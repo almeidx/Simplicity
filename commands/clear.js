@@ -1,18 +1,16 @@
-const Discord = require("discord.js");
 module.exports = {
-    run: async function(message, client, args) {
-
+    run: async function (message, client, [amount]) {
         if (!message.member.hasPermission("MANAGE_MESSAGES")) {
             message.reply('Você não tem permissão para executar este comando!')
             return;
         };
         
-        if (!bot.user.hasPermission("MANAGE_MESSAGES")) {
+        if (!message.guild.me.hasPermission("MANAGE_MESSAGES")) {
             message.reply('Eu não tenho permissões suficientes para executar esse comando!');
             return;
         };
         
-        let total = parseInt(args[0], 10);
+        let total = parseInt(amount, 10);
         if (!total || total < 2 || total > 100) {
             message.reply('Por favor, indique entre 2 a 100 mensagens!');
             return;
