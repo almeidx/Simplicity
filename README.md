@@ -1,2 +1,3 @@
-# simplicity
-Simplicity Repository
+# Simplicity
+
+Discord Bot
