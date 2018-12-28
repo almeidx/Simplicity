@@ -8,5 +8,6 @@ module.exports = {
             .setColor("#36393F")
             .setFooter(`Executado por : ${message.author.tag}`, message.author.displayAvatarURL)
         message.channel.send(embed);
-    }
+    },
+    aliases: ["servericone"]
 };

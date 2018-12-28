@@ -19,5 +19,6 @@ module.exports = {
         const res = await message.channel.fetchMessages({limit: total});
         message.channel.bulkDelete(res);
         message.channel.send(`Foram apagadas ${total} mensagens por ${message.author}. `).then(m => m.delete(15000));    
-    }
+    },
+    aliases: ["purge"]
 };

@@ -1,50 +1,28 @@
 const Discord = require('discord.js');
+const Util = require('util');
 module.exports = {
     run: async function(message, client, args) {
-              
-        var dev = ["289209067963154433", "281561868844269569", "385132696135008259"]
-    
-        if(!dev.includes(message.author.id)) {
-            var embedd = new Discord.RichEmbed()
-                .addField('Você não tem permissão para usar este comando!', 'Você tem que ser um Desenvolvedor para poder usar este comando!')
-                .setTimestamp()
-                .setColor("#ff3939")
-                .setFooter(`Executado por ${message.author.tag}`, message.author.displayAvatarURL)
-            message.channel.send(embedd);
-            return;
-        };
-    
-        if (message.content.toLowerCase().includes('token')) {
-            var embedt = new Discord.RichEmbed()
-                .setTitle('Negado! \⛔')
-                .setTimestamp()
-                .setColor("#ff3939")
-                .setFooter(`Executado por ${message.author.tag}`, message.author.displayAvatarURL)
-            message.channel.send(embedt);
-            return;
-        };
-            
-        if(args.length === 0) {
-            var embeda = new Discord.RichEmbed()
-                .setTitle('Você precisa de inserir o código!')
-                .setTimestamp()
-                .setColor("#ff3939")
-                .setFooter(`Executado por ${message.author.tag}`, message.author.displayAvatarURL)
-            message.channel.send(embeda);
-                return;
-        };
 
-        var embed = new Discord.RichEmbed()
+        if (!process.env.developers.includes(message.author.id)) return message.channel.send('Você não tem permissão para usar esse comando!');
+
+        if (args.length == 0) return message.channel.send('Você esqueceu de colocar o código!');
+
+        let code = args.join(' ').replace(/^```(js|javascript ?\n)?|```$/g, '')
+        let value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``
+        let embed = new Discord.RichEmbed()
+            .setColor('#36393F')
+        
         try {
-            let evaled = eval(args.join(' '));
-            let evaledMsg = `${evaled}`.replace(process.env.token, '*'.repeat(process.env.token.length)).slice(0, 950);
-            embed.setColor("#07ed66")
-            .addField('Resultado:', `\`\`\`js\n${evaledMsg}\`\`\``); 
-        } catch (err) {
-            embed.setColor("#e53030")
-            .addField('Erro:', `\`\`\`js\n${err}\`\`\``);
+            let resultEval = eval(code)
+            let toEval = typeof resultEval === 'string' ? resultEval : Util.inspect(resultEval,  { depth: 1 })  
+
+            embed.addField('Resultado', value('js', toEval))
+            embed.addField('Tipo', value('css', typeof resultEval))
+        } catch (error) {
+            embed.addField('Error', value('js', error))
         } finally {
-            await message.channel.send(embed);
-        };
-    }
+            message.channel.send(embed)
+        }
+    },
+    aliases: ["compile"]
 };

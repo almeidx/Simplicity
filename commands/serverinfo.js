@@ -30,5 +30,6 @@ module.exports = {
             .setColor("#36393F")
             .setTimestamp()
         message.channel.send(embed)
-    }
+    },
+    aliases: ["si", "server"]
 };

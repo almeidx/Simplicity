@@ -1,18 +1,22 @@
 {
-  "name": "NewBeta",
+  "name": "Simplicity-master",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "discord-anti-spam": "^1.1.6",
     "discord.js": "^11.4.2",
-    "dotenv": "^6.1.0",
+    "dotenv": "^6.2.0",
     "eslint": "^5.10.0",
-    "moment": "^2.22.2"
+    "firebase": "^5.7.1",
+    "moment": "^2.22.2",
+    "moment-duration-format": "^2.2.2"
   }
 }
