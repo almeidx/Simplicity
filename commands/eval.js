@@ -2,9 +2,15 @@ const Discord = require('discord.js');
 const Util = require('util');
 module.exports = {
     run: async function(message, client, args) {
-        if (!process.env.DEVS.includes(message.author.id)) return message.reply('Only my developers have permission to use this command.');
+        if (!process.env.DEVS.includes(message.author.id)) {
+            message.reply('Only my developers have permission to use this command.');
+            return;
+        };
 
-        if (args.length == 0) return message.reply('You didn\'t provide the code!');
+        if (args.length == 0) {
+            message.reply('You didn\'t provide the code!');
+            return;
+        };
 
         let code = args.join(' ').replace(/^```(js|javascript ?\n)?|```$/g, '')
         let value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length));
@@ -20,7 +26,7 @@ module.exports = {
             embed.addField('Error', value('js', error))
         } finally {
             message.channel.send(embed)
-        }
+        };
     },
     aliases: ["compile"]
 };
