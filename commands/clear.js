@@ -1,6 +1,5 @@
 module.exports = {
     run: async function (message, client, [amount]) {
-        
         if (!message.member.hasPermission("MANAGE_MESSAGES"))
             message.reply('You require the **MANAGE_MESSAGES** permission in order to execute this command.')
             return;
