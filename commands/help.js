@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 module.exports = {
-    run: async function(message, client) {
-        
+    run: async function(message, client, args) {
         
         let embed = new Discord.RichEmbed()
             .setTimestamp()
@@ -14,10 +13,8 @@ module.exports = {
         } else if (args[0].toLowerCase() == ('bot' || 'simplicity')) {
             embed.addField('Bot Stuff', '\`[]\` = Required Parameters.\n\`<>\` = Optional Parameters.')
             embed.addField('')
-        } else {
-            message.channel.send(embed);
         };
-        
+        message.channel.send(embed);
     },
     aliases: ["h"]
 };
