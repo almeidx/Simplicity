@@ -1,5 +1,6 @@
 module.exports = {
     run: async function (message, client, [amount]) {
+        
         if (!message.member.hasPermission("MANAGE_MESSAGES")) {
             message.reply('Você não tem permissão para executar este comando!')
             return;

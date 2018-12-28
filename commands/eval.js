@@ -3,19 +3,18 @@ const Util = require('util');
 module.exports = {
     run: async function(message, client, args) {
 
-        if (!process.env.developers.includes(message.author.id)) return message.channel.send('Você não tem permissão para usar esse comando!');
+        if (!process.env.DEVS.includes(message.author.id)) return message.channel.send('Você não tem permissão para usar esse comando!');
 
         if (args.length == 0) return message.channel.send('Você esqueceu de colocar o código!');
 
         let code = args.join(' ').replace(/^```(js|javascript ?\n)?|```$/g, '')
-        let value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``
+        let value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length));
         let embed = new Discord.RichEmbed()
             .setColor('#36393F')
-        
+
         try {
             let resultEval = eval(code)
-            let toEval = typeof resultEval === 'string' ? resultEval : Util.inspect(resultEval,  { depth: 1 })  
-
+            let toEval = typeof resultEval === 'string' ? resultEval : Util.inspect(resultEval,  { depth: 1 }) 
             embed.addField('Resultado', value('js', toEval))
             embed.addField('Tipo', value('css', typeof resultEval))
         } catch (error) {
