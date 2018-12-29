@@ -4,6 +4,7 @@ const client = new Client();
 const fs = require('fs');
 client.commands = new Collection();
 
+// Export Commands
 fs.readdirSync('./commands').forEach((file) => { 
     if (file.endsWith('.js')) {
         try {
@@ -15,6 +16,7 @@ fs.readdirSync('./commands').forEach((file) => {
     }
 });
 
+// Export Events
 fs.readdirSync('./listeners').forEach((file) => {
     if (file.endsWith('.js')) {
         try {

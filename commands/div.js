@@ -14,7 +14,7 @@ module.exports = {
             }
         });
 
-        var embed = new Discord.RichEmbed()
+        var embed = new Discord.MessageEmbed()
             .addField("Membros Recrutados:", `${invitesUses}`)
             .setColor("RANDOM")
             .setFooter(`${user.tag}`)

@@ -3,7 +3,7 @@ const Util = require('util');
 module.exports = {
     run: async function(message, client, args) {
         if (!process.env.DEVS.includes(message.author.id)) {
-            message.reply('Only my developers have permission to use this command.');
+            message.reply('You must be a developer in order to execute this command!');
             return;
         };
 
@@ -14,7 +14,7 @@ module.exports = {
 
         let code = args.join(' ').replace(/^```(js|javascript ?\n)?|```$/g, '')
         let value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length));
-        let embed = new Discord.RichEmbed()
+        let embed = new Discord.MessageEmbed()
             .setColor('#36393F')
 
         try {
