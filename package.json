@@ -11,12 +11,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord-anti-spam": "^1.1.6",
-    "discord.js": "github:discordjs/discord.js",
+    "discord.js": "git+https://github.com/discordjs/discord.js.git#master",
     "dotenv": "^6.2.0",
     "eslint": "^5.11.1",
     "firebase": "^5.7.1",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
   }
 }
