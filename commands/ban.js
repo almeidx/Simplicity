@@ -26,13 +26,10 @@ module.exports = {
 
     if (!message.guild.me.permissions.has('BAN_MEMBERS')) {
       msg = 'I require the **Ban Members** permission to execute this command.'
-
     } else if (!message.member.permissions.has('BAN_MEMBERS')) {
       msg = 'You need **Ban Members** permission to execute this command.'
-
     } else if (args.length === 0) {
       msg = `Usage: **${process.env.PREFIX}ban [@mention/id] <reason>**`
-
     } else if (!member) {
       msg = `Usage: **${process.env.PREFIX}ban [@mention/id] <reason>**`
       title = 'You didn\'t mention / used a valid ID!'
@@ -51,7 +48,6 @@ module.exports = {
         .addField(`Reason: `, reason ? reason : 'No reason given.')
         .setThumbnail(message.author.displayAvatarURL())
     }
-
     embed.setDescription(msg)
     embed.setTitle(title)
     message.channel.send(embed)
