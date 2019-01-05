@@ -19,8 +19,9 @@ module.exports = {
       .setTimestamp()
       .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
       .setColor('RED')
-    // eslint-disable-next-line one-var
-    let msg, title = 'Missing Parameters!'
+
+    let msg
+    let title = 'Missing Parameters!'
     let member = getUser(message, args)
     let reason = args.slice(1).join(' ')
 
@@ -44,8 +45,7 @@ module.exports = {
       title = 'Member Banned'
       msg = `${member} has been banned from the server`
       embed.addField('Banned by:', message.author, true)
-        // eslint-disable-next-line no-unneeded-ternary
-        .addField(`Reason: `, reason ? reason : 'No reason given.')
+        .addField(`Reason: `, reason || 'No reason given.')
         .setThumbnail(message.author.displayAvatarURL())
     }
     embed.setDescription(msg)

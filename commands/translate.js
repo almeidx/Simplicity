@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js')
+const { MessageEmbed, MessageAttachment } = require('discord.js')
 const translate = require('node-google-translate-skidz')
 module.exports = {
   run: async function (message, client, args) {
@@ -16,20 +16,16 @@ module.exports = {
       text: text,
       target: 'en'
     }, function (res) {
-      if (res.translation !== 'undefined') {
-        message.channel.send(new MessageEmbed()
+      if (res.translation) {
+        let embed = new MessageEmbed()
           .setColor('4f8bf5')
           .setTimestamp()
           .setThumbnail('attachment://translate.png')
           .addField('Original', text, true)
           .addField('Translated', res.translation)
           .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
-        , {
-          files: [{
-            attachment: './assets/google-translate.png',
-            name: 'translate.png'
-          }]
-        }) // favor arrumar essa merda de thumbnail ai Tsu ;-;
+          .attachFiles(new MessageAttachment('assets/google-translate.png', 'translate.png'))
+        message.channel.send(embed)
       } else {
         const embed = new MessageEmbed()
           .setColor('RED')
