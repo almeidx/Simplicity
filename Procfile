@@ -1,1 +1,1 @@
-worker: node Simplicity.js
+worker: node index.js
