@@ -11,7 +11,6 @@ fs.readdirSync('./commands').forEach((file) => {
       let Cmd = require(`./commands/${file}`)
       let name = file.replace('.js', '')
       if (typeof Cmd === 'function' && new Cmd() instanceof Command) {
-        console.log(Cmd, 1)
         Cmd = new Cmd(name, client)
       }
       client.commands.set(name, Cmd)
