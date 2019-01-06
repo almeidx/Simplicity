@@ -2,13 +2,19 @@ require('dotenv').config()
 const { Client, Collection } = require('discord.js')
 const client = new Client()
 const fs = require('fs')
+const Command = require('./structures/Command')
 client.commands = new Collection()
 
 fs.readdirSync('./commands').forEach((file) => {
   if (file.endsWith('.js')) {
     try {
-      const command = require(`./commands/${file}`)
-      client.commands.set(file.replace('.js', ''), command)
+      let Cmd = require(`./commands/${file}`)
+      let name = file.replace('.js', '')
+      if (typeof Cmd === 'function' && new Cmd() instanceof Command) {
+        console.log(Cmd, 1)
+        Cmd = new Cmd(name, client)
+      }
+      client.commands.set(name, Cmd)
     } catch (error) {
       console.log(`There was an error with command ${file}\n`, error)
     }

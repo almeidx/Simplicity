@@ -6,6 +6,11 @@ module.exports = function onMessage (message) {
   const commandName = args.shift().toLowerCase()
   const command = this.commands.find((c, i) => i === commandName || (Array.isArray(c.aliases) && c.aliases.includes(commandName)))
   if (command) {
-    command.run(message, this, args)
+    console.log(command.toString())
+    if (typeof command._run === 'function') {
+      command._run(message, args)
+    } else {
+      command.run(message, this, args)
+    }
   }
 }

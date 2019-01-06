@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js')
-const { PERMISSIONS } = require('../structures/Constants')
+const { PERMISSIONS } = require('../Utils/Constants')
+
 class Command {
   constructor (name, client) {
     this.name = name
@@ -10,7 +11,9 @@ class Command {
     this.permissions = []
     this.clientPermissions = []
   }
+
   run () {}
+
   _run (message, args) {
     if (this.argsRequired && args.length === 0) {
       return message.channel.send('Invalid Parameters!')
