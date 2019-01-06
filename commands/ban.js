@@ -4,6 +4,9 @@ const Command = require('../structures/Command')
 class Ban extends Command {
   constructor (name, client) {
     super(name, client)
+    this.aliases = ['bean']
+    this.description = 'This command lets you ban members of your server.'
+    this.usage = `Usage: **${process.env.PREFIX}ban [mention/id] <reason>**`
     this.permissions = ['BAN_MEMBERS']
     this.argsRequired = true
     this.clientPermissions = ['BAN_MEMBERS']

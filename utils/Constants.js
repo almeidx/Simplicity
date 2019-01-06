@@ -28,5 +28,14 @@ module.exports = {
     'MANAGE_ROLES': 'Manage Roles',
     'MANAGE_WEBHOOKS': 'Manage Webhooks',
     'MANAGE_EMOJIS': 'Manage Emojis'
+  },
+  PLATFORMS: {
+    'win32': 'Windows',
+    'aix': 'Aix',
+    'linux': 'Linux',
+    'darwin': 'Darwin',
+    'openbsd': 'OpenBSD',
+    'sunos': 'Solaris',
+    'freebsd': 'FreeBSD'
   }
 }
