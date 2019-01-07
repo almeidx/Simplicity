@@ -25,7 +25,7 @@ class ServerInfo extends Command {
     let verificationLevel = ['None', 'Low', 'Medium', '(╯°□°）╯︵ ┻━┻', '┻━┻彡 ヽ(ಠ益ಠ)ノ彡┻━┻'][message.guild.verificationLevel]
     let verificationName = ['Unrestricted.', 'Must have a verified email on their Discord account.', 'Must be registered on Discord for longer than 5 minutes.', 'Must be a member of the server for longer than 10 minutes.', 'Must have a verified phone on their Discord account.'][message.guild.verificationLevel]
     let embed = new MessageEmbed()
-      .addField('» Name:', message.guild.true)
+      .addField('» Name:', message.guild.name, true)
       .addField('» Owner:', `<@${message.guild.owner.id}>`, true)
       .addField('» ID:', message.guild.id, true)
       .addField('» Created:', moment(message.guild.createdAt).format('LLLL'))
