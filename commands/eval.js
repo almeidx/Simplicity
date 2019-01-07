@@ -1,13 +1,17 @@
 const { MessageEmbed } = require('discord.js')
 const { inspect } = require('util')
-module.exports = {
-  run: async function (message, client, args) {
-    if (!process.env.DEVS.includes(message.author.id)) {
-      return message.reply('You must be a developer in order to execute this command!')
-    };
-    if (args.length === 0) {
-      return message.reply('You didn\'t provide the code!')
-    };
+const Command = require('../structures/Command')
+
+class Eval extends Command {
+  constructor (name, client) {
+    super(name, client)
+    this.aliases = ['compile']
+    this.description = 'This command lets my developers evaluate JavaScript code.'
+    this.usage = `Usage: **${process.env.PREFIX}eval [code]**`
+    this.category = 'Developer'
+    this.argsRequired = true
+  }
+  run (message, client) {
     let code = args.join(' ').replace(/^```(js|javascript ?\n)?|```$/g, '')
     let value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length))
     let embed = new MessageEmbed()
@@ -23,6 +27,7 @@ module.exports = {
     } finally {
       message.channel.send(embed)
     };
-  },
-  aliases: ['compile']
+  }
 }
+
+module.exports = Eval

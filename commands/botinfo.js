@@ -10,6 +10,7 @@ class BotInfo extends Command {
     this.aliases = ['bi']
     this.description = 'This command shows you info about myself.'
     this.usage = `Usage: **${process.env.PREFIX}botinfo**`
+    this.category = 'Bot'
     this.argsRequired = false
   }
 

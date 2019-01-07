@@ -7,6 +7,7 @@ class Ban extends Command {
     this.aliases = ['bean']
     this.description = 'This command lets you ban members of your server.'
     this.usage = `Usage: **${process.env.PREFIX}ban [mention/id] <reason>**`
+    this.category = 'Moderation'
     this.permissions = ['BAN_MEMBERS']
     this.argsRequired = true
     this.clientPermissions = ['BAN_MEMBERS']
