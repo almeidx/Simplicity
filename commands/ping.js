@@ -1,8 +1,8 @@
 const Command = require('../structures/Command')
 
 class Ping extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['pong']
     this.description = 'This command shows you the ping of the bot.'
     this.usage = `Usage: **${process.env.PREFIX}ping**`

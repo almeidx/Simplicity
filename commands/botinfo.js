@@ -6,8 +6,8 @@ const moment = require('moment')
 require('moment-duration-format')
 
 class BotInfo extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['bi']
     this.description = 'This command shows you info about myself.'
     this.usage = `Usage: **${process.env.PREFIX}botinfo**`

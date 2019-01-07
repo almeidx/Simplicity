@@ -2,8 +2,8 @@ const { MessageEmbed } = require('discord.js')
 const Command = require('../structures/Command')
 
 class Help extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['h', 'commands']
     this.description = 'This command shows my other commands.'
     this.usage = `Usage: **${process.env.PREFIX}help <module>**`

@@ -1,8 +1,8 @@
 const Command = require('../structures/Command')
 
 class Clear extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['purge', 'prune', 'clean']
     this.description = 'This command clears messages from the chat.'
     this.usage = `Usage: **${process.env.PREFIX}clear [amount]**`

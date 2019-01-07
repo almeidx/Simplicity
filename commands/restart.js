@@ -1,8 +1,8 @@
 const Command = require('../structures/Command')
 
 class Restart extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.description = 'This command makes me restart.'
     this.usage = `Usage: **${process.env.PREFIX}restart**`
     this.category = 'Developer'

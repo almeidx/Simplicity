@@ -2,8 +2,8 @@ const { MessageEmbed } = require('discord.js')
 const Command = require('../structures/Command')
 
 class Invite extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['inv']
     this.description = 'This command shows how many persons you\'ve invited to the server.'
     this.usage = `Usage: **${process.env.PREFIX}inv <mention/id>**`

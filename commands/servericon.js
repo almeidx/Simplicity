@@ -2,15 +2,15 @@ const { MessageEmbed } = require('discord.js')
 const Command = require('../structures/Command')
 
 class ServerIcon extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['svicon']
     this.description = 'This command shows the server icon.'
     this.usage = `Usage: **${process.env.PREFIX}servericon**`
     this.category = 'Server'
     this.argsRequired = false
   }
-  run (message, args) {
+  run (message) {
     let embed = new MessageEmbed()
       .setDescription(`Click [here](${message.guild.iconURL({ size: 2048 })}) to download the icon!`)
       .setImage(message.guild.iconURL({ size: 2048 }))

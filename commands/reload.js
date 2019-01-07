@@ -1,8 +1,8 @@
 const Command = require('../structures/Command')
 
 class Reload extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['load']
     this.description = 'This command reloads another command.'
     this.usage = `Usage: **${process.env.PREFIX}reload [command]**`

@@ -3,8 +3,8 @@ require('moment-duration-format')
 const Command = require('../structures/Command')
 
 class Uptime extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['ut', 'ontime']
     this.description = 'This command shows my uptime.'
     this.usage = `Usage: **${process.env.PREFIX}uptime**`

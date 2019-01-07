@@ -2,8 +2,8 @@ const { MessageEmbed } = require('discord.js')
 const Command = require('../structures/Command')
 
 class Ban extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['bean']
     this.description = 'This command lets you ban members of your server.'
     this.usage = `Usage: **${process.env.PREFIX}ban [mention/id] <reason>**`
@@ -18,7 +18,7 @@ class Ban extends Command {
     let member = this.getUser(message, args)
     let msg, title
     const embed = new MessageEmbed()
-      .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 2048 }))
+      .setAuthor(message.author.usermessage.author.displayAvatarURL({ size: 2048 }))
       .setTimestamp()
       .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
       .setColor('RED')

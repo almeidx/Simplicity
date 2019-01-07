@@ -2,8 +2,8 @@ const { MessageEmbed } = require('discord.js')
 const Command = require('../structures/Command')
 
 class Kick extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.description = 'This command lets you kick members of your server.'
     this.usage = `Usage: **${process.env.PREFIX + this.name} [mention/id] <reason>**`
     this.category = 'Moderation'
@@ -16,7 +16,7 @@ class Kick extends Command {
     let member = this.getUser(message, args)
     let msg, title
     const embed = new MessageEmbed()
-      .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 2048 }))
+      .setAuthor(message.author.usermessage.author.displayAvatarURL({ size: 2048 }))
       .setTimestamp()
       .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
       .setColor('RED')

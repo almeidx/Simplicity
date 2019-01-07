@@ -1,10 +1,10 @@
 const { MessageEmbed } = require('discord.js')
 const { inspect } = require('util')
-const Command = require('../structures/Command')
+const Command = require('../../structures/Command')
 
 class Eval extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['compile']
     this.description = 'This command lets my developers evaluate JavaScript code.'
     this.usage = `Usage: **${process.env.PREFIX}eval [code]**`

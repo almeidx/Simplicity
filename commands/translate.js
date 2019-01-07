@@ -3,8 +3,8 @@ const translate = require('node-google-translate-skidz')
 const Command = require('../structures/Command')
 
 class Translate extends Command {
-  constructor (name, client) {
-    super(name, client)
+  constructor (client) {
+    super(client)
     this.aliases = ['googletranslate', 'google-translate']
     this.description = 'This command translates something to English.'
     this.usage = `Usage: **${process.env.PREFIX}translate [text]**`
