@@ -10,9 +10,9 @@ class Invite extends Command {
     this.category = 'Server'
     this.argsRequired = false
   }
-  run (message, args) {
+  async run (message, args) {
     var user = message.mentions.users.first() || message.guild.members.get([args[0]]) || message.author
-    var targetInvites = message.guild.fetchInvites() // falta await aqui porem nsei onde coloco o async :ThinkPepe:
+    var targetInvites = await message.guild.fetchInvites()
     var invitesUses = 0
     targetInvites.forEach(invite => {
       if (invite.inviter.id === user.id) {
