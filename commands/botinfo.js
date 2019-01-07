@@ -14,7 +14,7 @@ class BotInfo extends Command {
     this.argsRequired = false
   }
 
-  run (message, client) {
+  run (message, args) {
     let uptime = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
     let cpu = (process.cpuUsage().user / 1024 / 1024).toFixed(2) // CPU Usage
     let ram = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) // RAM Usage
