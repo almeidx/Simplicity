@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js')
+const { readdirSync } = require('fs')
 const { PLATFORMS } = require('../utils/Constants')
 const Command = require('../structures/Command')
 const moment = require('moment')
@@ -13,13 +14,17 @@ class BotInfo extends Command {
     this.category = 'Bot'
     this.argsRequired = false
   }
-
   run (message, args) {
     let uptime = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
     let cpu = (process.cpuUsage().user / 1024 / 1024).toFixed(2) // CPU Usage
     let ram = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) // RAM Usage
     let platform = PLATFORMS[process.platform]
     let pings = message.guild.shard.pings.join(', ')
+    let array = []
+    readdirSync('./commands').forEach((file) => {
+      array.push(array.length + 1)
+    })
+    let commands = array.length
     const embed = new MessageEmbed()
       .setColor('#0494bc')
       .addField('» Ping', `${Math.floor(this.client.ws.ping)}ms`, true)
@@ -29,7 +34,7 @@ class BotInfo extends Command {
       .addField('» Discord.js | Node.js', `${require('discord.js').version} | ${process.versions.node}`, true)
       .addField('» OS', platform, true)
       .addField('» Uptime', uptime, true)
-      .addField('» Comandos', 'merda', true) // colocar aqui a quantidade de comandos @Tsugami
+      .addField('» Comandos', commands, true)
       .addField('» Last Pings', pings, true)
     message.channel.send(embed)
   }

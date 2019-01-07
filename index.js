@@ -1,11 +1,11 @@
 require('dotenv').config()
 const { Client, Collection } = require('discord.js')
+const { readdirSync } = require('fs')
 const client = new Client()
-const fs = require('fs')
 const Command = require('./structures/Command')
 client.commands = new Collection()
 
-fs.readdirSync('./commands').forEach((file) => {
+readdirSync('./commands').forEach((file) => {
   if (file.endsWith('.js')) {
     try {
       let Cmd = require(`./commands/${file}`)
@@ -20,7 +20,7 @@ fs.readdirSync('./commands').forEach((file) => {
   }
 })
 
-fs.readdirSync('./listeners').forEach((file) => {
+readdirSync('./listeners').forEach((file) => {
   if (file.endsWith('.js')) {
     try {
       const Listener = require('./listeners' + '/' + file)

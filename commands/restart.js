@@ -1,20 +1,27 @@
-module.exports = {
-  run: async function (message, client, args) {
-    if (!process.env.DEVS.includes(message.author.id)) {
-      return message.reply('You must be a developer in order to execute this command!')
-    };
+const Command = require('../structures/Command')
+
+class Restart extends Command {
+  constructor (name, client) {
+    super(name, client)
+    this.description = 'This command makes me restart.'
+    this.usage = `Usage: **${process.env.PREFIX}restart**`
+    this.category = 'Developer'
+    this.argsRequired = false
+  }
+  run (message, args) {
     resetBot(message.channel)
     async function resetBot (channel) {
       channel.send('Restarting...')
         .then(m => {
-          client.on('ready', () => {
+          this.client.on('ready', () => {
             m.edit(`Sucessfully restarted the bot in ${message.createdTimestamp - m.createdTimestamp}ms.`)
             m.react('✅')
           })
         })
-        .then(msg => client.destroy())
-        .then(() => client.login(process.env.BOT_TOKEN))
+        .then(msg => this.client.destroy())
+        .then(() => this.client.login(process.env.BOT_TOKEN))
     }
-  },
-  aliases: ['reiniciar']
+  }
 }
+
+module.exports = Restart

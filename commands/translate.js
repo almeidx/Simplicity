@@ -1,16 +1,17 @@
 const { MessageEmbed, MessageAttachment } = require('discord.js')
 const translate = require('node-google-translate-skidz')
-module.exports = {
-  run: async function (message, client, args) {
-    if (args.length === 0) {
-      const embed = new MessageEmbed()
-        .setTimestamp()
-        .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
-        .setColor('RED')
-        .setTitle('Missing Parameters!')
-        .setDescription(`Usage: **${process.env.PREFIX}translate [text]**`)
-      message.channel.send(embed)
-    };
+const Command = require('../structures/Command')
+
+class Translate extends Command {
+  constructor (name, client) {
+    super(name, client)
+    this.aliases = ['googletranslate', 'google-translate']
+    this.description = 'This command translates something to English.'
+    this.usage = `Usage: **${process.env.PREFIX}translate [text]**`
+    this.category = 'Utility'
+    this.argsRequired = true
+  }
+  run (message, args) {
     let text = args.join(' ')
     translate({
       text: text,
@@ -21,8 +22,9 @@ module.exports = {
           .setColor('4f8bf5')
           .setTimestamp()
           .setThumbnail('attachment://translate.png')
+          .setAuthor('Google Translate', 'attachment://translate.png')
           .addField('Original', text, true)
-          .addField('Translated', res.translation)
+          .addField('Translated', res.translation, true)
           .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
           .attachFiles(new MessageAttachment('assets/google-translate.png', 'translate.png'))
         message.channel.send(embed)
@@ -37,3 +39,5 @@ module.exports = {
     })
   }
 }
+
+module.exports = Translate

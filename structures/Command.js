@@ -10,7 +10,7 @@ class Command {
     this.category = 'No category'
     this.argsRequired = false
     this.permissions = []
-    this.clientPermissions = []
+    this.clientPermissions = ['MANAGE_MESSAGES', 'EMBED_LINKS', 'ATTACH_FILES', 'ADD_REACTIONS', 'READ_MESSAGE_HISTORY', 'USE_EXTERNAL_EMOJIS']
   }
   run () {}
   _run (message, args) {
@@ -18,7 +18,13 @@ class Command {
       return message.channel.send('You must be a developer in order to execute this command!')
     }
     if (this.argsRequired && args.length === 0) {
-      return message.channel.send('Invalid Parameters!')
+      const embed = new MessageEmbed()
+        .setTimestamp()
+        .setFooter(`Executed by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
+        .setColor('RED')
+        .setTitle('Missing Parameters!')
+        .setDescription(this.usage)
+      return message.channel.send(embed)
     }
     let ClientPermissions = this.clientPermissions.filter(p => !message.guild.me.permissions.has(p))
     if (ClientPermissions.length !== 0) {

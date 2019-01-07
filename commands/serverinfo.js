@@ -1,7 +1,17 @@
 const { MessageEmbed } = require('discord.js')
+const Command = require('../structures/Command')
 const moment = require('moment')
-module.exports = {
-  run: async function (message, client) {
+
+class ServerInfo extends Command {
+  constructor (name, client) {
+    super(name, client)
+    this.aliases = ['si', 'server']
+    this.description = 'This command shows the server icon.'
+    this.usage = `Usage: **${process.env.PREFIX}servericon**`
+    this.category = 'Server'
+    this.argsRequired = false
+  }
+  run (message, args) {
     let online = message.guild.members.filter(user => user.presence.status === 'online').size
     let idle = message.guild.members.filter(user => user.presence.status === 'idle').size
     let dnd = message.guild.members.filter(user => user.presence.status === 'dnd').size
@@ -21,12 +31,13 @@ module.exports = {
       .addField('» Created:', moment(message.guild.createdAt).format('LLLL'))
       .addField(`» Members (${members})`, `**Online:** ${online}\n**Idle:** ${idle}\n**Do Not Disturb:** ${dnd}\n**Offline:** ${offline}\n**Bots:** ${bots}`, true)
       .addField(`» Channels | Emojis | Roles`, `${text + voice} | ${emojis} | ${roles}`, true)
-      .addField(`» Verification Level: ${verificationName}`, verificationLevel)
+      .addField(`» Verification Level: ${verificationLevel}`, verificationName)
       .setThumbnail(message.guild.iconURL({ size: 2048 }))
       .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
-      .setColor(message.guild.me.displayHexColor)
+      .setColor('#0494bc')
       .setTimestamp()
     message.channel.send(embed)
-  },
-  aliases: ['si', 'server']
+  }
 }
+
+module.exports = ServerInfo
