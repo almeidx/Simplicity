@@ -5,7 +5,7 @@ class Kick extends Command {
   constructor (client) {
     super(client)
     this.description = 'This command lets you kick members of your server.'
-    this.usage = `Usage: **${process.env.PREFIX + this.name} [mention/id] <reason>**`
+    this.usage = `Usage: **${process.env.PREFIX} [mention/id] <reason>**`
     this.category = 'Moderation'
     this.argsRequired = true
     this.permissions = ['KICK_MEMBERS']
