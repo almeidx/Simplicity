@@ -21,7 +21,7 @@ class BotInfo extends Command {
     let platform = PLATFORMS[process.platform]
     let pings = message.guild.shard.pings.join(', ')
     let array = []
-    readdirSync('./commands').forEach((file) => {
+    readdirSync('./').forEach((file) => {
       array.push(array.length + 1)
     })
     let commands = array.length
