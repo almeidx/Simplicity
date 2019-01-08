@@ -32,11 +32,11 @@ class Ban extends Command {
     } else if (message.guild.me.roles.highest.position <= member.roles.highest.position) {
       msg = 'I can\'t ban this user because they have the same or higher role as me.'
     } else {
-      member.ban({ days: 7, reason: reason || 'No reason given.' })
+      member.ban({ days: 7, reason: (reason ? message.author.tag + ' | ' + reason : message.author.tag + ' | No reason provided.') })
       title = 'Member Banned'
       msg = `${member} has been banned from the server`
       embed.addField('Banned by:', message.author, true)
-        .addField(`Reason: `, reason || 'No reason given.')
+        .addField(`Reason: `, reason || 'No reason provided.')
         .setThumbnail(message.author.displayAvatarURL())
     }
     if (msg) embed.setDescription(msg)
