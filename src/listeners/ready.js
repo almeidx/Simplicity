@@ -1,4 +1,4 @@
 module.exports = function Ready () {
   console.log(`Logged on ${this.guilds.size} guilds with ${this.users.size} users at ${require('moment')().format('LLLL')}`)
-  this.user.setActivity(`${this.users.size} users`, { type: 'WATCHING' })
+  this.user.setActivity('and thinking', { type: 'WATCHING' })
 }

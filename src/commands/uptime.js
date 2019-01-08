@@ -1,6 +1,6 @@
 const moment = require('moment')
 require('moment-duration-format')
-const Command = require('../structures/Command')
+const { Command } = require('../')
 
 class Uptime extends Command {
   constructor (client) {
@@ -11,7 +11,8 @@ class Uptime extends Command {
     this.category = 'Bot'
     this.argsRequired = false
   }
-  run (message, args) {
+
+  run (message) {
     let duration = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
     message.channel.send(`I have been online for: **${duration}**`)
   }

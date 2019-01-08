@@ -1,6 +1,6 @@
 const { MessageEmbed, MessageAttachment } = require('discord.js')
 const translate = require('node-google-translate-skidz')
-const Command = require('../structures/Command')
+const { Command } = require('../')
 
 class Translate extends Command {
   constructor (client) {
@@ -11,6 +11,7 @@ class Translate extends Command {
     this.category = 'Utility'
     this.argsRequired = true
   }
+
   run (message, args) {
     let text = args.join(' ')
     translate({

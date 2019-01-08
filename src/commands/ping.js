@@ -1,4 +1,4 @@
-const Command = require('../structures/Command')
+const { Command } = require('../')
 
 class Ping extends Command {
   constructor (client) {
@@ -9,7 +9,8 @@ class Ping extends Command {
     this.category = 'Bot'
     this.argsRequired = false
   }
-  run (message, args) {
+
+  run (message) {
     message.channel.send('Ping...')
       .then(msg => {
         msg.edit(`Latency is ${msg.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.floor(this.client.ws.ping)}ms.`)

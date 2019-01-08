@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const Command = require('../structures/Command')
+const { Command } = require('../')
 const moment = require('moment')
 
 class ServerInfo extends Command {
@@ -11,6 +11,7 @@ class ServerInfo extends Command {
     this.category = 'Server'
     this.argsRequired = false
   }
+
   run (message) {
     let online = message.guild.members.filter(user => user.presence.status === 'online').size
     let idle = message.guild.members.filter(user => user.presence.status === 'idle').size

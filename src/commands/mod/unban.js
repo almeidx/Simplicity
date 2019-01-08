@@ -1,17 +1,18 @@
 const { MessageEmbed } = require('discord.js')
-const Command = require('../structures/Command')
+const { Command } = require('../../')
 
 class Unban extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['ub']
     this.description = 'This command lets you unban members from your server.'
-    this.usage = `Usage: **${process.env.PREFIX} [id] <reason>**`
+    this.usage = `Usage: **${process.env.PREFIX + this.name} [id] <reason>**`
     this.category = 'Moderation'
     this.argsRequired = true
     this.permissions = ['BAN_MEMBERS']
     this.clientPermissions = ['BAN_MEMBERS']
   }
+
   run (message, args) {
     const embed = new MessageEmbed()
       .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 2048 }))

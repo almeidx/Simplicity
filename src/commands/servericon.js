@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const Command = require('../structures/Command')
+const { Command } = require('../')
 
 class ServerIcon extends Command {
   constructor (client) {

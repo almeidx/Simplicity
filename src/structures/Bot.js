@@ -1,10 +1,13 @@
 const { Client, Collection } = require('discord.js')
 const { readdirSync, statSync } = require('fs')
+const Path = require('path')
 
 module.exports = class Bot extends Client {
   constructor (options) {
     super(options)
     this.commands = new Collection()
+    this.initCommands(Path.join(__dirname, '../commands'))
+    this.initListeners(Path.join(__dirname, '../listeners'))
   }
 
   initCommands (path) {
@@ -12,14 +15,18 @@ module.exports = class Bot extends Client {
       let filePath = path + '/' + file
       if (file.endsWith('.js')) {
         let commandName = file.replace(/.js/g, '')
-        let Command = require(filePath)
-        let command = new Command(this)
-        command.name = commandName
-        let category = path.split(/\\|\//g).pop()
-        if (category !== 'commands' && command.category === 'none') {
-          command.category = category
+        try {
+          let Command = require(filePath)
+          let command = new Command(this)
+          command.name = commandName
+          let category = path.split(/\\|\//g).pop()
+          if (category !== 'commands' && command.category === 'none') {
+            command.category = category
+          }
+          this.commands.set(commandName, command)
+        } catch (err) {
+          console.error(err)
         }
-        this.commands.set(commandName, command)
       } else if (statSync(path).isDirectory()) {
         this.initCommands(filePath)
       }

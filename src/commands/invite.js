@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const Command = require('../structures/Command')
+const { Command } = require('../')
 
 class Invite extends Command {
   constructor (client) {
@@ -10,6 +10,7 @@ class Invite extends Command {
     this.category = 'Server'
     this.argsRequired = false
   }
+
   async run (message, args) {
     var user = message.mentions.users.first() || message.guild.members.get([args[0]]) || message.author
     var targetInvites = await message.guild.fetchInvites()

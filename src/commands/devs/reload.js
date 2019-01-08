@@ -1,4 +1,4 @@
-const Command = require('../structures/Command')
+const { Command } = require('../../')
 
 class Reload extends Command {
   constructor (client) {
@@ -9,6 +9,7 @@ class Reload extends Command {
     this.category = 'Developer'
     this.argsRequired = true
   }
+
   run (message, args) {
     try {
       delete require.cache[require.resolve(`./${args}.js`)]

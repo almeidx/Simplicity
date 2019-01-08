@@ -1,16 +1,15 @@
 const { MessageEmbed } = require('discord.js')
-const Command = require('../structures/Command')
+const { Command } = require('../../')
 
-class Ban extends Command {
+class Kick extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['bean']
-    this.description = 'This command lets you ban members of your server.'
-    this.usage = `Usage: **${process.env.PREFIX}ban [mention/id] <reason>**`
+    this.description = 'This command lets you kick members of your server.'
+    this.usage = `Usage: **${process.env.PREFIX + this.name} [mention/id] <reason>**`
     this.category = 'Moderation'
     this.argsRequired = true
-    this.permissions = ['BAN_MEMBERS']
-    this.clientPermissions = ['BAN_MEMBERS']
+    this.permissions = ['KICK_MEMBERS']
+    this.clientPermissions = ['KICK_MEMBERS']
   }
 
   run (message, args) {
@@ -25,17 +24,17 @@ class Ban extends Command {
       .setTitle('Denied!')
 
     if (!member) {
-      msg = `Usage: **${process.env.PREFIX}ban [@mention/id] <reason>**`
+      msg = this.usage
       title = 'You didn\'t mention / used a valid ID!'
     } else if (message.member.roles.highest.position <= member.roles.highest.position) {
-      msg = 'You can\'t ban this user because they have the same or higher role as you.'
+      msg = 'You can\'t kick this user because they have the same or higher role as you.'
     } else if (message.guild.me.roles.highest.position <= member.roles.highest.position) {
-      msg = 'I can\'t ban this user because they have the same or higher role as me.'
+      msg = 'I can\'t kick this user because they have the same or higher role as me.'
     } else {
-      member.ban({ days: 7, reason: (reason ? message.author.tag + ' | ' + reason : message.author.tag + ' | No reason provided.') })
-      title = 'Member Banned'
-      msg = `${member} has been banned from the server`
-      embed.addField('Banned by:', message.author, true)
+      member.kick({ reason: (reason ? message.author.tag + ' | ' + reason : message.author.tag + ' | No reason provided.') })
+      title = 'Member Kicked'
+      msg = `${member} has been kicked from the server`
+      embed.addField('Kicked by:', message.author, true)
         .addField(`Reason: `, reason || 'No reason provided.')
         .setThumbnail(message.author.displayAvatarURL())
     }
@@ -56,4 +55,4 @@ class Ban extends Command {
     }
   }
 }
-module.exports = Ban
+module.exports = Kick

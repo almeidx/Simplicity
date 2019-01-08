@@ -1,7 +1,4 @@
 require('dotenv').config()
-const Bot = require('./structures/Bot')
-const Path = require('path')
+const { Bot } = require('./src')
 const client = new Bot()
-client.initCommands(Path.join(__dirname, './commands'))
-client.initListeners(Path.join(__dirname, './listeners'))
 client.login(process.env.BOT_TOKEN)

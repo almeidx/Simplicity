@@ -1,7 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const { readdirSync } = require('fs')
-const { PLATFORMS } = require('../utils/Constants')
-const Command = require('../structures/Command')
+const { Command, Constants: { PLATFORMS } } = require('../')
 const moment = require('moment')
 require('moment-duration-format')
 
@@ -14,7 +13,8 @@ class BotInfo extends Command {
     this.category = 'Bot'
     this.argsRequired = false
   }
-  run (message, args) {
+
+  run (message) {
     let uptime = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
     let cpu = (process.cpuUsage().user / 1024 / 1024).toFixed(2) // CPU Usage
     let ram = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) // RAM Usage

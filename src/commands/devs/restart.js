@@ -1,4 +1,4 @@
-const Command = require('../../structures/Command')
+const { Command } = require('../../')
 
 class Restart extends Command {
   constructor (client) {
@@ -8,7 +8,8 @@ class Restart extends Command {
     this.category = 'Developer'
     this.argsRequired = false
   }
-  run (message, args) {
+
+  run (message) {
     resetBot(message.channel)
     async function resetBot (channel) {
       channel.send('Restarting...')
