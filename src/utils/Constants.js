@@ -39,9 +39,10 @@ module.exports = {
     'freebsd': 'FreeBSD'
   },
   EMOJIS_CUSTOM: {
-    'SOCK_PING': '<a:sPingSock:532228766651383813>'
+    'SOCK_PING': '532228766651383813'
   },
   EMOJIS: {
-    'SOCK_PING': '👺'
+    'SOCK_PING': '👺',
+    'QUESTION': '❓'
   }
 }

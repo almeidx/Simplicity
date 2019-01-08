@@ -4,8 +4,7 @@ module.exports = function onMessage (message) {
     message.type === 'dm' ||
     !message.guild.me.permissions.has('SEND_MESSAGES')) return
   if (message.mentions.has(this.user.id) && message.guild.me.permissions.has('ADD_REACTIONS')) {
-    console.log(Emojis.get(message).SOCK_PING)
-    message.react(Emojis.get(message).SOCK_PING)
+    message.react(Emojis.get(message, 'SOCK_PING', false))
   }
   if (!message.content.startsWith(process.env.PREFIX)) return
   const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g)
