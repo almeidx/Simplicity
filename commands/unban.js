@@ -6,7 +6,7 @@ class Unban extends Command {
     super(client)
     this.aliases = ['ub']
     this.description = 'This command lets you unban members from your server.'
-    this.usage = `Usage: **${process.env.PREFIX + this.name} [id] <reason>**`
+    this.usage = `Usage: **${process.env.PREFIX} [id] <reason>**`
     this.category = 'Moderation'
     this.argsRequired = true
     this.permissions = ['BAN_MEMBERS']
