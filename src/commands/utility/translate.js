@@ -1,6 +1,6 @@
 const { MessageEmbed, MessageAttachment } = require('discord.js')
+const { Command } = require('../../')
 const translate = require('node-google-translate-skidz')
-const { Command } = require('../')
 
 class Translate extends Command {
   constructor (client) {
@@ -20,7 +20,7 @@ class Translate extends Command {
     }, function (res) {
       if (res.translation) {
         let embed = new MessageEmbed()
-          .setColor('4f8bf5')
+          .setColor(process.env.COLOR)
           .setTimestamp()
           .setThumbnail('attachment://translate.png')
           .setAuthor('Google Translate', 'attachment://translate.png')

@@ -1,4 +1,4 @@
-const { Command } = require('../')
+const { Command } = require('../../')
 
 class Ping extends Command {
   constructor (client) {

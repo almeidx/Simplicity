@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const { Command } = require('../')
+const { Command } = require('../..')
 
 class ServerIcon extends Command {
   constructor (client) {
@@ -14,7 +14,7 @@ class ServerIcon extends Command {
     let embed = new MessageEmbed()
       .setDescription(`Click [here](${message.guild.iconURL({ size: 2048 })}) to download the icon!`)
       .setImage(message.guild.iconURL({ size: 2048 }))
-      .setColor('#0494bc')
+      .setColor(process.env.COLOR)
       .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
     message.channel.send(embed)
   }

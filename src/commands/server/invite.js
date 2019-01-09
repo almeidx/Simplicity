@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const { Command } = require('../')
+const { Command } = require('../..')
 
 class Invite extends Command {
   constructor (client) {
@@ -22,7 +22,7 @@ class Invite extends Command {
     })
     var embed = new MessageEmbed()
       .addField('Invited members:', invitesUses)
-      .setColor('RANDOM')
+      .setColor(process.env.COLOR)
       .setFooter(user.tag)
       .setTimestamp()
     message.channel.send(embed)

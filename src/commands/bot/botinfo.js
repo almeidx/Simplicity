@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const { readdirSync } = require('fs')
-const { Command, Constants: { PLATFORMS } } = require('../')
+const { Command, Constants: { PLATFORMS } } = require('../../')
 const moment = require('moment')
 require('moment-duration-format')
 
@@ -26,7 +26,7 @@ class BotInfo extends Command {
     })
     let commands = array.length
     const embed = new MessageEmbed()
-      .setColor('#0494bc')
+      .setColor(process.env.COLOR)
       .addField('» Ping', `${Math.floor(this.client.ws.ping)}ms`, true)
       .addField('» Guilds | Users', `${this.client.guilds.size} | ${this.client.users.size}`, true)
       .addField('» Channels | Emojis', `${this.client.channels.size} | ${this.client.emojis.size}`, true)

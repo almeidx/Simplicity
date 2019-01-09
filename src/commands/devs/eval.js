@@ -14,7 +14,7 @@ class Eval extends Command {
     let code = args.join(' ').replace(/^```(js|javascript ?\n)?|```$/g, '')
     let value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length))
     let embed = new MessageEmbed()
-      .setColor('#36393F')
+      .setColor(process.env.COLOR)
     try {
       // eslint-disable-next-line no-eval
       let resultEval = eval(code)

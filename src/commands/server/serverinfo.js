@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const { Command } = require('../')
+const { Command } = require('../..')
 const moment = require('moment')
 
 class ServerInfo extends Command {
@@ -35,7 +35,7 @@ class ServerInfo extends Command {
       .addField(`» Verification Level: ${verificationLevel}`, verificationName)
       .setThumbnail(message.guild.iconURL({ size: 2048 }))
       .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
-      .setColor('#0494bc')
+      .setColor(process.env.COLOR)
       .setTimestamp()
     message.channel.send(embed)
   }

@@ -1,6 +1,6 @@
 const moment = require('moment')
 require('moment-duration-format')
-const { Command } = require('../')
+const { Command } = require('../..')
 
 class Uptime extends Command {
   constructor (client) {
