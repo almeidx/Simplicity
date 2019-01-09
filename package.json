@@ -14,9 +14,9 @@
     "discord.js": "git+https://github.com/discordjs/discord.js.git#master",
     "dotenv": "^6.2.0",
     "eslint": "^5.12.0",
-    "firebase": "^5.7.2",
     "moment": "^2.23.0",
     "moment-duration-format": "^2.2.2",
+    "mongoose": "^5.4.2",
     "node-google-translate-skidz": "^1.1.2"
   },
   "devDependencies": {

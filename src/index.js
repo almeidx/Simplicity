@@ -4,5 +4,7 @@ module.exports = {
   Command: require('./structures/Command'),
   // Utils
   Constants: require('./utils/Constants'),
-  Emojis: require('./utils/Emojis')
+  Emojis: require('./utils/Emojis'),
+  // Database
+  Database: require('./database/Database.js')
 }

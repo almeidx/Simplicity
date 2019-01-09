@@ -1,11 +1,14 @@
 const { Client, Collection } = require('discord.js')
+const Database = require('../database/Database')
 const { readdirSync, statSync } = require('fs')
 const Path = require('path')
 
+require('../utils/prototypes')
 module.exports = class Bot extends Client {
   constructor (options) {
     super(options)
     this.commands = new Collection()
+    this.Database = new Database(this)
     this.initCommands(Path.join(__dirname, '../commands'))
     this.initListeners(Path.join(__dirname, '../listeners'))
   }
