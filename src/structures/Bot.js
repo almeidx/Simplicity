@@ -3,7 +3,6 @@ const Database = require('../database/Database')
 const { readdirSync, statSync } = require('fs')
 const Path = require('path')
 
-require('../utils/prototypes')
 module.exports = class Bot extends Client {
   constructor (options) {
     super(options)
