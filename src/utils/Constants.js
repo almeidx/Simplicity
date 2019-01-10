@@ -44,5 +44,6 @@ module.exports = {
   EMOJIS: {
     'SOCK_PING': '👺',
     'QUESTION': '❓'
-  }
+  },
+  TAGS_LOGGERS: ['ERROR', 'COMMAND']
 }

@@ -22,6 +22,7 @@ class Eval extends Command {
       embed.addField('Result', value('js', toEval))
       embed.addField('Type', value('css', typeof resultEval))
     } catch (error) {
+      console.log(error)
       embed.addField('Error', value('js', error))
     } finally {
       message.channel.send(embed)
