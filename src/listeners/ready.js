@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js')
 module.exports = function Ready () {
   console.log(`Logged on ${this.guilds.size} guilds, ${this.users.size} users at ${require('moment')().format('LLLL')}`)
-  this.user.setActivity(`${this.users.size} users`, { type: 'WATCHING' })
+  this.user.setActivity(`@Simplicity help | ${this.users.size} users`, { type: 'WATCHING' })
   const embed = new MessageEmbed()
     .setTitle('**Bot has started**')
     .setDescription(`Logged on **${this.guilds.size} guilds**, **${this.users.size} users** at: \`${require('moment')().format('LLLL')}\``)

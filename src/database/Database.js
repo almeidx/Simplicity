@@ -13,7 +13,8 @@ class Database {
       channels: [{ id: String, userID: String, date: Date }]
     }))
     this.guilds = new Collection(this._guilds)
-    mongoose.connect(this._url, { useNewUrlParser: true }).catch(e => console.log(e))
+    mongoose.connect(this._url, { useNewUrlParser: true })
+      .catch(e => console.log(e))
   }
 }
 

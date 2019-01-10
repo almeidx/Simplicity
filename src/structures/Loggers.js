@@ -1,7 +1,7 @@
 const moment = require('moment')
 moment.locale('pt-br')
 const Colors = require('colors')
-const { Constants: { TAGS_LOGGERS } } = require('../')
+const Constants = require('../Utils/Constants')
 
 class Logger {
   static get timestamp () {
@@ -12,7 +12,7 @@ class Logger {
     context = Object.assign({ tags: [], text: '' }, context)
     colors = Object.assign({ tags: 'bgGreen', text: null }, colors)
 
-    if (typeof context.tags === 'string' && !TAGS_LOGGERS.includes(context.tags)) {
+    if (typeof context.tags === 'string' && !Constants.TAGS_LOGGERS.includes(context.tags)) {
       context.text = context.tags + ' ' + context.text
       context.tags = []
     }
@@ -22,7 +22,7 @@ class Logger {
     }
 
     let tag = context.tags.map(tag => String(tag).toUpperCase())
-      .filter(tag => TAGS_LOGGERS.includes(tag))
+      .filter(tag => Constants.TAGS_LOGGERS.includes(tag))
       .map(tag => Colors.white(Colors[colors.tags](tag)))
       .join(' ')
 
