@@ -15,9 +15,9 @@ class Clear extends Command {
   async run (message, [amount]) {
     let total = parseInt(amount, 10)
     if (!total || total <= 2 || total >= 100) {
-      return message.reply('Por favor, indique entre 2 a 100 mensagens!')
+      return message.reply('Please, give a value between 2 and 100!')
     };
-    const res = await message.channel.fetchMessages({ limit: total })
+    const res = await message.channel.messages.fetch({ limit: total })
     message.channel.bulkDelete(res)
       .catch(() => {
         return message.reply('An error has ocurred while trying to delete the messages.')
