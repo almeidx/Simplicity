@@ -7,7 +7,7 @@ module.exports = class Bot extends Client {
   constructor (options) {
     super(options)
     this.commands = new Collection()
-    this.Database = new Database(this)
+    this.database = new Database(this)
     this.initCommands(Path.join(__dirname, '../commands'))
     this.initListeners(Path.join(__dirname, '../listeners'))
   }

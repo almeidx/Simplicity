@@ -22,7 +22,7 @@ class Prefix extends Command {
         .setFooter(`Executed by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
       return message.channel.send(embed)
     }
-    this.client.Database.guilds.edit(message.guild.id, { prefix: pfx })
+    this.client.database.guilds.edit(message.guild.id, { prefix: pfx })
       .catch(() => {
         let embed = new MessageEmbed()
           .setTitle('Oops!')

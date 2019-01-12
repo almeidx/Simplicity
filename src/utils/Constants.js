@@ -38,11 +38,8 @@ module.exports = {
     'sunos': 'Solaris',
     'freebsd': 'FreeBSD'
   },
-  EMOJIS_CUSTOM: {
-    'SOCK_PING': '532228766651383813'
-  },
+  EMOJIS_CUSTOM: {},
   EMOJIS: {
-    'SOCK_PING': '👺',
     'QUESTION': '❓'
   },
   TAGS_LOGGERS: ['ERROR', 'COMMAND', 'PARAMETER']

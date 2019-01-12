@@ -16,7 +16,7 @@ class Command {
   run () {}
 
   _run (message, args) {
-    if (this.category === 'Developer' && !process.env.DEVS.includes(message.author.id)) {
+    if (!process.env.DEVS.includes(message.author.id)) {
       return message.channel.send('You must be a developer in order to execute this command!')
     }
     if (this.argsRequired && args.length === 0) {

@@ -3,6 +3,15 @@ class Collection {
     this.Data = data
   }
 
+  has (id) {
+    return new Promise((resolve, reject) => {
+      this.Data.findById(id, (error, data) => {
+        if (error) reject(error)
+        resolve(!!data)
+      })
+    })
+  }
+
   get (id) {
     return new Promise((resolve, reject) => {
       this.Data.findById(id, (error, data) => {

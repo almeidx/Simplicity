@@ -1,35 +1,30 @@
-const { Emojis } = require('../')
-async function checkPrefix (message) {
-  let prefixes = [process.env.PREFIX, `${message.client.user} `]
-  let prefix
-  let guildData = await message.client.Database.guilds.get(message.guild.id)
-  if (guildData) {
-    prefix = guildData.prefix
-  }
-  if (prefix) {
-    if (message.content.startsWith(prefix)) {
-      return prefix
-    }
-  } else return prefixes.find(prefix => message.content.startsWith(prefix))
-}
+const { CommandContext } = require('../')
 
 module.exports = async function onMessage (message) {
-  if (message.author.bot ||
-    message.type === 'dm' ||
-    !message.guild.me.permissions.has('SEND_MESSAGES')) return
-  if (message.mentions.has(this.user.id) && message.guild.me.permissions.has('ADD_REACTIONS')) {
-    message.react(Emojis.get(message, 'SOCK_PING', false))
+  if (message.author.bot || message.type === 'dm' || !message.guild.me.permissions.has('SEND_MESSAGES')) return
+
+  if (message.mentions.has(this.user.id) && message.guild.me.permissions.has(['USE_EXTERNAL_EMOJIS', 'ADD_REACTIONS']) && this.emojis.has(process.env.EMOJI_PINGSHOCK_ID)) {
+    message.react(process.env.EMOJI_PINGSHOCK_ID)
   }
-  let prefix = await checkPrefix(message)
-  if (!prefix) return
-  const args = message.content.slice(prefix.length).trim().split(/ +/g)
-  const commandName = args.shift().toLowerCase()
-  const command = this.commands.find((c, i) => i === commandName || (Array.isArray(c.aliases) && c.aliases.includes(commandName)))
-  if (command) {
-    if (typeof command._run === 'function') {
-      command._run(message, args)
-    } else {
-      command.run(message, this, args)
+
+  const guildData = await this.database.guilds.get(message.guild.id)
+  const prefix = (guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX
+
+  const botMention = this.user.toString()
+  const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : message.content.startsWith(prefix) ? prefix : null
+
+  if (usedPrefix) {
+    const args = message.content.slice(prefix.length).trim().split(/ +/g)
+    const commandName = args.shift().toLowerCase()
+    const command = this.commands.find(c => c.name.toLowerCase() === commandName || c.aliases.includes(commandName))
+
+    if (command) {
+      command.run(new CommandContext({
+        prefix: usedPrefix,
+        query: args.join(' '),
+        command,
+        message
+      }), args)
     }
   }
 }
