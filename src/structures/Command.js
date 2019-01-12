@@ -9,6 +9,7 @@ class Command {
     this.description = 'No description'
     this.usage = 'No example'
     this.argsRequired = false
+    this.devsOnly = false
     this.permissions = []
     this.clientPermissions = []
   }
@@ -16,7 +17,7 @@ class Command {
   run () {}
 
   _run (message, args) {
-    if (!process.env.DEVS.includes(message.author.id)) {
+    if (this.devsOnly && !process.env.DEVS.includes(message.author.id)) {
       return message.channel.send('You must be a developer in order to execute this command!')
     }
     if (this.argsRequired && args.length === 0) {
