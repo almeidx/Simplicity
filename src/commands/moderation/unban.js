@@ -6,7 +6,7 @@ class Unban extends Command {
     super(client)
     this.aliases = ['ub']
     this.description = 'This command lets you unban members from your server.'
-    this.usage = `Usage: **${process.env.PREFIX + this.name} [id] <reason>**`
+    this.usage = `Usage: **${process.env.PREFIX}unban [id] <reason>**`
     this.category = 'Moderation'
     this.argsRequired = true
     this.permissions = ['BAN_MEMBERS']
@@ -19,14 +19,13 @@ class Unban extends Command {
       .setTimestamp()
       .setFooter(`Executed by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
       .setColor('RED')
-    let regex = '^[0-9}*$'
     let reason = args.slice(1)
     let title = 'Something wen\'t wrong!'
     let msg
-    if (args[0].match(regex)) {
+    if (args[0].match('(^[0-9]*$)')) {
       try {
         this.client.users.fetch(args[0]).then(u => {
-          message.guild.unban(args[0], { reason: (reason ? message.author.tag + ' | ' + reason : message.author.tag + ' | No reason provided.') })
+          message.guild.members.unban(args[0], { reason: (reason ? message.author.tag + ' | ' + reason : message.author.tag + ' | No reason provided.') })
           title = 'Member Unbanned'
           msg = `${u.user.tag} has been unbanned from the server!`
           embed.addField('Unbanned by:', message.author, true)
