@@ -45,5 +45,5 @@ module.exports = {
     'SOCK_PING': '👺',
     'QUESTION': '❓'
   },
-  TAGS_LOGGERS: ['ERROR', 'COMMAND']
+  TAGS_LOGGERS: ['ERROR', 'COMMAND', 'PARAMETER']
 }
