@@ -10,7 +10,8 @@ class Database {
       _id: { type: String, required: true },
       lang: { type: String },
       prefix: { type: String },
-      channels: [{ id: String, userID: String, date: Date }]
+      channels: [{ id: String, userID: String, date: Date }],
+      logs: { channelID: String, logs: [String] }
     }))
     this.guilds = new Collection(this._guilds)
     mongoose.connect(this._url, { useNewUrlParser: true })
