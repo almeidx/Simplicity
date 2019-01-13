@@ -17,9 +17,7 @@ class Command {
   run () {}
 
   _run (message, args) {
-    if ((this.devsOnly ||
-    ['developer', 'dev', 'devs'].includes(this.category.toLowerCase())) &&
-    !process.env.DEVS.includes(message.author.id)) {
+    if ((this.devsOnly || ['developer', 'dev', 'devs'].includes(this.category.toLowerCase())) && !process.env.DEVS.includes(message.author.id)) {
       return message.channel.send('You must be a developer in order to execute this command!')
     }
     if (this.argsRequired && args.length === 0) {
@@ -29,7 +27,10 @@ class Command {
         .setColor('RED')
         .setTitle('Missing Parameters!')
         .setDescription(this.usage)
-      return message.channel.send(embed)
+      message.channel.send(embed)
+        .then(m => m.delete(10000))
+      message.delete(10000)
+      return
     }
     let ClientPermissions = this.clientPermissions.filter(p => !message.guild.me.permissions.has(p))
     if (ClientPermissions.length !== 0) {
@@ -40,7 +41,10 @@ class Command {
         .setColor('RED')
         .setFooter(`Executed by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
         .setTimestamp()
-      return message.channel.send(embed)
+      message.channel.send(embed)
+        .then(m => m.delete(10000))
+      message.delete(10000)
+      return
     }
     let UserPermissions = this.permissions.filter(p => !message.member.permissions.has(p))
     if (UserPermissions.length !== 0) {
@@ -51,7 +55,10 @@ class Command {
         .setColor('RED')
         .setFooter(`Executed by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
         .setTimestamp()
-      return message.channel.send(embed)
+      message.channel.send(embed)
+        .then(m => m.delete(10000))
+      message.delete(10000)
+      return
     }
     this.run(message, args)
   }

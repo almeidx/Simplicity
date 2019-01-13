@@ -25,7 +25,7 @@ class Ban extends Command {
       .setTitle('Denied!')
 
     if (!member) {
-      msg = `Usage: **${process.env.PREFIX}ban [@mention/id] <reason>**`
+      msg = this.usage
       title = 'You didn\'t mention / used a valid ID!'
     } else if (message.member.roles.highest.position <= member.roles.highest.position) {
       msg = 'You can\'t ban this user because they have the same or higher role as you.'
