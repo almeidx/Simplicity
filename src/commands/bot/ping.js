@@ -9,7 +9,6 @@ class Ping extends Command {
     this.category = 'Bot'
     this.argsRequired = false
   }
-
   run (message) {
     message.channel.send('Ping...')
       .then(msg => {

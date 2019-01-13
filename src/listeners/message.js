@@ -9,7 +9,6 @@ module.exports = async function onMessage (message) {
 
   const guildData = await this.database.guilds.get(message.guild.id)
   const prefix = (guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX
-
   const botMention = this.user.toString()
   const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : message.content.startsWith(prefix) ? prefix : null
 

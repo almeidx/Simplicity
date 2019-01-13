@@ -12,7 +12,6 @@ class Unban extends Command {
     this.permissions = ['BAN_MEMBERS']
     this.clientPermissions = ['BAN_MEMBERS']
   }
-
   run (message, args) {
     const embed = new MessageEmbed()
       .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 2048 }))

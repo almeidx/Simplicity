@@ -1,4 +1,5 @@
 const { Constants } = require('../')
+
 class CommandContext {
   constructor (options) {
     Object.setPrototypeOf(this, options.message)
@@ -9,7 +10,6 @@ class CommandContext {
     this.language = options.language
     this.query = options.query
   }
-
   emoji (name = 'QUESTION', id = false) {
     name = name.toUpperCase()
     let result

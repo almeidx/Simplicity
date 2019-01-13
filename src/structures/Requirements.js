@@ -5,7 +5,6 @@ class Requirements {
     this.clientPermissions = []
     this.memberPermissions = []
     this.responses = {}
-    
   }
 }
 

@@ -11,7 +11,6 @@ class Clear extends Command {
     this.permissions = ['MANAGE_MESSAGES']
     this.clientPermissions = ['MANAGE_MESSAGES']
   }
-
   async run (message, [amount]) {
     let total = parseInt(amount, 10)
     if (!total || total <= 2 || total >= 100) {

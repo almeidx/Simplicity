@@ -10,7 +10,6 @@ class Prefix extends Command {
     this.argsRequired = true
     this.permissions = ['MANAGE_GUILD']
   }
-
   run (message, args) {
     let pfx = args.join('')
     if (pfx.length >= 10) {

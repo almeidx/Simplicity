@@ -10,7 +10,6 @@ class Help extends Command {
     this.category = 'Bot'
     this.argsRequired = false
   }
-
   run (message, args) {
     let embed = new MessageEmbed()
       .setTimestamp()

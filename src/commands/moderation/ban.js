@@ -12,7 +12,6 @@ class Ban extends Command {
     this.permissions = ['BAN_MEMBERS']
     this.clientPermissions = ['BAN_MEMBERS']
   }
-
   run (message, args) {
     let reason = args.slice(1).join(' ')
     let member = this.getUser(message, args)

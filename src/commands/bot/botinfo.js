@@ -13,7 +13,6 @@ class BotInfo extends Command {
     this.category = 'Bot'
     this.argsRequired = false
   }
-
   run (message) {
     let uptime = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
     let cpu = (process.cpuUsage().user / 1024 / 1024).toFixed(2) // CPU Usage

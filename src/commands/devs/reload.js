@@ -9,7 +9,6 @@ class Reload extends Command {
     this.category = 'Developer'
     this.argsRequired = true
   }
-
   run (message, args) {
     try {
       delete require.cache[require.resolve(`./${args}.js`)]

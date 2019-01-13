@@ -8,7 +8,6 @@ class Restart extends Command {
     this.category = 'Developer'
     this.argsRequired = false
   }
-
   run (message) {
     resetBot(message.channel)
     async function resetBot (channel) {

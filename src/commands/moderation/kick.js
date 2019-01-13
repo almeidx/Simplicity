@@ -11,7 +11,6 @@ class Kick extends Command {
     this.permissions = ['KICK_MEMBERS']
     this.clientPermissions = ['KICK_MEMBERS']
   }
-
   run (message, args) {
     let reason = args.slice(1).join(' ')
     let member = this.getUser(message, args)

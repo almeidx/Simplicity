@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const { PERMISSIONS } = require('../utils/Constants')
+
 class Command {
   constructor (client) {
     this.client = client
@@ -13,9 +14,7 @@ class Command {
     this.permissions = []
     this.clientPermissions = []
   }
-
   run () {}
-
   _run (message, args) {
     if ((this.devsOnly || ['developer', 'dev', 'devs'].includes(this.category.toLowerCase())) && !process.env.DEVS.includes(message.author.id)) {
       return message.channel.send('You must be a developer in order to execute this command!')

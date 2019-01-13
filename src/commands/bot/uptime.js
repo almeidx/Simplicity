@@ -11,7 +11,6 @@ class Uptime extends Command {
     this.category = 'Bot'
     this.argsRequired = false
   }
-
   run (message) {
     let duration = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
     message.channel.send(`I have been online for: **${duration}**`)
