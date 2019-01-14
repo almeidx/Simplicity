@@ -20,6 +20,7 @@ module.exports = async function onMessage (message) {
     if (command) {
       command._run(new CommandContext({
         prefix: usedPrefix,
+        language: guildData.lang || process.env.DEFAULT_LANG,
         query: args.join(' '),
         command,
         message,

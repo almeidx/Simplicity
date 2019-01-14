@@ -11,6 +11,8 @@ class CommandContext {
     this.language = options.language
     this.query = options.query
     this.args = options.args
+
+    this.t = options.client.i18next.getFixedT(options.language)
   }
   emoji (name = 'QUESTION', id = false) {
     name = name.toUpperCase()

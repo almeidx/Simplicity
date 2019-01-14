@@ -6,9 +6,10 @@ class Requirements {
     this.clientPermissions = []
     this.permissions = []
     this.responses = {
-      ownerOnly: 'erros:developerOnly',
-      clientPermissions: 'erros:clientMissingPermission',
-      argsRequired: 'args'
+      ownerOnly: 'errors:developerOnly',
+      clientPermissions: 'errors:clientMissingPermission',
+      userMissingPermission: 'errors:userMissingPermission',
+      argsRequired: 'errors:missingParameters'
     }
 
     for (const req in requirements) {
@@ -35,12 +36,12 @@ class Requirements {
 
     const clientPerms = this.clientPermissions.filter((p) => !channel.permissionsFor(guild.me).has(p))
     if (clientPerms.length !== 0) {
-      return new CommandError(this.responses.clientPermissions, { perm: clientPerms[0] })
+      return new CommandError(this.responses.clientPermissions, { permission: clientPerms[0] })
     }
 
     const memberPerms = this.permissions.filter((p) => !channel.permissionsFor(author.id).has(p))
     if (memberPerms.length !== 0) {
-      return new CommandError(this.responses.permissions, { perm: memberPerms[0] })
+      return new CommandError(this.responses.permissions, { permission: memberPerms[0] })
     }
 
     if (this.argsRequired && args.length === 0) {
