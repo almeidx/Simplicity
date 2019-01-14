@@ -15,7 +15,7 @@ class Command {
   _run (context) {
     const requirements = this._requirements.handle(context)
     if (requirements instanceof CommandError) {
-      return context.channel.send('faltou algo')
+      return context.channel.send('Something is missing')
     }
     this.run(context)
   }
