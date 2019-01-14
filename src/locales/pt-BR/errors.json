@@ -1,0 +1,9 @@
+{
+    "general": "Ocurreu um erro.",
+    "developerOnly": "Você tem de ser um desenvolvedor do bot para poder usar esse comando!",
+    "missingParameters": "Parametros inválidos!",
+    "clientMissingPermission": "Eu necessito da permissão de {permission} para puder executar esse comando!",
+    "clientMissingPermissions": "Eu necessito das permissões de {permissions} para puder executar esse comando!",
+    "userMissingPermission": "Você necessita a permissão de {permission} para puder executar esse comando!",
+    "userMissingPermissions": "Você necessita as permissões de {permissions} para puder executar esse comando!"
+}
