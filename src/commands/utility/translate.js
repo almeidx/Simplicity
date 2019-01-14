@@ -9,7 +9,6 @@ class Translate extends Command {
     this.category = 'utility'
     this.requirements = { argsRequired: true }
   }
-
   run (message, args) {
     let text = args.join(' ')
     translate({

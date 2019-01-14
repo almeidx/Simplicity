@@ -10,7 +10,6 @@ class Command {
     this.requirements = null
     this._requirements = new Requirements(this.requirements)
   }
-
   run () {}
 
   _run (context) {

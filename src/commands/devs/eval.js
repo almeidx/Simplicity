@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js')
 const { inspect } = require('util')
 const { Command } = require('../../')
+
 class Eval extends Command {
   constructor (client) {
     super(client)

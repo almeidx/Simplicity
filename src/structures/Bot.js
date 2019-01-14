@@ -11,7 +11,6 @@ module.exports = class Bot extends Client {
     this.initCommands(Path.join(__dirname, '../commands'))
     this.initListeners(Path.join(__dirname, '../listeners'))
   }
-
   initCommands (path) {
     readdirSync(path).forEach((file) => {
       let filePath = path + '/' + file
@@ -34,7 +33,6 @@ module.exports = class Bot extends Client {
       }
     })
   }
-
   initListeners (path) {
     readdirSync(path).forEach((file) => {
       let name = file.replace(/.js/, '')

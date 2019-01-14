@@ -1,12 +1,12 @@
 const { Loggers } = require('../')
 const CommandError = require('./CommandError')
+
 class Parameters {
   constructor (command) {
     this.command = command
     this.client = this.command.client
     this.parameters = this.command.parameters || []
   }
-
   handle (message, args) {
     let context = message
     for (let param in this.parameters) {

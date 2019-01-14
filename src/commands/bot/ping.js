@@ -6,12 +6,8 @@ class Ping extends Command {
     this.aliases = ['pong']
     this.category = 'bot'
   }
-
   run ({ message }) {
     message.channel.send('Ping...')
-      .then(msg => {
-        msg.edit(`**Latency:** ${msg.createdTimestamp - message.createdTimestamp} ms\n**API Latency:** ${Math.floor(this.client.ws.ping)} ms`)
-      })
   }
 }
 

@@ -12,7 +12,6 @@ class CommandContext {
     this.query = options.query
     this.args = options.args
   }
-
   emoji (name = 'QUESTION', id = false) {
     name = name.toUpperCase()
     let result
