@@ -11,20 +11,21 @@ module.exports = async function onMessage (message) {
   const prefix = (guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX
 
   const botMention = this.user.toString()
-  const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : message.content.startsWith(prefix) ? prefix : null
+  const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.startsWith(prefix) ? prefix : null)
 
   if (usedPrefix) {
-    const args = message.content.slice(prefix.length).trim().split(/ +/g)
+    const args = message.content.slice(usedPrefix.length).trim().split(/ +/g)
     const commandName = args.shift().toLowerCase()
     const command = this.commands.find(c => c.name.toLowerCase() === commandName || c.aliases.includes(commandName))
 
     if (command) {
-      command.run(new CommandContext({
+      command._run(new CommandContext({
         prefix: usedPrefix,
         query: args.join(' '),
         command,
-        message
-      }), args)
+        message,
+        args
+      }))
     }
   }
 }

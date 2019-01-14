@@ -4,14 +4,11 @@ const { Command } = require('../..')
 class Prefix extends Command {
   constructor (client) {
     super(client)
-    this.description = 'This command sets my prefix on the server the command was used!.'
-    this.usage = `Usage: **${process.env.PREFIX}prefix [prefix]**`
     this.category = 'Bot'
-    this.argsRequired = true
-    this.permissions = ['MANAGE_GUILD']
+    this.requirements = { argsRequired: true, permissions: ['MANAGE_ROLES'] }
   }
 
-  run (message, args) {
+  run ({ message, args }) {
     let pfx = args.join('')
     if (pfx.length >= 10) {
       let embed = new MessageEmbed()

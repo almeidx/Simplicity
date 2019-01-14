@@ -5,15 +5,11 @@ class Ban extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['bean']
-    this.description = 'This command lets you ban members of your server.'
-    this.usage = `Usage: **${process.env.PREFIX}ban [mention/id] <reason>**`
-    this.category = 'Moderation'
-    this.argsRequired = true
-    this.permissions = ['BAN_MEMBERS']
-    this.clientPermissions = ['BAN_MEMBERS']
+    this.category = 'mod'
+    this.requirements = { argsRequired: true, permissions: ['BAN_MEMBERS'], clientPermissions: ['BAN_MEMBERS'] }
   }
 
-  run (message, args) {
+  run ({ message, args }) {
     let reason = args.slice(1).join(' ')
     let member = this.getUser(message, args)
     let msg, title

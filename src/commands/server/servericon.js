@@ -5,10 +5,7 @@ class ServerIcon extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['svicon']
-    this.description = 'This command shows the server icon.'
-    this.usage = `Usage: **${process.env.PREFIX}servericon**`
-    this.category = 'Server'
-    this.argsRequired = false
+    this.category = 'server'
   }
   run (message) {
     let embed = new MessageEmbed()

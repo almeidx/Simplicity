@@ -5,12 +5,10 @@ class Eval extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['compile']
-    this.description = 'This command lets my developers evaluate JavaScript code.'
-    this.usage = `Usage: **${process.env.PREFIX}eval [code]**`
-    this.category = 'Developer'
-    this.argsRequired = true
+    this.category = 'dev'
+    this.requirements = { ownerOnly: true, argsRequired: true }
   }
-  run (message, args) {
+  run ({ message, args }) {
     let code = args.join(' ').replace(/^```(js|javascript ?\n)?|```$/g, '')
     let value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length))
     let embed = new MessageEmbed()

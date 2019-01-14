@@ -6,13 +6,10 @@ class ServerInfo extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['si', 'server']
-    this.description = 'This command shows the server icon.'
-    this.usage = `Usage: **${process.env.PREFIX}servericon**`
-    this.category = 'Server'
-    this.argsRequired = false
+    this.category = 'server'
   }
 
-  run (message) {
+  run ({ message }) {
     let online = message.guild.members.filter(user => user.presence.status === 'online').size
     let idle = message.guild.members.filter(user => user.presence.status === 'idle').size
     let dnd = message.guild.members.filter(user => user.presence.status === 'dnd').size

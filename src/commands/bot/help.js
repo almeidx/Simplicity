@@ -5,13 +5,10 @@ class Help extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['h', 'commands']
-    this.description = 'This command shows my other commands.'
-    this.usage = `Usage: **${process.env.PREFIX}help <module>**`
-    this.category = 'Bot'
-    this.argsRequired = false
+    this.category = 'bot'
   }
 
-  run (message, args) {
+  run ({ message, args }) {
     let embed = new MessageEmbed()
       .setTimestamp()
       .setFooter(`Executed by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))

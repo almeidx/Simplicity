@@ -4,15 +4,12 @@ class Clear extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['purge', 'prune', 'clean']
-    this.description = 'This command clears messages from the chat.'
-    this.usage = `Usage: **${process.env.PREFIX}clear [amount]**`
-    this.category = 'Moderation'
-    this.argsRequired = true
-    this.permissions = ['MANAGE_MESSAGES']
-    this.clientPermissions = ['MANAGE_MESSAGES']
+    this.category = 'mod'
+    this.requirements = { argsRequired: true, permissions: ['MANAGE_MESSAGES'], clientPermissions: ['MANAGE_MESSAGES'] }
   }
 
-  async run (message, [amount]) {
+  async run ({ message, args }) {
+    let amount = [args]
     let total = parseInt(amount)
     if (!total || total <= 2 || total >= 100) {
       return message.reply('Please, give a value between 2 and 100!')

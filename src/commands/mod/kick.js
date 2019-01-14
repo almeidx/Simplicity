@@ -4,15 +4,11 @@ const { Command } = require('../../')
 class Kick extends Command {
   constructor (client) {
     super(client)
-    this.description = 'This command lets you kick members of your server.'
-    this.usage = `Usage: **${process.env.PREFIX + this.name} [mention/id] <reason>**`
-    this.category = 'Moderation'
-    this.argsRequired = true
-    this.permissions = ['KICK_MEMBERS']
-    this.clientPermissions = ['KICK_MEMBERS']
+    this.category = 'mod'
+    this.requirements = { argsRequired: true, permissions: ['KICK_MEMBERS'], clientPermissions: ['KICK_MEMBERS'] }
   }
 
-  run (message, args) {
+  run ({ message, args }) {
     let reason = args.slice(1).join(' ')
     let member = this.getUser(message, args)
     let msg, title

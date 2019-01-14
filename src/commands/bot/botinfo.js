@@ -8,13 +8,11 @@ class BotInfo extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['bi']
-    this.description = 'This command shows you info about myself.'
-    this.usage = `Usage: **${process.env.PREFIX}botinfo**`
     this.category = 'Bot'
-    this.argsRequired = false
+    this.requirements = { argsRequired: true }
   }
 
-  run (message) {
+  run ({ message }) {
     let uptime = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
     let cpu = (process.cpuUsage().user / 1024 / 1024).toFixed(2) // CPU Usage
     let ram = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) // RAM Usage

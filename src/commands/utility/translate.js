@@ -6,10 +6,8 @@ class Translate extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['googletranslate', 'google-translate']
-    this.description = 'This command translates something to English.'
-    this.usage = `Usage: **${process.env.PREFIX}translate [text]**`
-    this.category = 'Utility'
-    this.argsRequired = true
+    this.category = 'utility'
+    this.requirements = { argsRequired: true }
   }
 
   run (message, args) {

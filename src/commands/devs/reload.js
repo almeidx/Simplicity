@@ -4,13 +4,11 @@ class Reload extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['load']
-    this.description = 'This command reloads another command.'
-    this.usage = `Usage: **${process.env.PREFIX}reload [command]**`
-    this.category = 'Developer'
-    this.argsRequired = true
+    this.category = 'dev'
+    this.requirements = { argsRequired: true }
   }
 
-  run (message, args) {
+  run ({ message, args }) {
     try {
       delete require.cache[require.resolve(`./${args}.js`)]
     } catch (e) {
