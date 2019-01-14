@@ -1,6 +1,6 @@
 class CommandError extends Error {
   constructor (messageError, options) {
-    super()
+    super(messageError)
     this.messageError = messageError
     this.options = options
   }

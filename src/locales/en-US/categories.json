@@ -1,8 +1,25 @@
 {
-  "bot": "Bot",
-  "configuration": "Configuration",
-  "developers": "Developers",
-  "general": "General",
-  "moderation": "Moderation",
-  "utility": "Utility"
+  "bot": {
+    "name": "Bot",
+    "description": ""
+  },
+  "config": {
+    "name": "Configuration",
+    "description": ""
+  },
+  "dev": {
+    "name": "Developers",
+    "description": ""
+  },
+  "general": {
+    "name": "General",
+    "description": ""
+  },
+  "mod": { 
+    "name": "Moderation",
+    "description": ""
+  },
+  "util": {
+    "name": "Utility",
+    "description": ""
 }

@@ -4,8 +4,12 @@ class Requirements {
     this.argsRequired = false
     this.ownerOnly = false
     this.clientPermissions = []
-    this.memberPermissions = []
-    this.responses = {}
+    this.permissions = []
+    this.responses = {
+      ownerOnly: 'erros:developerOnly',
+      clientPermissions: 'erros:clientMissingPermission',
+      argsRequired: 'args'
+    }
 
     for (const req in requirements) {
       let opts = requirements[req]
@@ -24,7 +28,7 @@ class Requirements {
     if (this.ownerOnly) {
       const guildClient = client.guilds.get(process.env.SERVER_ID)
       const devRole = guildClient && guildClient.roles.get(process.env.ROLE_DEVS_ID)
-      if ((devRole && !devRole.members.has(author.id)) || (process.env.ROLE_DEVS_ID && !process.env.ROLE_DEVS_ID.split(',').includes(author.id))) {
+      if ((devRole && !devRole.members.has(author.id)) || (process.env.DEVS_ID && !process.env.DEV_IDS.split(',').includes(author.id))) {
         return new CommandError(this.responses.ownerOnly)
       }
     }

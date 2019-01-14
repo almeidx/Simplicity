@@ -8,14 +8,13 @@ class Command {
     this.category = 'none'
     this.aliases = []
     this.requirements = null
-    this._requirements = new Requirements(this.requirements)
   }
   run () {}
 
   _run (context) {
-    const requirements = this._requirements.handle(context)
+    const requirements = new Requirements(this.requirements).handle(context)
     if (requirements instanceof CommandError) {
-      return context.channel.send('Something is missing')
+      return context.channel.send(requirements.message, 'Something is missing')
     }
     this.run(context)
   }
