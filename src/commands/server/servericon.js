@@ -7,7 +7,7 @@ class ServerIcon extends Command {
     this.aliases = ['svicon']
     this.category = 'server'
   }
-  run (message) {
+  run ({ message }) {
     let embed = new MessageEmbed()
       .setDescription(`Click [here](${message.guild.iconURL({ size: 2048 })}) to download the icon!`)
       .setImage(message.guild.iconURL({ size: 2048 }))

@@ -42,5 +42,9 @@ module.exports = {
   EMOJIS: {
     'QUESTION': '❓'
   },
-  TAGS_LOGGERS: ['ERROR', 'COMMAND', 'PARAMETER']
+  TAGS_LOGGERS: [
+    'ERROR',
+    'COMMAND',
+    'PARAMETER'
+  ]
 }

@@ -17,7 +17,7 @@ module.exports = async function messageUpdate (oldMessage, newMessage) {
               (oldMessage.pinned === false || newMessage.pinned === true)) { // Message Pins
       let embed = new MessageEmbed()
         .setAuthor(oldMessage.author.tag, oldMessage.author.displayAvatarURL({ size: 2048 }))
-        .addField('Content', oldMessage.content)
+        .addField('Content', newMessage.content || 'None')
         .setColor(process.env.COLOR)
         .setTimestamp()
         .setFooter(`ID: ${oldMessage.author.id}`, newMessage.author.displayAvatarURL({ size: 2048 }))
