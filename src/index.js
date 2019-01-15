@@ -3,7 +3,7 @@ module.exports = {
   Bot: require('./structures/Bot'),
   Command: require('./structures/Command'),
   Loggers: require('./structures/Loggers'),
-  CommandContext: require('./structures/CommandContext'),
+  CommandContext: require('./structures/command/CommandContext'),
   // Utils
   Constants: require('./utils/Constants'),
   // Database

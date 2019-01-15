@@ -1,4 +1,4 @@
-const { Loggers } = require('../')
+const { Loggers } = require('../..')
 const CommandError = require('./CommandError')
 
 class Parameters {

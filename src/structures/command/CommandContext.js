@@ -1,4 +1,4 @@
-const Constants = require('../utils/Constants')
+const Constants = require('../../utils/Constants')
 class CommandContext {
   constructor (options) {
     this.message = options.message

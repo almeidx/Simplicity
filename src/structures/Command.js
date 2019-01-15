@@ -1,5 +1,5 @@
-const Requirements = require('./Requirements')
-const CommandError = require('./CommandError')
+const Requirements = require('./command/Requirements')
+const CommandError = require('./command/CommandError')
 
 class Command {
   constructor (client) {
