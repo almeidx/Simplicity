@@ -4,21 +4,35 @@ const { Command } = require('../../')
 class Avatar extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['googletranslate', 'google-translate']
+    this.aliases = ['av']
     this.category = 'utility'
   }
   run ({ message, args }) {
     let embed = new MessageEmbed()
-    if (message.mentions.members) {
-      embed.setImage(message.mentions.members.first().displayAvatarURL({ size: 2048 }))
-    } else {
-      try {
-        this.client.users.fetch(args[0]) // nem aq
-      } catch (err) {
-        embed.setTitle('Something wen\'t wrong') // calma ainda n terminei
-      }
+      .setColor(process.env.COLOR)
+      .setFooter(message.author.tag, message.author.displayAvatarURL({ size: 2048 }))
+    if (args.length === 0) {
+      embed.setImage(message.author.displayAvatarURL({ size: 2048 }))
+        .setAuthor(message.author.tag, message.author.displayAvatarURL({ size: 2048 }))
+      return message.channel.send(embed)
     }
-    message.channel.send(embed)
+    if (message.mentions.members.first()) {
+      let mem = message.mentions.members.first()
+      embed.setImage(mem.user.displayAvatarURL({ size: 2048 }))
+        .setAuthor(mem.user.tag, mem.user.displayAvatarURL({ size: 2048 }))
+      return message.channel.send(embed)
+    } else {
+      this.client.users.fetch(args[0])
+        .then(u => {
+          embed.setImage(u.displayAvatarURL({ size: 2048 }))
+            .setAuthor(u.tag, u.displayAvatarURL({ size: 2048 }))
+          return message.channel.send(embed)
+        })
+        .catch(() => {
+          embed.setTitle('Something wen\'t wrong')
+          return message.channel.send(embed)
+        })
+    }
   }
 }
 
