@@ -4,7 +4,7 @@ module.exports = async function onMessage (message) {
   if (message.author.bot || message.type === 'dm' || !message.guild.me.permissions.has('SEND_MESSAGES')) return
   const guildData = await this.database.guilds.get(message.guild.id)
   const prefix = (guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX
-  const botMention = this.user.toString()
+  const botMention = `<@!${this.user.id}>` || `<@${this.user.id}>`
   const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.startsWith(prefix) ? prefix : null)
   if (usedPrefix) {
     const args = message.content.slice(usedPrefix.length).trim().split(/ +/g)
