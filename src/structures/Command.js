@@ -14,7 +14,7 @@ class Command {
   _run (context) {
     const requirements = new Requirements(this.requirements).handle(context)
     if (requirements instanceof CommandError) {
-      return context.channel.send(requirements.message, 'Something is missing')
+      return context.channel.send(context.t(requirements.message, requirements.options))
     }
     this.run(context)
   }

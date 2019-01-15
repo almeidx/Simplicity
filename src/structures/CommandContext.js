@@ -8,11 +8,10 @@ class CommandContext {
     this.voiceChannel = options.message.member.voiceChannel
     this.prefix = options.prefix
     this.command = options.command
-    this.language = options.language
+    this.language = Object.keys(options.message.client.i18next.store.data).includes(options.language) ? options.language : process.env.DEFAULT_LANG
     this.query = options.query
     this.args = options.args
-
-    this.t = options.client.i18next.getFixedT(options.language)
+    this.t = options.message.client.i18next.getFixedT(options.language)
   }
   emoji (name = 'QUESTION', id = false) {
     name = name.toUpperCase()

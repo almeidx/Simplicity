@@ -16,11 +16,11 @@ module.exports = async function onMessage (message) {
     const args = message.content.slice(usedPrefix.length).trim().split(/ +/g)
     const commandName = args.shift().toLowerCase()
     const command = this.commands.find(c => c.name.toLowerCase() === commandName || c.aliases.includes(commandName))
-
+    console.log(guildData)
     if (command) {
       command._run(new CommandContext({
         prefix: usedPrefix,
-        language: guildData.lang || process.env.DEFAULT_LANG,
+        language: guildData ? guildData.lang : process.env.DEFAULT_LANG,
         query: args.join(' '),
         command,
         message,
