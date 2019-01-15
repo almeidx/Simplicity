@@ -10,7 +10,6 @@ class Command {
     this.requirements = null
   }
   run () {}
-
   _run (context) {
     const requirements = new Requirements(this.requirements).handle(context)
     if (requirements instanceof CommandError) {
