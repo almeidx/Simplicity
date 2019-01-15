@@ -7,7 +7,6 @@ class Clear extends Command {
     this.category = 'mod'
     this.requirements = { argsRequired: true, permissions: ['MANAGE_MESSAGES'], clientPermissions: ['MANAGE_MESSAGES'] }
   }
-
   async run ({ message, args }) {
     let amount = [args]
     let total = parseInt(amount)

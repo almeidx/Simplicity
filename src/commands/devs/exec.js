@@ -1,4 +1,5 @@
 const { Command } = require('../../')
+const { EMOJIS_CUSTOM: { LOADING_EMOJI } } = require('../../utils/Constants')
 const exec = require('shell-exec')
 
 class Exec extends Command {
@@ -14,7 +15,7 @@ class Exec extends Command {
       const { MessageEmbed } = require('discord.js')
       let embed = new MessageEmbed()
         .setColor(process.env.COLOR)
-        .setDescription(`Loading... ${this.client.emojis.get(process.env.LOADING_EMOJI_ID)}`)
+        .setDescription(`Loading... ${this.client.emojis.get(LOADING_EMOJI)}`)
       message.channel.send(embed).then(e => {
         exec(execc)
           .then(c => e.edit(embed.setDescription(JSON.stringify(c.stdout).replace(/\\n/g, '\n').slice(1, -1))))
