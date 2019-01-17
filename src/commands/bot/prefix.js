@@ -10,7 +10,7 @@ class Prefix extends Command {
 
   async run ({ guild, query, send, t }) {
     const embed = new MessageEmbed()
-    if (query.length >= 10) {
+    if (query.length > 10) {
       embed.setTitle('errors:denied')
       embed.setDescription('commands:help.multiCharacters')
       return send(embed)

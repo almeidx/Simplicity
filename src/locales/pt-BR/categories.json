@@ -22,5 +22,9 @@
   "util": {
     "name": "Utilidade",
     "description": ""
+  },
+  "server": {
+    "name": "Servidor",
+    "descriptions:": ""
   }
 }
