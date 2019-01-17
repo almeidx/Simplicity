@@ -1,6 +1,7 @@
+const { Command } = require('../..')
+const { MessageEmbed } = require('discord.js')
 const moment = require('moment')
 require('moment-duration-format')
-const { Command } = require('../..')
 
 class Uptime extends Command {
   constructor (client) {
@@ -9,9 +10,11 @@ class Uptime extends Command {
     this.category = 'bot'
   }
 
-  run ({ message }) {
-    let duration = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
-    message.channel.send(`I have been online for: **${duration}**`)
+  run ({ send, t }) {
+    const duration = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
+    const embed = new MessageEmbed()
+      .setTitle(`${t('commands:uptime.onlineFor')} **${duration}**`)
+    send(embed)
   }
 }
 

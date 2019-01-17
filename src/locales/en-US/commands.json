@@ -9,12 +9,12 @@
         "os": "Operational System"
     },
     "help": {
-        "about": "",
+        "about": "Simplicity is a bot with focous on moderation, utility, server management, and much more!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo see my commands, type **{{- prefix }}help <module>**",
         "categories": "Categories",
         "aliases": "Aliases",
         "usage": "Usage",
         "commandHelp": "ta troll fdp?",
-        "commandUndefined": "this command does not exist or is disabled"
+        "commandUndefined": "This command does not exist or is disabled"
     },
     "prefix": {
         "multiCharacters": "My new prefix can\\'t have more than 10 characters!",
@@ -22,5 +22,16 @@
         "sucess": "My prefix on this server has been changed to: `{{- prefix }}`",
         "oops": "Oops!",
         "failed": "Sadly, something wen't wrong while trying to update the servers prefix!\nPlease, try again later."
+    },
+    "translate": {
+        "original": "Original",
+        "translated": "Translated",
+        "googleTranslate": "Google Translate"
+    },
+    "servericon": {
+        "description": "Click [here](`{{- icon }}`) to download the icon!"
+    },
+    "uptime": {
+        "onlineFor": "I have been online for:"
     }
 }

@@ -7,7 +7,7 @@ class Avatar extends Command {
     this.aliases = ['av']
     this.category = 'util'
   }
-  run ({ message, args }) {
+  run ({ message, args, t }) {
     let embed = new MessageEmbed()
       .setColor(process.env.COLOR)
       .setFooter(message.author.tag, message.author.displayAvatarURL({ size: 2048 }))
@@ -29,7 +29,7 @@ class Avatar extends Command {
           return message.channel.send(embed)
         })
         .catch(() => {
-          embed.setTitle('Something wen\'t wrong')
+          embed.setTitle(t('errors:general'))
           return message.channel.send(embed)
         })
     }

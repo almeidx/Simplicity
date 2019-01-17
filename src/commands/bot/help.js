@@ -12,7 +12,7 @@ class Help extends Command {
     const categories = this.client.categories
     const embed = new MessageEmbed()
     if (args.length === 0) {
-      embed.setDescription('commands:help.about')
+      embed.setDescription('commands:help.about', { prefix: prefix })
       embed.setAuthor(this.client.user.username, this.client.user.displayAvatarURL())
       categories.filter(c => c.name !== 'help').each((cmds, i) => embed.addField(`categories:${i}.name`, `${t(`categories:${i}.description`)}\n${cmds.keyArray().map(c => `\`${c}\``).join(', ')}`))
       send(embed)

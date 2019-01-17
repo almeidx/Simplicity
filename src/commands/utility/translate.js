@@ -9,7 +9,7 @@ class Translate extends Command {
     this.category = 'util'
     this.requirements = { argsRequired: true }
   }
-  run (message, args) {
+  run ({ message, args, t }) {
     let text = args.join(' ')
     translate({
       text: text,
@@ -20,17 +20,17 @@ class Translate extends Command {
           .setColor(process.env.COLOR)
           .setTimestamp()
           .setThumbnail('attachment://translate.png')
-          .setAuthor('Google Translate', 'attachment://translate.png')
-          .addField('Original', text, true)
-          .addField('Translated', res.translation, true)
-          .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
-          .attachFiles(new MessageAttachment('assets/google-translate.png', 'translate.png'))
+          .setAuthor(t('commands:translate.googleTranslate'), 'attachment://translate.png')
+          .addField(t('commands:translate.original'), text, true)
+          .addField(t('commands:translate.translated'), res.translation, true)
+          .setFooter(`${t('utils:footer')} ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
+          .attachFiles(new MessageAttachment('src/assets/google-translate.png', 'translate.png'))
         message.channel.send(embed)
       } else {
         const embed = new MessageEmbed()
           .setColor('RED')
-          .addField('Something wen\'t wrong!', 'Try again later.')
-          .setFooter(`Resquested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
+          .setTitle(t('errors:general'), 'Try again later.')
+          .setFooter(`${t('general:footer')} ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
           .setTimestamp()
         message.channel.send(embed)
       };

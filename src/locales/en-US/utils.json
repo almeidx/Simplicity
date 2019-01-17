@@ -4,5 +4,6 @@
         "hours": "hours",
         "minutes": "minutes",
         "seconds": "seconds"
-    }
+    },
+    "footer": "Requested by:"
 }

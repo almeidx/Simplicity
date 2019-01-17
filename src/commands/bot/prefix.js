@@ -12,7 +12,8 @@ class Prefix extends Command {
     const embed = new MessageEmbed()
     if (query.length > 10) {
       embed.setTitle('errors:denied')
-      embed.setDescription('commands:help.multiCharacters')
+      embed.setDescription('commands:prefix.multiCharacters')
+      embed.setColor('RED')
       return send(embed)
     }
 
