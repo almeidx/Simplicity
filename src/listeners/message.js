@@ -6,7 +6,7 @@ module.exports = async function onMessage (message) {
   const guildData = await this.database.guilds.get(message.guild.id)
   const prefix = (guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX
 
-  const botMention = `<@!${this.user.id}>` || `<@${this.user.id}>`
+  const botMention = message.guild.me.toString()
   const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.startsWith(prefix) ? prefix : null)
 
   if (usedPrefix) {
@@ -14,7 +14,7 @@ module.exports = async function onMessage (message) {
     const commandName = args.shift().toLowerCase()
     const command = this.fetchCommand(commandName)
 
-    if (message.mentions.has(this.user.id) && message.guild.me.permissions.has(['USE_EXTERNAL_EMOJIS', 'ADD_REACTIONS'])) {
+    if (message.mentions.has(this.user.id) && message.guild.me.permissions.has(['USE_EXTERNAL_EMOJIS', 'ADD_REACTIONS']) && this.emojis.has(process.env.EMOJI_PINGSOCK_ID) && !command) {
       return message.react(process.env.EMOJI_PINGSOCK_ID)
     }
 
