@@ -1,19 +1,17 @@
-/* eslint-disable no-undef */
 const { MessageEmbed } = require('discord.js')
+const { Loggers } = require('../')
 module.exports = function Ready () {
-  console.log(`Logged on ${this.guilds.size} guilds, ${this.users.size} users at ${require('moment')().format('LLLL')}`)
+  Loggers.log(['CLIENT', 'READY'], `Logged on ${this.guilds.size} guilds and ${this.users.size} users`)
   this.user.setActivity(`@${this.user.username} help | ${this.users.size} users`, { type: 'WATCHING' })
+
   const embed = new MessageEmbed()
     .setTitle('**Bot has started**')
     .setDescription(`Logged on **${this.guilds.size} guilds**, **${this.users.size} users** at: \`${require('moment')().format('LLLL')}\``)
     .setTimestamp()
-    .setColor('014686')
-    .setFooter(this.user.username, this.user.displayAvatarURL({ size: 2048 }))
-  this.channels.get('532374004791640064').send(embed)
-  this.guilds.forEach(g => {
-    g.fetchInvites()
-      .then(inv => {
-        invites[g.id] = inv
-      })
-  })
+    .setColor('GREEN')
+    .setFooter(this.user.username, this.user.displayAvatarURL())
+
+  if (process.env.CHANNEL_LOG_START && this.channels.has(process.env.CHANNEL_LOG_START)) {
+    this.channels.get(process.env.CHANNEL_LOG_START).send(embed)
+  }
 }
