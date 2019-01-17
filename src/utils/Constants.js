@@ -38,7 +38,9 @@ module.exports = {
     'sunos': 'Solaris',
     'freebsd': 'FreeBSD'
   },
-  EMOJIS_CUSTOM: {},
+  EMOJIS_CUSTOM: {
+    'LOADING_EMOJI': '534521618177851393'
+  },
   EMOJIS: {
     'QUESTION': '❓'
   },

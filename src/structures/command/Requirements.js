@@ -11,7 +11,6 @@ class Requirements {
       userMissingPermission: 'errors:userMissingPermission',
       argsRequired: 'errors:missingParameters'
     }
-
     for (const req in requirements) {
       let opts = requirements[req]
       if (this[req] == null) throw new Error(`${req} não existe`)
@@ -24,26 +23,22 @@ class Requirements {
       }
     }
   }
-
   handle ({ author, client, channel, guild, args }) {
     if (this.ownerOnly) {
       const guildClient = client.guilds.get(process.env.SERVER_ID)
       const devRole = guildClient && guildClient.roles.get(process.env.ROLE_DEVS_ID)
-      if ((devRole && !devRole.members.has(author.id)) || (process.env.DEVS_ID && !process.env.DEV_IDS.split(',').includes(author.id))) {
+      if ((devRole && !devRole.members.has(author.id)) || (process.env.DEVS_IDS && !process.env.DEVS_IDS.split(',').includes(author.id))) {
         return new CommandError(this.responses.ownerOnly)
       }
     }
-
     const clientPerms = this.clientPermissions.filter((p) => !channel.permissionsFor(guild.me).has(p))
     if (clientPerms.length !== 0) {
       return new CommandError(this.responses.clientPermissions, { permission: clientPerms[0] })
     }
-
     const memberPerms = this.permissions.filter((p) => !channel.permissionsFor(author.id).has(p))
     if (memberPerms.length !== 0) {
       return new CommandError(this.responses.permissions, { permission: memberPerms[0] })
     }
-
     if (this.argsRequired && args.length === 0) {
       return new CommandError(this.responses.argsRequired)
     }

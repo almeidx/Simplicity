@@ -17,7 +17,7 @@ module.exports = async function messageDelete (message) {
       let embed = new MessageEmbed()
         .setAuthor(message.author.tag, message.author.displayAvatarURL({ size: 2048 }))
         .setDescription(`**Message sent by ${message.author} deleted in ${message.channel} by ${user}**`)
-        .addField('Content', message.content.length >= 1024 ? `${message.content.slice(0, 1020)} ...` : message.content)
+        .addField('Content', (message.content.slice(0, 1020) + message.content.length >= 1024 ? ' ...' : message.content) || 'An error occurred while inputting the message content.')
         .setFooter(`ID: ${message.author.id}`, message.author.displayAvatarURL({ size: 2048 }))
         .setTimestamp()
         .setColor(process.env.COLOR)

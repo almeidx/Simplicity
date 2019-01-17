@@ -9,17 +9,13 @@ const translationBackend = require('i18next-node-fs-backend')
 module.exports = class Bot extends Client {
   constructor (options) {
     super(options)
-
     this.i18next = require('i18next')
-
     this.commands = new Collection()
     this.database = new Database(this)
-
     this.initCommands(Path.join(__dirname, '../commands'))
     this.initListeners(Path.join(__dirname, '../listeners'))
     this.initLocales(Path.join(__dirname, '../locales'))
   }
-
   initCommands (path) {
     fs.readdirSync(path).forEach((file) => {
       let filePath = path + '/' + file
@@ -42,14 +38,12 @@ module.exports = class Bot extends Client {
       }
     })
   }
-
   initListeners (path) {
     fs.readdirSync(path).forEach((file) => {
       let name = file.replace(/.js/, '')
       this.on(name, require(path + '/' + file))
     })
   }
-
   async initLocales (path) {
     this.i18next.use(translationBackend).init({
       ns: [ 'categories', 'commands', 'errors', 'permissions' ],

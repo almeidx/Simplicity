@@ -8,7 +8,6 @@ class Ban extends Command {
     this.category = 'mod'
     this.requirements = { argsRequired: true, permissions: ['BAN_MEMBERS'], clientPermissions: ['BAN_MEMBERS'] }
   }
-
   run ({ message, args }) {
     let reason = args.slice(1).join(' ')
     let member = this.getUser(message, args)
@@ -39,7 +38,6 @@ class Ban extends Command {
     if (title) embed.setTitle(title)
     message.channel.send(embed)
   }
-
   getUser (message, [query = null]) {
     let member = message.mentions.members.first()
     let checkMention = new RegExp('(^<@[0-9]*>)', 'g').test(query)

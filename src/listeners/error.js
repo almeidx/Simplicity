@@ -4,7 +4,7 @@ module.exports = function Error (error) {
   } else if (error.message === 'read ECONNRESET') {
     console.log('Connection Reset! Reconnecting...')
   } else {
-    this.user.channels.get('532368809105948701').send(error)
     console.error(error)
   }
+  this.channels.get('532368809105948701').send(`There was an error: ${error.message}`)
 }

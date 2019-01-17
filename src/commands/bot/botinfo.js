@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js')
-const { readdirSync } = require('fs')
 const { Command, Constants: { PLATFORMS } } = require('../../')
 const moment = require('moment')
 require('moment-duration-format')
@@ -9,20 +8,14 @@ class BotInfo extends Command {
     super(client)
     this.aliases = ['bi']
     this.category = 'Bot'
-    this.requirements = { argsRequired: true }
   }
-
   run ({ message }) {
     let uptime = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
     let cpu = (process.cpuUsage().user / 1024 / 1024).toFixed(2) // CPU Usage
     let ram = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) // RAM Usage
     let platform = PLATFORMS[process.platform]
     let pings = message.guild.shard.pings.join(', ')
-    let array = []
-    readdirSync('./').forEach((file) => {
-      array.push(array.length + 1)
-    })
-    let commands = array.length
+    let commands = this.client.commands.size
     const embed = new MessageEmbed()
       .setColor(process.env.COLOR)
       .addField('» Ping', `${Math.floor(this.client.ws.ping)}ms`, true)

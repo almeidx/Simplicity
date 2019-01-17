@@ -1,5 +1,5 @@
-const exec = require('shell-exec')
 const { Command } = require('../../')
+const exec = require('shell-exec')
 
 class Exec extends Command {
   constructor (client) {
@@ -9,10 +9,9 @@ class Exec extends Command {
     this.requirements = { argsRequired: true, ownerOnly: true }
   }
   run ({ message, query }) {
-      exec(query)
-        .then(c => message.channel.send(JSON.stringify(c.stdout).replace(/\\n/g, '\n').slice(1, -1)))
-        .catch(console.log)
-    }
+    exec(query)
+      .then(c => message.channel.send(JSON.stringify(c.stdout).replace(/\\n/g, '\n').slice(1, -1)))
+      .catch(console.log)
   }
 }
 
