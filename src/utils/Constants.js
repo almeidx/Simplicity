@@ -11,7 +11,8 @@ module.exports = {
     'RAM': '💾',
     'BOOKS': '📚',
     'PC': '💻',
-    'WATCH': '⌚'
+    'WATCH': '⌚',
+    'ERROR': '🚫'
   },
   TAGS_LOGGERS: [
     'ERROR',
@@ -19,6 +20,9 @@ module.exports = {
     'PARAMETER',
     'CLIENT',
     'START',
-    'READY'
+    'READY',
+    'EVAL',
+    'RESULT',
+    'USAGE'
   ]
 }

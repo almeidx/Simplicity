@@ -30,7 +30,7 @@ class Logger {
   static error (tags = [], ...args) {
     return this._log({ tags, text: args.join(' ') }, { tags: 'bgRed' })
   }
-  static ward (tags = [], ...args) {
+  static warn (tags = [], ...args) {
     return this._log({ tags, text: args.join(' ') }, { tags: 'bgYellow' })
   }
 }

@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const { inspect } = require('util')
-const { Command } = require('../../')
+const { Command, Loggers } = require('../../')
 
 class Eval extends Command {
   constructor (client) {
@@ -20,8 +20,10 @@ class Eval extends Command {
       let toEval = typeof resultEval === 'string' ? resultEval : inspect(resultEval, { depth: 1 })
       embed.addField('Result', value('js', toEval))
       embed.addField('Type', value('css', typeof resultEval))
+      Loggers.warn(['COMMAND', 'EVAL', 'RESULT'], toEval)
     } catch (error) {
       embed.addField('Error', value('js', error))
+      Loggers.error(['COMMAND', 'EVAL', 'RESULT', 'ERROR'], error)
     } finally {
       send(embed)
     };

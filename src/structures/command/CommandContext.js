@@ -4,6 +4,7 @@ const { MessageEmbed } = require('discord.js')
 class CommandContext {
   constructor (options) {
     this.message = options.message
+    this.member = options.message.member
     this.author = options.message.author
     this.channel = options.message.channel
     this.client = options.message.client
@@ -41,7 +42,8 @@ class CommandContext {
 
       embed.setTimestamp()
 
-      if (!embed.color) embed.setColor(this.error ? 'RED' : (process.env.COLOR || 'GREEN'))
+      const COLOR = process.env.COLOR ? process.env.COLOR : this.guild.me.displayColor !== 0 ? this.guild.me.displayColor : this.member.displayColor !== 0 ? this.member.displayColor : 'GREEN'
+      if (!embed.color) embed.setColor(options.error ? 'RED' : COLOR)
       if (options.authorFooter || !embed.footer || embed.footer.text === '') embed.setFooter(this.author.tag, this.author.displayAvatarURL())
 
       if (this.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {

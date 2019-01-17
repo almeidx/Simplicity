@@ -1,4 +1,5 @@
-{
+{   
+    "usage": "Usage",
     "general": "An error occurred.",
     "developerOnly": "You must be a bot developer in order to execute this command!",
     "missingParameters": "Invalid Parameters!",

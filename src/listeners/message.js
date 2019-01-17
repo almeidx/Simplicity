@@ -1,4 +1,4 @@
-const { CommandContext } = require('../')
+const { CommandContext, Loggers } = require('../')
 
 module.exports = async function onMessage (message) {
   if (message.author.bot || message.type === 'dm' || !message.guild.me.permissions.has('SEND_MESSAGES')) return
@@ -27,6 +27,7 @@ module.exports = async function onMessage (message) {
         message,
         args
       }))
+      Loggers.warn(['COMMAND', 'USAGE'], `${message.guild.name} #${message.channel.name} @${message.author.tag} ${message.content}`)
     }
   }
 }
