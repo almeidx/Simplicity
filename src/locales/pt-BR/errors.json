@@ -1,6 +1,6 @@
 {
     "denied": "Negado!",
-    "usage": "Como usar",
+    "usage": "Uso",
     "general": "Ocurreu um erro.",
     "developerOnly": "Você tem de ser um desenvolvedor do bot para poder usar esse comando!",
     "missingParameters": "Parametros inválidos!",
