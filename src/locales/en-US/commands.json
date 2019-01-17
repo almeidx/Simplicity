@@ -15,5 +15,12 @@
         "usage": "Usage",
         "commandHelp": "ta troll fdp?",
         "commandUndefined": "this command does not exist or is disabled"
+    },
+    "prefix": {
+        "multiCharacters": "My new prefix can\\'t have more than 10 characters!",
+        "done": "Done!",
+        "sucess": "My prefix on this server has been changed to: `{{- prefix }}`",
+        "oops": "Oops!",
+        "failed": "Sadly, something wen't wrong while trying to update the servers prefix!\nPlease, try again later."
     }
 }

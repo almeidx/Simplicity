@@ -8,34 +8,25 @@ class Prefix extends Command {
     this.requirements = { argsRequired: true, permissions: ['MANAGE_ROLES'] }
   }
 
-  run ({ message, args }) {
-    let pfx = args.join('')
-    if (pfx.length >= 10) {
-      let embed = new MessageEmbed()
-        .setTitle('Denied!')
-        .setDescription('My new prefix can\'t have more than 10 characters!')
-        .setColor('RED')
-        .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 2048 }))
-        .setFooter(`Executed by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
-      return message.channel.send(embed)
+  async run ({ guild, query, send, t }) {
+    const embed = new MessageEmbed()
+    if (query.length >= 10) {
+      embed.setTitle('errors:denied')
+      embed.setDescription('commands:help.multiCharacters')
+      return send(embed)
     }
-    this.client.database.guilds.edit(message.guild.id, { prefix: pfx })
-      .catch(() => {
-        let embed = new MessageEmbed()
-          .setTitle('Oops!')
-          .setDescription('Sadly, something wen\'t wrong while trying to update the servers prefix!\nPlease, try again later.')
-          .setColor('RED')
-          .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 2048 }))
-          .setFooter(`Executed by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
-        return message.channel.send(embed)
-      })
-    let embed = new MessageEmbed()
-      .setTitle('Done!')
-      .setDescription(`My prefix on this server has been changed to: \`${pfx}\``)
-      .setColor(process.env.COLOR)
-      .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 2048 }))
-      .setFooter(`Executed by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
-    return message.channel.send(embed)
+
+    try {
+      const data = await this.client.database.guilds.edit(guild.id, { prefix: query })
+      embed.setTitle('commands:prefix.done')
+      embed.setDescription(t('commands:prefix.sucess', { prefix: query }))
+      send(embed)
+    } catch (err) {
+      embed.setTitle('commands:prefix.oops')
+      embed.setDescription('commands:prefix.failed')
+      send(embed)
+      console.log(err)
+    }
   }
 }
 

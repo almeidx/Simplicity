@@ -5,6 +5,7 @@ class CommandContext {
   constructor (options) {
     this.message = options.message
     this.member = options.message.member
+    this.guild = options.message.guild
     this.author = options.message.author
     this.channel = options.message.channel
     this.client = options.message.client
