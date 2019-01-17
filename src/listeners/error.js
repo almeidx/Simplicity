@@ -6,5 +6,5 @@ module.exports = function Error (error) {
   } else {
     console.error(error)
   }
-  this.user.channels.get('532368809105948701').send(`There was an error: ${error.message}`)
+  this.channels.get('532368809105948701').send(`There was an error: ${error.message}`)
 }

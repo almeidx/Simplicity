@@ -9,12 +9,9 @@ const translationBackend = require('i18next-node-fs-backend')
 module.exports = class Bot extends Client {
   constructor (options) {
     super(options)
-
     this.i18next = require('i18next')
-
     this.commands = new Collection()
     this.database = new Database(this)
-
     this.initCommands(Path.join(__dirname, '../commands'))
     this.initListeners(Path.join(__dirname, '../listeners'))
     this.initLocales(Path.join(__dirname, '../locales'))

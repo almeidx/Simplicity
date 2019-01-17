@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { MessageEmbed } = require('discord.js')
 module.exports = function Ready () {
   console.log(`Logged on ${this.guilds.size} guilds, ${this.users.size} users at ${require('moment')().format('LLLL')}`)
@@ -9,4 +10,10 @@ module.exports = function Ready () {
     .setColor('014686')
     .setFooter(this.user.username, this.user.displayAvatarURL({ size: 2048 }))
   this.channels.get('532374004791640064').send(embed)
+  this.guilds.forEach(g => {
+    g.fetchInvites()
+      .then(inv => {
+        invites[g.id] = inv
+      })
+  })
 }

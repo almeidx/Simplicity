@@ -1,8 +1,26 @@
 {
-    "bot": "Bot",
-    "configuration": "Configuração",
-    "developers": "Desenvolvedores",
-    "general": "Geral",
-    "moderation": "Moderação",
-    "utility": "Utilidade"
+  "bot": {
+    "name": "Bot",
+    "description": ""
+  },
+  "config": {
+    "name": "Configuração",
+    "description": ""
+  },
+  "dev": {
+    "name": "Desenvolvedores",
+    "description": ""
+  },
+  "general": {
+    "name": "Geral",
+    "description": ""
+  },
+  "mod": { 
+    "name": "Moderação",
+    "description": ""
+  },
+  "util": {
+    "name": "Utilidade",
+    "description": ""
   }
+}
