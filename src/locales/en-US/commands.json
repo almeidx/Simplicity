@@ -1,1 +1,11 @@
-{}
+{
+    "botinfo": {
+        "botinfo": "Bot Information",
+        "guildAndUsers": "Guilds | Users",
+        "channelAndEmojis": "Channels | Emojis",
+        "uptime": "Uptime",
+        "commands": "Commands",
+        "pings": "Last Pings",
+        "os": "Operational System"
+    }
+}

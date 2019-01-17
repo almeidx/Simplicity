@@ -46,7 +46,7 @@ module.exports = class Bot extends Client {
   }
   async initLocales (path) {
     this.i18next.use(translationBackend).init({
-      ns: [ 'categories', 'commands', 'errors', 'permissions' ],
+      ns: [ 'categories', 'commands', 'errors', 'permissions', 'utils' ],
       preload: await readdir(path),
       fallbackLng: 'en-US',
       backend: {
