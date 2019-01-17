@@ -22,5 +22,9 @@
   "util": {
     "name": "Utility",
     "description": ""
+  },
+  "server": {
+    "name": "Server",
+    "descriptions:": ""
   }
 }

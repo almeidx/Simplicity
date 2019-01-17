@@ -16,6 +16,19 @@ module.exports = class Bot extends Client {
     this.initListeners(Path.join(__dirname, '../listeners'))
     this.initLocales(Path.join(__dirname, '../locales'))
   }
+
+  fetchCommand (commandName = '') {
+    return this.commands.find(c => c.name.toLowerCase() === commandName.toLowerCase() || c.aliases.includes(commandName.toLowerCase())) || null
+  }
+
+  get categories () {
+    return this.commands.reduce((o, command) => {
+      if (!o.has(command.category)) o.set(command.category, new Collection())
+      o.get(command.category).set(command.name, command)
+      return o
+    }, new Collection())
+  }
+
   initCommands (path) {
     fs.readdirSync(path).forEach((file) => {
       let filePath = path + '/' + file
@@ -38,12 +51,14 @@ module.exports = class Bot extends Client {
       }
     })
   }
+
   initListeners (path) {
     fs.readdirSync(path).forEach((file) => {
       let name = file.replace(/.js/, '')
       this.on(name, require(path + '/' + file))
     })
   }
+
   async initLocales (path) {
     this.i18next.use(translationBackend).init({
       ns: [ 'categories', 'commands', 'errors', 'permissions', 'utils' ],

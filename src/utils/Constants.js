@@ -12,7 +12,9 @@ module.exports = {
     'BOOKS': '📚',
     'PC': '💻',
     'WATCH': '⌚',
-    'ERROR': '🚫'
+    'ERROR': '🚫',
+    'USAGE': '🖊',
+    'ALIASES': '🗝'
   },
   TAGS_LOGGERS: [
     'ERROR',

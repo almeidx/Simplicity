@@ -10,7 +10,7 @@ class Eval extends Command {
     this.requirements = { ownerOnly: true, argsRequired: true }
   }
 
-  run ({ message, query, send }) {
+  run ({ message, query, send, t }) {
     let code = query.replace(/^```(js|javascript ?\n)?|```$/g, '')
     let value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length))
     let embed = new MessageEmbed()

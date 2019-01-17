@@ -4,7 +4,7 @@ const { Command } = require('../..')
 class Prefix extends Command {
   constructor (client) {
     super(client)
-    this.category = 'Bot'
+    this.category = 'bot'
     this.requirements = { argsRequired: true, permissions: ['MANAGE_ROLES'] }
   }
 

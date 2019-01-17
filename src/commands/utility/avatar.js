@@ -5,7 +5,7 @@ class Avatar extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['av']
-    this.category = 'utility'
+    this.category = 'util'
   }
   run ({ message, args }) {
     let embed = new MessageEmbed()
