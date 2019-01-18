@@ -5,9 +5,14 @@ module.exports = async function onMessage (message) {
 
   const guildData = await this.database.guilds.get(message.guild.id)
   const prefix = (guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX
+  const language = (guildData && guildData.lang) ? guildData.lang : process.env.DEFAULT_LANG
 
   const botMention = message.guild.me.toString()
   const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.startsWith(prefix) ? prefix : null)
+
+  if (message.content === botMention) {
+    return message.channel.send(this.i18next.getFixedT(language)('utils:myprefix', { prefix: prefix }))
+  }
 
   if (usedPrefix) {
     const args = message.content.slice(usedPrefix.length).trim().split(/ +/g)
@@ -20,8 +25,8 @@ module.exports = async function onMessage (message) {
 
     if (command) {
       command._run(new CommandContext({
-        prefix: usedPrefix,
-        language: guildData ? guildData.lang : process.env.DEFAULT_LANG,
+        prefix: prefix,
+        language: language,
         query: args.join(' '),
         command,
         message,

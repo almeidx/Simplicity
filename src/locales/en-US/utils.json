@@ -13,5 +13,6 @@
         "offline": "Offline"
     },
     "bot": "Bot",
-    "bots": "Bots"
+    "bots": "Bots",
+    "myprefix": "my prefix on this server is: `{{- prefix }}`" 
 }

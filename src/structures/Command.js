@@ -15,11 +15,11 @@ class Command {
     const requirements = new Requirements(this.requirements).handle(context)
     if (requirements instanceof CommandError) {
       const embed = new MessageEmbed()
-        .setDescription(`${context.emoji('ERROR')} ${context.t(requirements.message, requirements.options)}`)
+        .setDescription(requirements.message)
       if (this.usage && context.t(`commands:${this.name}.usage`) !== `commands:${this.name}.usage`) {
         embed.addField('errors:usage', `${context.prefix + this.name} ${context.t(`commands:${this.name}.usage`)}`)
       }
-      return context.send(embed, { error: true })
+      return context.send(embed, { error: true, description: requirements.options })
     }
     this.run(context)
   }

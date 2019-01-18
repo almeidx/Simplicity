@@ -33,19 +33,21 @@ class CommandContext {
   }
 
   _send (embed, options, optionsMessage = {}) {
-    options = Object.assign({ error: false, convertText: true, authorFooter: true }, options)
+    options = Object.assign({ error: false, convertText: true, authorFooter: true, title: {}, description: {} }, options)
     if (embed instanceof MessageEmbed) {
-      if (embed.title) embed.title = this.t(embed.title)
-      if (embed.description) embed.description = this.t(embed.description)
-
+      if (embed.title && embed.title.includes(':') && !embed.description.includes(' ')) {
+        embed.title = this.t(embed.title, options.title)
+      }
+      if (embed.description && embed.description.includes(':') && !embed.description.includes(' ')) {
+        embed.description = (options.error ? this.emoji('ERROR') + ' ' : '') + this.t(embed.description, options.description)
+      }
       if (embed.fields !== 0) embed.fields = embed.fields.map((f) => ({ name: this.t(f.name), value: this.t(f.value), inline: f.inline }))
       if (embed.author) embed.author.name = this.t(embed.author.name)
-
       embed.setTimestamp()
 
       const COLOR = process.env.COLOR ? process.env.COLOR : this.guild.me.displayColor !== 0 ? this.guild.me.displayColor : this.member.displayColor !== 0 ? this.member.displayColor : 'GREEN'
       if (!embed.color) embed.setColor(options.error ? 'RED' : COLOR)
-      if (options.authorFooter || !embed.footer || embed.footer.text === '') embed.setFooter(this.author.tag, this.author.displayAvatarURL({ size: 2048 }))
+      if (options.authorFooter || !embed.footer || embed.footer.text === '') embed.setFooter(this.author.tag, this.author.displayAvatarURL())
 
       if (this.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {
         let message = []

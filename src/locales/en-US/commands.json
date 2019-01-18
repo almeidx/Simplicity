@@ -9,7 +9,7 @@
         "os": "Operational System"
     },
     "help": {
-        "about": "Simplicity is a bot with focous on moderation, utility, server management, and much more!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo see my commands, type **{{- prefix }}help <module>**",
+        "about": "{{- botname}} is a bot with focous on moderation, utility, server management, and much more!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo see my commands, type **{{- prefix }}help <module>**",
         "categories": "Categories",
         "aliases": "Aliases",
         "usage": "Usage",
