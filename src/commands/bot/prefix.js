@@ -7,7 +7,6 @@ class Prefix extends Command {
     this.category = 'bot'
     this.requirements = { argsRequired: true, permissions: ['MANAGE_ROLES'] }
   }
-
   async run ({ guild, query, send, t }) {
     const embed = new MessageEmbed()
     if (query.length > 10) {
@@ -30,5 +29,4 @@ class Prefix extends Command {
     }
   }
 }
-
 module.exports = Prefix

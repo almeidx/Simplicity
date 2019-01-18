@@ -13,5 +13,4 @@ class Ping extends Command {
       })
   }
 }
-
 module.exports = Ping

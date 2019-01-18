@@ -7,7 +7,6 @@ class Help extends Command {
     this.aliases = ['h', 'commands']
     this.category = 'bot'
   }
-
   run ({ send, args, t, prefix, emoji }) {
     const categories = this.client.categories
     const embed = new MessageEmbed()
@@ -32,5 +31,4 @@ class Help extends Command {
     }
   }
 }
-
 module.exports = Help

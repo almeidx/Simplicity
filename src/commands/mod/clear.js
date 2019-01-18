@@ -7,21 +7,20 @@ class Clear extends Command {
     this.category = 'mod'
     this.requirements = { argsRequired: true, permissions: ['MANAGE_MESSAGES'], clientPermissions: ['MANAGE_MESSAGES'] }
   }
-  async run ({ message, args }) {
+  async run ({ author, channel, send, t, args }) {
     let amount = [args]
     let total = parseInt(amount)
     if (!total || total <= 2 || total >= 100) {
-      return message.reply('Please, give a value between 2 and 100!')
+      return send(t('commands:clear.invalidValue'))
     };
-    const res = await message.channel.messages.fetch({ limit: amount })
-    await message.channel.bulkDelete(res)
+    const res = await channel.messages.fetch({ limit: amount })
+    await channel.bulkDelete(res)
       .catch(() => {
-        return message.reply('An error has ocurred while trying to delete the messages.')
+        return send(t('errors:general'))
       })
-    message.channel.send(`${res.size} messages have been deleted by ${message.author}. `)
-      .then(m => m.delete(15000))
+    send(t('commands:clear.deleted'), { amt: res.size, auth: author })
+      .then(m => m.delete(7000))
       .catch(err => console.log(err))
   }
 }
-
 module.exports = Clear

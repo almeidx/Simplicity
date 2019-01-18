@@ -9,7 +9,6 @@ class Uptime extends Command {
     this.aliases = ['ut', 'ontime']
     this.category = 'bot'
   }
-
   run ({ send, t }) {
     const duration = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
     const embed = new MessageEmbed()
@@ -17,5 +16,4 @@ class Uptime extends Command {
     send(embed)
   }
 }
-
 module.exports = Uptime

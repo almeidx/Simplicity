@@ -6,7 +6,6 @@ class Restart extends Command {
     this.category = 'dev'
     this.requirements = { ownerOnly: true }
   }
-
   run ({ message, client, channel }) {
     channel.send('Restarting...')
       .then(m => {
@@ -19,5 +18,4 @@ class Restart extends Command {
       .then(() => client.login(process.env.BOT_TOKEN))
   }
 }
-
 module.exports = Restart

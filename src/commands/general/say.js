@@ -6,9 +6,9 @@ class Say extends Command {
     this.category = 'general'
     this.requirements = { argsRequired: true, clientPermissions: ['MANAGE_MESSAGES'] }
   }
-  run ({ message, args }) {
+  run ({ send, message, args }) {
     message.delete()
-    message.channel.send(args.join(' '))
+    send(args.join(' '))
   }
 }
 module.exports = Say

@@ -29,9 +29,34 @@
         "googleTranslate": "Google Translate"
     },
     "servericon": {
-        "description": "Click [here](`{{- icon }}`) to download the icon!"
+        "description": "Click [here]({{- icon }}) to download the icon!"
     },
     "uptime": {
         "onlineFor": "I have been online for:"
+    },
+    "serverinfo": {
+        "name": "» Name",
+        "id": "» ID",
+        "owner": "» Owner",
+        "created": "» Created",
+        "members": "» Members ({{- members }})",
+        "channelsEmojisRoles": "» Channels | Emojis | Roles",
+        "verificationLevel": "» Verification Level"
+    },
+    "createemoji": {
+        "noNameLink": "You either didn't specify the link of the emoji or the name of it.",
+        "nameTooBig": "The name for the emoji you provided was too big.",
+        "nameTooShort": "The name for the emoji you provided was too short.",
+        "invalidName": "Please, note that the emoji name can only have letters, numbers or underscores.",
+        "invalidURL": "The URL you provided was not a valid url.",
+        "emojiCreated": "The emoji has been created!",
+        "error": "There was an error when creating the emoji."
+    },
+    "invite": {
+        "invitedMembers": "Invited members:"
+    },
+    "clear": {
+        "invalidValue": "Please, give a value between 2 and 100!",
+        "deleted": "{{- amt }} messages have been deleted by {{- auth }}."
     }
 }

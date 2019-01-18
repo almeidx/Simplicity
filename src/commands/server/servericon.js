@@ -8,14 +8,11 @@ class ServerIcon extends Command {
     this.category = 'server'
   }
   run ({ author, guild, send, t }) {
-    const url = guild.iconURL({ size: 2048 })
-    let embed = new MessageEmbed()
-      .setDescription(t('commands:servericon:description'), { icon: url })
+    const embed = new MessageEmbed()
+      .setDescription(t('commands:servericon:description'), { icon: guild.iconURL({ size: 2048 }) })
       .setImage(guild.iconURL({ size: 2048 }))
-      .setColor(process.env.COLOR)
       .setFooter(`${t('utils:footer')} ${author.tag}`, author.displayAvatarURL({ size: 2048 }))
     send(embed)
   }
 }
-
 module.exports = ServerIcon

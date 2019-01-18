@@ -5,5 +5,13 @@
         "minutes": "minutes",
         "seconds": "seconds"
     },
-    "footer": "Requested by:"
+    "footer": "Requested by:",
+    "status": {
+        "online": "Online",
+        "idle": "Idle",
+        "dnd": "Do not Disturb",
+        "offline": "Offline"
+    },
+    "bot": "Bot",
+    "bots": "Bots"
 }

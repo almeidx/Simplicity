@@ -31,5 +31,4 @@ class BotInfo extends Command {
     send(embed)
   }
 }
-
 module.exports = BotInfo

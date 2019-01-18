@@ -6,25 +6,19 @@ class Invite extends Command {
     super(client)
     this.aliases = ['inv']
     this.category = 'server'
-    this.requirements = { argsRequired: true }
   }
-
-  async run ({ message, args }) {
-    var user = message.mentions.users.first() || message.guild.members.get([args[0]]) || message.author
-    var targetInvites = await message.guild.fetchInvites()
+  async run ({ guild, author, message, send, t, args }) {
+    const user = message.mentions.users.first() || guild.members.get([args[0]]) || author
+    var targetInvites = await guild.fetchInvites()
     var invitesUses = 0
     targetInvites.forEach(invite => {
       if (invite.inviter.id === user.id) {
         invitesUses += invite.uses
       }
     })
-    var embed = new MessageEmbed()
-      .addField('Invited members:', invitesUses)
-      .setColor(process.env.COLOR)
-      .setFooter(user.tag)
-      .setTimestamp()
-    message.channel.send(embed)
+    const embed = new MessageEmbed()
+      .addField(t('commands:invite.invitedMembers'), invitesUses)
+    send(embed)
   }
 }
-
 module.exports = Invite

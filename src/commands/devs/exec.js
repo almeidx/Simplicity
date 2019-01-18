@@ -14,5 +14,4 @@ class Exec extends Command {
       .catch(console.log)
   }
 }
-
 module.exports = Exec

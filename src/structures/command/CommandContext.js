@@ -45,7 +45,7 @@ class CommandContext {
 
       const COLOR = process.env.COLOR ? process.env.COLOR : this.guild.me.displayColor !== 0 ? this.guild.me.displayColor : this.member.displayColor !== 0 ? this.member.displayColor : 'GREEN'
       if (!embed.color) embed.setColor(options.error ? 'RED' : COLOR)
-      if (options.authorFooter || !embed.footer || embed.footer.text === '') embed.setFooter(this.author.tag, this.author.displayAvatarURL())
+      if (options.authorFooter || !embed.footer || embed.footer.text === '') embed.setFooter(this.author.tag, this.author.displayAvatarURL({ size: 2048 }))
 
       if (this.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {
         let message = []

@@ -8,7 +8,6 @@ class Unban extends Command {
     this.category = 'mod'
     this.requirements = { argsRequired: true, permissions: ['BAN_MEMBERS'], clientPermissions: ['BAN_MEMBERS'] }
   }
-
   run ({ message, args }) {
     const embed = new MessageEmbed()
       .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 2048 }))
@@ -41,5 +40,4 @@ class Unban extends Command {
     message.channel.send(embed)
   }
 }
-
 module.exports = Unban

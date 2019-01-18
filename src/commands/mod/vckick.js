@@ -53,5 +53,4 @@ class VoiceKick extends Command {
     }
   }
 }
-
 module.exports = VoiceKick

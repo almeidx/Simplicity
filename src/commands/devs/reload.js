@@ -7,7 +7,6 @@ class Reload extends Command {
     this.category = 'dev'
     this.requirements = { argsRequired: true }
   }
-
   run ({ message, args }) {
     try {
       delete require.cache[require.resolve(`./${args}.js`)]
@@ -17,5 +16,4 @@ class Reload extends Command {
     message.reply(`The command **${args}** has been reloaded sucessfully!`)
   }
 }
-
 module.exports = Reload
