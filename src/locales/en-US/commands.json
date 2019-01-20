@@ -62,6 +62,8 @@
     "userinfo": {
         "name": "» Name",
         "id": "» ID",
-        "createdAt": "» Created At"
+        "createdAt": "» Created At",
+        "joinedAt": "» Joined At",
+        "status": "» Status"
     }
 }

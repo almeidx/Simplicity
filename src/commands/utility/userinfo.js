@@ -8,22 +8,25 @@ class UserInfo extends Command {
     this.aliases = ['ui', 'user']
     this.category = 'util'
   }
-  run ({ author, send, message, args, t }) {
+  run ({ author, guild, send, message, args, t, emoji }) {
     const embed = new MessageEmbed()
       .setFooter(`${t('utils:footer')} ${author.tag}`, author.displayAvatarURL({ size: 2048 }))
     if (args.length === 0) {
       embed.addField(t('commands:userinfo.name'), author.tag, true)
-        .addField(t('commands:userinfo.id'), author.id, true)
+        .addField(t('commands:userinfo.status'), `${emoji(author.presence.status.toUpperCase())} ${t('utils:status.' + author.presence.status)}`)
+        .addField(t('commands:userinfo.id'), author.id)
         .addField(t('commands:userinfo.createdAt'), `${moment(author.createdAt).format('LL')} (\`${moment(author.createdAt).fromNow()}\`)`)
-        .addField(t('commands:userinfo.joinedAt'), `${moment(author.joinedAt).format('LL')} (\`${moment(author.joinedAt).fromNow()}\`)`)
+        .addField(t('commands:userinfo.joinedAt'), `${moment(guild.members.get(author.id).joinedAt).format('LL')} (\`${moment(guild.members.get(author.id).joinedAt).fromNow()}\`)`)
         .setAuthor(author.tag, author.displayAvatarURL({ size: 2048 }))
         .setThumbnail(author.displayAvatarURL({ size: 2048 }))
       return send(embed)
     } else if (message.mentions.members.first()) {
       const mem = message.mentions.members.first()
       embed.addField(t('commands:userinfo.name'), mem.user.tag, true)
-        .addField(t('commands:userinfo.id'), mem.id, true)
+        .addField(t('commands:userinfo.status'), `${emoji(mem.presence.status.toUpperCase())} ${t('utils:status.' + mem.presence.status)}`)
+        .addField(t('commands:userinfo.id'), mem.id)
         .addField(t('commands:userinfo.createdAt'), `${moment(mem.user.createdAt).format('LL')} (\`${moment(mem.user.createdAt).fromNow()}\`)`)
+        .addField(t('commands:userinfo.joinedAt'), `${moment(guild.members.get(mem.id).joinedAt).format('LL')} (\`${moment(guild.members.get(mem.id).joinedAt).fromNow()}\`)`)
         .setAuthor(mem.user.tag, mem.user.displayAvatarURL({ size: 2048 }))
         .setThumbnail(mem.user.displayAvatarURL({ size: 2048 }))
       return send(embed)
@@ -31,10 +34,14 @@ class UserInfo extends Command {
       this.client.users.fetch(args)
         .then(u => {
           embed.addField(t('commands:userinfo.name'), u.tag, true)
+            .addField(t('commands:userinfo.status'), `${emoji(u.presence.status.toUpperCase())} ${t('utils:status.' + u.presence.status)}`)
             .addField(t('commands:userinfo.id'), u.id, true)
             .addField(t('commands:userinfo.createdAt'), `${moment(u.createdAt).format('LL')} (\`${moment(u.createdAt).fromNow()}\`)`)
-            .setAuthor(u.tag, u.displayAvatarURL({ size: 2048 }))
             .setThumbnail(u.displayAvatarURL({ size: 2048 }))
+            .setAuthor(u.tag, u.displayAvatarURL({ size: 2048 }))
+          if (guild.members.get(u.id)) {
+            embed.addField(t('commands:userinfo.joinedAt'), `${moment(guild.members.get(u.id).joinedAt).format('LL')} (\`${moment(guild.members.get(u.id).joinedAt).fromNow()}\`)`)
+          }
           return send(embed)
         })
         .catch(() => {
