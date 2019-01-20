@@ -8,7 +8,7 @@ class UserInfo extends Command {
     this.aliases = ['ui', 'user']
     this.category = 'util'
   }
-  run ({ author, guild, send, message, args, t, emoji }) {
+  run ({ author, guild, send, message, member, args, t, emoji }) {
     const embed = new MessageEmbed()
       .setFooter(`${t('utils:footer')} ${author.tag}`, author.displayAvatarURL({ size: 2048 }))
     if (args.length === 0) {
@@ -16,7 +16,7 @@ class UserInfo extends Command {
         .addField(t('commands:userinfo.status'), `${emoji(author.presence.status.toUpperCase())} ${t('utils:status.' + author.presence.status)}`)
         .addField(t('commands:userinfo.id'), author.id)
         .addField(t('commands:userinfo.createdAt'), `${moment(author.createdAt).format('LL')} (\`${moment(author.createdAt).fromNow()}\`)`)
-        .addField(t('commands:userinfo.joinedAt'), `${moment(guild.members.get(author.id).joinedAt).format('LL')} (\`${moment(guild.members.get(author.id).joinedAt).fromNow()}\`)`)
+        .addField(t('commands:userinfo.joinedAt'), `${moment(member.joinedAt).format('LL')} (\`${moment(member.joinedAt).fromNow()}\`)`)
         .setAuthor(author.tag, author.displayAvatarURL({ size: 2048 }))
         .setThumbnail(author.displayAvatarURL({ size: 2048 }))
       return send(embed)
