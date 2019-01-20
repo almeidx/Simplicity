@@ -13,7 +13,7 @@
         "categories": "Categories",
         "aliases": "Aliases",
         "usage": "Usage",
-        "commandHelp": "ta troll fdp?",
+        "commandHelp": "What?!",
         "commandUndefined": "This command does not exist or is disabled"
     },
     "prefix": {

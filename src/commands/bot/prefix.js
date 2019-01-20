@@ -17,7 +17,7 @@ class Prefix extends Command {
     }
 
     try {
-      const data = await this.client.database.guilds.edit(guild.id, { prefix: query })
+      await this.client.database.guilds.edit(guild.id, { prefix: query })
       embed.setTitle('commands:prefix.done')
       embed.setDescription(t('commands:prefix.sucess', { prefix: query }))
       send(embed)

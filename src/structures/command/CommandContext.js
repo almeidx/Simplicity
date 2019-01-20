@@ -26,7 +26,7 @@ class CommandContext {
     if (this.guild && this.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[name]) {
       const emoji = this.client.emojis.get(Constants.EMOJIS_CUSTOM[name])
       if (emoji) {
-        result = id ? Constants.EMOJIS_CUSTOM[name] : `<${emoji.animated ? 'a:' : ':'}${emoji.name}:${emoji.id}>`
+        result = id ? Constants.EMOJIS_CUSTOM[name] : `<${emoji.animated ? 'a' : ''}:${emoji.name}:${emoji.id}>`
       }
     }
     return result || Constants.EMOJIS[name] || '❓'
