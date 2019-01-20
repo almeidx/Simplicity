@@ -20,11 +20,11 @@ class Translate extends Command {
           .addField(t('commands:translate.original'), text, true)
           .addField(t('commands:translate.translated'), result.translation, true)
           .attachFiles(new MessageAttachment('src/assets/google-translate.png', 'translate.png'))
-        send(embed)
+        return send(embed)
       } else {
-        embed.setColor('RED')
-          .setTitle(t('errors:oops'), t('errors:general'))
-        send(embed)
+        embed.setTitle(t('errors:oops'))
+          .setDescription(t('errors:general'))
+        return send(embed, { error: true })
       }
     })
   }

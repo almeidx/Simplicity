@@ -14,5 +14,5 @@
     },
     "bot": "Bot",
     "bots": "Bots",
-    "myprefix": "my prefix on this server is: `{{- prefix }}`" 
+    "myprefix": "My prefix on this server is: `{{- prefix }}`" 
 }

@@ -58,5 +58,10 @@
     "clear": {
         "invalidValue": "Please, give a value between 2 and 100!",
         "deleted": "{{- amt }} messages have been deleted by {{- auth }}."
+    },
+    "userinfo": {
+        "name": "» Name",
+        "id": "» ID",
+        "createdAt": "» Created At"
     }
 }

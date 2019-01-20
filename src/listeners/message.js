@@ -11,7 +11,8 @@ module.exports = async function onMessage (message) {
   const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.startsWith(prefix) ? prefix : null)
 
   if (message.content === botMention) {
-    return message.channel.send(this.i18next.getFixedT(language)('utils:myprefix', { prefix: prefix }))
+    message.react(this.emojis.get(process.env.EMOJI_PINGSOCK_ID))
+    return message.reply(this.i18next.getFixedT(language)('utils:myprefix', { prefix: prefix }))
   }
 
   if (usedPrefix) {
