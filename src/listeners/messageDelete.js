@@ -6,6 +6,7 @@ module.exports = async function messageDelete (message) {
     if (message.guild.me.hasPermission('VIEW_AUDIT_LOG')) {
       const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' }).then(audit => audit.entries.first())
       let user
+      console.log(entry)
       if (entry.extra.channel.id === message.channel.id &&
          (entry.target.id === message.author.id) &&
          (entry.createdTimestamp > (Date.now() - 5000)) &&
