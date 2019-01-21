@@ -19,7 +19,7 @@ class Command {
       if (this.usage && context.t(`commands:${this.name}.usage`) !== `commands:${this.name}.usage`) {
         embed.addField('errors:usage', `${context.prefix + this.name} ${context.t(`commands:${this.name}.usage`)}`)
       }
-      return context.send(embed, { error: true, description: requirements.options })
+      return context.send(embed, { error: true, options: requirements.options })
     }
     this.run(context)
   }
