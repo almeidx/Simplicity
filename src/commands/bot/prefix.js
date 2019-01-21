@@ -12,8 +12,7 @@ class Prefix extends Command {
     if (query.length > 10) {
       embed.setTitle('errors:denied')
       embed.setDescription('commands:prefix.multiCharacters')
-      embed.setColor('RED')
-      return send(embed)
+      return send(embed, { error: true })
     }
 
     try {
@@ -24,7 +23,7 @@ class Prefix extends Command {
     } catch (err) {
       embed.setTitle('commands:prefix.oops')
       embed.setDescription('commands:prefix.failed')
-      send(embed)
+      send(embed, { error: true })
       console.log(err)
     }
   }

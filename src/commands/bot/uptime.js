@@ -12,7 +12,7 @@ class Uptime extends Command {
   run ({ send, t }) {
     const duration = moment.duration(this.client.uptime).format('D[d], H[h], m[m], s[s]')
     const embed = new MessageEmbed()
-      .setTitle(`${t('commands:uptime.onlineFor')} **${duration}**`)
+      .setTitle(t('commands:uptime.onlineFor', { duration }))
     send(embed)
   }
 }

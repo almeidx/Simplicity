@@ -32,7 +32,10 @@
         "description": "Click [here]({{- icon }}) to download the icon!"
     },
     "uptime": {
-        "onlineFor": "I have been online for:"
+        "onlineFor": "I have been online for: **${{- duration }}**"
+    },
+    "ping": {
+        "sucess": "`**Latency:** {{- HOST }} ms\n**API Latency:** {{- API }} ms`"
     },
     "serverinfo": {
         "name": "» Name",
