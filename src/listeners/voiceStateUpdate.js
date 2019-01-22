@@ -11,15 +11,15 @@ module.exports = function voiceStateUpdate (oldState, newState) {
       .setFooter(oldMember.guild.name, oldMember.guild.iconURL({ size: 2048 }))
       .setAuthor(oldMember.user.tag, oldMember.user.displayAvatarURL({ size: 2048 }))
       .setTimestamp()
-    if (oldUserChannel === undefined && newUserChannel.id) {
+    if (oldUserChannel === undefined && newUserChannel) {
       embed.setDescription(`${oldMember} has joined the voice channel: **${newUserChannel.name}**`)
       return chan.send(embed)
-    } else if (oldUserChannel.id && newUserChannel === undefined){
+    } else if (oldUserChannel && newUserChannel === undefined) {
       embed.setDescription(`${oldMember} has left the voice channel: **${oldUserChannel.name}**`)
       return chan.send(embed)
-    } else if (oldUserChannel.id !== newUserChannel.id) {
+    } else if (oldUserChannel !== newUserChannel) {
       embed.setDescription(`${oldMember} has moved from the voice channel **${oldUserChannel.name}** to ${newUserChannel.name}`)
       return chan.send(embed)
     }
-  }  
+  }
 }
