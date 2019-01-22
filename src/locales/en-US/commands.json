@@ -1,5 +1,7 @@
 {
     "botinfo": {
+        "description": "This command shows you info about myself.",
+        "usage": "Usage: **{{- prefix }}botinfo**",
         "botinfo": "Bot Information",
         "guildAndUsers": "Guilds | Users",
         "channelAndEmojis": "Channels | Emojis",
@@ -17,6 +19,8 @@
         "commandUndefined": "This command does not exist or is disabled"
     },
     "prefix": {
+        "description": "This command sets my prefix on the server the command was used!",
+        "usage": "Usage: **{{- prefix }}prefix <prefix>**",
         "multiCharacters": "My new prefix can\\'t have more than 10 characters!",
         "done": "Done!",
         "sucess": "My prefix on this server has been changed to: `{{- prefix }}`",
@@ -24,20 +28,31 @@
         "failed": "Sadly, something wen't wrong while trying to update the servers prefix!\nPlease, try again later."
     },
     "translate": {
+        "description": "This command translates something to English.",
+        "usage": "Usage: **{{- prefix }}translate [text]**",
         "original": "Original",
         "translated": "Translated",
         "googleTranslate": "Google Translate"
     },
     "servericon": {
-        "description": "Click [here]({{- icon }}) to download the icon!"
+        "description": "This command shows the server icon.",
+        "usage": "Usage: **{{- usage }}**",
+        "text": "Click [here]({{- icon }}) to download the icon!"
     },
     "uptime": {
+        "description": "This command shows the time I've been up for.",
+        "usage": "Usage: **{{- prefix }}uptime**",
         "onlineFor": "I have been online for: **{{- duration }}**"
     },
     "ping": {
-        "sucess": "`**Latency:** {{- HOST }} ms\n**API Latency:** {{- API }} ms`"
+        "description": "This command shows the latency of the bot.",
+        "usage": "Usage: **{{- prefix }}ping**",
+        "sucess": "**Latency:** {{- HOST }} ms\n**API Latency:** {{- API }} ms",
+        "loading": "Loading..."
     },
     "serverinfo": {
+        "description": "This command shows info about the server.",
+        "usage": "Usage: **{{- prefix }}serverinfo**",
         "name": "» Name",
         "id": "» ID",
         "owner": "» Owner",
@@ -47,6 +62,8 @@
         "verificationLevel": "» Verification Level"
     },
     "createemoji": {
+        "description": "This command allows you to create emojis.",
+        "usage": "Usage: **{{- prefix }}createemoji [name] [link]**",
         "noNameLink": "You either didn't specify the link of the emoji or the name of it.",
         "nameTooBig": "The name for the emoji you provided was too big.",
         "nameTooShort": "The name for the emoji you provided was too short.",
@@ -56,13 +73,19 @@
         "error": "There was an error when creating the emoji."
     },
     "invite": {
+        "description": "This command shows how many persons the user has invited to the server.",
+        "usage": "Usage: **{{- prefix }}invite <mention/id>**",
         "invitedMembers": "Invited members:"
     },
     "clear": {
+        "description": "This command clears messages from the chat.",
+        "usage": "Usage: **{{- prefix }}clear [amount]**",
         "invalidValue": "Please, give a value between 2 and 100!",
         "deleted": "{{- amt }} messages have been deleted by {{- auth }}."
     },
     "userinfo": {
+        "description": "This command shows info about the user.",
+        "usage": "Usage: **{{- prefix }}userinfo <id/mention>**",
         "name": "» Name",
         "id": "» ID",
         "createdAt": "» Created At",
