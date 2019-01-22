@@ -7,9 +7,9 @@ class Ping extends Command {
     this.category = 'bot'
   }
   run ({ message, t }) {
-    message.channel.send('.')
+    message.channel.send(t('commands:ping.loading'))
       .then(msg => {
-        msg.edit(t('commands:ping.sucess', { HOST: msg.createdTimestamp - message.createdTimestamp, API: this.client.ws.ping }))
+        msg.edit(t('commands:ping.sucess', { HOST: msg.createdTimestamp - message.createdTimestamp, API: Math.round(this.client.ws.ping) }))
       })
   }
 }
