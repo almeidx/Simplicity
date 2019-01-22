@@ -5,8 +5,8 @@
     "oops": "Oops!",
     "developerOnly": "You must be a bot developer in order to execute this command!",
     "missingParameters": "Invalid Parameters!",
-    "clientMissingPermission": "I require the {permission} permission in order to execute this command!",
-    "clientMissingPermissions": "I require the {permissions} permissions in order to execute this command!",
-    "userMissingPermission": "You require the {permission} permission in order to execute this command!",
-    "userMissingPermissions": "You require the {permissions} permissions in order to execute this command!"
+    "clientMissingPermission": "I require the `{{- permission }}` permission in order to execute this command!",
+    "clientMissingPermissions": "I require the {{- permission }} permissions in order to execute this command!",
+    "userMissingPermission": "You require the `{{- permission }}` permission in order to execute this command!",
+    "userMissingPermissions": "You require the {{- permission }} permissions in order to execute this command!"
 }

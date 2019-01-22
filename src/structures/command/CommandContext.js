@@ -20,43 +20,64 @@ class CommandContext {
     this.send = this._send.bind(this)
   }
 
-  _emoji (name = 'QUESTION', id = false) {
+  _emoji (name = 'QUESTION', options) {
+    const { id, noEmoji } = Object.assign({ id: false, noEmoji: false }, options)
     name = name.toUpperCase()
-    let result
-    if (this.guild && this.guild.me.permissions.has('USE_EXTERNAL_EMOJIS') && Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[name]) {
+    if (this.guild && this.channel.permissionsFor(this.guild.me).has('USE_EXTERNAL_EMOJIS') && Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[name]) {
       const emoji = this.client.emojis.get(Constants.EMOJIS_CUSTOM[name])
       if (emoji) {
-        result = id ? Constants.EMOJIS_CUSTOM[name] : `<${emoji.animated ? 'a' : ''}:${emoji.name}:${emoji.id}>`
+        return id ? emoji.id : emoji.toString()
       }
     }
-    return result || Constants.EMOJIS[name] || '❓'
+    return Constants.EMOJIS[name] || (noEmoji ? '' : '❓')
   }
 
   _send (embed, options, optionsMessage = {}) {
-    options = Object.assign({ error: false, convertText: true, authorFooter: true, title: {}, description: {} }, options)
+    options = Object.assign({ error: false, convertText: true, autoFooter: true, options: {} }, options)
+    const tOptions = Object.assign({ title: {}, description: {} }, options.options)
+
     if (embed instanceof MessageEmbed) {
-      if (embed.title && embed.title.includes(':') && !embed.description.includes(' ')) {
-        embed.title = this.t(embed.title, options.title)
-      }
-      if (embed.description && embed.description.includes(':') && !embed.description.includes(' ')) {
-        embed.description = (options.error ? this.emoji('ERROR') + ' ' : '') + this.t(embed.description, options.description)
-      }
-      if (embed.fields !== 0) embed.fields = embed.fields.map((f) => ({ name: this.t(f.name), value: this.t(f.value), inline: f.inline }))
-      if (embed.author) embed.author.name = this.t(embed.author.name)
       embed.setTimestamp()
 
+      const checkGetT = (text) => text.includes(':') && !text.includes(' ')
       const COLOR = process.env.COLOR ? process.env.COLOR : this.guild.me.displayColor !== 0 ? this.guild.me.displayColor : this.member.displayColor !== 0 ? this.member.displayColor : 'GREEN'
-      if (!embed.color) embed.setColor(options.error ? 'RED' : COLOR)
-      if (options.authorFooter || !embed.footer || embed.footer.text === '') embed.setFooter(this.author.tag, this.author.displayAvatarURL())
 
-      if (this.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {
+      if (embed.title && checkGetT(embed.title)) {
+        embed.title = this.t(embed.title, tOptions.title)
+      }
+
+      if (embed.description && checkGetT(embed.description)) {
+        embed.description = (options.error ? this.emoji('ERROR') + ' ' : '') + this.t(embed.description, tOptions.description)
+      }
+
+      if (embed.fields !== 0) {
+        embed.fields = embed.fields.map((f) => ({
+          name: checkGetT(f.name) ? this.t(f.name) : f.name,
+          value: checkGetT(f.value) ? this.t(f.value) : f.value,
+          inline: f.inline }))
+      }
+
+      if (embed.author && embed.author.name && checkGetT(embed.author.name)) {
+        embed.author.name = this.t(embed.author.name)
+      }
+
+      if (!embed.color) {
+        embed.setColor(options.error ? 'RED' : COLOR)
+      }
+
+      if (options.autoFooter) {
+        embed.setFooter(`${this.t('utils:footer')} ${this.author.tag}`, this.author.displayAvatarURL())
+      }
+
+      if (options.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {
         let message = []
         if (embed.title) message.push(`**${embed.title}**`)
-        if (embed.description) message.description(embed.description)
+        if (embed.description) message.push(embed.description)
         if (embed.fields.length !== 0) embed.fields.forEach(e => message.push(`**${e.name}\n${e.value}`))
 
         return this.channel.send(message, optionsMessage)
       }
+
       optionsMessage.embed = embed
       return this.channel.send(optionsMessage)
     }

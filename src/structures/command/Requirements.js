@@ -14,7 +14,7 @@ class Requirements {
     for (const req in requirements) {
       let opts = requirements[req]
       if (this[req] == null) throw new Error(`${req} não existe`)
-      if (typeof opts === 'object') {
+      if (typeof opts === 'object' && !Array.isArray(opts)) {
         if (opts.response) this.responses[req] = opts.response
         opts = opts.return
       }
@@ -23,7 +23,7 @@ class Requirements {
       }
     }
   }
-  handle ({ author, client, channel, guild, args }) {
+  handle ({ author, client, channel, guild, args, t }) {
     if (this.ownerOnly) {
       const guildClient = client.guilds.get(process.env.SERVER_ID)
       const devRole = guildClient && guildClient.roles.get(process.env.ROLE_DEVS_ID)
@@ -31,13 +31,13 @@ class Requirements {
         return new CommandError(this.responses.ownerOnly)
       }
     }
-    const clientPerms = this.clientPermissions.filter((p) => !channel.permissionsFor(guild.me).has(p))
+    const clientPerms = this.clientPermissions.filter((p) => !channel.permissionsFor(guild.me).has(p)).map(p => t('permissions:' + p))
     if (clientPerms.length !== 0) {
-      return new CommandError(this.responses.clientPermissions, { permission: clientPerms[0] })
+      return new CommandError(this.responses.clientPermissions, { description: { permission: clientPerms[0] } })
     }
-    const memberPerms = this.permissions.filter((p) => !channel.permissionsFor(author.id).has(p))
+    const memberPerms = this.permissions.filter((p) => !channel.permissionsFor(author.id).has(p)).map(p => t('permissions:' + p))
     if (memberPerms.length !== 0) {
-      return new CommandError(this.responses.permissions, { permission: memberPerms[0] })
+      return new CommandError(this.responses.permissions, { description: { permission: memberPerms[0] } })
     }
     if (this.argsRequired && args.length === 0) {
       return new CommandError(this.responses.argsRequired)

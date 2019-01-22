@@ -6,6 +6,7 @@ module.exports = {
   CommandContext: require('./structures/command/CommandContext'),
   // Utils
   Constants: require('./utils/Constants'),
+  Utils: require('./utils/Utils'),
   // Database
   Database: require('./database/Database.js')
 }

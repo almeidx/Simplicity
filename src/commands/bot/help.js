@@ -15,7 +15,6 @@ class Help extends Command {
       embed.setDescription(t('commands:help.about', { prefix, botname: this.client.user.username }))
       embed.setAuthor(this.client.user.username, this.client.user.displayAvatarURL())
       categories.filter(c => c.name !== 'help').each((cmds, i) => embed.addField(`categories:${i}.name`, `${t(`categories:${i}.description`)}\n${cmds.keyArray().map(c => `\`${c}\``).join(', ')}`))
-      console.log(embed.description)
       return send(embed)
     }
 
