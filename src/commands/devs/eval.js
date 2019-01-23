@@ -5,7 +5,7 @@ const { Command, Loggers } = require('../../')
 class Eval extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['compile']
+    this.aliases = ['compile', 'ev']
     this.category = 'dev'
     this.requirements = { ownerOnly: true, argsRequired: true }
   }

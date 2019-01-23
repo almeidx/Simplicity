@@ -8,9 +8,11 @@ class Exec extends Command {
     this.category = 'dev'
     this.requirements = { argsRequired: true, ownerOnly: true }
   }
-  run ({ message, query }) {
+  run ({ send, query }) {
     exec(query)
-      .then(c => message.channel.send(JSON.stringify(c.stdout).replace(/\\n/g, '\n').slice(1, -1)))
+      .then(c => {
+        send(JSON.stringify(c.stdout).replace(/\\n/g, '\n').slice(1, -1))
+      })
       .catch(console.log)
   }
 }
