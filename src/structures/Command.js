@@ -1,5 +1,4 @@
 const Requirements = require('./command/Requirements')
-const CommandError = require('./command/CommandError')
 const { MessageEmbed } = require('discord.js')
 class Command {
   constructor (client) {
@@ -10,18 +9,26 @@ class Command {
     this.aliases = []
     this.requirements = null
   }
-  run () {}
-  _run (context) {
-    const requirements = new Requirements(this.requirements).handle(context)
-    if (requirements instanceof CommandError) {
-      const embed = new MessageEmbed()
-        .setDescription(requirements.message)
-      if (this.usage && context.t(`commands:${this.name}.usage`) !== `commands:${this.name}.usage`) {
-        embed.addField('errors:usage', `${context.prefix + this.name} ${context.t(`commands:${this.name}.usage`)}`)
-      }
-      return context.send(embed, { error: true, options: requirements.options })
+
+  async run () {}
+
+  async _run (context) {
+    const requirements = new Requirements(this.requirements)
+    try {
+      requirements.handle(context)
+    } catch (e) {
+      return this.sendError(context, e)
     }
-    this.run(context)
+    return this.run(context)
+  }
+
+  sendError (context, error) {
+    const embed = new MessageEmbed()
+      .setDescription(error.message)
+    if (this.usage && context.t(`commands:${this.name}.usage`) !== `${this.name}.usage`) {
+      embed.addField('errors:usage', `${context.prefix + this.name} ${context.t(`commands:${this.name}.usage`)}`)
+    }
+    return context.send(embed, { error: true, options: error.options })
   }
 }
 
