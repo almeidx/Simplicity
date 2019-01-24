@@ -22,7 +22,7 @@ class UserInfo extends Command {
     } else if (message.mentions.members.first()) {
       const mem = message.mentions.members.first()
       embed.addField(t('commands:userinfo.name'), mem.user.tag, true)
-	    .addField(t('commands:userinfo.id'), mem.id)
+        .addField(t('commands:userinfo.id'), mem.id)
         .addField(t('commands:userinfo.status'), `${emoji(mem.presence.status.toUpperCase())} ${t('utils:status.' + mem.presence.status)}`, true)
         .addField(t('commands:userinfo.createdAt'), `${moment(mem.user.createdAt).format('LL')} (\`${moment(mem.user.createdAt).fromNow()}\`)`, true)
         .addField(t('commands:userinfo.joinedAt'), `${moment(guild.members.get(mem.id).joinedAt).format('LL')} (\`${moment(guild.members.get(mem.id).joinedAt).fromNow()}\`)`, true)
@@ -33,7 +33,7 @@ class UserInfo extends Command {
       this.client.users.fetch(args)
         .then(u => {
           embed.addField(t('commands:userinfo.name'), u.tag, true)
-		    .addField(t('commands:userinfo.id'), u.id, true)
+            .addField(t('commands:userinfo.id'), u.id, true)
             .addField(t('commands:userinfo.status'), `${emoji(u.presence.status.toUpperCase())} ${t('utils:status.' + u.presence.status)}`)
             .addField(t('commands:userinfo.createdAt'), `${moment(u.createdAt).format('LL')} (\`${moment(u.createdAt).fromNow()}\`)`)
             .setThumbnail(u.displayAvatarURL({ size: 2048 }))

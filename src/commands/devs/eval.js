@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const { inspect } = require('util')
-const { Command, Loggers } = require('../../')
+const { Command, Loggers, Constants } = require('../../')
 
 class Eval extends Command {
   constructor (client) {
@@ -25,7 +25,18 @@ class Eval extends Command {
       Loggers.error(['COMMAND', 'EVAL', 'RESULT', 'ERROR'], error)
     } finally {
       send(embed)
-    };
+        .then(async function (msg) {
+          await msg.react(Constants.EMOJIS_CUSTOM.CANCEL)
+          await msg.awaitReactions((r, u) => u.id === message.author.id, { max: 1, time: 60000, errors: ['time'] })
+            .then(reactions => {
+              if (reactions.first().emoji.id === Constants.EMOJIS_CUSTOM.CANCEL) {
+                message.delete().catch(() => {})
+                msg.delete().catch(() => {})
+              }
+            })
+        })
+        .catch(() => {})
+    }
   }
 }
 module.exports = Eval
