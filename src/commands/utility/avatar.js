@@ -27,8 +27,7 @@ class Avatar extends Command {
           return send(embed)
         })
         .catch(() => {
-          embed.setTitle(t('errors:general'))
-          return send(embed)
+          return send(embed, { error: true })
         })
     }
   }

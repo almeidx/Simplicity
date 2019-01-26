@@ -7,35 +7,32 @@ class Kick extends Command {
     this.category = 'mod'
     this.requirements = { argsRequired: true, permissions: ['KICK_MEMBERS'], clientPermissions: ['KICK_MEMBERS'] }
   }
-  run ({ message, args }) {
+  run ({ author, guild, send, message, member, t, args }) {
     let reason = args.slice(1).join(' ')
-    let member = this.getUser(message, args)
+    let mem = this.getUser(message, args)
     let msg, title
     const embed = new MessageEmbed()
-      .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 2048 }))
-      .setTimestamp()
-      .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
+      .setAuthor(author.username, author.displayAvatarURL({ size: 2048 }))
       .setColor('RED')
-      .setTitle('Denied!')
-
-    if (!member) {
-      msg = this.usage
-      title = 'You didn\'t mention / used a valid ID!'
-    } else if (message.member.roles.highest.position <= member.roles.highest.position) {
-      msg = 'You can\'t kick this user because they have the same or higher role as you.'
-    } else if (message.guild.me.roles.highest.position <= member.roles.highest.position) {
-      msg = 'I can\'t kick this user because they have the same or higher role as me.'
+      .setTitle(t('errors:denied'))
+    if (!mem) {
+      msg = t('commands:kick.usage')
+      title = t('commands:kick.invalidUser')
+    } else if (member.roles.highest.position <= mem.roles.highest.position) {
+      msg = t('errors:userMissingRole', { action: t('commands:kick.action') })
+    } else if (guild.me.roles.highest.position <= mem.roles.highest.position) {
+      msg = t('errors:clientMissingRole', { action: t('commands:kick.action') })
     } else {
-      member.kick({ reason: (reason ? message.author.tag + ' | ' + reason : message.author.tag + ' | No reason provided.') })
-      title = 'Member Kicked'
-      msg = `${member} has been kicked from the server`
-      embed.addField('Kicked by:', message.author, true)
-        .addField(`Reason: `, reason || 'No reason provided.')
-        .setThumbnail(message.author.displayAvatarURL())
+      mem.kick({ reason: author.tag + ' | ' + (reason || t('commands:ban.noReason')) })
+      title = t('commands:kick.success')
+      msg = t('commands:kick.userKicked', { user: mem })
+      embed.addField(t('commands:kick.kickedBy'), author, true)
+        .addField(t('commands:kick.reason'), reason || t('commands:kick.noReason'))
+        .setThumbnail(author.displayAvatarURL({ size: 2048 }))
     }
     if (msg) embed.setDescription(msg)
     if (title) embed.setTitle(title)
-    message.channel.send(embed)
+    send(embed)
   }
   getUser (message, [query = null]) {
     let member = message.mentions.members.first()

@@ -44,8 +44,6 @@ class UserInfo extends Command {
           return send(embed)
         })
         .catch(() => {
-          embed.setTitle(t('errors:oops'))
-            .setDescription(t('errors:general'))
           return send(embed, { error: true })
         })
     }
