@@ -1,5 +1,5 @@
 const Colors = require('colors')
-const Constants = require('../Utils/Constants')
+const Constants = require('../utils/Constants')
 const moment = require('moment')
 moment.locale('pt-br')
 
