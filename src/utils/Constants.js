@@ -31,5 +31,11 @@ module.exports = {
     'EVAL',
     'RESULT',
     'USAGE'
-  ]
+  ],
+  COLOR: {
+    'MESSAGE_DELETE': '', // will be added eventually
+    'MESSAGE_EDIT': '',
+    'MESSAGE_PINNED': '',
+    'MESSAGE_UNPINNED': ''
+  }
 }
