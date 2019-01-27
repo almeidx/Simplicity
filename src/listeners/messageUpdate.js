@@ -15,7 +15,7 @@ module.exports = async function messageUpdate (oldMessage, newMessage) {
       return chan.send(embed)
     } else if ((oldMessage.pinned === true || newMessage.pinned === false) ||
               (oldMessage.pinned === false || newMessage.pinned === true)) { // Message Pins
-        embed.addField('Content', newMessage.content || ' ')
+      embed.addField('Content', newMessage.content || ' ')
       if (oldMessage.pinned && newMessage.pinned === false) {
         embed.setDescription(`**Message by ${oldMessage.author} unpinned on ${oldMessage.channel}**`)
         return chan.send(embed)
