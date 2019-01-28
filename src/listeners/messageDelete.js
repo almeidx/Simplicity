@@ -4,7 +4,7 @@ module.exports = async function messageDelete (message) {
   if (message.channel === chan) return
   if (chan) {
     const embed = new MessageEmbed()
-      .addField('Content', (message.content.slice(0, 1020) + message.content.length >= 1024 ? ' ...' : message.content) || ' ')
+      .addField('Content', (message.content.slice(0, 1020) + message.content.length >= 1024 ? ' ...' : message.content) || '** **')
       .setDescription(`**Message sent by ${message.author} deleted in ${message.channel}**`)
       .setAuthor(message.author.tag, message.author.displayAvatarURL({ size: 2048 }))
       .setFooter(`ID: ${message.author.id}`, message.author.displayAvatarURL({ size: 2048 }))
