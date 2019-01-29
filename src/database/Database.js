@@ -11,7 +11,8 @@ class Database {
       lang: { type: String },
       prefix: { type: String },
       channels: [{ id: String, userID: String, date: Date }],
-      logs: { channelID: String, logs: [String] }
+      logs: { channelID: String, logs: [String] },
+      blacklist: { type: Boolean }
     }))
     this.guilds = new Collection(this._guilds)
     mongoose.connect(this._url, { useNewUrlParser: true })

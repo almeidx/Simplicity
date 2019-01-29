@@ -32,10 +32,12 @@ module.exports = {
     'RESULT',
     'USAGE'
   ],
-  COLOR: {
-    'MESSAGE_DELETE': '', // will be added eventually
-    'MESSAGE_EDIT': '',
-    'MESSAGE_PINNED': '',
-    'MESSAGE_UNPINNED': ''
+  COLORS: {
+    'MESSAGE_DELETE': '36393f', // will be added eventually
+    'MESSAGE_EDIT': '36393f',
+    'MESSAGE_PIN': '36393f',
+    'MESSAGE_UNPIN': '36393f',
+    'MEMBER_UNBAN': '2ECC71',
+    'MEMBER_BAN': 'ff3535'
   }
 }

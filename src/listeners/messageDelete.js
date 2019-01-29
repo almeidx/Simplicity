@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js')
+const Constants = require('../../utils/Constants')
 module.exports = async function messageDelete (message) {
   const chan = message.guild.channels.find(ch => ch.name === 'logs')
   if (message.channel === chan) return
@@ -8,7 +9,7 @@ module.exports = async function messageDelete (message) {
       .setDescription(`**Message sent by ${message.author} deleted in ${message.channel}**`)
       .setAuthor(message.author.tag, message.author.displayAvatarURL({ size: 2048 }))
       .setFooter(`ID: ${message.author.id}`, message.author.displayAvatarURL({ size: 2048 }))
-      .setColor(process.env.COLOR)
+      .setColor(Constants.COLORS.MESSAGE_DELETE)
       .setTimestamp()
     if (message.guild.me.hasPermission('VIEW_AUDIT_LOG')) {
       const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' }).then(audit => audit.entries.first())
