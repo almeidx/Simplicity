@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const Constants = require('../../utils/Constants')
+const Constants = require('../utils/Constants')
 module.exports = async function messageDelete (message) {
   const chan = message.guild.channels.find(ch => ch.name === 'logs')
   if (message.channel === chan) return
