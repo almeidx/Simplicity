@@ -127,5 +127,9 @@
         "usage": "Usage: **{{- prefix }}vckick [mention/id] <reason>**",
         "success": "{{- auth }} has kicked {{- memb }} from a Voice Channel.",
         "action": "voice kick"
+    },
+    "emojify": {
+        "invalidCharacters": "Invalid characters!",
+        "messageTooBig": "The message you provided is too big!"
     }
 }
