@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const Constants = require('../../utils/Constants')
+const Constants = require('../utils/Constants')
 module.exports = async function messageUpdate (oldMessage, newMessage) {
   const chan = newMessage.guild.channels.find(ch => ch.name === 'logs')
   const embed = new MessageEmbed()
