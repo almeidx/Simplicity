@@ -33,7 +33,7 @@ module.exports = {
     'USAGE'
   ],
   COLORS: {
-    'MESSAGE_DELETE': '36393f', // will be added eventually
+    'MESSAGE_DELETE': '36393f',
     'MESSAGE_EDIT': '36393f',
     'MESSAGE_PIN': '36393f',
     'MESSAGE_UNPIN': '36393f',

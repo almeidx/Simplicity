@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 const { MessageEmbed } = require('discord.js')
 const moment = require('moment')
-moment.locale('pt-BR')
 module.exports = async function guildMemberAdd (member) {
   const chan = member.guild.channels.find(ch => ch.name === 'modlog')
   const chann = member.guild.channels.get('538787820790087680')
