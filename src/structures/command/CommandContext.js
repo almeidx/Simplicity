@@ -19,7 +19,6 @@ class CommandContext {
     this.emoji = this._emoji.bind(this)
     this.send = this._send.bind(this)
   }
-
   _emoji (name = 'QUESTION', options) {
     const { id, noEmoji } = Object.assign({ id: false, noEmoji: false }, options)
     name = name.toUpperCase()
@@ -84,5 +83,4 @@ class CommandContext {
     return this.channel.send(embed)
   }
 }
-
 module.exports = CommandContext

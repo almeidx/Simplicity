@@ -131,5 +131,9 @@
     "emojify": {
         "invalidCharacters": "Invalid characters!",
         "messageTooBig": "The message you provided is too big!"
+    },
+    "weather": {
+        "error": "I wasn't able to find a City with that name!",
+        "temperature": "Temperature"
     }
 }

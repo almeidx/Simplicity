@@ -1,5 +1,6 @@
 const Requirements = require('./command/Requirements')
 const { MessageEmbed } = require('discord.js')
+
 class Command {
   constructor (client) {
     this.client = client
@@ -9,7 +10,6 @@ class Command {
     this.aliases = []
     this.requirements = null
   }
-
   async run () {}
 
   async _run (context) {
@@ -31,5 +31,4 @@ class Command {
     return context.send(embed, { error: true, options: error.options })
   }
 }
-
 module.exports = Command

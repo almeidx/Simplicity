@@ -6,5 +6,4 @@ class SimplicityEmbed extends MessageEmbed {
     this.simpliData = this.data
   }
 }
-
 module.exports = SimplicityEmbed

@@ -34,5 +34,4 @@ class Logger {
     return this._log({ tags, text: args.join(' ') }, { tags: 'bgYellow' })
   }
 }
-
 module.exports = Logger
