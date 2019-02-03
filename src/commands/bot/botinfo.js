@@ -28,7 +28,7 @@ class BotInfo extends Command {
       .addField(`${emoji('WATCH')} ${t('commands:botinfo.uptime')}`, UPTIME, true)
       .addField(`${emoji('COMMANDS')} ${t('commands:botinfo.commands')}`, this.client.commands.size, true)
       .addField(`${emoji('PINGS')} ${t('commands:botinfo.pings')}`, message.guild.shard.pings, true)
-    send(embed)
+    send(embed, { autoAuthor: false })
   }
 }
 module.exports = BotInfo

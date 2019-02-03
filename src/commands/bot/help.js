@@ -18,11 +18,11 @@ class Help extends Command {
       return send(embed)
     }
 
-    if (!this.client.commands.has(args[0])) {
+    if (!this.client.commands.has(args[0].toLowerCase())) {
       return send(embed.setDescription(`commands:help.commandUndefined`), { error: true })
     }
 
-    const command = this.client.fetchCommand(args[0])
+    const command = this.client.fetchCommand(args[0].toLowerCase())
 
     if (command.name === 'help') {
       return send(embed.setDescription('commands:help.commandHelp'), { error: true })
