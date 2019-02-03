@@ -10,7 +10,7 @@ class Eval extends Command {
     this.category = 'dev'
     this.requirements = { ownerOnly: true, argsRequired: true }
   }
-  run ({ author, guild, channel, member, language, voiceChannel, command, prefix, message, query, send, args, t, emoji }) {
+  run ({ author, guild, channel, member, language, command, prefix, message, query, send, args, t, emoji }) {
     let code = query.replace(/^```(js|javascript ?\n)?|```$/g, '')
     let value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length))
     let embed = new MessageEmbed()
@@ -33,6 +33,9 @@ class Eval extends Command {
                 message.delete().catch(() => {})
                 msg.delete().catch(() => {})
               }
+            })
+            .catch(() => {
+              msg.reactions.removeAll().catch(() => {})
             })
         })
         .catch(() => {})

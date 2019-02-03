@@ -25,6 +25,6 @@
   },
   "server": {
     "name": "Server",
-    "descriptions:": "This category has commands related to the server."
+    "description:": "This category has commands related to the server."
   }
 }
