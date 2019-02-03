@@ -18,7 +18,7 @@ class UserInfo extends Command {
         .addField('commands:userinfo.joinedAt', `${moment(member.joinedAt).format('LL')} (\`${moment(member.joinedAt).fromNow()}\`)`)
         .setAuthor(author.tag, author.displayAvatarURL({ size: 2048 }))
         .setThumbnail(author.displayAvatarURL({ size: 2048 }))
-      return send(embed)
+      return send(embed, { autoAuthor: false })
     } else if (message.mentions.members.first()) {
       const mem = message.mentions.members.first()
       embed.addField(t('commands:userinfo.name'), mem.user.tag, true)
@@ -28,7 +28,7 @@ class UserInfo extends Command {
         .addField(t('commands:userinfo.joinedAt'), `${moment(guild.members.get(mem.id).joinedAt).format('LL')} (\`${moment(guild.members.get(mem.id).joinedAt).fromNow()}\`)`, true)
         .setAuthor(mem.user.tag, mem.user.displayAvatarURL({ size: 2048 }))
         .setThumbnail(mem.user.displayAvatarURL({ size: 2048 }))
-      return send(embed)
+      return send(embed, { autoAuthor: false })
     } else {
       this.client.users.fetch(args)
         .then(u => {
@@ -41,7 +41,7 @@ class UserInfo extends Command {
           if (guild.members.get(u.id)) {
             embed.addField(t('commands:userinfo.joinedAt'), `${moment(guild.members.get(u.id).joinedAt).format('LL')} (\`${moment(guild.members.get(u.id).joinedAt).fromNow()}\`)`)
           }
-          return send(embed)
+          return send(embed, { autoAuthor: false })
         })
         .catch(() => {
           return send(embed, { error: true })
