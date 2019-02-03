@@ -129,11 +129,15 @@
         "action": "voice kick"
     },
     "emojify": {
+        "description": "This command replaces your text but using emojis.",
+        "usage": "Usage: **{{- prefix }}emojify [text]**",
         "invalidCharacters": "Invalid characters!",
         "messageTooBig": "The message you provided is too big!"
     },
-    "weather": {
-        "error": "I wasn't able to find a City with that name!",
-        "temperature": "Temperature"
+    "urban": {
+        "description": "This command lets you search for a definition in the Urban Dictionary.",
+        "usage": "Usage: **{{- prefix }}urban [keywords]**",
+        "noDef": "There is not a definition for the keywords you provided!",
+        "example": "Example"
     }
 }

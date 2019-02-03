@@ -32,7 +32,7 @@ class CommandContext {
   }
 
   _send (embed, options, optionsMessage = {}) {
-    options = Object.assign({ error: false, convertText: true, autoFooter: true, options: {} }, options)
+    options = Object.assign({ error: false, convertText: true, autoFooter: true, autoAuthor: true, options: {} }, options)
     const tOptions = Object.assign({ title: {}, description: {} }, options.options)
 
     if (embed instanceof MessageEmbed) {
@@ -65,7 +65,11 @@ class CommandContext {
       }
 
       if (options.autoFooter) {
-        embed.setFooter(`${this.t('utils:footer')} ${this.author.tag}`, this.author.displayAvatarURL())
+        embed.setFooter(`${this.t('utils:footer')} ${this.author.tag}`, this.author.displayAvatarURL({ size: 2048 }))
+      }
+
+      if (options.autoAuthor) {
+        embed.setAuthor(this.author.username, this.author.displayAvatarURL({ size: 2048 }))
       }
 
       if (options.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {

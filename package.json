@@ -24,7 +24,7 @@
     "node-google-translate-skidz": "^1.1.2",
     "shell-exec": "^1.0.2",
     "snekfetch": "^4.0.4",
-    "weather": "^0.1.0"
+    "urban": "^0.3.2"
   },
   "devDependencies": {
     "eslint-config-standard": "^12.0.0",

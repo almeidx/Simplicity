@@ -12,7 +12,7 @@ class Clear extends Command {
     let total = parseInt(amount)
     if (!total || total <= 2 || total >= 100) {
       return send(t('commands:clear.invalidValue'))
-    };
+    }
     const res = await channel.messages.fetch({ limit: amount })
     await channel.bulkDelete(res)
       .catch(() => {

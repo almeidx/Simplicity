@@ -19,7 +19,9 @@ module.exports = {
     'WATCH': '⌚',
     'ERROR': '🚫',
     'USAGE': '🖊',
-    'ALIASES': '🗝'
+    'ALIASES': '🗝',
+    'THUMBS_UP': '👍',
+    'THUMBS_DOWN': '👎'
   },
   TAGS_LOGGERS: [
     'ERROR',
