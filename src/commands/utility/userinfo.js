@@ -8,45 +8,20 @@ class UserInfo extends Command {
     this.aliases = ['ui', 'user']
     this.category = 'util'
   }
-  run ({ author, guild, send, message, member, args, t, emoji }) {
+  run ({ guild, send, message, member, query, args, t, emoji }) {
     const embed = new MessageEmbed()
-    if (args.length === 0) {
-      embed.addField('commands:userinfo.name', author.tag, true)
-        .addField('commands:userinfo.id', member.id)
-        .addField('commands:userinfo.status', `${emoji(author.presence.status.toUpperCase())} ${t('utils:status.' + author.presence.status)}`)
-        .addField('commands:userinfo.createdAt', `${moment(author.createdAt).format('LL')} (\`${moment(author.createdAt).fromNow()}\`)`)
-        .addField('commands:userinfo.joinedAt', `${moment(member.joinedAt).format('LL')} (\`${moment(member.joinedAt).fromNow()}\`)`)
-        .setAuthor(author.tag, author.displayAvatarURL({ size: 2048 }))
-        .setThumbnail(author.displayAvatarURL({ size: 2048 }))
-      return send(embed, { autoAuthor: false })
-    } else if (message.mentions.members.first()) {
-      const mem = message.mentions.members.first()
-      embed.addField(t('commands:userinfo.name'), mem.user.tag, true)
-        .addField(t('commands:userinfo.id'), mem.id)
-        .addField(t('commands:userinfo.status'), `${emoji(mem.presence.status.toUpperCase())} ${t('utils:status.' + mem.presence.status)}`, true)
-        .addField(t('commands:userinfo.createdAt'), `${moment(mem.user.createdAt).format('LL')} (\`${moment(mem.user.createdAt).fromNow()}\`)`, true)
-        .addField(t('commands:userinfo.joinedAt'), `${moment(guild.members.get(mem.id).joinedAt).format('LL')} (\`${moment(guild.members.get(mem.id).joinedAt).fromNow()}\`)`, true)
-        .setAuthor(mem.user.tag, mem.user.displayAvatarURL({ size: 2048 }))
-        .setThumbnail(mem.user.displayAvatarURL({ size: 2048 }))
-      return send(embed, { autoAuthor: false })
-    } else {
-      this.client.users.fetch(args)
-        .then(u => {
-          embed.addField(t('commands:userinfo.name'), u.tag, true)
-            .addField(t('commands:userinfo.id'), u.id, true)
-            .addField(t('commands:userinfo.status'), `${emoji(u.presence.status.toUpperCase())} ${t('utils:status.' + u.presence.status)}`)
-            .addField(t('commands:userinfo.createdAt'), `${moment(u.createdAt).format('LL')} (\`${moment(u.createdAt).fromNow()}\`)`)
-            .setThumbnail(u.displayAvatarURL({ size: 2048 }))
-            .setAuthor(u.tag, u.displayAvatarURL({ size: 2048 }))
-          if (guild.members.get(u.id)) {
-            embed.addField(t('commands:userinfo.joinedAt'), `${moment(guild.members.get(u.id).joinedAt).format('LL')} (\`${moment(guild.members.get(u.id).joinedAt).fromNow()}\`)`)
-          }
-          return send(embed, { autoAuthor: false })
-        })
-        .catch(() => {
-          return send(embed, { error: true })
-        })
+    let mem = message.mentions.members.last() || this.client.users.get(query, true) || guild.members.find(m => m.displayName.toLowerCase().startsWith(query.toLowerCase()) || m.user.username.toLowerCase().startsWith(query.toLowerCase()) || m.displayName.toLowerCase().endsWith(query.toLowerCase()) || m.user.username.toLowerCase().endsWith(query.toLowerCase())) || member
+    if (args.length === 0) mem = member
+    embed.setAuthor((mem.user || mem).username, (mem.user || mem).displayAvatarURL({ size: 2048 }))
+      .addField('commands:userinfo.name', (mem.user || mem).tag, true)
+      .addField('commands:userinfo.id', mem.id, true)
+      .addField('commands:userinfo.status', `${emoji((mem.user || mem).presence.status.toUpperCase())} ${t('utils:status.' + (mem.user || mem).presence.status)}`)
+      .addField('commands:userinfo.createdAt', `${moment((mem.user || mem).createdAt).format('LL')} (${moment((mem.user || mem).createdAt).fromNow()})`)
+      .setThumbnail((mem.user || mem).displayAvatarURL({ size: 2048 }))
+    if (mem.guild) {
+      embed.addField('commands:userinfo.joinedAt', `${moment(mem.joinedAt).format('LL')} (${moment(mem.joinedAt).fromNow()})`)
     }
+    send(embed, { autoAuthor: false })
   }
 }
 module.exports = UserInfo

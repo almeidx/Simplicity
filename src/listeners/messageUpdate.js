@@ -7,7 +7,7 @@ module.exports = async function messageUpdate (oldMessage, newMessage) {
     .setTimestamp()
     .setFooter(`ID: ${oldMessage.author.id}`, newMessage.author.displayAvatarURL({ size: 2048 }))
   if (oldMessage.channel === chan) return
-  if (chan) {
+  if (chan && oldMessage.guild.me.permissions.has('READ_AUDIT_LOGS')) {
     if (oldMessage.content !== newMessage.content) { // Message Edits
       embed.setDescription(`**Message by ${oldMessage.author} edited in ${oldMessage.channel}**`)
         .addField('Before', (oldMessage.content.slice(0, 1020) + oldMessage.content.length >= 1024 ? '...' : oldMessage.content) || '** **', true)

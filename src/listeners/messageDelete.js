@@ -3,7 +3,7 @@ const Constants = require('../utils/Constants')
 module.exports = async function messageDelete (message) {
   const chan = message.guild.channels.find(ch => ch.name === 'logs')
   if (message.channel === chan) return
-  if (chan) {
+  if (chan && message.guild.me.permissions.has('READ_AUDIT_LOGS')) {
     const embed = new MessageEmbed()
       .addField('Content', (message.content.slice(0, 1020) + message.content.length >= 1024 ? ' ...' : message.content) || '** **')
       .setDescription(`**Message sent by ${message.author} deleted in ${message.channel}**`)
