@@ -1,5 +1,6 @@
 const { Command } = require('../../')
-const exec = require('shell-exec')
+const { MessageEmbed } = require('discord.js')
+const { exec } = require('child_process')
 
 class Exec extends Command {
   constructor (client) {
@@ -8,12 +9,19 @@ class Exec extends Command {
     this.category = 'dev'
     this.requirements = { argsRequired: true, ownerOnly: true }
   }
+
   run ({ send, query }) {
-    exec(query)
-      .then(c => {
-        send(JSON.stringify(c.stdout).replace(/\\n/g, '\n').slice(1, -1))
-      })
-      .catch(console.log)
+    exec(query, (error, stdout) => {
+      const embed = new MessageEmbed()
+      if (error) {
+        embed.setDescription(error)
+        return send(embed, { error: true })
+      } else {
+        embed.setDescription(stdout)
+        return send(embed)
+      }
+    })
   }
 }
+
 module.exports = Exec
