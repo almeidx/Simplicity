@@ -2,6 +2,7 @@ const CommandError = require('./CommandError')
 class Requirements {
   constructor (requirements = {}) {
     this.argsRequired = false
+    this.nsfwChannelOnly = false
     this.ownerOnly = false
     this.clientPermissions = []
     this.permissions = []
