@@ -5,7 +5,6 @@ const Collection = require('./DBCollection')
 class Database {
   constructor (client) {
     this.client = client
-    this._url = `mongodb://${process.env.MLAB_LOGIN}:${process.env.MLAB_PASSWORD}@${process.env.MLAB_EMAIL}.mlab.com:${process.env.MLAB_ID}`
     this._guilds = mongoose.model('guilds', new Schema({
       _id: { type: String, required: true },
       lang: { type: String },
@@ -15,7 +14,7 @@ class Database {
       blacklist: { type: Boolean }
     }))
     this.guilds = new Collection(this._guilds)
-    mongoose.connect(this._url, { useNewUrlParser: true })
+    mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true })
       .catch(e => console.log(e))
   }
 }
