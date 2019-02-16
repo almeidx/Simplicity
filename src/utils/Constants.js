@@ -19,7 +19,9 @@ module.exports = {
     'WATCH': '⌚',
     'ERROR': '🚫',
     'USAGE': '🖊',
-    'ALIASES': '🗝'
+    'ALIASES': '🗝',
+    'THUMBS_UP': '👍',
+    'THUMBS_DOWN': '👎'
   },
   TAGS_LOGGERS: [
     'ERROR',
@@ -31,5 +33,13 @@ module.exports = {
     'EVAL',
     'RESULT',
     'USAGE'
-  ]
+  ],
+  COLORS: {
+    'MESSAGE_DELETE': '36393f',
+    'MESSAGE_EDIT': '36393f',
+    'MESSAGE_PIN': '36393f',
+    'MESSAGE_UNPIN': '36393f',
+    'MEMBER_UNBAN': '2ECC71',
+    'MEMBER_BAN': 'ff3535'
+  }
 }

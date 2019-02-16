@@ -5,7 +5,7 @@
         "minutes": "minutes",
         "seconds": "seconds"
     },
-    "footer": "Requested by:",
+    "footer": "Executed by:",
     "status": {
         "online": "Online",
         "idle": "Idle",

@@ -12,23 +12,22 @@ class Avatar extends Command {
     if (args.length === 0) {
       embed.setImage(author.displayAvatarURL({ size: 2048 }))
         .setAuthor(author.tag, author.displayAvatarURL({ size: 2048 }))
-      return send(embed)
+      return send(embed, { autoAuthor: false })
     }
     if (message.mentions.members.first()) {
       let mem = message.mentions.members.first()
       embed.setImage(mem.user.displayAvatarURL({ size: 2048 }))
         .setAuthor(mem.user.tag, mem.user.displayAvatarURL({ size: 2048 }))
-      return send(embed)
+      return send(embed, { autoAuthor: false })
     } else {
       this.client.users.fetch(args[0])
         .then(u => {
           embed.setImage(u.displayAvatarURL({ size: 2048 }))
             .setAuthor(u.tag, u.displayAvatarURL({ size: 2048 }))
-          return send(embed)
+          return send(embed, { autoAuthor: false })
         })
         .catch(() => {
-          embed.setTitle(t('errors:general'))
-          return send(embed)
+          return send(embed, { error: true })
         })
     }
   }

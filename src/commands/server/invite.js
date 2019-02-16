@@ -4,7 +4,7 @@ const { Command } = require('../..')
 class Invite extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['inv']
+    this.aliases = ['inv', 'div']
     this.category = 'server'
   }
   async run ({ guild, author, message, send, t, args }) {

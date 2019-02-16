@@ -8,5 +8,10 @@
     "clientMissingPermission": "I require the `{{- permission }}` permission in order to execute this command!",
     "clientMissingPermissions": "I require the {{- permission }} permissions in order to execute this command!",
     "userMissingPermission": "You require the `{{- permission }}` permission in order to execute this command!",
-    "userMissingPermissions": "You require the {{- permission }} permissions in order to execute this command!"
+    "userMissingPermissions": "You require the {{- permission }} permissions in order to execute this command!",
+    "userMissingRole": "You can't {{- action }} this user because they have the same or higher role as you.",
+    "clientMissingRole": "I can't {{- action }} this user because they have the same or higher role as me.",
+    "noVoiceChannel": "The user is not in a Voice Channel.",
+    "invalidUser": "The ID or the user you mentioned is invalid!",
+    "nsfwChannel": "This command can only be used in NSFW Channels!"
 }

@@ -12,7 +12,6 @@ class Translate extends Command {
   run ({ author, send, args, t }) {
     const text = args.join(' ')
     const embed = new MessageEmbed()
-      .setFooter(`${t('utils:footer')} ${author.tag}`, author.displayAvatarURL({ size: 2048 }))
     translate({ text: text, target: 'en' }, function (result) {
       if (result.translation) {
         embed.setThumbnail('attachment://translate.png')
@@ -22,8 +21,6 @@ class Translate extends Command {
           .attachFiles(new MessageAttachment('src/assets/google-translate.png', 'translate.png'))
         return send(embed)
       } else {
-        embed.setTitle(t('errors:oops'))
-          .setDescription(t('errors:general'))
         return send(embed, { error: true })
       }
     })

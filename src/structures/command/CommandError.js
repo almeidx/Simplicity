@@ -4,5 +4,4 @@ class CommandError extends Error {
     this.options = options
   }
 }
-
 module.exports = CommandError

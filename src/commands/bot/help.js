@@ -18,11 +18,11 @@ class Help extends Command {
       return send(embed)
     }
 
-    if (!this.client.commands.has(args[0])) {
+    if (!this.client.commands.has(args[0].toLowerCase())) {
       return send(embed.setDescription(`commands:help.commandUndefined`), { error: true })
     }
 
-    const command = this.client.fetchCommand(args[0])
+    const command = this.client.fetchCommand(args[0].toLowerCase())
 
     if (command.name === 'help') {
       return send(embed.setDescription('commands:help.commandHelp'), { error: true })
@@ -30,7 +30,7 @@ class Help extends Command {
 
     embed.setTitle(command.name)
     if (t(`commands:${command.name}.description`) !== `${command.name}.description`) embed.setDescription(`commands:${command.name}.description`, { prefix })
-    if (t(`commands:${command.name}.usage`) !== `${command.name}.usage`) embed.addField(`${emoji('USAGE')} ${t('commands:help.usage')}`, `commands:${command.name}.usage`)
+    if (t(`commands:${command.name}.usage`) !== `${command.name}.usage`) embed.addField(`${emoji('USAGE')} ${t('commands:help.usage')}`, t(`commands:${command.name}.usage`, { prefix }))
     if (command.aliases.length !== 0) embed.addField(`${emoji('ALIASES')} ${t('commands:help.aliases')}`, command.aliases)
     return send(embed)
   }

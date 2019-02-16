@@ -1,5 +1,5 @@
 const Colors = require('colors')
-const Constants = require('../Utils/Constants')
+const Constants = require('../utils/Constants')
 const moment = require('moment')
 moment.locale('pt-br')
 
@@ -34,5 +34,4 @@ class Logger {
     return this._log({ tags, text: args.join(' ') }, { tags: 'bgYellow' })
   }
 }
-
 module.exports = Logger

@@ -8,36 +8,34 @@ class Unban extends Command {
     this.category = 'mod'
     this.requirements = { argsRequired: true, permissions: ['BAN_MEMBERS'], clientPermissions: ['BAN_MEMBERS'] }
   }
-  run ({ message, args }) {
+  run ({ author, send, guild, t, args }) {
     const embed = new MessageEmbed()
-      .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 2048 }))
-      .setTimestamp()
-      .setFooter(`Executed by: ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048 }))
+      .setAuthor(author.username, author.displayAvatarURL({ size: 2048 }))
       .setColor('RED')
-    let regex = '^[0-9}*$'
     let reason = args.slice(1)
-    let title = 'Something wen\'t wrong!'
+    let title = t('errors:general')
     let msg
-    if (args[0].match(regex)) {
+    if (args[0].match('(^[0-9}*$)')) {
       try {
-        this.client.users.fetch(args[0]).then(u => {
-          message.guild.unban(args[0], { reason: (reason ? message.author.tag + ' | ' + reason : message.author.tag + ' | No reason provided.') })
-          title = 'Member Unbanned'
-          msg = `${u.user.tag} has been unbanned from the server!`
-          embed.addField('Unbanned by:', message.author, true)
-            .addField('Reason:', reason || 'No reason provided.')
-            .setColor('0494bc')
-            .setThumbnail(u.user.displayAvatarURL({ size: 2048 }))
-        })
+        this.client.users.fetch(args[0])
+          .then(u => {
+            guild.unban(args[0], { reason: author.tag + ' | ' + (reason || t('commands:unban.noReason')) })
+            title = t('commands:unban.success')
+            msg = t('commands:unban.userUnbanned', { tag: u.user.tag })
+            embed.addField('Unbanned by:', author, true)
+              .addField(t('commands:unban.reason'), reason || 'No reason provided.')
+              .setColor(process.env.COLOR)
+              .setThumbnail(u.user.displayAvatarURL({ size: 2048 }))
+          })
       } catch (err) {
-        msg = 'I was unable to find a user with that ID!'
+        msg = t('commands:unban.noUser')
       }
     } else {
-      msg = 'You have provided a wrong ID!'
+      msg = t('commands:unban.badID')
     }
     embed.setTitle(title)
       .setDescription(msg)
-    message.channel.send(embed)
+    send(embed)
   }
 }
 module.exports = Unban

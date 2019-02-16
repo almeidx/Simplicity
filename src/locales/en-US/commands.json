@@ -91,5 +91,53 @@
         "createdAt": "» Created At",
         "joinedAt": "» Joined At",
         "status": "» Status"
+    },
+    "ban": {
+        "description": "This command lets you ban members of your server.",
+        "usage": "Usage: **{{- prefix }}ban [mention/id] <reason>**",
+        "success": "Member Banned",
+        "userBanned": "{{- user }} has been banned from the server",
+        "bannedBy": "Banned by",
+        "reason": "Reason",
+        "noReason": "No reason provided.",
+        "action": "ban"
+    },
+    "kick": {
+        "description": "This command lets you kick members of your server.",
+        "usage": "Usage: **{{- prefix }}kick [mention/id] <reason>**",
+        "success": "Member Kicked",
+        "userKicked": "{{- user }} has been kicked from the server",
+        "kickedBy": "Kicked by",
+        "reason": "Reason",
+        "noReason": "No reason provided.",
+        "action": "kick"
+    },
+    "unban": {
+        "description": "This command lets you unban members of your server.",
+        "usage": "Usage: **{{- prefix }}unban [id] <reason>**",
+        "success": "Member Unbanned",
+        "userUnbanned": "{{- tag }} has been unbanned from the server!`",
+        "reason": "Reason",
+        "noUser": "I was unable to find a user with that ID!",
+        "badID": "You have provided a wrong ID!",
+        "noReason": "'No reason provided.'"
+    },
+    "vckick": {
+        "description": "This command lets you kick members of voice channels.",
+        "usage": "Usage: **{{- prefix }}vckick [mention/id] <reason>**",
+        "success": "{{- auth }} has kicked {{- memb }} from a Voice Channel.",
+        "action": "voice kick"
+    },
+    "emojify": {
+        "description": "This command replaces your text but using emojis.",
+        "usage": "Usage: **{{- prefix }}emojify [text]**",
+        "invalidCharacters": "Invalid characters!",
+        "messageTooBig": "The message you provided is too big!"
+    },
+    "urban": {
+        "description": "This command lets you search for a definition in the Urban Dictionary.",
+        "usage": "Usage: **{{- prefix }}urban [keywords]**",
+        "noDef": "There is not a definition for the keywords you provided!",
+        "example": "Example"
     }
 }

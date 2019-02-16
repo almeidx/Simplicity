@@ -18,7 +18,7 @@ class BotInfo extends Command {
 
     const embed = new MessageEmbed()
       .setTitle('commands:botinfo.botinfo')
-      .setThumbnail(this.client.user.displayAvatarURL({ size: 2042 }))
+      .setThumbnail(this.client.user.displayAvatarURL({ size: 2048 }))
       .addField(`${emoji('PING')} Ping`, `${Math.floor(this.client.ws.ping)}ms`, true)
       .addField(`${emoji('USERS')} ${t('commands:botinfo.guildAndUsers')}`, `${this.client.guilds.size} | ${this.client.users.size}`, true)
       .addField(`${emoji('HASH')} ${t('commands:botinfo.channelAndEmojis')}`, `${this.client.channels.size} | ${this.client.emojis.size}`, true)
@@ -27,8 +27,8 @@ class BotInfo extends Command {
       .addField(`${emoji('PC')} ${t('commands:botinfo.os')}`, PLATFORM, true)
       .addField(`${emoji('WATCH')} ${t('commands:botinfo.uptime')}`, UPTIME, true)
       .addField(`${emoji('COMMANDS')} ${t('commands:botinfo.commands')}`, this.client.commands.size, true)
-      .addField(`${emoji('PINGS')} ${t('commands:botinfo.pings')}`, message.guild.shard.pings.join(', '), true)
-    send(embed)
+      .addField(`${emoji('PINGS')} ${t('commands:botinfo.pings')}`, message.guild.shard.pings, true)
+    send(embed, { autoAuthor: false })
   }
 }
 module.exports = BotInfo

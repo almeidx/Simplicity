@@ -44,5 +44,4 @@ class Requirements {
     }
   }
 }
-
 module.exports = Requirements
