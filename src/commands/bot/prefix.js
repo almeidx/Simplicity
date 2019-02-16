@@ -5,7 +5,7 @@ class Prefix extends Command {
   constructor (client) {
     super(client)
     this.category = 'bot'
-    this.requirements = { argsRequired: true, permissions: ['MANAGE_ROLES'] }
+    this.requirements = { argsRequired: true, permissions: ['MANAGE_GUILD'] }
   }
   async run ({ guild, query, send, t }) {
     const embed = new MessageEmbed()
