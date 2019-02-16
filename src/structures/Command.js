@@ -15,11 +15,11 @@ class Command {
   async _run (context) {
     const requirements = new Requirements(this.requirements)
     try {
-      requirements.handle(context)
+      await requirements.handle(context)
+      await this.run(context)
     } catch (e) {
       return this.sendError(context, e)
     }
-    return this.run(context)
   }
 
   sendError (context, error) {
