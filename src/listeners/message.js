@@ -4,6 +4,8 @@ module.exports = async function onMessage (message) {
   if (message.author.bot || message.type === 'dm' || !message.guild.me.permissions.has('SEND_MESSAGES')) return
 
   const guildData = await this.database.guilds.get(message.guild.id)
+  if (!guildData) await this.database.guilds.create(message.guild.id)
+
   const prefix = (guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX
   const language = (guildData && guildData.lang) ? guildData.lang : process.env.DEFAULT_LANG
 
