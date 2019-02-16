@@ -9,7 +9,8 @@ class Requirements {
       ownerOnly: 'errors:developerOnly',
       clientPermissions: 'errors:clientMissingPermission',
       userMissingPermission: 'errors:userMissingPermission',
-      argsRequired: 'errors:missingParameters'
+      argsRequired: 'errors:missingParameters',
+      nsfwChannelOnly: 'errors:nsfwChannel'
     }
     for (const req in requirements) {
       let opts = requirements[req]
@@ -41,6 +42,9 @@ class Requirements {
     }
     if (this.argsRequired && args.length === 0) {
       throw new CommandError(this.responses.argsRequired)
+    }
+    if (this.nsfwChannelOnly && !channel.nsfw) {
+      throw new CommandError(this.responses.nsfwChannelOnly)
     }
   }
 }

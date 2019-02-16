@@ -46,8 +46,8 @@ class CommandContext {
       }
       if (embed.author && embed.author.name && checkGetT(embed.author.name)) embed.author.name = this.t(embed.author.name)
       if (!embed.color) embed.setColor(options.error ? 'RED' : COLOR)
-      if (options.autoFooter) embed.setFooter(`${this.t('utils:footer')} ${this.author.tag}`, this.author.displayAvatarURL({ size: 2048 }))
-      if (options.autoAuthor) embed.setAuthor(this.author.username, this.author.displayAvatarURL({ size: 2048 }))
+      if (options.autoFooter) embed.setFooter(this.author.tag)
+      if (options.autoAuthor) embed.setAuthor(this.author.tag, this.author.displayAvatarURL())
       if (options.autoTimestamp) embed.setTimestamp()
       if (options.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {
         let message = []
