@@ -7,12 +7,11 @@ class Avatar extends Command {
     this.aliases = ['av']
     this.category = 'util'
   }
-  run ({ author, guild, send, args, message, t }) {
+  run ({ author, send, args, message }) {
     const embed = new MessageEmbed()
     if (args.length === 0) {
       embed.setImage(author.displayAvatarURL({ size: 2048 }))
-        .setAuthor(author.tag, author.displayAvatarURL({ size: 2048 }))
-      return send(embed, { autoAuthor: false })
+      return send(embed)
     }
     if (message.mentions.members.first()) {
       let mem = message.mentions.members.first()

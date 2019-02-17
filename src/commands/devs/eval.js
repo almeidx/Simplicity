@@ -35,7 +35,9 @@ class Eval extends Command {
         await msg.delete()
         await message.delete()
       })
-      collector.on('end', () => msg.reactions.removeAll())
+      collector.on('end', () => {
+        if (msg) msg.reactions.removeAll()
+      })
     }
   }
 }
