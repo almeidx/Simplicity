@@ -5,6 +5,6 @@ cache:
   directories:
     - "node_modules"
 notifications:
-  webhooks: https://discordapp.com/api/webhooks/547025221236949003/zWFY5ug8RrPSyBQgfVEXmFCkODd_4Y4D5f-9cI1-AGXQ5Ca4MVtR7wawf-_D7PHVSk-7
+  webhooks: https://discordapp.com/api/webhooks/547025221236949003/zWFY5ug8RrPSyBQgfVEXmFCkODd_4Y4D5f-9cI1-AGXQ5Ca4MVtR7wawf-_D7PHVSk-7/notifications
   slack:
     on_success: always
