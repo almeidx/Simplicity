@@ -35,11 +35,11 @@ class Requirements {
     }
     const clientPerms = this.clientPermissions.filter((p) => !channel.permissionsFor(guild.me).has(p)).map(p => t('permissions:' + p))
     if (clientPerms.length !== 0) {
-      throw new CommandError(this.responses.clientPermissions, { description: { permission: clientPerms[0] } })
+      throw new CommandError(t(this.responses.clientPermissions, { permissions: clientPerms.join(' '), count: clientPerms.length }))
     }
     const memberPerms = this.permissions.filter((p) => !channel.permissionsFor(author.id).has(p)).map(p => t('permissions:' + p))
     if (memberPerms.length !== 0) {
-      throw new CommandError(this.responses.permissions, { description: { permission: memberPerms[0] } })
+      throw new CommandError(t(this.responses.permissions, { permissions: memberPerms.join(' '), count: memberPerms.length }))
     }
     if (this.argsRequired && args.length === 0) {
       throw new CommandError(this.responses.argsRequired)
