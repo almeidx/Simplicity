@@ -1,5 +1,5 @@
-const { MessageEmbed } = require('discord.js')
-const { Command } = require('../../')
+const { Command, Embed } = require('../../')
+const { version } = require('discord.js')
 const moment = require('moment')
 require('moment-duration-format')
 
@@ -16,19 +16,19 @@ class BotInfo extends Command {
     const RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)
     const PLATFORM = process.platform.charAt(0).toUpperCase() + process.platform.slice(1)
 
-    const embed = new MessageEmbed()
+    const embed = new Embed({ message, t, emoji, autoFooter: false })
       .setTitle('commands:botinfo.botinfo')
       .setThumbnail(this.client.user.displayAvatarURL({ size: 2048 }))
-      .addField(`${emoji('PING')} Ping`, `${Math.floor(this.client.ws.ping)}ms`, true)
-      .addField(`${emoji('USERS')} ${t('commands:botinfo.guildAndUsers')}`, `${this.client.guilds.size} | ${this.client.users.size}`, true)
-      .addField(`${emoji('HASH')} ${t('commands:botinfo.channelAndEmojis')}`, `${this.client.channels.size} | ${this.client.emojis.size}`, true)
-      .addField(`${emoji('RAM')} CPU | RAM`, `${CPU}mb | ${RAM}mb`, true)
-      .addField(`${emoji('BOOKS')} Discord.js | Node.js`, `${require('discord.js').version} | ${process.versions.node}`, true)
-      .addField(`${emoji('PC')} ${t('commands:botinfo.os')}`, PLATFORM, true)
-      .addField(`${emoji('WATCH')} ${t('commands:botinfo.uptime')}`, UPTIME, true)
-      .addField(`${emoji('COMMANDS')} ${t('commands:botinfo.commands')}`, this.client.commands.size, true)
-      .addField(`${emoji('PINGS')} ${t('commands:botinfo.pings')}`, message.guild.shard.pings.join(', '), true)
-    send(embed, { autoAuthor: false })
+      .addField('Ping', `${Math.floor(this.client.ws.ping)}ms`, true, { emoji: 'PING' })
+      .addField('commands:botinfo.guildAndUsers', `${this.client.guilds.size} | ${this.client.users.size}`, true, { emoji: 'USERS' })
+      .addField('commands:botinfo.channelAndEmojis', `${this.client.channels.size} | ${this.client.emojis.size}`, true, { emoji: 'HASH' })
+      .addField('CPU | RAM', `${CPU}mb | ${RAM}mb`, true, { emoji: 'RAM' })
+      .addField('Discord.js | Node.js', `${version} | ${process.versions.node}`, true, { emoji: 'BOOKS' })
+      .addField('commands:botinfo.os', PLATFORM, true, { emoji: 'PC' })
+      .addField('commands:botinfo.uptime', UPTIME, true, { emoji: 'WATCH' })
+      .addField('commands:botinfo.commands', this.client.commands.size, true, { emoji: 'COMMANDS' })
+      .addField('commands:botinfo.pings', message.guild.shard.pings.join(', '), true, { emoji: 'PINGS' })
+    message.channel.send(embed)
   }
 }
 module.exports = BotInfo

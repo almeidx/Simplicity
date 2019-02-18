@@ -18,6 +18,7 @@ class Command {
       await requirements.handle(context)
       await this.run(context)
     } catch (e) {
+      console.log(e)
       return this.sendError(context, e)
     }
   }
