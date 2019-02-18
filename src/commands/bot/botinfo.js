@@ -27,7 +27,7 @@ class BotInfo extends Command {
       .addField(`${emoji('PC')} ${t('commands:botinfo.os')}`, PLATFORM, true)
       .addField(`${emoji('WATCH')} ${t('commands:botinfo.uptime')}`, UPTIME, true)
       .addField(`${emoji('COMMANDS')} ${t('commands:botinfo.commands')}`, this.client.commands.size, true)
-      .addField(`${emoji('PINGS')} ${t('commands:botinfo.pings')}`, message.guild.shard.pings, true)
+      .addField(`${emoji('PINGS')} ${t('commands:botinfo.pings')}`, message.guild.shard.pings.join(', '), true)
     send(embed, { autoAuthor: false })
   }
 }
