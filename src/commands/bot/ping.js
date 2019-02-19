@@ -1,4 +1,4 @@
-const { Command } = require('../../')
+const { Command, Embed } = require('../../')
 
 class Ping extends Command {
   constructor (client) {
@@ -6,10 +6,14 @@ class Ping extends Command {
     this.aliases = ['pong']
     this.category = 'bot'
   }
-  run ({ message, send, t }) {
-    send(t('commands:ping.loading'))
+
+  async run ({ message, send, t }) {
+    const embed = new Embed({ message, t })
+      .setDescription('commands:ping.loading')
+
+    send(embed)
       .then(msg => {
-        msg.edit(t('commands:ping.sucess', { HOST: msg.createdTimestamp - message.createdTimestamp, API: Math.round(this.client.ws.ping) }))
+        msg.edit(embed.setDescription('commands:ping.sucess', { HOST: msg.createdTimestamp - message.createdTimestamp, API: Math.round(this.client.ws.ping) }))
       })
   }
 }
