@@ -10,13 +10,13 @@ class BotInfo extends Command {
     this.category = 'bot'
     this.requirements = { clientPermissions: ['EMBED_LINKS'] }
   }
-  run ({ message, t, emoji, send }) {
+  run ({ t, emoji, send, guild }) {
     const UPTIME = moment.duration(this.client.uptime).format(`D[ ${t('utils:date.days')}], H[ ${t('utils:date.hours')}], m[ ${t('utils:date.minutes')}], s[ ${t('utils:date.seconds')}]`)
     const CPU = (process.cpuUsage().user / 1024 / 1024).toFixed(2)
     const RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)
-    const PLATFORM = process.platform.charAt(0).toUpperCase() + process.platform.slice(1)
+    const PLATFORM = process.platform[0].toUpperCase() + process.platform.slice(1)
 
-    const embed = new Embed({ message, t, emoji, autoFooter: false })
+    const embed = new Embed({ t, emoji, autoAuthor: false })
       .setTitle('commands:botinfo.botinfo')
       .setThumbnail(this.client.user.displayAvatarURL({ size: 2048 }))
       .addField('Ping', `${Math.floor(this.client.ws.ping)}ms`, true, { emoji: 'PING' })
@@ -27,8 +27,8 @@ class BotInfo extends Command {
       .addField('commands:botinfo.os', PLATFORM, true, { emoji: 'PC' })
       .addField('commands:botinfo.uptime', UPTIME, true, { emoji: 'WATCH' })
       .addField('commands:botinfo.commands', this.client.commands.size, true, { emoji: 'COMMANDS' })
-      .addField('commands:botinfo.pings', message.guild.shard.pings.join(', '), true, { emoji: 'PINGS' })
-    message.channel.send(embed)
+      .addField('commands:botinfo.pings', guild.shard.pings.join(', '), true, { emoji: 'PINGS' })
+    send(embed)
   }
 }
 module.exports = BotInfo
