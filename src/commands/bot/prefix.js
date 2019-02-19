@@ -1,31 +1,36 @@
-const { MessageEmbed } = require('discord.js')
-const { Command } = require('../..')
+const { Command, Embed } = require('../..')
 
 class Prefix extends Command {
   constructor (client) {
     super(client)
     this.category = 'bot'
-    this.requirements = { argsRequired: true, permissions: ['MANAGE_GUILD'] }
+    this.requirements = { argsRequired: true, permissions: ['MANAGE_ROLE'] }
   }
-  async run ({ guild, query, send, t }) {
-    const embed = new MessageEmbed()
+
+  async run ({ message, guild, query, send, t }) {
+    const embed = new Embed({ t, message })
+
     if (query.length > 10) {
       embed.setTitle('errors:denied')
-      embed.setDescription('commands:prefix.multiCharacters')
-      return send(embed, { error: true })
+        .setDescription('commands:prefix.multiCharacters')
+        .setError()
+      return send(embed)
     }
 
     try {
-      await this.client.database.guilds.edit(guild.id, { prefix: query })
+      const data = await this.client.database.guilds.edit(guild.id, { prefix: query })
+      if (!data) throw new Error()
       embed.setTitle('commands:prefix.done')
-      embed.setDescription(t('commands:prefix.sucess', { prefix: query }))
+        .setDescription('commands:prefix.sucess', { prefix: query })
       send(embed)
     } catch (err) {
       embed.setTitle('commands:prefix.oops')
-      embed.setDescription('commands:prefix.failed')
-      send(embed, { error: true })
+        .setDescription('commands:prefix.failed')
+        .setError()
+      send(embed)
       console.log(err)
     }
   }
 }
+
 module.exports = Prefix

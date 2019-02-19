@@ -39,6 +39,10 @@ class Embed extends MessageEmbed {
     return result
   }
 
+  setError () {
+    return this.setColor('RED')
+  }
+
   setTitle () {
     return super.setTitle(this._tt(...arguments))
   }
