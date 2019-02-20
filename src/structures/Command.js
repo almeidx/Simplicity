@@ -6,7 +6,6 @@ class Command {
     this.client = client
     this.name = 'none'
     this.category = 'none'
-    this.usage = false
     this.aliases = []
     this.requirements = null
   }
@@ -29,7 +28,7 @@ class Command {
       .setError()
       .setDescription(error.message, error.options)
 
-    if (this.usage && t(`commands:${this.name}.usage`) !== `${this.name}.usage`) {
+    if (t(`commands:${this.name}.usage`) !== `${this.name}.usage`) {
       embed.addField('errors:usage', `${prefix + this.name} ${t(`commands:${this.name}.usage`)}`)
     }
 

@@ -105,7 +105,7 @@
     },
     "kick": {
         "description": "This command lets you kick members of your server.",
-        "usage": "[mention/id] <reason>**",
+        "usage": "<mention/id> [reason]",
         "success": "Member Kicked",
         "userKicked": "{{- user }} has been kicked from the server",
         "kickedBy": "Kicked by",
