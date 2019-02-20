@@ -22,10 +22,10 @@ class Kick extends Command {
       throw new CommandError('errors:invalidUser')
     }
     if (guild.me.roles.highest.position <= guilty.roles.highest.position) {
-      throw new CommandError('errors:clientMissingRole', { action: t('commands:kick.action') })
+      throw new CommandError('errors:clientMissingRole', { action: t('commands:kick.action'), usage: false })
     }
     if (member.roles.highest.position <= guilty.roles.highest.position) {
-      throw new CommandError('errors:userMissingRole', { action: t('commands:kick.action') })
+      throw new CommandError('errors:userMissingRole', { action: t('commands:kick.action'), usage: false })
     }
 
     const reason = query.replace(new RegExp(`^(${guilty}|${id})`, 'g'), '').trim() || t('errors:noReason')

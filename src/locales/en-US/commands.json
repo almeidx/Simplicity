@@ -1,7 +1,6 @@
 {
     "botinfo": {
         "description": "This command shows you info about myself.",
-        "usage": "Usage: **{{- prefix }}botinfo**",
         "botinfo": "Bot Information",
         "guildAndUsers": "Guilds | Users",
         "channelAndEmojis": "Channels | Emojis",
@@ -14,13 +13,13 @@
         "about": "{{- botname}} is a bot with focous on moderation, utility, server management, and much more!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo see my commands, type **{{- prefix }}help <module>**",
         "categories": "Categories",
         "aliases": "Aliases",
-        "usage": "Usage",
+        "_usage": "Usage",
         "commandHelp": "What?!",
         "commandUndefined": "This command does not exist or is disabled"
     },
     "prefix": {
         "description": "This command sets my prefix on the server the command was used!",
-        "usage": "Usage: **{{- prefix }}prefix <prefix>**",
+        "usage": "<prefix>",
         "multiCharacters": "My new prefix can\\'t have more than 10 characters!",
         "done": "Done!",
         "sucess": "My prefix on this server has been changed to: `{{- prefix }}`",
@@ -29,30 +28,26 @@
     },
     "translate": {
         "description": "This command translates something to English.",
-        "usage": "Usage: **{{- prefix }}translate [text]**",
+        "usage": "<text>",
         "original": "Original",
         "translated": "Translated",
         "googleTranslate": "Google Translate"
     },
     "servericon": {
         "description": "This command shows the server icon.",
-        "usage": "Usage: **{{- usage }}**",
         "text": "Click [here]({{- icon }}) to download the icon!"
     },
     "uptime": {
         "description": "This command shows the time I've been up for.",
-        "usage": "Usage: **{{- prefix }}uptime**",
         "onlineFor": "I have been online for: **{{- duration }}**"
     },
     "ping": {
         "description": "This command shows the latency of the bot.",
-        "usage": "Usage: **{{- prefix }}ping**",
         "sucess": "**Latency:** {{- HOST }} ms\n**API Latency:** {{- API }} ms",
         "loading": "Loading..."
     },
     "serverinfo": {
         "description": "This command shows info about the server.",
-        "usage": "Usage: **{{- prefix }}serverinfo**",
         "name": "» Name",
         "id": "» ID",
         "owner": "» Owner",
@@ -63,7 +58,7 @@
     },
     "createemoji": {
         "description": "This command allows you to create emojis.",
-        "usage": "Usage: **{{- prefix }}createemoji [name] [link]**",
+        "usage": "[name] [link]",
         "noNameLink": "You either didn't specify the link of the emoji or the name of it.",
         "nameTooBig": "The name for the emoji you provided was too big.",
         "nameTooShort": "The name for the emoji you provided was too short.",
@@ -74,19 +69,19 @@
     },
     "invite": {
         "description": "This command shows how many persons the user has invited to the server.",
-        "usage": "Usage: **{{- prefix }}invite <mention/id>**",
+        "usage": "<mention/id>",
         "invitedMembers": "Invited members:"
     },
     "clear": {
         "description": "This command clears messages from the chat.",
-        "usage": "Usage: **{{- prefix }}clear [amount]**",
+        "usage": "[amount]",
         "invalidValue": "Please, give a value between 2 and 100!",
         "deleted": "{{- amt }} messages have been deleted by {{- auth }}.",
         "reason": "{{- auth }} [{{- authID }}] | Deleted {{- count }} messages."
     },
     "userinfo": {
         "description": "This command shows info about the user.",
-        "usage": "Usage: **{{- prefix }}userinfo <id/mention>**",
+        "usage": "<id/mention>",
         "name": "» Name",
         "id": "» ID",
         "createdAt": "» Created At",
@@ -95,7 +90,7 @@
     },
     "ban": {
         "description": "This command lets you ban members of your server.",
-        "usage": "Usage: **{{- prefix }}ban [mention/id] <reason>**",
+        "usage": "<reason>",
         "success": "Member Banned",
         "userBanned": "{{- user }} has been banned from the server",
         "bannedBy": "Banned by",
@@ -114,7 +109,7 @@
     },
     "unban": {
         "description": "This command lets you unban members of your server.",
-        "usage": "Usage: **{{- prefix }}unban [id] <reason>**",
+        "usage": "[id] <reason>",
         "success": "Member Unbanned",
         "userUnbanned": "{{- tag }} has been unbanned from the server!`",
         "reason": "Reason",
@@ -124,25 +119,25 @@
     },
     "vckick": {
         "description": "This command lets you kick members of voice channels.",
-        "usage": "Usage: **{{- prefix }}vckick [mention/id] <reason>**",
+        "usage": "[mention/id] <reason>",
         "success": "{{- auth }} has kicked {{- memb }} from a Voice Channel.",
         "action": "voice kick"
     },
     "emojify": {
         "description": "This command replaces your text but using emojis.",
-        "usage": "Usage: **{{- prefix }}emojify [text]**",
+        "usage": "[text]",
         "invalidCharacters": "Invalid characters!",
         "messageTooBig": "The message you provided is too big!"
     },
     "urban": {
         "description": "This command lets you search for a definition in the Urban Dictionary.",
-        "usage": "Usage: **{{- prefix }}urban [keywords]**",
+        "usage": "[keywords]",
         "noDef": "There is not a definition for the keywords you provided!",
         "example": "Example"
     },
     "config": {
         "description": "This command is the basis to config the bot on your server.",
-        "usage": "Usage: **{{- prefix}}config <module> <statement>**",
+        "usage": "<module> <statement>",
         "serverConfig": "Server Configuration",
         "channel": "Logging Channel"
     }
