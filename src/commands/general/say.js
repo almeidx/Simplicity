@@ -4,11 +4,11 @@ class Say extends Command {
   constructor (client) {
     super(client)
     this.category = 'general'
-    this.requirements = { argsRequired: true, clientPermissions: ['MANAGE_MESSAGES'] }
+    this.requirements = { argsRequired: true }
   }
-  run ({ send, message, args }) {
-    message.delete()
-    send(args.join(' '))
+  async run ({ message, query }) {
+    if (message.channel.permissionsFor(this.client.user.id).has('MANAGE_MESSAGES')) await message.delete()
+    await message.channel.send(query)
   }
 }
 module.exports = Say
