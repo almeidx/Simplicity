@@ -6,7 +6,7 @@ module.exports = async function onMessage (message) {
   const guildData = await this.database.guilds.get(message.guild.id)
   if (!guildData) await this.database.guilds.create(message.guild.id)
 
-  const prefix = (guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX
+  const prefix = ((guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX).toLowerCase()
   const language = (guildData && guildData.lang) ? guildData.lang : process.env.DEFAULT_LANG
 
   const botMention = message.guild.me.toString()
