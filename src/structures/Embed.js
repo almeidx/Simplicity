@@ -3,9 +3,10 @@ const { MessageEmbed } = require('discord.js')
 class Embed extends MessageEmbed {
   constructor (options, data) {
     super(data)
-    options = Object.assign({ message: null, t: null, emoji: null, autoFooter: true, autoTimestamp: true }, options)
+    options = Object.assign({ message: null, author: null, t: null, emoji: null, autoFooter: true, autoTimestamp: true }, options)
 
     this._message = options.message
+    this._author = options.author
     this._t = options.t
     this._emoji = options.emoji
 
@@ -21,8 +22,9 @@ class Embed extends MessageEmbed {
       this.setColor(color)
     }
 
-    if (options.autoFooter && this._message) {
-      this.setFooter(this._message.author.tag)
+    if (options.autoFooter && (this._message || this._author)) {
+      const author = this._message ? this._message.author : this._author
+      this.setFooter(author.tag)
     }
 
     if (options.autoTimestamp) {
