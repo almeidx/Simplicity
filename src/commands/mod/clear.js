@@ -1,5 +1,4 @@
-const { MessageEmbed } = require('discord.js')
-const { Command } = require('../../')
+const { Command, Embed } = require('../../')
 
 class Clear extends Command {
   constructor (client) {
@@ -9,19 +8,21 @@ class Clear extends Command {
     this.requirements = { argsRequired: true, permissions: ['MANAGE_MESSAGES'], clientPermissions: ['MANAGE_MESSAGES'] }
   }
   async run ({ author, channel, send, t, query }) {
-    const embed = new MessageEmbed()
-    let amount = query
-    let total = parseInt(amount)
+    const embed = new Embed({ t, author })
+    const total = parseInt(query)
+
     if (!total || total <= 1 || total >= 101) {
-      return send(embed.setDescription(t('commands:clear.invalidValue')), { error: true })
+      return send(embed.setDescription('commands:clear.invalidValue').setError())
     }
+
     const res = await channel.messages.fetch({ limit: total })
     await channel.bulkDelete(res).catch(() => {
-      return send(embed, { error: true })
+      return send(embed.setDescription('error:denied').setError())
     })
-    send(embed.setDescription(t('commands:clear.deleted'), { amt: res.size, auth: author }))
-      .then(msg => {
-        msg.delete({ options: { timeout: 10000 } })
+
+    send(embed.setDescription('commands:clear.deleted', { amt: res.size, auth: author }))
+      .then(async msg => {
+        await msg.delete({ timeout: 10000, reason: t('commands:clear.reason', { count: total, auth: author.tag, authID: author.id }) })
       })
   }
 }

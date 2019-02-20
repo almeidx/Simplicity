@@ -81,7 +81,8 @@
         "description": "This command clears messages from the chat.",
         "usage": "Usage: **{{- prefix }}clear [amount]**",
         "invalidValue": "Please, give a value between 2 and 100!",
-        "deleted": "{{- amt }} messages have been deleted by {{- auth }}."
+        "deleted": "{{- amt }} messages have been deleted by {{- auth }}.",
+        "reason": "{{- auth }} [{{- authID }}] | Deleted {{- count }} messages."
     },
     "userinfo": {
         "description": "This command shows info about the user.",
