@@ -29,7 +29,7 @@ class Kick extends Command {
     }
 
     const reason = query.replace(new RegExp(`^(${guilty}|${id})`, 'g'), '').trim() || t('errors:noReason')
-    await guilty.kick({ reason: `${author.tag} [${author.id}] | ${reason}` })
+    await guilty.kick(`${author.tag} [${author.id}] | ${reason}`)
 
     const embed = new Embed({ t, author })
       .setTitle('commands:kick.success')
