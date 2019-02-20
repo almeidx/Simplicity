@@ -1,5 +1,5 @@
 const Constants = require('../../utils/Constants')
-const { MessageEmbed } = require('discord.js')
+const Embed = require('../Embed')
 
 class CommandContext {
   constructor (options) {
@@ -19,6 +19,7 @@ class CommandContext {
     this.emoji = this._emoji.bind(this)
     this.send = this._send.bind(this)
   }
+
   _emoji (name = 'QUESTION', options) {
     const { id, noEmoji } = Object.assign({ id: false, noEmoji: false }, options)
     name = name.toUpperCase()
@@ -30,34 +31,19 @@ class CommandContext {
     }
     return Constants.EMOJIS[name] || (noEmoji ? '' : '❓')
   }
-  _send (embed, options, optionsMessage = {}) {
-    options = Object.assign({ error: false, convertText: true, autoFooter: true, autoAuthor: true, autoTimestamp: true, options: {} }, options)
-    const tOptions = Object.assign({ title: {}, description: {} }, options.options)
-    if (embed instanceof MessageEmbed) {
-      const checkGetT = (text) => text.includes(':') && !text.includes(' ')
-      const COLOR = process.env.COLOR ? process.env.COLOR : this.guild.me.displayColor !== 0 ? this.guild.me.displayColor : this.member.displayColor !== 0 ? this.member.displayColor : 'GREEN'
-      if (embed.title && checkGetT(embed.title)) embed.title = this.t(embed.title, tOptions.title)
-      if (embed.description && checkGetT(embed.description)) embed.description = (options.error ? this.emoji('ERROR') + ' ' : '') + this.t(embed.description, tOptions.description)
-      if (embed.fields !== 0) {
-        embed.fields = embed.fields.map((f) => ({
-          name: checkGetT(f.name) ? this.t(f.name) : f.name,
-          value: checkGetT(f.value) ? this.t(f.value) : f.value,
-          inline: f.inline }))
-      }
-      if (embed.author && embed.author.name && checkGetT(embed.author.name)) embed.author.name = this.t(embed.author.name)
-      if (!embed.color) embed.setColor(options.error ? 'RED' : COLOR)
-      if (options.autoFooter) embed.setFooter(this.author.tag)
-      if (options.autoAuthor) embed.setAuthor(this.author.tag, this.author.displayAvatarURL())
-      if (options.autoTimestamp) embed.setTimestamp()
+
+  _send (embed, options) {
+    options = Object.assign({ convertText: true }, options)
+    if (embed instanceof Embed) {
       if (options.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {
         let message = []
         if (embed.title) message.push(`**${embed.title}**`)
         if (embed.description) message.push(embed.description)
         if (embed.fields.length !== 0) embed.fields.forEach(e => message.push(`**${e.name}\n${e.value}`))
-        return this.channel.send(message, optionsMessage)
+        return this.channel.send(message, options)
       }
-      optionsMessage.embed = embed
-      return this.channel.send(optionsMessage)
+      options.embed = embed
+      return this.channel.send(options)
     }
     return this.channel.send(embed)
   }
