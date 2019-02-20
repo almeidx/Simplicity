@@ -8,3 +8,11 @@ notifications:
   webhooks: https://discordapp.com/api/webhooks/547025221236949003/zWFY5ug8RrPSyBQgfVEXmFCkODd_4Y4D5f-9cI1-AGXQ5Ca4MVtR7wawf-_D7PHVSk-7/status
   slack:
     on_success: always
+after_success:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh success $WEBHOOK_URL
+after_failure:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL
