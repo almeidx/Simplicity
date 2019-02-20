@@ -10,13 +10,13 @@ class BotInfo extends Command {
     this.category = 'bot'
     this.requirements = { clientPermissions: ['EMBED_LINKS'] }
   }
-  run ({ t, emoji, send, guild }) {
+  run ({ author, t, emoji, send, guild }) {
     const UPTIME = moment.duration(this.client.uptime).format(`D[ ${t('utils:date.days')}], H[ ${t('utils:date.hours')}], m[ ${t('utils:date.minutes')}], s[ ${t('utils:date.seconds')}]`)
     const CPU = (process.cpuUsage().user / 1024 / 1024).toFixed(2)
     const RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)
     const PLATFORM = process.platform[0].toUpperCase() + process.platform.slice(1)
 
-    const embed = new Embed({ t, emoji, autoAuthor: false })
+    const embed = new Embed({ author, t, emoji })
       .setTitle('commands:botinfo.botinfo')
       .setThumbnail(this.client.user.displayAvatarURL({ size: 2048 }))
       .addField('Ping', `${Math.floor(this.client.ws.ping)}ms`, true, { emoji: 'PING' })

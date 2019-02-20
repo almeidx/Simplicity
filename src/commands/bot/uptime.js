@@ -1,5 +1,4 @@
-const { Command, Utils } = require('../..')
-const { MessageEmbed } = require('discord.js')
+const { Command, Utils, Embed } = require('../..')
 
 class Uptime extends Command {
   constructor (client) {
@@ -8,8 +7,8 @@ class Uptime extends Command {
     this.category = 'bot'
   }
   run ({ send, t }) {
-    const embed = new MessageEmbed()
-      .setDescription(t('commands:uptime.onlineFor', { duration: Utils.convertDateLang(t, this.client.uptime) }))
+    const embed = new Embed({ t })
+      .setDescription('commands:uptime.onlineFor', { duration: Utils.convertDateLang(t, this.client.uptime) })
     send(embed)
   }
 }

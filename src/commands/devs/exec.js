@@ -1,5 +1,4 @@
-const { Command } = require('../../')
-const { MessageEmbed } = require('discord.js')
+const { Command, Embed } = require('../../')
 const { exec } = require('child_process')
 
 class Exec extends Command {
@@ -12,7 +11,7 @@ class Exec extends Command {
 
   run ({ send, query }) {
     exec(query, (error, stdout) => {
-      const embed = new MessageEmbed()
+      const embed = new Embed()
       if (error) {
         embed.setDescription(error)
         return send(embed, { error: true })

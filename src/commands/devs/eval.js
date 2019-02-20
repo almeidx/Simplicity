@@ -1,7 +1,6 @@
 /* eslint-disable no-eval */
-const { MessageEmbed } = require('discord.js')
 const { inspect } = require('util')
-const { Command, Loggers } = require('../../')
+const { Command, Embed, Loggers } = require('../../')
 
 class Eval extends Command {
   constructor (client) {
@@ -14,7 +13,7 @@ class Eval extends Command {
   async run ({ author, guild, channel, member, language, command, prefix, message, query, send, args, t, emoji }) {
     const code = query.replace(/^```(js|javascript ?\n)?|```$/g, '')
     const value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length))
-    const embed = new MessageEmbed()
+    const embed = new Embed()
     try {
       const resultEval = eval(code)
       const toEval = typeof resultEval === 'string' ? resultEval : inspect(resultEval, { depth: 1 })

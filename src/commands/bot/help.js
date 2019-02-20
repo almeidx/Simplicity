@@ -1,5 +1,4 @@
-const { MessageEmbed } = require('discord.js')
-const { Command } = require('../../')
+const { Command, Embed } = require('../../')
 
 class Help extends Command {
   constructor (client) {
@@ -8,9 +7,9 @@ class Help extends Command {
     this.category = 'bot'
   }
 
-  run ({ send, args, t, prefix, emoji }) {
+  run ({ send, args, t, prefix, emoji, author }) {
     const categories = this.client.categories
-    const embed = new MessageEmbed()
+    const embed = new Embed({ t, author })
       .setAuthor(this.client.user.username, this.client.user.displayAvatarURL({ size: 2048 }))
     if (args.length === 0) {
       embed.setDescription(t('commands:help.about', { prefix, botname: this.client.user.username }))
@@ -19,13 +18,13 @@ class Help extends Command {
     }
 
     if (!this.client.commands.has(args[0].toLowerCase())) {
-      return send(embed.setDescription(`commands:help.commandUndefined`), { error: true })
+      return send(embed.setDescription(`commands:help.commandUndefined`).setError())
     }
 
     const command = this.client.fetchCommand(args[0].toLowerCase())
 
     if (command.name === 'help') {
-      return send(embed.setDescription('commands:help.commandHelp'), { error: true })
+      return send(embed.setDescription('commands:help.commandHelp').setError())
     }
 
     embed.setTitle(command.name)
