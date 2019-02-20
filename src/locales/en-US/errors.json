@@ -13,5 +13,6 @@
     "clientMissingRole": "I can't {{- action }} this user because they have the same or higher role as me.",
     "noVoiceChannel": "The user is not in a Voice Channel.",
     "invalidUser": "The ID or the user you mentioned is invalid!",
-    "nsfwChannel": "This command can only be used in NSFW Channels!"
+    "nsfwChannel": "This command can only be used in NSFW Channels!",
+    "noReason": "No reason provided."
 }

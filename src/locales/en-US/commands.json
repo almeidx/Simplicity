@@ -105,12 +105,11 @@
     },
     "kick": {
         "description": "This command lets you kick members of your server.",
-        "usage": "Usage: **{{- prefix }}kick [mention/id] <reason>**",
+        "usage": "[mention/id] <reason>**",
         "success": "Member Kicked",
         "userKicked": "{{- user }} has been kicked from the server",
         "kickedBy": "Kicked by",
         "reason": "Reason",
-        "noReason": "No reason provided.",
         "action": "kick"
     },
     "unban": {
