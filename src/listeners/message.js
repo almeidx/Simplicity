@@ -6,11 +6,11 @@ module.exports = async function onMessage (message) {
   const guildData = await this.database.guilds.get(message.guild.id)
   if (!guildData) await this.database.guilds.create(message.guild.id)
 
-  const prefix = ((guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX).toLowerCase()
+  const prefix = (guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX
   const language = (guildData && guildData.lang) ? guildData.lang : process.env.DEFAULT_LANG
 
   const botMention = message.guild.me.toString()
-  const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.startsWith(prefix) ? prefix : null)
+  const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.toLowerCase().startsWith(prefix.toLowerCase()) ? prefix : null)
 
   if (message.content === botMention) {
     return message.reply(this.i18next.getFixedT(language)('utils:myprefix', { prefix: prefix }))
