@@ -24,16 +24,16 @@ class Command {
     }
   }
 
-  sendError (context, error) {
-    const embed = new Embed({ t: context.t, author: context.author })
+  sendError ({ t, author, prefix, send }, error) {
+    const embed = new Embed({ t, author })
       .setError()
       .setDescription(error.message, error.options)
 
-    if (this.usage && context.t(`commands:${this.name}.usage`) !== `${this.name}.usage`) {
-      embed.addField('errors:usage', `${context.prefix + this.name} ${context.t(`commands:${this.name}.usage`)}`)
+    if (this.usage && t(`commands:${this.name}.usage`) !== `${this.name}.usage`) {
+      embed.addField('errors:usage', `${prefix + this.name} ${t(`commands:${this.name}.usage`)}`)
     }
 
-    return context.send(embed)
+    return send(embed)
   }
 }
 module.exports = Command
