@@ -1,7 +1,5 @@
 <p align="center">
-  <b>QUE PORRA:</b><br>
-  <a href="#">OI?</a> |
-  <a href="#">Q ISSO AQ</a> |
+  <b>Simplicity</b><br>
   <br><br>
 </p>
 
