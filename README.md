@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Sei lá porra não sei o que eu to fazendo KK</title>
-</head>
 <body>
 
-<h1>Simplicity</h1>
-<p>TO TESTANDO PORRA</p>
+<center><b><div style="color:#00a1c3;">Simplcity</div></center>
 
 </body>
 </html>
