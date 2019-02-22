@@ -1,6 +1,5 @@
 <p align="center">
-   <b>Simplicity</b>
-<br><br>
+  <img src="https://fontmeme.com/permalink/190222/ed7f07f28f52a41e96ec0d987bbe9cf9.png">
 </p>
 <a title="code style" target="_blank" href="http://standardjs.com"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square"></a>
 <a title="Dependencies" target="_blank" href="https://david-dm.org/Almeeida/Simplicity/"><img src="https://david-dm.org/Almeeida/Simplicity/status.svg?style=flat-square"></a>
