@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<center><b><div style="color:#00a1c3;">Simplcity</div></center>
+<s><center>Simplicity</center></s>
 
 </body>
 </html>
