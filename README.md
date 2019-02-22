@@ -5,3 +5,5 @@ Simplicity is a simple WIP Discord bot that was made by Almeida#0001 and Tsugami
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
     <a title="Dependencies" target="_blank" href="https://david-dm.org/Almeeida/Simplicity/"><img src="https://david-dm.org/Almeeida/Simplicity/status.svg?style=flat-square"></a>
+<img src="https://img.shields.io/badge/library-discord.js-blue.svg?style=flat-square" alt="Library">
+
