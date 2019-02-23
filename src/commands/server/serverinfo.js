@@ -22,7 +22,7 @@ class ServerInfo extends Command {
       .addField('commands:serverinfo.created', moment(guild.createdAt).format('LLL'), true)
       .addField('commands:serverinfo.channelsEmojisRoles', `${channels} | ${emojis} | ${roles}`, true)
       .addField('commands:serverinfo.onlineOfflineBotsTotal', `${online} | ${offline} | ${bots} | ${members}`, true)
-      .addField(`${t('commands:serverinfo.verificationLevel')}: ${t(`commands:serverinfo.verificationName.${guild.verificationLevel}`)}`, t(`commands:serverinfo.verificationDetails.${guild.verificationLevel}`), true)
+      .addField(t('commands:serverinfo.verificationLevel', { level: guild.verificationLevel }), t(`commands:serverinfo.verificationDetails.${guild.verificationLevel}`), true)
       .setThumbnail(guild.iconURL({ size: 2048 }))
     channel.send(embed)
   }

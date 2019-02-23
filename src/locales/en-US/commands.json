@@ -54,7 +54,7 @@
         "created": "» Guild Created at",
         "channelsEmojisRoles": "» Channels | Emojis | Roles",
         "onlineOfflineBotsTotal": "» Online | Offline | Bots | Total",
-        "verificationLevel": "» Guild Verification Level",
+        "verificationLevel": "» Guild Verification Level: $t(commands:serverinfo.verificationName.{{- level }})",
         "verificationName": ["None", "Low", "Medium", "(╯°□°）╯︵ ┻━┻", "┻━┻彡 ヽ(ಠ益ಠ)ノ彡┻━┻"],
         "verificationDetails": [
             "Unrestricted.",
