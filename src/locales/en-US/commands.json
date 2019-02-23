@@ -48,22 +48,21 @@
     },
     "serverinfo": {
         "description": "This command shows info about the server.",
-        "name": "» Name",
-        "id": "» ID",
-        "owner": "» Owner",
-        "created": "» Created at",
-        "members": "» Members ({{- members }})",
+        "name": "» Guild Name",
+        "id": "» Guild ID",
+        "owner": "» Guild Owner",
+        "created": "» Guild Created at",
         "channelsEmojisRoles": "» Channels | Emojis | Roles",
-        "membersOnlineOfflineBots": "» Members | Online | Offline | Bots",
-        "verificationLevel": "» Verification Level",
-        "none": "None",
-        "low": "Low",
-        "medium": "Medium",
-        "unrestricted": "Unrestricted",
-        "levelTwo": "Must have a verified email on their Discord account.", 
-        "levelThree": "Must be registered on Discord for longer than 5 minutes.",
-        "levelFour": "Must be a member of the server for longer than 10 minutes.",
-        "levelFive": "Must have a verified phone on their Discord account."
+        "onlineOfflineBotsTotal": "» Online | Offline | Bots | Total",
+        "verificationLevel": "» Guild Verification Level",
+        "verificationName": ["None", "Low", "Medium", "(╯°□°）╯︵ ┻━┻", "┻━┻彡 ヽ(ಠ益ಠ)ノ彡┻━┻"],
+        "verificationDetails": [
+            "Unrestricted.",
+            "Must have a verified email on their Discord account.", 
+            "Must be registered on Discord for longer than 5 minutes.", 
+            "Must be a member of the server for longer than 10 minutes.", 
+            "Must have a verified phone on their Discord account."
+        ]
     },
     "createemoji": {
         "description": "This command allows you to create emojis.",
