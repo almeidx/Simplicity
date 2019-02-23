@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js')
 class Embed extends MessageEmbed {
   constructor (options, data) {
     super(data)
-    options = Object.assign({ message: null, author: null, t: null, emoji: null, autoFooter: true, autoTimestamp: true }, options)
+    options = Object.assign({ message: null, author: null, t: null, emoji: null, autoFooter: true, autoAuthor: true, autoTimestamp: true }, options)
 
     this._message = options.message
     this._author = options.author
@@ -25,6 +25,12 @@ class Embed extends MessageEmbed {
     if (options.autoFooter && (this._message || this._author)) {
       const author = this._message ? this._message.author : this._author
       this.setFooter(author.tag)
+    }
+
+    if (options.autoAuthor && (this._message || this._author)) {
+      const author = this._message ? this._message.author : this._author
+      console.log(this._tt(...arguments))
+      this.setAuthor(author.tag, author.displayAvatarURL())
     }
 
     if (options.autoTimestamp) {
@@ -49,8 +55,8 @@ class Embed extends MessageEmbed {
     return super.setTitle(this._tt(...arguments))
   }
 
-  setAuthor () {
-    return super.setAuthor(this._tt(...arguments))
+  setAuthor (name, iconURL) {
+    return super.setAuthor(this._tt(name), this._tt(iconURL))
   }
 
   setDescription () {

@@ -7,7 +7,7 @@ class ServerInfo extends Command {
     this.aliases = ['si', 'server']
     this.category = 'server'
   }
-  run ({ author, guild, channel, t }) {
+  run ({ author, guild, send, t }) {
     // Members
     const online = guild.members.filter(user => user.presence.status !== 'offline' && !user.user.bot).size
     const offline = guild.members.filter(user => user.presence.status === 'offline' && !user.user.bot).size
@@ -31,7 +31,7 @@ class ServerInfo extends Command {
       .addField('commands:serverinfo.onlineOfflineBotsTotal', `${online} | ${offline} | ${bots} | ${members}`, true)
       .addField('commands:serverinfo.verificationLevel', `commands:serverinfo.verificationDetails.${guild.verificationLevel}`, true, { level: guild.verificationLevel })
       .setThumbnail(guild.iconURL({ size: 2048 }))
-    channel.send(embed)
+    send(embed)
   }
 }
 module.exports = ServerInfo
