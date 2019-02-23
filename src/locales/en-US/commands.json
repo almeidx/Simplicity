@@ -54,7 +54,8 @@
         "created": "» Created",
         "members": "» Members ({{- members }})",
         "channelsEmojisRoles": "» Channels | Emojis | Roles",
-        "verificationLevel": "» Verification Level"
+        "verificationLevel": "» Verification Level",
+        "available": "Available"
     },
     "createemoji": {
         "description": "This command allows you to create emojis.",
