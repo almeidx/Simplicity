@@ -19,16 +19,18 @@ class Embed extends MessageEmbed {
       if (options.autoAuthor) this.setAuthor(author.tag, author.displayAvatarURL())
 
       if (options.autoTimestamp) this.setTimestamp()
-
-      if (options.error) {
-        this.setError()
-      } else {
-        const colorClientGuild = msg && msg.guild && msg.guild.me.displayColor
-        const colorMemberGuild = msg && msg.guild && msg.member.displayAvatarURL
-        const color = process.env.COLOR || colorClientGuild || colorMemberGuild || 'GREEN'
-        this.setColor(color)
-      }
     }
+
+    if (options.error) {
+      this.setError()
+    } else {
+      const msg = this._message
+      const colorClientGuild = msg && msg.guild && msg.guild.me.displayColor
+      const colorMemberGuild = msg && msg.member && msg.member.displayAvatarURL
+      const color = process.env.COLOR || colorClientGuild || colorMemberGuild || 'GREEN'
+      this.setColor(color)
+    }
+
   }
 
   _tt (str = '', tOptions = {}) {
