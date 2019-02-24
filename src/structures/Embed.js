@@ -29,7 +29,6 @@ class Embed extends MessageEmbed {
 
     if (options.autoAuthor && (this._message || this._author)) {
       const author = this._message ? this._message.author : this._author
-      console.log(this._tt(...arguments))
       this.setAuthor(author.tag, author.displayAvatarURL())
     }
 

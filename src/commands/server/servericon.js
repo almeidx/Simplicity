@@ -1,5 +1,4 @@
-const { MessageEmbed } = require('discord.js')
-const { Command } = require('../..')
+const { Command, Embed } = require('../..')
 
 class ServerIcon extends Command {
   constructor (client) {
@@ -8,10 +7,9 @@ class ServerIcon extends Command {
     this.category = 'server'
   }
   run ({ author, guild, send, t }) {
-    const embed = new MessageEmbed()
-      .setDescription(t('commands:servericon:text'), { icon: guild.iconURL({ size: 2048 }) })
+    const embed = new Embed({ author, t, guild })
+      .setDescription('commands:servericon:text', { iconURL: guild.iconURL({ size: 2048 }) })
       .setImage(guild.iconURL({ size: 2048 }))
-      .setFooter(`${t('utils:footer')} ${author.tag}`, author.displayAvatarURL({ size: 2048 }))
     send(embed)
   }
 }
