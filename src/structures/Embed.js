@@ -24,10 +24,7 @@ class Embed extends MessageEmbed {
     if (options.error) {
       this.setError()
     } else {
-      const msg = this._message
-      const colorClientGuild = msg && msg.guild && msg.guild.me.displayColor
-      const colorMemberGuild = msg && msg.member && msg.member.displayAvatarURL
-      const color = process.env.COLOR || colorClientGuild || colorMemberGuild || 'GREEN'
+      const color = process.env.COLOR || 'GREEN'
       this.setColor(color)
     }
 
