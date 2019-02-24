@@ -10,30 +10,24 @@ class Embed extends MessageEmbed {
     this._t = options.t
     this._emoji = options.emoji
 
-    if (options.error) {
-      this.setColor('RED')
-    } else {
-      let color = process.env.COLOR
-      if (!color && this._message) {
-        const colorClientGuild = this._message.guild && this.guild.me.displayColor
-        const colorMemberGuild = this._message.member && this._message.member.displayColor
-        color = colorClientGuild || colorMemberGuild || 'GREEN'
+    if (this._message || this.author) {
+      const msg = this._message
+      const author = this.author || (msg && msg.author)
+
+      if (options.autoFooter && author) this.setFooter(author.tag)
+
+      if (options.autoAuthor) this.setAuthor(author.tag, author.displayAvatarURL())
+
+      if (options.autoTimestamp) this.setTimestamp()
+
+      if (options.error) {
+        this.setError()
+      } else {
+        const colorClientGuild = msg && msg.guild && msg.guild.me.displayColor
+        const colorMemberGuild = msg && msg.guild && msg.member.displayAvatarURL
+        const color = process.env.COLOR || colorClientGuild || colorMemberGuild || 'GREEN'
+        this.setColor(color)
       }
-      this.setColor(color)
-    }
-
-    if (options.autoFooter && (this._message || this._author)) {
-      const author = this._message ? this._message.author : this._author
-      this.setFooter(author.tag)
-    }
-
-    if (options.autoAuthor && (this._message || this._author)) {
-      const author = this._message ? this._message.author : this._author
-      this.setAuthor(author.tag, author.displayAvatarURL())
-    }
-
-    if (options.autoTimestamp) {
-      this.setTimestamp()
     }
   }
 
@@ -54,8 +48,8 @@ class Embed extends MessageEmbed {
     return super.setTitle(this._tt(...arguments))
   }
 
-  setAuthor (name, iconURL) {
-    return super.setAuthor(this._tt(name), this._tt(iconURL))
+  setAuthor (name, iconURL = null, url = null, tOptions = {}) {
+    return super.setAuthor(this._tt(name, tOptions), iconURL, url)
   }
 
   setDescription () {
