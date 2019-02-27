@@ -1,34 +1,22 @@
-const { MessageEmbed } = require('discord.js')
-const { Command } = require('../../')
+const { Command, Embed } = require('../../')
 
 class Avatar extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['av']
     this.category = 'util'
+    this.parameters = [{
+      type: 'user',
+      required: false
+    }]
+    this.requirements = { permissions: ['EMBED_LINKS'] }
   }
-  run ({ author, send, args, message }) {
-    const embed = new MessageEmbed()
-    if (args.length === 0) {
-      embed.setImage(author.displayAvatarURL({ size: 2048 }))
-      return send(embed)
-    }
-    if (message.mentions.members.first()) {
-      let mem = message.mentions.members.first()
-      embed.setImage(mem.user.displayAvatarURL({ size: 2048 }))
-        .setAuthor(mem.user.tag, mem.user.displayAvatarURL({ size: 2048 }))
-      return send(embed, { autoAuthor: false })
-    } else {
-      this.client.users.fetch(args[0])
-        .then(u => {
-          embed.setImage(u.displayAvatarURL({ size: 2048 }))
-            .setAuthor(u.tag, u.displayAvatarURL({ size: 2048 }))
-          return send(embed, { autoAuthor: false })
-        })
-        .catch(() => {
-          return send(embed, { error: true })
-        })
-    }
+
+  run ({ author, send }, user) {
+    if (!user) user = author
+    const embed = new Embed({ author })
+      .setImage(user.displayAvatarURL({ size: 2048 }))
+    send(embed)
   }
 }
 module.exports = Avatar
