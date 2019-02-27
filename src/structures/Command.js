@@ -28,7 +28,7 @@ class Command {
       .setError()
       .setDescription(error.message, error.options)
 
-    if (error.usage && t(`commands:${this.name}.usage`) !== `${this.name}.usage`) {
+    if (error.onUsage && t(`commands:${this.name}.usage`) !== `${this.name}.usage`) {
       embed.addField('errors:usage', `${prefix + this.name} ${t(`commands:${this.name}.usage`)}`)
     }
 

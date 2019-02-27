@@ -1,9 +1,9 @@
 class CommandError extends Error {
   constructor (message, options = {}) {
     super(message)
-    options = Object.assign({ usage: true }, options)
+    options = Object.assign({ onUsage: true }, options)
     this.options = options
-    this.usage = options.usage
+    this.onUsage = options.onUsage
   }
 }
 module.exports = CommandError
