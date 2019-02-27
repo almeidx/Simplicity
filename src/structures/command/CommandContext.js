@@ -36,7 +36,7 @@ class CommandContext {
     options = Object.assign({ convertText: true }, options)
     if (embed instanceof Embed) {
       if (options.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {
-        let message = []
+        const message = []
         if (embed.title) message.push(`**${embed.title}**`)
         if (embed.description) message.push(embed.description)
         if (embed.fields.length !== 0) embed.fields.forEach(e => message.push(`**${e.name}\n${e.value}`))

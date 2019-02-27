@@ -1,5 +1,6 @@
 const Requirements = require('./command/Requirements')
 const Embed = require('./Embed')
+const CommandError = require('./command/CommandError')
 
 class Command {
   constructor (client) {
