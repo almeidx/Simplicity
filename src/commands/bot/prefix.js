@@ -1,4 +1,4 @@
-const { Command, Embed } = require('../..')
+const { Command, Embed, CommandError } = require('../..')
 
 class Prefix extends Command {
   constructor (client) {
@@ -10,26 +10,15 @@ class Prefix extends Command {
   async run ({ message, guild, query, send, t }) {
     const embed = new Embed({ t, message })
 
-    if (query.length > 10) {
-      embed.setTitle('errors:denied')
-        .setDescription('commands:prefix.multiCharacters')
-        .setError()
-      return send(embed)
-    }
+    if (query.length > 10) throw new CommandError('commands:prefix.multiCharacters', { onUsage: false })
 
-    try {
-      const data = await this.client.database.guilds.edit(guild.id, { prefix: query })
-      if (!data) throw new Error()
-      embed.setTitle('commands:prefix.done')
-        .setDescription('commands:prefix.sucess', { prefix: query })
-      send(embed)
-    } catch (err) {
-      embed.setTitle('commands:prefix.oops')
-        .setDescription('commands:prefix.failed')
-        .setError()
-      send(embed)
-      console.log(err)
-    }
+    const data = await this.client.database.guilds.edit(guild.id, { prefix: query })
+
+    if (!data) throw new CommandError('commands:prefix.failed', { onUsage: false })
+
+    embed.setTitle('commands:prefix.done')
+      .setDescription('commands:prefix.sucess', { prefix: query })
+    send(embed)
   }
 }
 
