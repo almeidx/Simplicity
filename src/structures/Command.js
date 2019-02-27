@@ -25,6 +25,14 @@ class Command {
   }
 
   sendError ({ t, author, prefix, send }, error) {
+    if (!(error instanceof CommandError)) {
+      console.log(error)
+      if (process.env.CHANNEL_LOG_ERROR && this.client.channels.has(process.env.CHANNEL_LOG_ERROR)) {
+        this.client.channels.get(process.env.CHANNEL_LOG_ERROR).send(`${error}`, { code: 'js' })
+      }
+      return send(t('errors:errorCommand'))
+    }
+
     const embed = new Embed({ t, author })
       .setError()
       .setDescription(error.message, error.options)

@@ -1,4 +1,5 @@
 {   
+    "errorCommand": "An error occurred while executing the command, try again later",
     "denied": "Denied!",
     "usage": "Usage",
     "general": "An error occurred.",
