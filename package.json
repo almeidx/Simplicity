@@ -7,7 +7,9 @@
     "start": "node index.js",
     "test": "node index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "discord"
+  ],
   "author": "Almeida#0001",
   "license": "ISC",
   "dependencies": {
