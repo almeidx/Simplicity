@@ -20,7 +20,7 @@
     "prefix": {
         "description": "This command sets my prefix on the server the command was used!",
         "usage": "<prefix>",
-        "multiCharacters": "My new prefix can\\'t have more than 10 characters!",
+        "multiCharacters": "My new prefix can\\'t have more than {{- count }} characters!",
         "done": "Done!",
         "sucess": "My prefix on this server has been changed to: `{{- prefix }}`",
         "oops": "Oops!",

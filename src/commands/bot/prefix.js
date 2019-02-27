@@ -10,7 +10,7 @@ class Prefix extends Command {
   async run ({ message, guild, query, send, t }) {
     const embed = new Embed({ t, message })
 
-    if (query.length > 10) throw new CommandError('commands:prefix.multiCharacters', { onUsage: false })
+    if (query.length > 15) throw new CommandError('commands:prefix.multiCharacters', { count: 15, onUsage: false })
 
     const data = await this.client.database.guilds.edit(guild.id, { prefix: query })
 
