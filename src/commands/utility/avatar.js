@@ -7,7 +7,8 @@ class Avatar extends Command {
     this.category = 'util'
     this.parameters = [{
       type: 'user',
-      required: false
+      required: false,
+      checkUserGlobal: true
     }]
     this.requirements = { permissions: ['EMBED_LINKS'] }
   }
