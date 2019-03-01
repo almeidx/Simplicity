@@ -1,19 +1,15 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Collection = require('./DBCollection')
+const Schemas = require('./Schemas')
 
 class Database {
-  constructor (client) {
-    this.client = client
-    this._guilds = mongoose.model('guilds', new Schema({
-      _id: { type: String, required: true },
-      lang: { type: String },
-      prefix: { type: String },
-      channels: [{ id: String, userID: String, date: Date }],
-      logs: { channelID: String, logs: [String] },
-      blacklist: { type: Boolean }
-    }))
-    this.guilds = new Collection(this._guilds)
+  constructor () {
+    for (const x in Schemas) {
+      const schema = new Schema(Schemas[x])
+      const model = mongoose.model(x, schema)
+      this[x] = new Collection(model)
+    }
     mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true })
       .catch(e => console.log(e))
   }

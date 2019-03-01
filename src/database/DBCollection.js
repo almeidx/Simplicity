@@ -1,44 +1,22 @@
 class Collection {
-  constructor (data) {
-    this.Data = data
+  constructor (model) {
+    this.model = model
   }
 
-  has (id) {
-    return new Promise((resolve, reject) => {
-      this.Data.findById(id, (error, data) => {
-        if (error) reject(error)
-        resolve(!!data)
-      })
-    })
+  parse (entity) {
+    return entity
   }
 
   get (id) {
-    return new Promise((resolve, reject) => {
-      this.Data.findById(id, (error, data) => {
-        if (error) reject(error)
-        resolve(data)
-      })
-    })
+    return this.model.findById(id).then(e => this.parse(e) || this.create(id))
   }
 
-  create (id, data = {}, options = {}) {
-    data._id = id
-    return new Promise((resolve, reject) => {
-      let item = new this.Data(data)
-      item.save(options, (err, res) => {
-        if (err) reject(err)
-        resolve(res)
-      })
-    })
+  create (id) {
+    return this.model.create({ _id: id }).then(this.parse)
   }
 
-  edit (id, data = {}) {
-    return new Promise((resolve, reject) => {
-      this.Data.updateOne({ _id: id }, data, (err, res) => {
-        if (err) reject(err)
-        resolve(res)
-      })
-    })
+  edit (id, entity) {
+    return this.model.updateOne({ _id: id }, entity)
   }
 }
 module.exports = Collection
