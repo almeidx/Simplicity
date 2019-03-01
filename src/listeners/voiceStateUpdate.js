@@ -7,12 +7,11 @@ module.exports = async function voiceStateUpdate (oldState, newState) {
   if (channel) {
     const t = this.i18next.getFixedT(guildData.lang || process.env.DEFAULT_LANG)
     const user = oldState.member.user
-    const { guild } = oldState
     const oldChannel = oldState.channel && `**${oldState.channel.name}**`
     const newChannel = newState.channel && `**${newState.channel.name}**`
     const embed = new Embed({ t })
       .setTimestamp()
-      .setAuthor(guild.name, guild.iconURL())
+      .setAuthor(user.tag, user.displayAvatarURL())
       .setFooter(user.id)
 
     // LEAVE CHANNEL
