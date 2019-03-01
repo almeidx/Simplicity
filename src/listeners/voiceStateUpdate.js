@@ -1,25 +1,34 @@
-const { MessageEmbed } = require('discord.js')
-module.exports = function voiceStateUpdate (oldState, newState) {
-  const oldMember = oldState.member
-  const newMember = newState.member
-  const chan = oldMember.guild.channels.find(ch => ch.name === 'logs')
-  if (chan) {
-    let newUserChannel = oldMember.voice.channel
-    let oldUserChannel = newMember.voice.channel
-    const embed = new MessageEmbed()
-      .setColor(process.env.COLOR)
-      .setFooter(oldMember.guild.name, oldMember.guild.iconURL({ size: 2048 }))
-      .setAuthor(oldMember.user.tag, oldMember.user.displayAvatarURL({ size: 2048 }))
+const { Embed } = require('../')
+module.exports = async function voiceStateUpdate (oldState, newState) {
+  const guildData = await this.database.guilds.get(oldState.guild.id)
+  const logData = guildData && guildData.logs && guildData.logs.find(e => e.logName === 'JOIN_AND_LEAVE')
+  const channel = logData && logData.channelID && oldState.guild.channels.get(logData.channelID)
+
+  if (channel) {
+    const t = this.i18next.getFixedT(guildData.lang || process.env.DEFAULT_LANG)
+    const user = oldState.member.user
+    const { guild } = oldState
+    const oldChannel = oldState.channel && `**${oldState.channel.name}**`
+    const newChannel = newState.channel && `**${newState.channel.name}**`
+    const embed = new Embed({ t })
       .setTimestamp()
-    if (oldUserChannel === undefined && newUserChannel) {
-      embed.setDescription(`${oldMember} has joined the voice channel: **${newUserChannel.name}**`)
-      return chan.send(embed)
-    } else if (oldUserChannel && newUserChannel === undefined) {
-      embed.setDescription(`${oldMember} has left the voice channel: **${oldUserChannel.name}**`)
-      return chan.send(embed)
-    } else if (oldUserChannel !== newUserChannel) {
-      embed.setDescription(`${oldMember} has moved from the voice channel **${oldUserChannel.name}** to ${newUserChannel.name}`)
-      return chan.send(embed)
+      .setAuthor(guild.name, guild.iconURL())
+      .setFooter(user.id)
+
+    // LEAVE CHANNEL
+    if (oldChannel && !newChannel) {
+      embed.setDescription('loggers:leaveVoiceChannel', { user: user, channel: oldChannel })
+      return channel.send(embed)
+    } else
+
+    // JOIN CHANNEL
+    if (!oldChannel && newChannel) {
+      embed.setDescription('loggers:joinVoiceChannel', { user, channel: newChannel })
+      return channel.send(embed)
+    } else {
+    // CHANGED CHANNEL
+      embed.setDescription('loggers:hasChangedVoiceChannel', { user, newChannel, oldChannel })
+      return channel.send(embed)
     }
   }
 }
