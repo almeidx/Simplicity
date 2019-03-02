@@ -30,14 +30,14 @@ module.exports = class Bot extends Client {
 
   initCommands (path) {
     fs.readdirSync(path).forEach((file) => {
-      let filePath = path + '/' + file
+      const filePath = path + '/' + file
       if (file.endsWith('.js')) {
-        let commandName = file.replace(/.js/g, '')
+        const commandName = file.replace(/.js/g, '')
         try {
-          let Command = require(filePath)
-          let command = new Command(this)
+          const Command = require(filePath)
+          const command = new Command(this)
           command.name = commandName
-          let category = path.split(/\\|\//g).pop()
+          const category = path.split(/\\|\//g).pop()
           if (category !== 'commands' && command.category === 'none') {
             command.category = category
           }
@@ -53,7 +53,7 @@ module.exports = class Bot extends Client {
 
   initListeners (path) {
     fs.readdirSync(path).forEach((file) => {
-      let name = file.replace(/.js/, '')
+      const name = file.replace(/.js/, '')
       this.on(name, require(path + '/' + file))
     })
   }
