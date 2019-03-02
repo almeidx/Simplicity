@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const Constants = require('../utils/Constants')
-module.exports = async function messageUpdate (oldMessage, newMessage) {
+module.exports = function messageUpdate (oldMessage, newMessage) {
   const chan = newMessage.guild.channels.find(ch => ch.name === 'logs')
   const embed = new MessageEmbed()
     .setAuthor(oldMessage.author.tag, oldMessage.author.displayAvatarURL({ size: 2048 }))
