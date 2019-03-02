@@ -16,18 +16,18 @@ class BotInfo extends Command {
     const RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)
     const PLATFORM = process.platform[0].toUpperCase() + process.platform.slice(1)
 
-    const embed = new Embed({ author, t, emoji })
+    const embed = new Embed({ author, guild, t, emoji })
       .setTitle('commands:botinfo.botinfo')
       .setThumbnail(this.client.user.displayAvatarURL({ size: 2048 }))
-      .addField('Ping', `${Math.floor(this.client.ws.ping)}ms`, true, { emoji: 'PING' })
+      .addField('Ping', `${Math.round(guild.shard.ping)}ms`, true, { emoji: 'PING' })
       .addField('commands:botinfo.guildAndUsers', `${this.client.guilds.size} | ${this.client.users.size}`, true, { emoji: 'USERS' })
       .addField('commands:botinfo.channelAndEmojis', `${this.client.channels.size} | ${this.client.emojis.size}`, true, { emoji: 'HASH' })
       .addField('CPU | RAM', `${CPU}mb | ${RAM}mb`, true, { emoji: 'RAM' })
       .addField('Discord.js | Node.js', `${version} | ${process.versions.node}`, true, { emoji: 'BOOKS' })
       .addField('commands:botinfo.os', PLATFORM, true, { emoji: 'PC' })
-      .addField('commands:botinfo.uptime', UPTIME, true, { emoji: 'WATCH' })
       .addField('commands:botinfo.commands', this.client.commands.size, true, { emoji: 'COMMANDS' })
       .addField('commands:botinfo.pings', guild.shard.pings.join(', '), true, { emoji: 'PINGS' })
+      .addField('commands:botinfo.uptime', UPTIME, true, { emoji: 'WATCH' })
     send(embed)
   }
 }
