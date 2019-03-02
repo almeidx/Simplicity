@@ -18,7 +18,7 @@ class Help extends Command {
     }
 
     if (!this.client.commands.has(args[0].toLowerCase())) {
-      return send(embed.setDescription(`commands:help.commandUndefined`).setError())
+      return send(embed.setDescription('commands:help.commandUndefined').setError())
     }
 
     const command = this.client.fetchCommand(args[0].toLowerCase())
