@@ -4,7 +4,7 @@ class ServerIcon extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['svicon']
-    this.category = 'server'
+    this.category = 'guild'
   }
   run ({ author, guild, send, t }) {
     const embed = new Embed({ author, t, guild })

@@ -23,8 +23,8 @@
     "name": "Utility",
     "description": "This category has commands util commands."
   },
-  "server": {
+  "guild": {
     "name": "Server",
-    "description": "This category has commands related to the server."
+    "description": "This category has commands related to the guild."
   }
 }

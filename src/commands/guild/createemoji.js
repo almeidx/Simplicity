@@ -5,7 +5,7 @@ class CreateEmoji extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['createmoji', 'addemoji']
-    this.category = 'server'
+    this.category = 'guild'
     this.requirements = { argsRequired: true, permissions: ['MANAGE_EMOJIS'], clientPermissions: ['MANAGE_EMOJIS'] }
   }
   run ({ guild, author, send, t, args }) {

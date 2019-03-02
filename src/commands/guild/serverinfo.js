@@ -4,8 +4,8 @@ const moment = require('moment')
 class ServerInfo extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['si', 'server', 'svinfo', 'sv']
-    this.category = 'server'
+    this.aliases = ['si', 'server', 'svinfo', 'sv', 'guild']
+    this.category = 'guild'
   }
   run ({ author, guild, send, t }) {
     // Members
