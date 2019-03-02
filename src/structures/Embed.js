@@ -27,7 +27,6 @@ class Embed extends MessageEmbed {
       const color = process.env.COLOR || 'GREEN'
       this.setColor(color)
     }
-
   }
 
   _tt (str = '', tOptions = {}) {
