@@ -25,9 +25,9 @@ class BotInfo extends Command {
       .addField('CPU | RAM', `${CPU}mb | ${RAM}mb`, true, { emoji: 'RAM' })
       .addField('Discord.js | Node.js', `${version} | ${process.versions.node}`, true, { emoji: 'BOOKS' })
       .addField('commands:botinfo.os', PLATFORM, true, { emoji: 'PC' })
-      .addField('commands:botinfo.uptime', UPTIME, true, { emoji: 'WATCH' })
       .addField('commands:botinfo.commands', this.client.commands.size, true, { emoji: 'COMMANDS' })
       .addField('commands:botinfo.pings', guild.shard.pings.join(', '), true, { emoji: 'PINGS' })
+      .addField('commands:botinfo.uptime', UPTIME, true, { emoji: 'WATCH' })
     send(embed)
   }
 }
