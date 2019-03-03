@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-module.exports = async function userUpdate (oldUser, newUser) {
+module.exports = function userUpdate (oldUser, newUser) {
   if (oldUser.displayAvatarURL() !== newUser.displayAvatarURL()) {
     const embed = new MessageEmbed()
       .setAuthor(newUser.tag, newUser.displayAvatarURL({ size: 2048 }))
