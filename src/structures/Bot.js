@@ -16,6 +16,7 @@ module.exports = class Bot extends Client {
     this.initListeners(Path.join(__dirname, '../listeners'))
     this.initLocales(Path.join(__dirname, '../locales'))
   }
+
   fetchCommand (commandName = '') {
     return this.commands.find(c => c.name.toLowerCase() === commandName.toLowerCase() || c.aliases.includes(commandName.toLowerCase())) || null
   }
