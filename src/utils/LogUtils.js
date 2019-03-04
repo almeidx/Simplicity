@@ -11,12 +11,24 @@ class LogUtils {
     if (!channel.permissionsFor(channel.guild.me).has('MANAGE_WEBHOOKS')) {
       return channel.send(...body)
     } else {
-      const { client } = channel
-      const name = client.user.username + ' Logs'
-      const webhook = await channel.createWebhook(name, { avatar: client.user.displayAvatarURL() })
-      await webhook.send(...body)
-      await webhook.delete()
+      const webhook = await this.getWebhook(channel)
+      return webhook.send(...body)
     }
+  }
+
+  static async getWebhook (channel) {
+    const name = `${channel.client.user.username} Logs`
+    const avatar = channel.client.user.displayAvatarURL()
+
+    const webhooks = channel.fetchWebhooks()
+    let webhook = webhooks.find(wk => wk.name === name)
+
+    if (!webhook) {
+      webhook = await channel.createWebhook(name)
+    }
+
+    await webhook.edit({ name, avatar })
+    return webhook
   }
 }
 
