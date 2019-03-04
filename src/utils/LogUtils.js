@@ -7,14 +7,14 @@ class LogUtils {
     return { channel, t }
   }
 
-  static async send (channel, body) {
+  static async send (channel, ...body) {
     if (!channel.permissionsFor(channel.guild.me).has('MANAGE_WEBHOOKS')) {
-      return channel.send(body)
+      return channel.send(...body)
     } else {
       const { client } = channel
       const name = client.user.username + ' Logs'
       const webhook = await channel.createWebhook(name, { avatar: client.user.displayAvatarURL() })
-      await webhook.send(body)
+      await webhook.send(...body)
       await webhook.delete()
     }
   }
