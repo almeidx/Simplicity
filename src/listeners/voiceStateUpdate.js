@@ -13,10 +13,9 @@ module.exports = async function voiceStateUpdate (oldState, newState) {
 
     // LEAVE CHANNEL
     if (oldChannel && !newChannel) {
-      embed.setDescription('loggers:leaveVoiceChannel', { user: user, channel: oldChannel })
+      embed.setDescription('loggers:leaveVoiceChannel', { user, channel: oldChannel })
       return LogUtils.send(channel, embed)
     } else
-
     // JOIN CHANNEL
     if (!oldChannel && newChannel) {
       embed.setDescription('loggers:joinVoiceChannel', { user, channel: newChannel })
