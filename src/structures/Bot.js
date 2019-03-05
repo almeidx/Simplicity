@@ -1,6 +1,5 @@
 const { Client, Collection } = require('discord.js')
 const Loaders = require('../loaders')
-console.log(Loaders)
 const Database = require('../database/Database')
 const fs = require('fs')
 const Path = require('path')
