@@ -1,5 +1,8 @@
 {
     "joinVoiceChannel": "{{- user }} has joined the voice channel: {{- channel }}",
     "leaveVoiceChannel": "{{- user }} has left the voice channel: {{- channel }}",
-    "hasChangedVoiceChannel": "{{- user }} has moved from the voice channel {{- oldChannel }} to {{- newChannel }}"
+    "hasChangedVoiceChannel": "{{- user }} has moved from the voice channel {{- oldChannel }} to {{- newChannel }}",
+    "messageEdited": "[Message]({{- url }}) by {{- user }} edited in {{- channel }}",
+    "messageUnpinned": "[Message]({{- url }}) by {{- user }} unpinned on {{- channel }}",
+    "messagePinned": "[Message]({{- url }}) by {{- user }} pinned on {{- channel }}"
 }

@@ -18,5 +18,10 @@ class Collection {
   edit (id, entity) {
     return this.model.updateOne({ _id: id }, entity)
   }
+
+  remove (id) {
+    return this.model.findByIdAndRemove(id).then(this.parse)
+  }
 }
+
 module.exports = Collection

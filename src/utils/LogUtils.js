@@ -20,7 +20,7 @@ class LogUtils {
     const name = `${channel.client.user.username} Logs`
     const avatar = channel.client.user.displayAvatarURL()
 
-    const webhooks = channel.fetchWebhooks()
+    const webhooks = await channel.fetchWebhooks()
     let webhook = webhooks.find(wk => wk.name === name)
 
     if (!webhook) {

@@ -1,31 +1,44 @@
-const { MessageEmbed } = require('discord.js')
-const Constants = require('../utils/Constants')
-module.exports = function messageUpdate (oldMessage, newMessage) {
-  const chan = newMessage.guild.channels.find(ch => ch.name === 'logs')
-  const embed = new MessageEmbed()
-    .setAuthor(oldMessage.author.tag, oldMessage.author.displayAvatarURL({ size: 2048 }))
-    .setTimestamp()
-    .setFooter(`ID: ${oldMessage.author.id}`, newMessage.author.displayAvatarURL({ size: 2048 }))
-  if (oldMessage.channel === chan) return
-  if (chan && oldMessage.guild.me.permissions.has('READ_AUDIT_LOGS')) {
-    if (oldMessage.content !== newMessage.content) { // Message Edits
-      embed.setDescription(`**Message by ${oldMessage.author} edited in ${oldMessage.channel}**`)
-        .addField('Before', (oldMessage.content.slice(0, 1020) + oldMessage.content.length >= 1024 ? '...' : oldMessage.content) || '** **', true)
-        .addField('After', (newMessage.content.slice(0, 1020) + newMessage.content.length >= 1024 ? '...' : newMessage.content) || '** **', true)
+const { Embed, LogUtils, Constants } = require('../')
+const clean = (str) => str.slice(0, 1020) + str.length >= 1024 ? '...' : str
+
+async function messageUpdate (oldMessage, newMessage) {
+  const { channel, t } = await LogUtils.getChannel(this, oldMessage.guild, 'JOIN_AND_LEAVE')
+
+  if (channel && oldMessage.guild.me.permissions.has('READ_AUDIT_LOGS')) {
+    const url = oldMessage.url
+    const user = oldMessage.author
+    const msgChannel = oldMessage.channel
+    const oldContent = oldMessage.content
+    const newContent = newMessage.content
+    const embed = new Embed({ t })
+      .setTimestamp()
+      .setAuthor(user.tag, user.displayAvatarURL())
+      .setFooter(`ID: ${user.id}`)
+
+    // MESSAGE EDITED
+    if (oldContent !== newContent) {
+      embed.setDescription('loggers:messageEdited', { url, user, channel: msgChannel })
+        .addField('Before', clean(oldContent) || 'errors:general', true)
+        .addField('After', clean(newContent) || 'errors:general', true)
         .setColor(Constants.COLORS.MESSAGE_EDIT)
-      return chan.send(embed)
-    } else if ((oldMessage.pinned === true || newMessage.pinned === false) ||
-              (oldMessage.pinned === false || newMessage.pinned === true)) { // Message Pins
-      embed.addField('Content', newMessage.content || '** **')
-      if (oldMessage.pinned && newMessage.pinned === false) {
-        embed.setDescription(`**Message by ${oldMessage.author} unpinned on ${oldMessage.channel}**`)
+      return LogUtils.send(channel, embed)
+    } else
+    // MESSAGE PINS
+    if (oldMessage.pinned !== newMessage.pinned) {
+      // MESSAGE UNPINNED
+      if (oldMessage.pinned && !newMessage.pinned) {
+        embed.setDescription('loggers:messageUnpinned', { url, user, channel: msgChannel })
           .setColor(Constants.COLORS.MESSAGE_UNPIN)
-        return chan.send(embed)
-      } else if (newMessage.pinned && oldMessage.pinned === false) {
-        embed.setDescription(`**Message by ${oldMessage.author} pinned on ${oldMessage.channel}**`)
+        return LogUtils.send(channel, embed)
+      } else
+      // MESSAGE PINNED
+      if (!oldMessage.pinned && newMessage.pinned) {
+        embed.setDescription('loggers:messagePinned', { url, user, channel: msgChannel })
           .setColor(Constants.COLORS.MESSAGE_PIN)
-        return chan.send(embed)
+        return LogUtils.send(channel, embed)
       }
     }
   }
 }
+
+module.exports = messageUpdate
