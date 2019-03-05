@@ -1,10 +1,10 @@
-const { MessageEmbed } = require('discord.js')
-module.exports = function Disconnect () {
-  console.log(`The bot has been disconnected at ${require('moment')().format('LLLL')}`)
-  const embed = new MessageEmbed()
-    .setTitle('**Bot has disconnected**')
-    .setDescription(`Disconnected at: \`${require('moment')().format('LLLL')}\``)
+const { Embed } = require('../')
+function Disconnect () {
+  console.log(`The bot has disconnected at ${require('moment')().format('LLL')}`)
+
+  const embed = new Embed()
     .setTimestamp()
+    .setTitle('Bot disconnected')
     .setColor('RED')
     .setFooter(this.user.username, this.user.displayAvatarURL())
 
@@ -12,3 +12,5 @@ module.exports = function Disconnect () {
     this.channels.get(process.env.BOT_LOG).send(embed)
   }
 }
+
+module.exports = Disconnect
