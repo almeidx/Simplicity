@@ -33,7 +33,9 @@ class Embed extends MessageEmbed {
     if (!this._t) return str
     let result = String(str)
     const query = this._t(str, tOptions)
-    if (result.includes(':') && result.split(':')[1] !== query) result = query
+    const a = result.split(':').length >= 1 && result.split(':').slice(1)
+    const queryT = a && a[0] + '.' + a.slice(1).join('')
+    if (result.includes(':') && queryT !== query) result = query
     if (tOptions.emoji && this._emoji) result = `${this._emoji(tOptions.emoji)} ${result}`
     return result
   }
