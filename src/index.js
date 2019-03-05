@@ -10,6 +10,7 @@ module.exports = {
   // Utils
   Constants: require('./utils/Constants'),
   Utils: require('./utils/Utils'),
+  LogUtils: require('./utils/LogUtils'),
   // Database
   Database: require('./database/Database.js')
 }
