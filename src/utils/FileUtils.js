@@ -11,7 +11,7 @@ module.exports = class FileUtils {
       if (file.match(/\.(js|json)$/)) {
         try {
           const required = require(fullPath)
-          if (success) success(required)
+          if (success) success(required, file.replace(/.js|.json/g, ''), dirPath.split(/\\|\//g).pop())
           filesObject[file] = required
           return required
         } catch (e) {

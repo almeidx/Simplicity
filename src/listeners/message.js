@@ -18,7 +18,7 @@ module.exports = async function onMessage (message) {
   if (usedPrefix) {
     const args = message.content.slice(usedPrefix.length).trim().split(/ +/g)
     const commandName = args.shift().toLowerCase()
-    const command = this.fetchCommand(commandName)
+    const command = this.commands.fetch(commandName)
 
     if (message.mentions.has(this.user.id) && message.guild.me.permissions.has(['USE_EXTERNAL_EMOJIS', 'ADD_REACTIONS']) && this.emojis.has(process.env.EMOJI_PINGSOCK_ID) && !command) {
       return message.react(process.env.EMOJI_PINGSOCK_ID)

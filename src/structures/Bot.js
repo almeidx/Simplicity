@@ -1,4 +1,6 @@
 const { Client, Collection } = require('discord.js')
+const Loaders = require('../loaders')
+console.log(Loaders)
 const Database = require('../database/Database')
 const fs = require('fs')
 const Path = require('path')
@@ -10,15 +12,26 @@ module.exports = class Bot extends Client {
   constructor (options) {
     super(options)
     this.i18next = require('i18next')
-    this.commands = new Collection()
     this.database = new Database(this)
-    this.initCommands(Path.join(__dirname, '../commands'))
+    this.loadFiles()
     this.initListeners(Path.join(__dirname, '../listeners'))
     this.initLocales(Path.join(__dirname, '../locales'))
   }
 
-  fetchCommand (commandName = '') {
-    return this.commands.find(c => c.name.toLowerCase() === commandName.toLowerCase() || c.aliases.includes(commandName.toLowerCase())) || null
+  async loadFiles () {
+    for (const Loader of Object.values(Loaders)) {
+      const loader = new Loader(this)
+      let result
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        result = await loader.load()
+      } catch (err) {
+        console.error(err)
+        result = false
+      } finally {
+        if (!result && loader.required) process.exit(1)
+      }
+    }
   }
 
   get categories () {
