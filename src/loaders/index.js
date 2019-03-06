@@ -1,3 +1,3 @@
 module.exports = {
-  CommandLoader: require('./CommandLoader').default
+  CommandLoader: require('./CommandLoader')
 }
