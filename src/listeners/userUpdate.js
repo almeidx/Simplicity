@@ -1,21 +1,24 @@
-const { MessageEmbed } = require('discord.js')
-module.exports = function userUpdate (oldUser, newUser) {
+const { Embed, LogUtils } = require('../')
+
+function userUpdate (oldUser, newUser) {
+  // AVATAR CHANGES
   if (oldUser.displayAvatarURL() !== newUser.displayAvatarURL()) {
-    const embed = new MessageEmbed()
-      .setAuthor(newUser.tag, newUser.displayAvatarURL({ size: 2048 }))
-      .setDescription(newUser.toString() + ' has changed their avatar.')
-      .setImage(newUser.displayAvatarURL({ size: 2048 }))
-      .setColor(process.env.COLOR)
-      .setTimestamp()
-    this.guilds.forEach(g => {
-      if (g.members.find(mem => mem.id === oldUser.id)) {
-        const chan = g.channels.find(ch => ch.name === 'logs')
-        embed.setFooter(g.name, g.iconURL({ size: 2048 }))
-        if (chan) {
-          chan.send(embed)
-            .catch(() => {})
-        }
+    this.guilds.filter(guild => guild.members.get(oldUser.id)).forEach(async guild => {
+      const { channel, t } = await LogUtils.getChannel(this, guild, 'JOIN_AND_LEAVE')
+
+      if (channel) {
+        const embed = new Embed({ t })
+          .setTimestamp()
+          .setAuthor(newUser.tag, newUser.displayAvatarURL())
+          .setImage(newUser.displayAvatarURL({ size: 2048 }))
+          .setColor(process.env.COLOR)
+          .setFooter(guild.name, guild.iconURL())
+          .setDescription('loggers:changedAvatar', { user: newUser })
+
+        LogUtils.send(channel, embed)
       }
     })
   }
 }
+
+module.exports = userUpdate

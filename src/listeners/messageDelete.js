@@ -1,23 +1,30 @@
-const { MessageEmbed } = require('discord.js')
-const Constants = require('../utils/Constants')
-module.exports = async function messageDelete (message) {
-  const chan = message.guild.channels.find(ch => ch.name === 'logs')
-  if (message.channel === chan) return
-  if (chan && message.guild.me.permissions.has('READ_AUDIT_LOGS')) {
-    const embed = new MessageEmbed()
-      .addField('Content', (message.content.slice(0, 1020) + message.content.length >= 1024 ? ' ...' : message.content) || '** **')
-      .setDescription(`**Message sent by ${message.author} deleted in ${message.channel}**`)
-      .setAuthor(message.author.tag, message.author.displayAvatarURL({ size: 2048 }))
-      .setFooter(`ID: ${message.author.id}`, message.author.displayAvatarURL({ size: 2048 }))
-      .setColor(Constants.COLORS.MESSAGE_DELETE)
+const { Embed, LogUtils, Constants } = require('../')
+const clean = (str) => str.slice(0, 1020) + str.length >= 1024 ? '...' : str
+
+async function messageDelete (message) {
+  const { channel, t } = await LogUtils.getChannel(this, message.guild, 'JOIN_AND_LEAVE')
+  const user = message.author
+
+  if (channel) {
+    const embed = new Embed({ t })
       .setTimestamp()
-    if (message.guild.me.hasPermission('VIEW_AUDIT_LOG')) {
+      .setAuthor(user.tag, user.displayAvatarURL())
+      .setFooter(`ID: ${user.id}`, user.displayAvatarURL())
+      .setDescription('loggers:messageDeleted', { user, channel: message.channel })
+      .setColor(Constants.COLORS.MESSAGE_DELETE)
+
+    if (message.content) embed.addField('loggers:content', clean(message.content) || 'errors:general')
+
+    if (message.guild.me.permissions.has('VIEW_AUDIT_LOG')) {
       const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' }).then(audit => audit.entries.first())
-      if (entry.extra.channel.id === message.channel.id && entry.target.id === message.author.id && entry.createdTimestamp > Date.now() - 5000) {
-        const user = entry.executor
-        embed.setDescription(`**Message sent by ${message.author} deleted in ${message.channel} by ${user}**`)
+
+      if (entry.extra.channel.id === message.channel.id && entry.target.id === user.id && entry.createdTimestamp > Date.now() - 5000) {
+        const executor = entry.executor
+        embed.setDescription('loggers:messageDeletedExecuter', { user, channel: message.channel, executor })
       }
     }
-    chan.send(embed)
+    return LogUtils.send(channel, embed)
   }
 }
+
+module.exports = messageDelete

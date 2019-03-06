@@ -1,6 +1,6 @@
 const { CommandContext, Loggers } = require('../')
 
-module.exports = async function onMessage (message) {
+async function onMessage (message) {
   if (message.author.bot || message.type === 'dm' || !message.guild.me.permissions.has('SEND_MESSAGES')) return
 
   const guildData = await this.database.guilds.get(message.guild.id)
@@ -37,3 +37,5 @@ module.exports = async function onMessage (message) {
     }
   }
 }
+
+module.exports = onMessage

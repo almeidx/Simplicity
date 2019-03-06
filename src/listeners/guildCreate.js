@@ -1,9 +1,9 @@
 const { Embed } = require('../')
-async function guildDelete (guild) {
-  await this.database.guilds.remove(guild.id)
+async function guildCreate (guild) {
+  await this.database.guilds.create(guild.id)
 
-  if (process.env.GUILD_LEAVE && this.channels.has(process.env.GUILD_LEAVE)) {
-    const channel = this.channels.get(process.env.GUILD_LEAVE)
+  if (process.env.GUILD_JOIN && this.channels.has(process.env.GUILD_JOIN)) {
+    const channel = this.channels.get(process.env.GUILD_JOIN)
     const owner = guild.owner
 
     const embed = new Embed({ guild })
@@ -19,4 +19,4 @@ async function guildDelete (guild) {
   }
 }
 
-module.exports = guildDelete
+module.exports = guildCreate

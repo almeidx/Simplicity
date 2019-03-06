@@ -1,13 +1,18 @@
-const { MessageEmbed } = require('discord.js')
-const Constants = require('../utils/Constants')
-module.exports = function messageDeleteBulk (messages) {
-  const chan = messages.first().guild.channels.find(ch => ch.name === 'logs')
-  if (chan && messages.first().guild.me.permissions.has('READ_AUDIT_LOGS')) {
-    const embed = new MessageEmbed()
-      .setAuthor(messages.first().guild.name, messages.first().guild.iconURL({ size: 2048 }))
-      .setDescription(`**${messages.size} messages Bulk Deleted in ${messages.first().channel}**`)
+const { Embed, LogUtils, Constants } = require('../')
+
+async function messageDeleteBulk (messages) {
+  const message = messages.first()
+  const { channel, t } = await LogUtils.getChannel(this, message.guild, 'JOIN_AND_LEAVE')
+
+  if (channel) {
+    const embed = new Embed({ t })
       .setTimestamp()
-      .setColor(Constants.COLORS.MESSAGE_DELETE)
-    chan.send(embed)
+      .setAuthor(message.guild.name, message.guild.iconURL())
+      .setDescription('loggers:messageDeleteBulk', { amount: messages.size, channel: message.channel })
+      .setColor(Constants.COLORS.MESSAGE_BULK_DELETE)
+
+    LogUtils.send(channel, embed)
   }
 }
+
+module.exports = messageDeleteBulk
