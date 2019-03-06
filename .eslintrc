@@ -2,12 +2,12 @@
     "extends": "standard",
     "rules": {
         "eqeqeq": "error",
-	"no-async-promise-executor": "error",
-	"no-await-in-loop": "error",
-	"no-eval": "off",
-	"no-extra-parens": "error",
-	"no-var": "error",
-	"prefer-const": "error",
-	"require-await": "error"
+		"no-async-promise-executor": "error",
+		"no-await-in-loop": "error",
+		"no-eval": "off",
+		"no-extra-parens": "error",
+		"no-var": "error",
+		"prefer-const": "error",
+		"require-await": "error"
     }
 }

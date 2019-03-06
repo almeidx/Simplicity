@@ -149,5 +149,10 @@
         "usage": "<module> <statement>",
         "serverConfig": "Server Configuration",
         "channel": "Logging Channel"
+    },
+    "ascii": {
+        "description": "This command translates normal text into ascii format.",
+        "usage": "<text>",
+        "queryTooBig": "Please, use a text that is lower than 15 characters."
     }
 }
