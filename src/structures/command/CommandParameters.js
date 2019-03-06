@@ -1,34 +1,27 @@
-const { Loggers } = require('../..')
+const Parameters = require('./parameters')
 const CommandError = require('./CommandError')
 
-class Parameters {
-  constructor (command) {
-    this.command = command
-    this.client = this.command.client
-    this.parameters = this.command.parameters || []
+class CommandParameters {
+  static handle (context, parameters, args) {
+    return this._handle(context, parameters, args)
   }
 
-  handle (context) {
-    let query = context.query
-    let result = []
-    for (let p in this.parameters) {
-      const param = this.parameters[p]
-      if (this.client.parameters.has(param.id.toLowerCase())) {
-        const Parameter = this.client.parameters.get(param.id.toLowerCase())
-        const ctx = new Parameter(param).handle(context, query)
-        if (ctx instanceof CommandError) {
-          result = ctx
-          break
-        } else {
-          if (ctx.context) query = ctx.query
-          result.push(ctx)
-        }
-      } else {
-        Loggers.error(['COMMAND', 'PARAMETER'], 'Invalid Parameter!:', param.id)
+  static _handle (context, parameters = [], args) {
+    return parameters.map(async (p) => {
+      const name = p.type && (p.type[0].toUpperCase() + p.type.slice(1))
+      const Parameter = name && Parameters[name]
+
+      if (!name || !Parameter) throw new Error('Invalid Parameter:', name)
+      const parameter = new Parameter(p)
+      const result = await parameter.handle(context, args)
+      if (result) args.splice(0, 1)
+      else {
+        if (!parameter.required) return null
+        else throw new CommandError(parameter.missingError)
       }
-    }
-    return result
+      return result
+    })
   }
 }
 
-module.exports = Parameters
+module.exports = CommandParameters

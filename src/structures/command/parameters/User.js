@@ -1,33 +1,33 @@
-const Parameter = require('../Parameter')
+const Parameter = require('./Parameter')
 const CommandError = require('../CommandError')
+const REGEX_ID = /[0-9]{16,18}/g
 class User extends Parameter {
-  constructor (options, query) {
-    super(options, query)
+  constructor (options = {}) {
+    super(options)
 
     options = Object.assign({
       acceptBot: true,
-      acceptDeveloper: true,
       acceptUser: true,
       acceptSelf: true,
       checkID: true,
       checkNick: true,
       checkUsername: true,
       useLowerCase: true,
-      firstArg: true,
-      getMulti: false
-    })
+      useStartsWith: true,
+      checkUserGlobal: false
+    }, options)
 
     this.acceptSelf = !!options.self
     this.acceptBot = !!options.acceptBot
     this.acceptUser = !!options.acceptUser
 
+    this.checkUserGlobal = !!options.checkUserGlobal
     this.checkNick = !!options.checkNick
     this.checkUsername = !!options.checkUsername
     this.checkID = !!options.checkID
 
+    this.useStartsWith = !!options.useStartsWith
     this.useLowerCase = !!options.useLowerCase
-    this.firstArg = !!options.firstArg
-    this.getMulti = !!options.getMulti
 
     this.errors = Object.assign({
       acceptBot: 'errors:acceptBot',
@@ -36,33 +36,75 @@ class User extends Parameter {
     }, options.errors)
   }
 
-  handle ({ author, guild, client }, query) {
-    if (this.firstArg) {
-      query = query.split(' ')[0] || query
-    }
-    if (this.useLowerCase) {
-      query = query.toLowerCase()
-    }
+  async handle (context, args) {
+    const str = args.join(' ') || ''
+    const user = await this.getUser(context, str)
+    if (!user) return null
 
-    const id = query.split(' ')[0]
-    const REGEX_ID = 
-    if (this.checkID && ) {
-      try {}
-      const user = client.users.fetch()
-    }
+    if (!this.acceptSelf && user.id === context.author.id) throw new CommandError(this.errors.acceptSelf)
+    if (!this.acceptBot && user.bot) throw new CommandError(this.errors.acceptBot)
+    if (!this.acceptUser && !user.bot) throw new CommandError(this.errors.acceptSelf)
+
+    return user
   }
 
-  detect (user, authorID) {
-    if (!this.acceptBot && user.bot) {
-      throw new CommandError(this.errors.acceptBot)
+  async getUser ({ client, guild }, str) {
+    const { users } = client
+
+    const resultRegex = this.checkID && REGEX_ID.exec(str)
+    const userRegex = resultRegex && users.get(resultRegex[0])
+    if (userRegex) return userRegex
+
+    if (guild) {
+      const userUsername = this.checkUsername && guild.members.find(m => m.user.username === str)
+      if (userUsername) return userUsername.user
+
+      const userUsernameLowercase = this.checkUsername && this.useLowerCase && guild.members.find(m => m.user.username.toLowerCase() === str.toLowerCase())
+      if (userUsernameLowercase) return userUsernameLowercase.user
+
+      const userNick = this.checkNick && guild.members.find(m => m.nickname && (m.nickname === str))
+      if (userNick) return userNick
+
+      const userNickLowercase = this.checkNick && this.useLowerCase && guild.members.find(m => m.nickname && (m.nickname.toLowerCase() === str.toLowerCase()))
+      if (userNickLowercase) return userNickLowercase.user
+
+      const userUsernameStartsWith = this.useStartsWith && this.checkUsername && guild.members.find(m => m.user.username.startsWith(str))
+      if (userUsernameStartsWith) return userUsernameStartsWith.user
+
+      const userUsernameStartsWithANDlowercase = this.useStartsWith && this.checkUsername && this.useLowerCase && guild.members.find(m => m.user.username.toLowerCase().startsWith(str.toLowerCase()))
+      if (userUsernameStartsWithANDlowercase) return userUsernameStartsWithANDlowercase.user
+
+      const userNickStartsWith = this.useStartsWith && this.checkNick && guild.members.find(m => m.nickname && m.nickname.startsWith(str))
+      if (userNickStartsWith) return userNickStartsWith.user
+
+      const userNickStartsWithANDlowercase = this.checkNick && this.useLowerCase && this.useStartsWith && guild.members.find(m => m.nickname && m.nickname.toLowerCase().startsWith(str.toLowerCase()))
+      if (userNickStartsWithANDlowercase) return userNickStartsWithANDlowercase.user
     }
-    if (!this.acceptUser && !user.bot) {
-      throw new CommandError(this.errors.acceptUser)
+
+    const userUsername = this.checkUsername && users.find(u => u.username === str)
+    if (userUsername) return userUsername
+
+    const userUsernameLowercase = this.checkUsername && this.useLowerCase && users.find(u => u.username.toLowerCase() === str.toLowerCase())
+    if (userUsernameLowercase) return userUsernameLowercase
+
+    const userUsernameStartsWith = this.checkUsername && this.useStartsWith && users.find(u => u.username.startsWith(str))
+    if (userUsernameStartsWith) return userUsernameStartsWith
+
+    const userUsernameStartsWithANDlowercase = this.useLowerCase && this.checkUsername && this.useStartsWith && users.find(u => u.username.toLowerCase().startsWith(str.toLowerCase()))
+    if (userUsernameStartsWithANDlowercase) return userUsernameStartsWithANDlowercase
+
+    if (resultRegex && this.checkUserGlobal) {
+
     }
-    if (!this.acceptSelf && user.id === authorID) {
-      throw new CommandError(this.errors.acceptSelf)
+
+    if (resultRegex && this.checkUserGlobal) {
+      try {
+        const user = await users.fetch(resultRegex[0], false)
+        return user
+      } catch (_) {
+
+      }
     }
-    return user
   }
 }
 
