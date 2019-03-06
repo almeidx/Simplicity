@@ -37,8 +37,8 @@ class User extends Parameter {
   }
 
   async handle (context, args) {
-    const str = args.join(' ') || ''
-    const user = await this.getUser(context, str)
+    const str = args.join(' ')
+    const user = args.length > 0 && await this.getUser(context, str)
     if (!user) return null
 
     if (!this.acceptSelf && user.id === context.author.id) throw new CommandError(this.errors.acceptSelf)
