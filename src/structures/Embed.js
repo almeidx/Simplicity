@@ -9,10 +9,9 @@ class Embed extends MessageEmbed {
     this._author = options.author
     this._t = options.t
     this._emoji = options.emoji
-
-    if (this._message || this.author) {
+    if (this._message || this._author) {
       const msg = this._message
-      const author = this.author || (msg && msg.author)
+      const author = this._author || (msg && msg.author)
 
       if (options.autoFooter && author) this.setFooter(author.tag)
 
