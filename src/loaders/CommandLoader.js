@@ -1,4 +1,5 @@
-const { Loader, FileUtils } = require('../')
+const { FileUtils } = require('../')
+const Loader = require('../structures/Loggers')
 const { Collection } = require('discord.js')
 
 class CommandStore extends Collection {

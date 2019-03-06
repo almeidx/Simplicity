@@ -10,10 +10,11 @@
     "clientMissingPermission_plural": "I require the {{- permissions }} permissions in order to execute this command!",
     "userMissingPermission": "You require the `{{- permissions }}` permission in order to execute this command!",
     "userMissingPermission_plural": "You require the {{- permissions }} permissions in order to execute this command!",
-    "userMissingRole": "You can't {{- action }} this user because they have the same or higher role as you.",
-    "clientMissingRole": "I can't {{- action }} this user because they have the same or higher role as me.",
+    "userMissingRole": "You can't {{- action }} this user because they have the same or higher role than you.",
+    "clientMissingRole": "I can't {{- action }} this user because they have the same or higher role than me.",
     "noVoiceChannel": "The user is not in a Voice Channel.",
-    "invalidUser": "The ID or the user you mentioned is invalid!",
+    "invalidUser": "You must either mention, provide an ID, tag or the name of a member!",
     "nsfwChannel": "This command can only be used in NSFW Channels!",
-    "noReason": "No reason provided."
+    "noReason": "No reason provided.",
+    "invalidParameters": "Invalid Parameters."
 }

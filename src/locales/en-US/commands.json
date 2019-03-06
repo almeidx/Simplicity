@@ -99,13 +99,14 @@
     },
     "ban": {
         "description": "This command lets you ban members of your server.",
-        "usage": "<reason>",
+        "usage": "<member> [reason]",
         "success": "Member Banned",
         "userBanned": "{{- user }} has been banned from the server",
         "bannedBy": "Banned by",
         "reason": "Reason",
         "noReason": "No reason provided.",
-        "action": "ban"
+        "action": "ban",
+        "noUser": "You must provide a valid user!"
     },
     "kick": {
         "description": "This command lets you kick members of your server.",
