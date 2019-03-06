@@ -5,7 +5,7 @@ class Loader {
   }
 
   load () {
-    throw new Error(`${this.constructor.name} incompleted.`)
+    throw new Error(`${this.constructor.name} incomplete.`)
   }
 }
 

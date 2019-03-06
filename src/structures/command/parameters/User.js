@@ -71,14 +71,14 @@ class User extends Parameter {
       const userUsernameStartsWith = this.useStartsWith && this.checkUsername && guild.members.find(m => m.user.username.startsWith(str))
       if (userUsernameStartsWith) return userUsernameStartsWith.user
 
-      const userUsernameStartsWithANDlowercase = this.useStartsWith && this.checkUsername && this.useLowerCase && guild.members.find(m => m.user.username.toLowerCase().startsWith(str.toLowerCase()))
-      if (userUsernameStartsWithANDlowercase) return userUsernameStartsWithANDlowercase.user
+      const userUsernameStartsWithAndLowercase = this.useStartsWith && this.checkUsername && this.useLowerCase && guild.members.find(m => m.user.username.toLowerCase().startsWith(str.toLowerCase()))
+      if (userUsernameStartsWithAndLowercase) return userUsernameStartsWithAndLowercase.user
 
       const userNickStartsWith = this.useStartsWith && this.checkNick && guild.members.find(m => m.nickname && m.nickname.startsWith(str))
       if (userNickStartsWith) return userNickStartsWith.user
 
-      const userNickStartsWithANDlowercase = this.checkNick && this.useLowerCase && this.useStartsWith && guild.members.find(m => m.nickname && m.nickname.toLowerCase().startsWith(str.toLowerCase()))
-      if (userNickStartsWithANDlowercase) return userNickStartsWithANDlowercase.user
+      const userNickStartsWithAndLowercase = this.checkNick && this.useLowerCase && this.useStartsWith && guild.members.find(m => m.nickname && m.nickname.toLowerCase().startsWith(str.toLowerCase()))
+      if (userNickStartsWithAndLowercase) return userNickStartsWithAndLowercase.user
     }
 
     const userUsername = this.checkUsername && users.find(u => u.username === str)
@@ -90,8 +90,8 @@ class User extends Parameter {
     const userUsernameStartsWith = this.checkUsername && this.useStartsWith && users.find(u => u.username.startsWith(str))
     if (userUsernameStartsWith) return userUsernameStartsWith
 
-    const userUsernameStartsWithANDlowercase = this.useLowerCase && this.checkUsername && this.useStartsWith && users.find(u => u.username.toLowerCase().startsWith(str.toLowerCase()))
-    if (userUsernameStartsWithANDlowercase) return userUsernameStartsWithANDlowercase
+    const userUsernameStartsWithAndLowercase = this.useLowerCase && this.checkUsername && this.useStartsWith && users.find(u => u.username.toLowerCase().startsWith(str.toLowerCase()))
+    if (userUsernameStartsWithAndLowercase) return userUsernameStartsWithAndLowercase
 
     if (resultRegex && this.checkUserGlobal) {
 
