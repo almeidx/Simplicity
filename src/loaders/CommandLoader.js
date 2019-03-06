@@ -1,4 +1,4 @@
-const { FileUtils } = require('../')
+const FileUtils = require('../utils/FileUtils')
 const Loader = require('../structures/Loggers')
 const { Collection } = require('discord.js')
 
