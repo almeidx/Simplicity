@@ -13,9 +13,9 @@ class Avatar extends Command {
     this.requirements = { permissions: ['EMBED_LINKS'] }
   }
 
-  run ({ author, send }, user) {
+  run ({ author, send, t }, user) {
     if (!user) user = author
-    const embed = new Embed({ author })
+    const embed = new Embed({ author, t, autoAuthor: false })
       .setImage(user.displayAvatarURL({ size: 2048 }))
     send(embed)
   }
