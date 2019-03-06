@@ -15,8 +15,11 @@ class Avatar extends Command {
 
   run ({ author, send, t }, user) {
     if (!user) user = author
+
     const embed = new Embed({ author, t, autoAuthor: false })
       .setImage(user.displayAvatarURL({ size: 2048 }))
+      .setAuthor(user.tag, user.displayAvatarURL())
+
     send(embed)
   }
 }
