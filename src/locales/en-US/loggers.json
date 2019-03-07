@@ -6,7 +6,7 @@
     "messageUnpinned": "[Message]({{- url }}) by {{- user }} unpinned in {{- channel }}",
     "messagePinned": "[Message]({{- url }}) by {{- user }} pinned in {{- channel }}",
     "messageDeleted": "Message by {{- user }} deleted in {{- channel }}",
-    "messageDeletedExecuter": "Message by {{- user }} deleted in {{- channel }} by {{- executer }}",
+    "messageDeletedExecutor": "Message by {{- user }} deleted in {{- channel }} by {{- executor }}",
     "content": "Content",
     "messageDeletedBulk": "{{- amount }} messages Bulk Deleted in {{- channel }}",
     "changedAvatar": "{{- user }} has changed their avatar",

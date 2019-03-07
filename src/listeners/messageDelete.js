@@ -20,7 +20,7 @@ async function messageDelete (message) {
 
       if (entry.extra.channel.id === message.channel.id && entry.target.id === user.id && entry.createdTimestamp > Date.now() - 5000) {
         const executor = entry.executor
-        embed.setDescription('loggers:messageDeletedExecuter', { user, channel: message.channel, executor })
+        embed.setDescription('loggers:messageDeletedExecutor', { user, channel: message.channel, executor })
       }
     }
     return LogUtils.send(channel, embed)
