@@ -40,7 +40,7 @@ class User extends Parameter {
       acceptUser: 'errors:acceptUser',
       acceptSelf: 'errors:acceptSelf',
       onlyRoleHighest: 'errors:userMissingRole',
-      onlyBotRoleHighest: ''
+      onlyBotRoleHighest: 'errors:clientMissingRole'
     }, options.errors)
   }
 
