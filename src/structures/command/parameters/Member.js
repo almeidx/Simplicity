@@ -44,15 +44,15 @@ class User extends Parameter {
     }, options.errors)
   }
 
-  async handle ({ member: memberAuthor, author, guild }, args) {
+  async handle ({ member: memberAuthor, author, guild, command, t }, args) {
     const member = args.length > 0 && await this.getMember(guild, this.argFirst ? args[0] : args.join(' '))
     if (!member) return null
 
     if (!this.acceptSelf && member.user.id === author.id) throw new CommandError(this.errors.acceptSelf)
     if (!this.acceptBot && member.user.bot) throw new CommandError(this.errors.acceptBot)
     if (!this.acceptUser && !member.user.bot) throw new CommandError(this.errors.acceptSelf)
-    if (this.onlyRoleHighest && member.roles.highest.position <= memberAuthor.roles.highest.position) throw new CommandError(this.errors.onlyRoleHighest)
-    if (this.onlyBotRoleHighest && guild.me.roles.highest.position <= member.roles.highest.position) throw new CommandError(this.errors.onlyBotRoleHighest)
+    if (this.onlyRoleHighest && member.roles.highest.position >= memberAuthor.roles.highest.position) throw new CommandError(this.errors.onlyRoleHighest, { action: t(`commands:${command.name}.action`) })
+    if (this.onlyBotRoleHighest && guild.me.roles.highest.position <= member.roles.highest.position) throw new CommandError(this.errors.onlyBotRoleHighest, { action: t(`commands:${command.name}.action`) })
     return member
   }
 
