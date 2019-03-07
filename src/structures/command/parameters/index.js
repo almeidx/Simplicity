@@ -1,4 +1,5 @@
 module.exports = {
   User: require('./User'),
-  Member: require('./Member')
+  Member: require('./Member'),
+  String: require('./String')
 }
