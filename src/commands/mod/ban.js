@@ -5,45 +5,48 @@ class Ban extends Command {
     super(client)
     this.aliases = ['bean']
     this.category = 'mod'
+    this.parameters = [{
+      type: 'user',
+      required: true
+    }]
     this.requirements = { argsRequired: true, permissions: ['BAN_MEMBERS'], clientPermissions: ['BAN_MEMBERS'] }
   }
-  run ({ author, guild, send, message, member, t, args }) {
-    const reason = args.slice(1).join(' ')
-    const mem = this.getUser(message, args)
-    let msg, title
+  run ({ author, guild, send, member, t, args }, user) {
+    const reason = args.slice(1).join(' ') || 'commands:ban.noReason'
 
     const embed = new Embed({ t, author, member, guild })
-      .setColor('RED')
-      .setTitle('errors:denied')
+      .setTimestamp()
+      .setTitle('errors:invalidParameters')
 
-    if (!mem) {
-      msg = 'commands:ban.usage'
-      title = 'commands:ban.invalidUser'
-    } else if (member.roles.highest.position <= mem.roles.highest.position) {
-      msg = t('errors:userMissingRole', { action: 'commands:ban.action' })
-    } else if (guild.me.roles.highest.position <= mem.roles.highest.position) {
-      msg = t('errors:clientMissingRole', { action: t('commands:ban.action') })
+    if (!user) {
+      embed.setDescription('commands:ban.invalidUser')
+        .setError()
+      return send(embed)
+    }
+
+    // AUTHOR ROLES ARE LOWER OR THE SAME AS THE USER
+    if (member.roles.highest.position <= user.roles.highest.position) {
+      embed.setError()
+        .setDescription('errors:userMissingRole', { action: 'commands:ban.action' })
+      return send(embed)
+    } else
+
+    // BOT ROLES ARE LOWER OR THE SAME AS THE USER
+    if (guild.me.roles.highest.position <= user.roles.highest.position) {
+      embed.setError()
+        .setDescription('errors:clientMissingRole', { action: t('commands:ban.action') })
+      return send(embed)
     } else {
-      mem.ban({ days: 7, reason: `${author.tag} | ${reason || 'commands:ban.noReason'}` })
-      title = 'commands:ban.success'
-      msg = t('commands:ban.userBanned', { user: mem })
-      embed.addField(t('commands:ban.bannedBy'), author, true)
-        .addField(t('commands:ban.reason'), reason || t('commands:ban.noReason'))
-    }
-    if (msg) embed.setDescription(msg)
-    if (title) embed.setTitle(title)
-    send(embed)
-  }
-  getUser (message, [query = null]) {
-    const checkMention = new RegExp('(^<@[0-9]*>)', 'g').test(query)
-    let mem = message.mentions.members.first()
-    if (mem && checkMention) {
-      return mem
-    }
-    mem = message.guild.member(query)
-    if (mem) {
-      return mem
+      user.ban({ days: 7, reason: `${author.tag} | ${reason}` })
+
+      embed.setTitle('commands:ban.success')
+        .setDescription('commands:ban.userBanned', { user })
+        .addField('commands:ban.bannedBy', author, true)
+        .addField('commands:ban.reason', reason, true)
+
+      return send(embed)
     }
   }
 }
+
 module.exports = Ban
