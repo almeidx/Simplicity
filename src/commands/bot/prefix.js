@@ -17,7 +17,7 @@ class Prefix extends Command {
     if (!data) throw new CommandError('commands:prefix.failed', { onUsage: false })
 
     embed.setTitle('commands:prefix.done')
-      .setDescription('commands:prefix.sucess', { prefix: query })
+      .setDescription('commands:prefix.success', { prefix: query })
     send(embed)
   }
 }

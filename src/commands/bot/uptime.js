@@ -6,10 +6,15 @@ class Uptime extends Command {
     this.aliases = ['ut', 'ontime']
     this.category = 'bot'
   }
+
   run ({ send, t }) {
+    const duration = Utils.convertDateLang(t, this.client.uptime)
+
     const embed = new Embed({ t })
-      .setDescription('commands:uptime.onlineFor', { duration: Utils.convertDateLang(t, this.client.uptime) })
+      .setDescription('commands:uptime.onlineFor', { duration })
+
     send(embed)
   }
 }
+
 module.exports = Uptime

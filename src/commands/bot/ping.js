@@ -6,11 +6,15 @@ class Ping extends Command {
     this.aliases = ['pong']
     this.category = 'bot'
   }
-  run ({ message, send, guild, t }) {
-    send(t('commands:ping.loading'))
-      .then(msg => {
-        msg.edit(t('commands:ping.sucess', { HOST: msg.createdTimestamp - message.createdTimestamp, API: Math.round(guild.shard.ping) }))
-      })
+
+  async run ({ message, channel, guild, t }) {
+    const msg = await channel.send(t('commands:ping.loading'))
+
+    const host = msg.createdTimestamp - message.createdTimestamp
+    const api = Math.round(guild.shard.ping)
+
+    msg.edit(t('commands:ping.success', { host, api }))
   }
 }
+
 module.exports = Ping
