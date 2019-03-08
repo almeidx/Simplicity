@@ -12,7 +12,8 @@ class Ascii extends Command {
     const embed = new Embed({ t })
 
     if (query > 15) {
-      embed.setDescription('commands:ascii.queryTooBig')
+      embed
+        .setDescription('commands:ascii.queryTooBig')
         .setError()
 
       return send(embed)
@@ -22,7 +23,8 @@ class Ascii extends Command {
       if (!error && response.statusCode === 200) {
         return send(`\`\`\`${body}\`\`\``)
       } else {
-        embed.setDescription('errors:general')
+        embed
+          .setDescription('errors:general')
           .setError()
 
         return send(embed)

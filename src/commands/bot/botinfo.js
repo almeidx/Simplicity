@@ -10,6 +10,7 @@ class BotInfo extends Command {
     this.category = 'bot'
     this.requirements = { clientPermissions: ['EMBED_LINKS'] }
   }
+
   run ({ author, t, emoji, send, guild }) {
     const UPTIME = moment.duration(this.client.uptime).format(`D[ ${t('utils:date.days')}], H[ ${t('utils:date.hours')}], m[ ${t('utils:date.minutes')}], s[ ${t('utils:date.seconds')}]`)
     const CPU = (process.cpuUsage().user / 1024 / 1024).toFixed(2)
@@ -28,7 +29,9 @@ class BotInfo extends Command {
       .addField('commands:botinfo.commands', this.client.commands.size, true, { emoji: 'COMMANDS' })
       .addField('commands:botinfo.pings', guild.shard.pings.join(', '), true, { emoji: 'PINGS' })
       .addField('commands:botinfo.uptime', UPTIME, true, { emoji: 'WATCH' })
+
     send(embed)
   }
 }
+
 module.exports = BotInfo

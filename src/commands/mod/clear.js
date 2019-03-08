@@ -7,6 +7,7 @@ class Clear extends Command {
     this.category = 'mod'
     this.requirements = { argsRequired: true, permissions: ['MANAGE_MESSAGES'], clientPermissions: ['MANAGE_MESSAGES'] }
   }
+
   async run ({ author, channel, send, t, query }) {
     const embed = new Embed({ t, author })
     const total = parseInt(query)

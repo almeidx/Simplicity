@@ -6,9 +6,11 @@ class Emojify extends Command {
     this.category = 'util'
     this.requirements = { argsRequired: true }
   }
+
   run ({ send, args, t }) {
-    var text = args.join(' ')
+    const text = args.join(' ')
     let word = ''
+
     function getCharacter (input) {
       if (('abcdefghijklmnopqrstuvwxyz').includes(input)) {
         return `:regional_indicator_${input}:`
@@ -26,17 +28,19 @@ class Emojify extends Command {
         }
       }
     }
+
     text.toLowerCase().split('').forEach(function (char) {
       word += (char ? getCharacter(char) : ' ')
     })
+
     if (word && word.length <= 2000) {
-      send(word)
-        .catch(() => {
-          send(t('commands:emojify.invalidCharacters'))
-        })
+      send(word).catch(() => {
+        send(t('commands:emojify.invalidCharacters'))
+      })
     } else {
       send(t('commands:emojify.messageTooBig'))
     }
   }
 }
+
 module.exports = Emojify
