@@ -24,10 +24,10 @@ class Ban extends Command {
     const bans = await guild.fetchBans()
 
     if (bans && bans.has(user.id)) {
-      const reason = bans[user.id].reason // nem tenho certeza se é assim kk to com preguiça
+      const reason = bans[user.id].reason
       embed
         .setTitle('errors:oops')
-        .setDescription('commands:ban.alreadyBanned', { user, reason }) // coloca nos commands.json: "It seems that {{- user }} is already banned from this guild for {{- reason }}!"
+        .setDescription(reason ? 'commands:ban.alreadyBannedReason' : 'commands:ban.alreadyBannedNoReason', { user, reason ? reason : '' }) // coloca nos commands.json: "It seems that {{- user }} is already banned from this guild for {{- reason }}!"
     }
 
     await member.ban(reason)
