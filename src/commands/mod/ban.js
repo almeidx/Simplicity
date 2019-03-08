@@ -14,7 +14,7 @@ class Ban extends Command {
       missingError: 'errors:invalidUser'
     }, {
       type: 'string',
-      default: 'noReason'
+      default: 'errors:noReason'
     }]
     this.requirements = { permissions: ['BAN_MEMBERS'], clientPermissions: ['BAN_MEMBERS'] }
   }
@@ -27,7 +27,7 @@ class Ban extends Command {
       const reason = bans[user.id].reason
       embed
         .setTitle('errors:oops')
-        .setDescription(reason ? 'commands:ban.alreadyBannedReason' : 'commands:ban.alreadyBannedNoReason', { user, reason ? reason : '' }) // coloca nos commands.json: "It seems that {{- user }} is already banned from this guild for {{- reason }}!"
+        .setDescription(reason ? 'commands:ban.alreadyBannedReason' : 'commands:ban.alreadyBannedNoReason', { user, reason ? reason : '' })
     }
 
     await member.ban(reason)
