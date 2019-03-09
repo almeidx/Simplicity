@@ -24,7 +24,7 @@ class Help extends Command {
       return send(embed.setDescription('commands:help.commandUndefined').setError())
     }
 
-    const command = this.client.fetchCommand(args[0].toLowerCase())
+    const command = this.client.commands.fetch(args[0].toLowerCase())
 
     if (command.name === 'help') {
       return send(embed.setDescription('commands:help.commandHelp').setError())
