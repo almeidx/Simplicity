@@ -69,11 +69,6 @@
         "emojiCreated": "The emoji has been created!",
         "error": "There was an error when creating the emoji."
     },
-    "invite": {
-        "description": "This command shows how many persons the user has invited to the server.",
-        "usage": "<mention/id>",
-        "invitedMembers": "Invited members:"
-    },
     "clear": {
         "description": "This command clears messages from the chat.",
         "usage": "[amount]",
