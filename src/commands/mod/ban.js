@@ -14,14 +14,25 @@ class Ban extends Command {
       missingError: 'errors:invalidUser'
     }, {
       type: 'string',
-      default: 'noReason'
+      default: 'errors:noReason'
     }]
     this.requirements = { permissions: ['BAN_MEMBERS'], clientPermissions: ['BAN_MEMBERS'] }
   }
 
-  async run ({ author, send, t }, member, reason) {
-    await member.ban(reason)
+  async run ({ author, guild, send, t }, member, reason) {
     const embed = new Embed({ t, author })
+    const bans = await guild.fetchBans()
+
+    if (bans && bans.has(user.id)) {
+      const reason = bans[user.id].reason
+      embed
+        .setTitle('errors:oops')
+        .setDescription(reason ? 'commands:ban.alreadyBannedReason' : 'commands:ban.alreadyBannedNoReason', { user, reason ? reason : '' })
+    }
+
+    await member.ban(reason)
+
+    embed
       .setTitle('commands:ban.success')
       .setDescription('commands:ban.userBanned', { user: member })
       .addField('commands:ban.bannedBy', `${author}`, true)
