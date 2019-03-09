@@ -28,7 +28,7 @@ async function guildMemberAdd (member) {
 
     // .addField('Convidado por', `${inviter} usando o convite: ${invite.url} (${invite.uses} usos)`)
 
-    LogUtils.send(channel, embed)
+    LogUtils.send(channel, embed).catch(e => console.error(e))
   }
 }
 

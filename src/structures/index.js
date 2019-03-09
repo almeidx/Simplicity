@@ -3,5 +3,5 @@ module.exports = {
   Command: require('./Command'),
   Loggers: require('./Loggers'),
   Parameters: require('./command/Parameters'),
-  CommandError: require('./commandd/CommandError')
+  CommandError: require('./command/CommandError')
 }

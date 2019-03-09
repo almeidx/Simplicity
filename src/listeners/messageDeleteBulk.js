@@ -11,7 +11,7 @@ async function messageDeleteBulk (messages) {
       .setDescription('loggers:messageDeleteBulk', { amount: messages.size, channel: message.channel })
       .setColor(Constants.COLORS.MESSAGE_BULK_DELETE)
 
-    LogUtils.send(channel, embed)
+    LogUtils.send(channel, embed).catch(e => console.error(e))
   }
 }
 

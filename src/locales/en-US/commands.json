@@ -31,7 +31,8 @@
         "usage": "<text>",
         "original": "Original",
         "translated": "Translated",
-        "googleTranslate": "Google Translate"
+        "googleTranslate": "Google Translate",
+        "error": "There was not a translation to the text you entered."
     },
     "servericon": {
         "description": "This command shows the server icon.",

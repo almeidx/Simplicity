@@ -3,7 +3,7 @@ class Collection {
     this.model = model
   }
 
-  parse (entity) {
+  static parse (entity) {
     return entity
   }
 

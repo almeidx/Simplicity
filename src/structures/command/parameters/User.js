@@ -1,6 +1,7 @@
 const Parameter = require('./Parameter')
 const CommandError = require('../CommandError')
 const REGEX_ID = /[0-9]{16,18}/g
+
 class User extends Parameter {
   constructor (options = {}) {
     super(options)
@@ -94,16 +95,14 @@ class User extends Parameter {
     if (userUsernameStartsWithAndLowercase) return userUsernameStartsWithAndLowercase
 
     if (resultRegex && this.checkUserGlobal) {
-
+      // kkk
     }
 
     if (resultRegex && this.checkUserGlobal) {
       try {
         const user = await users.fetch(resultRegex[0], false)
         return user
-      } catch (_) {
-
-      }
+      } catch (_) { }
     }
   }
 }

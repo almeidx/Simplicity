@@ -1,5 +1,5 @@
-const { MessageEmbed, MessageAttachment } = require('discord.js')
-const { Command } = require('../../')
+const { MessageAttachment } = require('discord.js')
+const { Command, CommandError, Embed } = require('../../')
 const translate = require('node-google-translate-skidz')
 
 class Translate extends Command {
@@ -10,24 +10,24 @@ class Translate extends Command {
     this.requirements = { argsRequired: true }
   }
 
-  run ({ author, send, args, t }) {
-    const text = args.join(' ')
-    const embed = new MessageEmbed()
+  run ({ author, send, query, t }) {
+    const embed = new Embed({ author, t })
 
-    translate({ text: text, target: 'en' }, function (result) {
+    translate({ text: query, target: 'en' }, function (result) {
       if (result.translation) {
         embed
           .setThumbnail('attachment://translate.png')
-          .setAuthor(t('commands:translate.googleTranslate'), 'attachment://translate.png')
-          .addField(t('commands:translate.original'), text, true)
-          .addField(t('commands:translate.translated'), result.translation, true)
+          .setAuthor('commands:translate.googleTranslate', 'attachment://translate.png')
+          .addField('commands:translate.original', query)
+          .addField('commands:translate.translated', result.translation)
           .attachFiles(new MessageAttachment('src/assets/google-translate.png', 'translate.png'))
 
         return send(embed)
       } else {
-        return send(embed, { error: true })
+        throw new CommandError('commands:translate.error', { onUsage: false })
       }
     })
   }
 }
+
 module.exports = Translate

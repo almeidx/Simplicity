@@ -46,4 +46,5 @@ class Command {
     return send(embed)
   }
 }
+
 module.exports = Command

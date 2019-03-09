@@ -1,4 +1,5 @@
 const CommandError = require('./CommandError')
+
 class Requirements {
   constructor (requirements = {}) {
     this.argsRequired = false
@@ -13,6 +14,7 @@ class Requirements {
       argsRequired: 'errors:missingParameters',
       nsfwChannelOnly: 'errors:nsfwChannel'
     }
+
     for (const req in requirements) {
       let opts = requirements[req]
       if (this[req] == null) throw new Error(`${req} não existe`)
@@ -25,6 +27,7 @@ class Requirements {
       }
     }
   }
+
   handle ({ author, client, channel, guild, args, t }) {
     if (this.ownerOnly) {
       const guildClient = client.guilds.get(process.env.SERVER_ID)
@@ -33,20 +36,25 @@ class Requirements {
         throw new CommandError(this.responses.ownerOnly)
       }
     }
+
     const clientPerms = this.clientPermissions.filter((p) => !channel.permissionsFor(guild.me).has(p)).map(p => t('permissions:' + p))
     if (clientPerms.length !== 0) {
       throw new CommandError(t(this.responses.clientPermissions, { permissions: clientPerms.join(' '), count: clientPerms.length }))
     }
+
     const memberPerms = this.permissions.filter((p) => !channel.permissionsFor(author.id).has(p)).map(p => t('permissions:' + p))
     if (memberPerms.length !== 0) {
       throw new CommandError(t(this.responses.permissions, { permissions: memberPerms.join(' '), count: memberPerms.length }))
     }
+
     if (this.argsRequired && args.length === 0) {
       throw new CommandError(this.responses.argsRequired)
     }
+
     if (this.nsfwChannelOnly && !channel.nsfw) {
       throw new CommandError(this.responses.nsfwChannelOnly)
     }
   }
 }
+
 module.exports = Requirements

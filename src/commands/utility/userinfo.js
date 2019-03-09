@@ -34,4 +34,5 @@ class UserInfo extends Command {
     send(embed)
   }
 }
+
 module.exports = UserInfo
