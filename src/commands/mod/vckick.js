@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js')
+// const { MessageEmbed } = require('discord.js')
 const { Command } = require('../../')
 
 class VoiceKick extends Command {
@@ -7,8 +7,10 @@ class VoiceKick extends Command {
     this.category = 'mod'
     this.requirements = { argsRequired: true, permissions: ['KICK_MEMBERS'], clientPermissions: ['MANAGE_CHANNELS', 'MOVE_MEMBERS'] }
   }
-  async run ({ author, guild, send, message, member, t, args }) {
-    let mem = this.getUser(message, args)
+
+  /* async */ run ({ author, guild, send, message, member, t, args }) {
+    send('this command isn\'t finished')
+    /* let mem = this.getUser(message, args)
     let embed = new MessageEmbed()
       .setAuthor(author.tag, author.displayAvatarURL({ size: 2048 }))
       .setColor('RED')
@@ -49,7 +51,8 @@ class VoiceKick extends Command {
     member = message.guild.member(query)
     if (member) {
       return member
-    }
+    } */
   }
 }
+
 module.exports = VoiceKick

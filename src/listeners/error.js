@@ -1,4 +1,5 @@
-module.exports = function Error (error) {
+const { Embed } = require('../')
+function Error (error) {
   if (error.message === 'Unexpected server response: 520') {
     console.log('Cant connect to Discords API, Retrying...')
   } else if (error.message === 'read ECONNRESET') {
@@ -6,5 +7,17 @@ module.exports = function Error (error) {
   } else {
     console.error(error)
   }
-  this.channels.get('532368809105948701').send(`There was an error: ${error.message}`)
+
+  if (process.env.CHANNEL_LOG_ERROR && this.channels.has(process.env.CHANNEL_LOG_ERROR)) {
+    const channel = this.channels.get(process.env.CHANNEL_LOG_ERROR)
+
+    const embed = new Embed()
+      .setTimestamp()
+      .setAuthor(this.user.tag, this.user.displayAvatarURL())
+      .setDescription(error.stack)
+
+    channel.send(embed)
+  }
 }
+
+module.exports = Error

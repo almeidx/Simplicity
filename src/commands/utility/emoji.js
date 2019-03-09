@@ -1,5 +1,5 @@
-const { Command, RegexEmojis } = require('../../')
-const { MessageEmbed, MessageAttachment } = require('discord.js')
+const { Command, CommandError, RegexEmojis } = require('../../')
+const { MessageAttachment } = require('discord.js')
 const request = require('snekfetch')
 
 class Emoji extends Command {
@@ -9,32 +9,32 @@ class Emoji extends Command {
     this.category = 'util'
     this.requirements = { argsRequired: true }
   }
-  async run ({ send, args, t }) {
-    const embed = new MessageEmbed()
-      .setColor('36393f')
+
+  async run ({ channel, send, query, t }) {
+    channel.startTyping().catch(() => {})
     try {
-      let custom = args.join(' ').split(RegexEmojis)[0]
-      console.log(custom)
-      if (custom) {
-        const id = custom.split(':')[ custom.split(':').length - 1 ].replace(/>/g, '')
-        const gif = custom.split(':')[0].replace(/</g, '') === 'a'
-        embed.setImage(`attachment://Simplicity-Emoji.${gif ? 'gif' : 'png'}`)
-          .attachFiles(new MessageAttachment(`https://cdn.discordapp.com/emojis/${id}.${gif ? 'gif' : 'png'}?v=1`, `Simplicity-Emoji.${gif ? 'gif' : 'png'}`))
-        await send(embed, { autoFooter: false, autoAuthor: false, autoTimestamp: false })
-          .catch(async () => {
-            const url = `https://twemoji.maxcdn.com/2/72x72/${args.join(' ').codePointAt().toString(16)}.png`
-            await request.get(url)
-            embed.setImage('attachment://Simplicity-Emoji.png')
-              .attachFiles(new MessageAttachment(url, 'Simplicity-Emoji.png'))
-            await send(embed, { autoFooter: false, autoAuthor: false, autoTimestamp: false })
-              .catch(() => {
-                send(embed, { error: true })
-              })
-          })
+      const customEmoji = query.split(RegexEmojis)[0]
+
+      if (customEmoji) {
+        const id = customEmoji.split(':')[ customEmoji.split(':').length - 1 ].replace(/>/g, '')
+        const gif = customEmoji.split(':')[0].replace(/</g, '') === 'a'
+        return await send(new MessageAttachment(`https://cdn.discordapp.com/emojis/${id}.${gif ? 'gif' : 'png'}?v=1`, `emoji.${gif ? 'gif' : 'png'}`)).then(() => channel.stopTyping(true))
       }
-    } catch (err) {
-      send(t('errors:general'))
+
+      const clean = query.codePointAt().toString(16)
+      const url = `https://twemoji.maxcdn.com/2/72x72/${clean}.png`
+      console.log(url)
+      const defaultEmoji = await request.get(url).catch(() => null)
+
+      if (defaultEmoji && defaultEmoji.readable) {
+        await send(new MessageAttachment(url, 'emoji.png')).then(() => channel.stopTyping(true))
+      }
+    } catch (e) {
+      console.error(e)
+      await channel.stopTyping(true)
+      throw new CommandError('commands:emoji.error', { onUsage: false })
     }
   }
 }
+
 module.exports = Emoji

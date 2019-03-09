@@ -1,4 +1,4 @@
-const { Command } = require('../../')
+const { Command, CommandError } = require('../../')
 const request = require('request')
 
 class Ascii extends Command {
@@ -7,18 +7,18 @@ class Ascii extends Command {
     this.category = 'util'
     this.requirements = { argsRequired: true }
   }
-  run ({ send, args, t }) {
-    if (args.length > 15) {
-      return send('Porra vsf man')
-    }
-    send(`Loading`)
-    request('https://artii.herokuapp.com/make?text=' + args.join(' '), function (error, response, body) {
+
+  run ({ send, query, t }) {
+    if (query > 15) throw new CommandError('commands:ascii.queryTooBig', { amount: 15, onUsage: false })
+
+    request(`https://artii.herokuapp.com/make?text=${query}`, function (error, response, body) {
       if (!error && response.statusCode === 200) {
-        send(`\`\`\`${body}\`\`\``)
+        return send(`\`\`\`${body}\`\`\``)
       } else {
-        send(t('errors:general'))
+        throw new CommandError('commands:ascii.error', { onUsage: false })
       }
     })
   }
 }
+
 module.exports = Ascii

@@ -1,13 +1,12 @@
 const { CommandContext, Loggers } = require('../')
 
-module.exports = async function onMessage (message) {
+async function onMessage (message) {
   if (message.author.bot || message.type === 'dm' || !message.guild.me.permissions.has('SEND_MESSAGES')) return
 
   const guildData = await this.database.guilds.get(message.guild.id)
-  if (!guildData) await this.database.guilds.create(message.guild.id)
 
-  const prefix = (guildData && guildData.prefix) ? guildData.prefix : process.env.PREFIX
-  const language = (guildData && guildData.lang) ? guildData.lang : process.env.DEFAULT_LANG
+  const prefix = (guildData && guildData.prefix) || process.env.PREFIX
+  const language = (guildData && guildData.lang) || process.env.DEFAULT_LANG
 
   const botMention = message.guild.me.toString()
   const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.toLowerCase().startsWith(prefix.toLowerCase()) ? prefix : null)
@@ -19,7 +18,7 @@ module.exports = async function onMessage (message) {
   if (usedPrefix) {
     const args = message.content.slice(usedPrefix.length).trim().split(/ +/g)
     const commandName = args.shift().toLowerCase()
-    const command = this.fetchCommand(commandName)
+    const command = this.commands.fetch(commandName)
 
     if (message.mentions.has(this.user.id) && message.guild.me.permissions.has(['USE_EXTERNAL_EMOJIS', 'ADD_REACTIONS']) && this.emojis.has(process.env.EMOJI_PINGSOCK_ID) && !command) {
       return message.react(process.env.EMOJI_PINGSOCK_ID)
@@ -38,3 +37,5 @@ module.exports = async function onMessage (message) {
     }
   }
 }
+
+module.exports = onMessage

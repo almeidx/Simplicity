@@ -1,18 +1,13 @@
 {
     "extends": "standard",
     "rules": {
-	"default-case": "error",
-	"eqeqeq": "error",
-	"no-async-promise-executor": "error",
-	"no-await-in-loop": "error",
-	"no-eval": "off",
-	"no-extra-parens": "error",
-	"no-trailing-spaces": ["error"],
-	"no-var": "error",
-	"no-useless-catch": "error",
-	"no-useless-return": "error",
-	"prefer-const": "error",
-	"quotes": ["error", "single"],
-	"require-await": "error"
+        "eqeqeq": "error",
+		"no-async-promise-executor": "error",
+		"no-await-in-loop": "error",
+		"no-eval": "off",
+		"no-extra-parens": "error",
+		"no-var": "error",
+		"prefer-const": "error",
+		"require-await": "error"
     }
 }

@@ -9,10 +9,9 @@ class Embed extends MessageEmbed {
     this._author = options.author
     this._t = options.t
     this._emoji = options.emoji
-
-    if (this._message || this.author) {
+    if (this._message || this._author) {
       const msg = this._message
-      const author = this.author || (msg && msg.author)
+      const author = this._author || (msg && msg.author)
 
       if (options.autoFooter && author) this.setFooter(author.tag)
 
@@ -27,14 +26,15 @@ class Embed extends MessageEmbed {
       const color = process.env.COLOR || 'GREEN'
       this.setColor(color)
     }
-
   }
 
   _tt (str = '', tOptions = {}) {
     if (!this._t) return str
     let result = String(str)
     const query = this._t(str, tOptions)
-    if (result.includes(':') && result.split(':')[1] !== query) result = query
+    const a = result.split(':').length >= 1 && result.split(':').slice(1)
+    const queryT = a && a[0] + '.' + a.slice(1).join('')
+    if (result.includes(':') && queryT !== query) result = query
     if (tOptions.emoji && this._emoji) result = `${this._emoji(tOptions.emoji)} ${result}`
     return result
   }

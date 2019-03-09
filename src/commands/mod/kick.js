@@ -21,9 +21,11 @@ class Kick extends Command {
     if (!guilty) {
       throw new CommandError('errors:invalidUser')
     }
+
     if (guild.me.roles.highest.position <= guilty.roles.highest.position) {
       throw new CommandError('errors:clientMissingRole', { action: t('commands:kick.action'), onUsage: false })
     }
+
     if (member.roles.highest.position <= guilty.roles.highest.position) {
       throw new CommandError('errors:userMissingRole', { action: t('commands:kick.action'), onUsage: false })
     }
@@ -41,4 +43,5 @@ class Kick extends Command {
     send(embed)
   }
 }
+
 module.exports = Kick
