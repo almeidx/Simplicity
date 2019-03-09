@@ -126,12 +126,6 @@
         "success": "{{- auth }} has kicked {{- memb }} from a Voice Channel.",
         "action": "voice kick"
     },
-    "emojify": {
-        "description": "This command replaces your text but using emojis.",
-        "usage": "[text]",
-        "invalidCharacters": "Invalid characters!",
-        "messageTooBig": "The message you provided is too big!"
-    },
     "urban": {
         "description": "This command lets you search for a definition in the Urban Dictionary.",
         "usage": "[keywords]",
