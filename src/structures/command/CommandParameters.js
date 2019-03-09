@@ -11,11 +11,12 @@ class CommandParameters {
       const name = p.type && (p.type[0].toUpperCase() + p.type.slice(1))
       const Parameter = name && Parameters[name]
 
-      if (!name || !Parameter) throw new Error('Invalid Parameter:', name)
+      if (!name || !Parameter) throw new Error('Invalid Parameter:', p.type)
       const parameter = new Parameter(p)
       const result = await parameter.handle(context, args)
       if (result) args.splice(0, 1)
-      else {
+      console.log(args)
+      if (!result) {
         if (!parameter.required) return null
         else throw new CommandError(parameter.missingError)
       }
