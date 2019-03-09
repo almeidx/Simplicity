@@ -26,7 +26,6 @@
     "moment-duration-format": "^2.2.2",
     "mongoose": "^5.4.3",
     "node-fetch": "^2.3.0",
-    "node-google-translate-skidz": "^1.1.2",
     "snekfetch": "^4.0.4",
     "urban": "^0.3.2",
     "weather": "^0.1.0"

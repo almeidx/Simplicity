@@ -26,13 +26,6 @@
         "oops": "Oops!",
         "failed": "Sadly, something wen't wrong while trying to update the servers prefix!\nPlease, try again later."
     },
-    "translate": {
-        "description": "This command translates something to English.",
-        "usage": "<text>",
-        "original": "Original",
-        "translated": "Translated",
-        "googleTranslate": "Google Translate"
-    },
     "servericon": {
         "description": "This command shows the server icon.",
         "text": "Click [here]({{- iconURL }}) to download the icon!"
