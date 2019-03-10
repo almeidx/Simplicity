@@ -32,7 +32,7 @@ class Emoji extends Command {
     } catch (e) {
       console.error(e)
       await channel.stopTyping(true)
-      throw new CommandError('commands:emoji.error', { onUsage: false })
+      throw new CommandError('commands:emoji.error')
     }
   }
 }

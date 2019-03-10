@@ -42,9 +42,9 @@ class User extends Parameter {
     const user = args.length > 0 && await this.getUser(context, str)
     if (!user) return null
 
-    if (!this.acceptSelf && user.id === context.author.id) throw new CommandError(this.errors.acceptSelf)
-    if (!this.acceptBot && user.bot) throw new CommandError(this.errors.acceptBot)
-    if (!this.acceptUser && !user.bot) throw new CommandError(this.errors.acceptSelf)
+    if (!this.acceptSelf && user.id === context.author.id) throw new CommandError(this.errors.acceptSelf, { onUsage: true })
+    if (!this.acceptBot && user.bot) throw new CommandError(this.errors.acceptBot, { onUsage: true })
+    if (!this.acceptUser && !user.bot) throw new CommandError(this.errors.acceptSelf, { onUsage: true })
 
     return user
   }

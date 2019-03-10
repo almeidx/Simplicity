@@ -12,11 +12,11 @@ class Clear extends Command {
     const embed = new Embed({ t, author })
     const total = parseInt(query)
 
-    if (!total || total < 2 || total > 100) throw new CommandError('commands:clear.invalidValue', { onUsage: false })
+    if (!total || total < 2 || total > 100) throw new CommandError('commands:clear.invalidValue')
 
     const res = await channel.messages.fetch({ limit: total })
     await channel.bulkDelete(res).catch(() => {
-      throw new CommandError('commands:clear.error', { onUsage: false })
+      throw new CommandError('commands:clear.error')
     })
 
     const amount = res.size

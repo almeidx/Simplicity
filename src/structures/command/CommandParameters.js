@@ -17,7 +17,7 @@ class CommandParameters {
       if (result) args.splice(0, 1)
       else {
         if (!parameter.required) return null
-        else throw new CommandError(parameter.missingError)
+        else throw new CommandError(parameter.missingError, { onUsage: true })
       }
       return result
     })
