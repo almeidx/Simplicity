@@ -23,12 +23,12 @@ class Eval extends Command {
         .addField('Result', value('js', toEval))
         .addField('Type', value('css', typeof evald))
 
-      Loggers.warn(['COMMAND', 'EVAL', 'RESULT'], toEval)
+      if (toEval) Loggers.warn(['COMMAND', 'EVAL-RESULT'], toEval)
     } catch (error) {
       embed
         .addField('Error', value('js', error))
 
-      Loggers.error(['COMMAND', 'EVAL', 'RESULT', 'ERROR'], error)
+      Loggers.error(['COMMAND', 'EVAL-RESULT'], error)
     } finally {
       const msg = await send(embed)
 
@@ -42,7 +42,7 @@ class Eval extends Command {
 
         collector.on('collect', async () => {
           await msg.delete()
-          await message.delete().catch()
+          await message.delete()
         })
         collector.on('end', () => {
           if (msg) msg.reactions.removeAll()
