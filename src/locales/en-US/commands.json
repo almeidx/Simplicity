@@ -1,7 +1,7 @@
 {
     "botinfo": {
         "description": "This command shows you info about myself.",
-        "botInfo": "Bot Information",
+        "botinfo": "Bot Information",
         "guildAndUsers": "Guilds | Users",
         "channelAndEmotes": "Channels | Emotes",
         "uptime": "Uptime",
