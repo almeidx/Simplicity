@@ -29,8 +29,7 @@ module.exports = {
     'CLIENT',
     'START',
     'READY',
-    'EVAL',
-    'RESULT',
+    'EVAL-RESULT',
     'USAGE'
   ],
   COLORS: {
