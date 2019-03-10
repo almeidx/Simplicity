@@ -12,9 +12,9 @@ module.exports = class Bot extends Client {
     super(options)
     this.i18next = require('i18next')
     this.database = new Database(this)
-    this.loadFiles()
+    this.loadFiles().catch(e => console.error(e))
     this.initListeners(Path.join(__dirname, '../listeners'))
-    this.initLocales(Path.join(__dirname, '../locales'))
+    this.initLocales(Path.join(__dirname, '../locales')).catch(e => console.error(e))
   }
 
   async loadFiles () {

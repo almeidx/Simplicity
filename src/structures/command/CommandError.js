@@ -6,4 +6,5 @@ class CommandError extends Error {
     this.onUsage = options.onUsage
   }
 }
+
 module.exports = CommandError

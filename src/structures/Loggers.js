@@ -11,14 +11,17 @@ class Logger {
   static _log (context, colors) {
     context = Object.assign({ tags: [], text: '' }, context)
     colors = Object.assign({ tags: 'bgGreen', text: null }, colors)
+
     if (typeof context.tags === 'string' && !Constants.TAGS_LOGGERS.includes(context.tags)) {
       context.text = context.tags + ' ' + context.text
       context.tags = []
     }
+
     if (typeof context.tags === 'string') {
       context.tags = [context.tags]
     }
-    const tag = context.tags.map(tag => String(tag))
+
+    const tag = context.tags.map(tag => String(tag).toUpperCase())
       .filter(tag => Constants.TAGS_LOGGERS.includes(tag))
       .map(tag => '#' + tag[0].toUpperCase() + tag.slice(1))
       .join(' ')
@@ -26,14 +29,18 @@ class Logger {
     const timestamp = Colors[colors.tags](this.timestamp)
     return console.log(`${timestamp} ${(tag !== '' ? tag : '')} ${text}`)
   }
+
   static log (tags = [], ...args) {
     return this._log({ tags, text: args.join(' ') })
   }
+
   static error (tags = [], ...args) {
     return this._log({ tags, text: args.join(' ') }, { tags: 'bgRed' })
   }
+
   static warn (tags = [], ...args) {
     return this._log({ tags, text: args.join(' ') }, { tags: 'bgYellow' })
   }
 }
+
 module.exports = Logger

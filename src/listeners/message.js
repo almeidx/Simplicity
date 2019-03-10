@@ -12,7 +12,7 @@ async function onMessage (message) {
   const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.toLowerCase().startsWith(prefix.toLowerCase()) ? prefix : null)
 
   if (message.content === botMention) {
-    return message.reply(this.i18next.getFixedT(language)('utils:myprefix', { prefix: prefix }))
+    return message.reply(this.i18next.getFixedT(language)('utils:prefix', { prefix: prefix }))
   }
 
   if (usedPrefix) {
@@ -32,7 +32,7 @@ async function onMessage (message) {
         command,
         message,
         args
-      }))
+      })).catch(e => console.error(e))
       Loggers.warn(['COMMAND', 'USAGE'], `${message.guild.name} #${message.channel.name} @${message.author.tag} ${message.content}`)
     }
   }

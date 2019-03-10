@@ -23,7 +23,7 @@ async function messageDelete (message) {
         embed.setDescription('loggers:messageDeletedExecutor', { user, channel: message.channel, executor })
       }
     }
-    return LogUtils.send(channel, embed)
+    return LogUtils.send(channel, embed).catch(e => console.error(e))
   }
 }
 

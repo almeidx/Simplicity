@@ -4,7 +4,7 @@ const { Embed, Loggers } = require('../')
 function Ready () {
   Loggers.log(['CLIENT', 'READY'], `Logged on ${this.guilds.size} guilds and ${this.users.size} users`)
 
-  this.user.setActivity(`@${this.user.username} help | ${this.users.size} users | ${this.guilds.size} guilds`, { type: 'WATCHING' })
+  this.user.setActivity(`@${this.user.username} help | ${this.users.size} users | ${this.guilds.size} guilds`, { type: 'WATCHING' }).catch(e => console.error(e))
 
   const embed = new Embed()
     .setDescription(`Logged on ${this.guilds.size} guilds with ${this.users.size} users`)
@@ -13,7 +13,7 @@ function Ready () {
     .setFooter(this.user.tag, this.user.displayAvatarURL())
 
   if (process.env.CHANNEL_LOG_START && this.channels.has(process.env.CHANNEL_LOG_START)) {
-    this.channels.get(process.env.CHANNEL_LOG_START).send(embed)
+    this.channels.get(process.env.CHANNEL_LOG_START).send(embed).catch(e => console.error(e))
   }
 
   /* const invites = {}

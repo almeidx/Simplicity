@@ -22,7 +22,7 @@ class BotInfo extends Command {
       .setThumbnail(this.client.user.displayAvatarURL({ size: 2048 }))
       .addField('Ping', `${Math.round(guild.shard.ping)}ms`, true, { emoji: 'PING' })
       .addField('commands:botinfo.guildAndUsers', `${this.client.guilds.size} | ${this.client.users.size}`, true, { emoji: 'USERS' })
-      .addField('commands:botinfo.channelAndEmojis', `${this.client.channels.size} | ${this.client.emojis.size}`, true, { emoji: 'HASH' })
+      .addField('commands:botinfo.channelsAndEmotes', `${this.client.channels.size} | ${this.client.emojis.size}`, true, { emoji: 'HASH' })
       .addField('CPU | RAM', `${CPU}mb | ${RAM}mb`, true, { emoji: 'RAM' })
       .addField('Discord.js | Node.js', `${version} | ${process.versions.node}`, true, { emoji: 'BOOKS' })
       .addField('commands:botinfo.os', PLATFORM, true, { emoji: 'PC' })

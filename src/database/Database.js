@@ -10,8 +10,8 @@ class Database {
       const model = mongoose.model(x, schema)
       this[x] = new Collection(model)
     }
-    mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true })
-      .catch(e => console.log(e))
+    mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true }).catch(e => console.error(e))
   }
 }
+
 module.exports = Database

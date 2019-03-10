@@ -1,9 +1,10 @@
 const { Embed } = require('../')
+
 function Error (error) {
   if (error.message === 'Unexpected server response: 520') {
-    console.log('Cant connect to Discords API, Retrying...')
+    console.error('Cant connect to Discords API, Retrying...')
   } else if (error.message === 'read ECONNRESET') {
-    console.log('Connection Reset! Reconnecting...')
+    console.error('Connection Reset! Reconnecting...')
   } else {
     console.error(error)
   }
@@ -16,7 +17,7 @@ function Error (error) {
       .setAuthor(this.user.tag, this.user.displayAvatarURL())
       .setDescription(error.stack)
 
-    channel.send(embed)
+    channel.send(embed).catch(e => console.error(e))
   }
 }
 

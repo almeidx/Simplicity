@@ -1,7 +1,7 @@
 {
     "botinfo": {
         "description": "This command shows you info about myself.",
-        "botinfo": "Bot Information",
+        "botInfo": "Bot Information",
         "guildAndUsers": "Guilds | Users",
         "channelAndEmotes": "Channels | Emotes",
         "uptime": "Uptime",
@@ -28,7 +28,7 @@
     },
     "servericon": {
         "description": "This command shows the server icon.",
-        "text": "Click [here]({{- iconURL }}) to download the icon!"
+        "text": "Click [here]({{- icon }}) to download the icon!"
     },
     "uptime": {
         "description": "This command shows the time I've been up for.",
@@ -66,15 +66,16 @@
         "nameTooShort": "The name for the emoji you provided was too short.",
         "invalidName": "Please, note that the emoji name can only have letters, numbers or underscores.",
         "invalidURL": "The URL you provided was not a valid url.",
-        "emojiCreated": "The emoji has been created!",
+        "emojiCreated": "The {{- emoji }} emoji has been created!",
         "error": "There was an error when creating the emoji."
     },
     "clear": {
         "description": "This command clears messages from the chat.",
         "usage": "[amount]",
         "invalidValue": "Please, give a value between 2 and 100!",
-        "deleted": "{{- amt }} messages have been deleted by {{- auth }}.",
-        "reason": "{{- auth }} [{{- authID }}] | Deleted {{- count }} messages."
+        "deleted": "{{- amount }} messages have been deleted by {{- author }}.",
+        "reason": "{{- auth }} [{{- authID }}] | Deleted {{- amount }} messages.",
+        "error": "Something wen't wrong when deleting the messages."
     },
     "userinfo": {
         "description": "This command shows info about the user.",
@@ -132,5 +133,16 @@
         "usage": "<module> <statement>",
         "serverConfig": "Server Configuration",
         "channel": "Logging Channel"
+    },
+    "ascii": {
+        "description": "This command translates normal text into ascii format.",
+        "usage": "<text>",
+        "queryTooBig": "Please, use a text that is lower than {{- amount }} characters.",
+        "error": "There was an error while trying to display the result"
+    },
+    "emoji": {
+        "description": "This command sends the emoji image but bigger.",
+        "usage": "<emoji>",
+        "error": "The emoji was invalid."
     }
 }
