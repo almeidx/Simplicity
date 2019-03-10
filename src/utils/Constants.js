@@ -24,7 +24,6 @@ module.exports = {
     'THUMBS_DOWN': '👎'
   },
   TAGS_LOGGERS: [
-    'ERROR',
     'COMMAND',
     'PARAMETER',
     'CLIENT',
