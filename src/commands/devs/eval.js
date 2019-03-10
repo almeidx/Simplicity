@@ -23,7 +23,7 @@ class Eval extends Command {
         .addField('Result', value('js', toEval))
         .addField('Type', value('css', typeof evald))
 
-      if (toEval) Loggers.warn(['COMMAND', 'EVAL-RESULT'], toEval)
+      if (evald) Loggers.warn(['COMMAND', 'EVAL-RESULT'], toEval)
     } catch (error) {
       embed
         .addField('Error', value('js', error))
