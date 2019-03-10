@@ -7,6 +7,7 @@ class Logger {
   static get timestamp () {
     return `[${moment().format('DD/MM/YYYY HH:mm:ss')}] `
   }
+
   static _log (context, colors) {
     context = Object.assign({ tags: [], text: '' }, context)
     colors = Object.assign({ tags: 'bgGreen', text: null }, colors)
@@ -17,12 +18,13 @@ class Logger {
     if (typeof context.tags === 'string') {
       context.tags = [context.tags]
     }
-    let tag = context.tags.map(tag => String(tag).toUpperCase())
+    const tag = context.tags.map(tag => String(tag))
       .filter(tag => Constants.TAGS_LOGGERS.includes(tag))
-      .map(tag => Colors.white(Colors[colors.tags](tag)))
+      .map(tag => '#' + tag[0].toUpperCase() + tag.slice(1))
       .join(' ')
-    let text = colors.text ? Colors[colors.text](context.text) : context.text
-    return console.log(`${this.timestamp + (tag !== '' ? tag : '')} ${text}`)
+    const text = colors.text ? Colors[colors.text](context.text) : context.text
+    const timestamp = Colors[colors.tags](this.timestamp)
+    return console.log(`${timestamp} ${(tag !== '' ? tag : '')} ${text}`)
   }
   static log (tags = [], ...args) {
     return this._log({ tags, text: args.join(' ') })
