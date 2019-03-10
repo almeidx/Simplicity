@@ -44,6 +44,7 @@ class Requirements {
 
     const memberPerms = this.permissions.filter((p) => !channel.permissionsFor(author.id).has(p)).map(p => t('permissions:' + p))
     if (memberPerms.length !== 0) {
+      throw new CommandError(t(this.responses.userMissingPermission, { permissions: memberPerms.join(', '), count: memberPerms.length, onUsage: true }))
     }
 
     if (this.argsRequired && args.length === 0) {
