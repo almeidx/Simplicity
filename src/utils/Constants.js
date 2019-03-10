@@ -40,5 +40,12 @@ module.exports = {
     'MESSAGE_UNPIN': '36393f',
     'MEMBER_UNBAN': '2ECC71',
     'MEMBER_BAN': 'ff3535'
+  },
+  LOG_COLORS: {
+    'ERROR': 'red',
+    'WARN': 'yellow',
+    'SUCESS': 'green',
+    'COMMAND_USAGE': 'white',
+    'COLOR_TAG': 'magenta'
   }
 }

@@ -5,4 +5,4 @@ const client = new Bot({
   disableEveryone: true,
   disabledEvents: ['TYPING_START']
 })
-client.login(process.env.BOT_TOKEN).catch(() => process.exit())
+client.login(process.env.BOT_TOKEN).catch((e) => console.error(e))
