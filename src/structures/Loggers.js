@@ -1,50 +1,29 @@
 const colors = require('colors')
-const { LOG_COLORS, TAGS_LOGGERS } = require('../utils/Constants')
-const parseTag = tag => String(tag).toUpperCase()
-const checkTag = tag => TAGS_LOGGERS.includes(parseTag(tag))
-const sharp = tag => colors[LOG_COLORS.COLOR_TAG]('#') + tag
+const { LOG_COLORS } = require('../utils/Constants')
+const getText = (color, text) => colors[(LOG_COLORS[color] || color)](text)
 const moment = require('moment')
 moment.locale('pt-br')
 
 class Logger {
-  static timestamp (color) {
-    return colors[LOG_COLORS[color]](`[${moment().format('DD/MM/YYYY HH:mm:ss')}] `)
+  static get timestamp () {
+    return getText('gray', `[${moment().format('DD/MM/YYYY HH:mm:ss')}] `)
   }
 
-  static checkTags (tags) {
-    if (Array.isArray(tags) && !tags.every(checkTag)) return false
-    else if (!checkTag(tags)) return false
-    else return true
+  static log (color, tag, text) {
+    return console.log(`${this.timestamp}${getText('COLOR_TAG', `[${tag}]`)} ${getText(color, text)}`)
   }
 
-  static convertTags (tags) {
-    if (Array.isArray(tags)) {
-      return tags.map(sharp).join(' ')
-    } else {
-      return sharp(tags)
-    }
+  static success (tag, text) {
+    return this.log('SUCCESS', tag, text)
   }
 
-  static _lowg (color, text, tags) {
-    const tag = this.checkTags(tags) && this.convertTags(tags)
-    if (!tag) text = text + ' ' + tag
-    else text = tag + text
-    return console.log(this.timestamp(color) + text)
+  static error (tag, text) {
+    return this.log('ERROR', tag, text)
   }
 
-  static _log (context, colors) {
-    context = Object.assign({ tags: [], text: '' }, context)
-    colors = Object.assign({ tags: 'bgGreen', text: null }, colors)
-    return this._lowg(colors.tags, context.text, context.tags)
-  }
-  static log (tags = [], ...args) {
-    return this._log({ tags, text: args.join(' ') })
-  }
-  static error (tags = [], ...args) {
-    return this._log({ tags, text: args.join(' ') }, { tags: 'bgRed' })
-  }
-  static warn (tags = [], ...args) {
-    return this._log({ tags, text: args.join(' ') }, { tags: 'bgYellow' })
+  static commandUsage (tag, text) {
+    return this.log('COMMAND_USAGE', tag, text)
   }
 }
+
 module.exports = Logger
