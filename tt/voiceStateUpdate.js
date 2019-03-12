@@ -1,4 +1,4 @@
-const { Embed, LogUtils } = require('../')
+const { Embed, LogUtils } = require('../src')
 module.exports = async function voiceStateUpdate (oldState, newState) {
   const { channel, t } = await LogUtils.getChannel(this, oldState.guild, 'JOIN_AND_LEAVE')
 

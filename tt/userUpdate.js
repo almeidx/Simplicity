@@ -1,4 +1,4 @@
-const { Embed, LogUtils } = require('../')
+const { Embed, LogUtils } = require('../src')
 
 function userUpdate (oldUser, newUser) {
   // AVATAR CHANGES

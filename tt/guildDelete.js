@@ -1,4 +1,4 @@
-const { Embed } = require('../')
+const { Embed } = require('../src')
 async function guildDelete (guild) {
   await this.database.guilds.remove(guild.id)
 

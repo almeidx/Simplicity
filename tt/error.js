@@ -1,4 +1,4 @@
-const { Embed } = require('../')
+const { Embed } = require('../src')
 function Error (error) {
   if (error.message === 'Unexpected server response: 520') {
     console.log('Cant connect to Discords API, Retrying...')
