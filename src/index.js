@@ -5,6 +5,7 @@ module.exports = {
   Command: require('./structures/Command'),
   Loggers: require('./structures/Loggers'),
   Loader: require('./structures/Loader'),
+  Listener: require('./structures/Listener'),
   // Command
   CommandContext: require('./structures/command/CommandContext'),
   CommandError: require('./structures/command/CommandError'),
