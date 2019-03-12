@@ -23,15 +23,6 @@ module.exports = {
     'THUMBS_UP': '👍',
     'THUMBS_DOWN': '👎'
   },
-  TAGS_LOGGERS: [
-    'COMMAND',
-    'PARAMETER',
-    'CLIENT',
-    'START',
-    'READY',
-    'EVAL-RESULT',
-    'USAGE'
-  ],
   COLORS: {
     'MESSAGE_DELETE': '36393f',
     'MESSAGE_BULK_DELETE': '36393f',
@@ -44,8 +35,8 @@ module.exports = {
   LOG_COLORS: {
     'ERROR': 'red',
     'WARN': 'yellow',
-    'SUCESS': 'green',
-    'COMMAND_USAGE': 'white',
+    'SUCCESS': 'green',
+    'COMMAND_USAGE': 'blue',
     'COLOR_TAG': 'magenta'
   }
 }
