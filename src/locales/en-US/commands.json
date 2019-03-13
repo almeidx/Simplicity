@@ -36,8 +36,7 @@
     },
     "ping": {
         "description": "This command shows the latency of the bot.",
-        "success": "**Latency:** {{- host }} ms\n**API Latency:** {{- api }} ms",
-        "loading": "Loading..."
+        "success": "Pong! `{{- ping }}ms`"
     },
     "serverinfo": {
         "description": "This command shows info about the server.",
@@ -120,12 +119,6 @@
         "usage": "[mention/id] <reason>",
         "success": "{{- auth }} has kicked {{- memb }} from a Voice Channel.",
         "action": "voice kick"
-    },
-    "urban": {
-        "description": "This command lets you search for a definition in the Urban Dictionary.",
-        "usage": "[keywords]",
-        "noDef": "There is not a definition for the keywords you provided!",
-        "example": "Example"
     },
     "config": {
         "description": "This command is the basis to config the bot on your server.",

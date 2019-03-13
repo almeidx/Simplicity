@@ -7,13 +7,8 @@ class Ping extends Command {
     this.category = 'bot'
   }
 
-  async run ({ message, channel, guild, t }) {
-    const msg = await channel.send(t('commands:ping.loading'))
-
-    const host = msg.createdTimestamp - message.createdTimestamp
-    const api = Math.round(guild.shard.ping)
-
-    msg.edit(t('commands:ping.success', { host, api }))
+  run ({ send, guild, t }) {
+    send(t('commands:ping.success', { ping: Math.ceil(guild.shard.ping) }))
   }
 }
 
