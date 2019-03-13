@@ -11,11 +11,11 @@ class ListenerLoader extends Loader {
     const logs = []
     await FileUtils.requireDirectory('src/listeners', (Listener, fileName) => {
       const listener = new Listener(this.client)
-      const Llogs = listener.logs
+      const LisLogs = listener.logs
 
-      if (Llogs.length !== 0) {
-        for (const i in Llogs) {
-          logs.push(Llogs[i])
+      if (LisLogs.length !== 0) {
+        for (const i in LisLogs) {
+          logs.push(LisLogs[i])
         }
       }
 
