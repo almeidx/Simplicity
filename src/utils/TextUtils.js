@@ -10,7 +10,6 @@ class TextUtils {
     // add translaton in $"..."
     if (t) {
       text = text.replace(/(?:\$")(\S+)(?:")/g, (s) => this.t(t, s.slice(2, -1), options.options))
-      console.log(text)
     }
     // add text embed in @...
     if (embed && embed instanceof Embed) {
