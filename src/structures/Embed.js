@@ -37,22 +37,19 @@ class SimplicityEmbed extends MessageEmbed {
 
     if (typeof embedResolvable === 'function') {
       if (embedResolvable.name === 'fixedT') embedResolvable = { t: embedResolvable }
-      if (embedResolvable.name === 'bound _emoji') embedResolvable = { emoji: embedResolvable }
     }
 
     if (embedResolvable instanceof Message) {
       const context = new CommandContext({ message: embedResolvable })
       embedResolvable = {
         author: context.author,
-        t: context.t,
-        emoji: context.emoji
+        t: context.t
       }
     }
 
-    embedResolvable = Object.assign({ author: null, t: null, emoji: null }, embedResolvable)
+    embedResolvable = Object.assign({ author: null, t: null }, embedResolvable)
 
     this.t = embedResolvable.t
-    this.emoji = embedResolvable.emoji
 
     if (embedResolvable.author) {
       if (this.options.autoAuthor) this.setAuthor(embedResolvable.author)
