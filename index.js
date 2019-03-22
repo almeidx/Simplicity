@@ -1,4 +1,5 @@
 require('dotenv').config()
+
 const { Bot } = require('./src')
 const client = new Bot({
   fetchAllMembers: true,

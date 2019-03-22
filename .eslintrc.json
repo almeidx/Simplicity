@@ -8,6 +8,7 @@
 		"no-extra-parens": "error",
 		"no-var": "error",
 		"prefer-const": "error",
-		"require-await": "error"
+		"require-await": "error",
+		"no-useless-constructor": "off"
     }
 }
