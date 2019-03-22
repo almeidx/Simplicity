@@ -19,12 +19,12 @@ function checkIcon (resolvable) {
 class SimplicityEmbed extends MessageEmbed {
   constructor (embedResolvable = {}, options = {}, data = {}) {
     super(data)
-    this.setup(embedResolvable, options)
+    this.setupEmbed(embedResolvable, options)
     this.dataFixedT = {}
     this.fieldsFixedT = []
   }
 
-  setup (embedResolvable, options) {
+  setupEmbed (embedResolvable, options) {
     this.options = Object.assign({
       autoFooter: true,
       autoAuthor: false,

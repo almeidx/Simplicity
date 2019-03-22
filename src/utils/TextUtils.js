@@ -9,10 +9,11 @@ class TextUtils {
     }
     // add translaton in $"..."
     if (t) {
-      text = text.replace(/(?:\$")(\w+)(?:")/g, (s) => this.t(t, s.slice(2, -1), options.options))
+      text = text.replace(/(?:\$")(\S+)(?:")/g, (s) => this.t(t, s.slice(2, -1), options.options))
+      console.log(text)
     }
     // add text embed in @...
-    if (embed instanceof Embed) {
+    if (embed && embed instanceof Embed) {
       text = text.replace(/(?:@)\w+/g, (k) => {
         const [key, v1, v2] = k.slice(1).split('.')
         const result = key && embed[key]
@@ -29,7 +30,7 @@ class TextUtils {
     if (!t) throw Error('T invalid')
     const result = t(key, options)
     const spltKey = key.split(':')
-    if (spltKey.length > 1 || spltKey.slice(1) === result) return key
+    if (spltKey.length > 2 || spltKey.slice(1).join(':') === result) return key
     else return result
   }
 }
