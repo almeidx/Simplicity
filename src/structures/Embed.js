@@ -16,7 +16,7 @@ function checkIcon (resolvable) {
   if (resolvable instanceof Guild) return resolvable.displayAvatarURL(o)
 }
 
-class Embed extends MessageEmbed {
+class SimplicityEmbed extends MessageEmbed {
   constructor (embedResolvable = {}, options = {}, data = {}) {
     super(data)
     this.setup(embedResolvable, options)
@@ -111,4 +111,4 @@ class Embed extends MessageEmbed {
   }
 }
 
-module.exports = Embed
+module.exports = SimplicityEmbed
