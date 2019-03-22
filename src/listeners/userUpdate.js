@@ -15,7 +15,7 @@ function userUpdate (oldUser, newUser) {
           .setFooter(guild.name, guild.iconURL())
           .setDescription('loggers:changedAvatar', { user: newUser })
 
-        LogUtils.send(channel, embed)
+        LogUtils.send(channel, embed).catch(e => console.error(e))
       }
     })
   }

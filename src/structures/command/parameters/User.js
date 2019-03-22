@@ -1,6 +1,7 @@
 const Parameter = require('./Parameter')
 const CommandError = require('../CommandError')
 const REGEX_ID = /[0-9]{16,18}/g
+
 class User extends Parameter {
   constructor (options = {}) {
     super(options)
@@ -41,9 +42,9 @@ class User extends Parameter {
     const user = args.length > 0 && await this.getUser(context, str)
     if (!user) return null
 
-    if (!this.acceptSelf && user.id === context.author.id) throw new CommandError(this.errors.acceptSelf)
-    if (!this.acceptBot && user.bot) throw new CommandError(this.errors.acceptBot)
-    if (!this.acceptUser && !user.bot) throw new CommandError(this.errors.acceptSelf)
+    if (!this.acceptSelf && user.id === context.author.id) throw new CommandError(this.errors.acceptSelf, { onUsage: true })
+    if (!this.acceptBot && user.bot) throw new CommandError(this.errors.acceptBot, { onUsage: true })
+    if (!this.acceptUser && !user.bot) throw new CommandError(this.errors.acceptSelf, { onUsage: true })
 
     return user
   }
@@ -93,17 +94,13 @@ class User extends Parameter {
     const userUsernameStartsWithAndLowercase = this.useLowerCase && this.checkUsername && this.useStartsWith && users.find(u => u.username.toLowerCase().startsWith(str.toLowerCase()))
     if (userUsernameStartsWithAndLowercase) return userUsernameStartsWithAndLowercase
 
-    if (resultRegex && this.checkUserGlobal) {
-
-    }
+    // if (resultRegex && this.checkUserGlobal) { }
 
     if (resultRegex && this.checkUserGlobal) {
       try {
         const user = await users.fetch(resultRegex[0], false)
         return user
-      } catch (_) {
-
-      }
+      } catch (_) { }
     }
   }
 }

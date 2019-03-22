@@ -7,6 +7,7 @@ class ServerInfo extends Command {
     this.aliases = ['si', 'server', 'svinfo', 'sv', 'guild']
     this.category = 'guild'
   }
+
   run ({ author, guild, send, t }) {
     // Members
     const online = guild.members.filter(user => user.presence.status !== 'offline' && !user.user.bot).size
@@ -21,6 +22,7 @@ class ServerInfo extends Command {
 
     const emojis = guild.emojis.size
     const roles = guild.roles.size
+
     const embed = new Embed({ t, guild, author })
       .addField('commands:serverinfo.name', guild.name, true)
       .addField('commands:serverinfo.owner', guild.owner.user.tag, true)
@@ -31,7 +33,9 @@ class ServerInfo extends Command {
       .addField('commands:serverinfo.onlineOfflineBotsTotal', `${online} | ${offline} | ${bots} | ${members}`, true)
       .addField('commands:serverinfo.verificationLevel', `commands:serverinfo.verificationDetails.${guild.verificationLevel}`, true, { level: guild.verificationLevel })
       .setThumbnail(guild.iconURL({ size: 2048 }))
+
     send(embed)
   }
 }
+
 module.exports = ServerInfo

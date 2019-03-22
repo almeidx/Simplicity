@@ -25,9 +25,7 @@ class CommandContext {
     name = name.toUpperCase()
     if (this.guild && this.channel.permissionsFor(this.guild.me).has('USE_EXTERNAL_EMOJIS') && Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[name]) {
       const emoji = this.client.emojis.get(Constants.EMOJIS_CUSTOM[name])
-      if (emoji) {
-        return id ? emoji.id : emoji.toString()
-      }
+      if (emoji) return id ? emoji.id : emoji.toString()
     }
     return Constants.EMOJIS[name] || (noEmoji ? '' : '❓')
   }
@@ -37,6 +35,7 @@ class CommandContext {
     if (embed instanceof Embed) {
       if (options.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {
         const message = []
+
         if (embed.title) message.push(`**${embed.title}**`)
         if (embed.description) message.push(embed.description)
         if (embed.fields.length !== 0) embed.fields.forEach(e => message.push(`**${e.name}\n${e.value}`))
@@ -48,4 +47,5 @@ class CommandContext {
     return this.channel.send(embed)
   }
 }
+
 module.exports = CommandContext

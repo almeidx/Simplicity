@@ -10,6 +10,7 @@ async function messageUpdate (oldMessage, newMessage) {
     const msgChannel = oldMessage.channel
     const oldContent = oldMessage.content
     const newContent = newMessage.content
+
     const embed = new Embed({ t })
       .setTimestamp()
       .setAuthor(user.tag, user.displayAvatarURL())
@@ -21,21 +22,22 @@ async function messageUpdate (oldMessage, newMessage) {
         .addField('Before', clean(oldContent) || 'errors:general', true)
         .addField('After', clean(newContent) || 'errors:general', true)
         .setColor(Constants.COLORS.MESSAGE_EDIT)
-      return LogUtils.send(channel, embed)
+      return LogUtils.send(channel, embed).catch(e => console.error(e))
     } else
+
     // MESSAGE PINS
     if (oldMessage.pinned !== newMessage.pinned) {
       // MESSAGE UNPINNED
       if (oldMessage.pinned && !newMessage.pinned) {
         embed.setDescription('loggers:messageUnpinned', { url, user, channel: msgChannel })
           .setColor(Constants.COLORS.MESSAGE_UNPIN)
-        return LogUtils.send(channel, embed)
+        return LogUtils.send(channel, embed).catch(e => console.error(e))
       } else
       // MESSAGE PINNED
       if (!oldMessage.pinned && newMessage.pinned) {
         embed.setDescription('loggers:messagePinned', { url, user, channel: msgChannel })
           .setColor(Constants.COLORS.MESSAGE_PIN)
-        return LogUtils.send(channel, embed)
+        return LogUtils.send(channel, embed).catch(e => console.error(e))
       }
     }
   }

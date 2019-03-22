@@ -1,16 +1,16 @@
 {
     "botinfo": {
         "description": "This command shows you info about myself.",
-        "botinfo": "Bot Information",
+        "botInfo": "Bot Information",
         "guildAndUsers": "Guilds | Users",
-        "channelAndEmojis": "Channels | Emojis",
+        "channelAndEmotes": "Channels | Emotes",
         "uptime": "Uptime",
         "commands": "Commands",
         "pings": "Last Pings",
         "os": "Operational System"
     },
     "help": {
-        "about": "{{- botname}} is a bot with focous on moderation, utility, server management, and much more!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo see my commands, type **{{- prefix }}help <module>**",
+        "about": "{{- name }} is a bot with focus on moderation, utility, server management, and much more!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo see my commands, type **{{- prefix }}help <module>**",
         "categories": "Categories",
         "aliases": "Aliases",
         "_usage": "Usage",
@@ -22,20 +22,13 @@
         "usage": "<prefix>",
         "multiCharacters": "My new prefix can\\'t have more than {{- count }} characters!",
         "done": "Done!",
-        "sucess": "My prefix on this server has been changed to: `{{- prefix }}`",
+        "success": "My prefix on this server has been changed to: `{{- prefix }}`",
         "oops": "Oops!",
         "failed": "Sadly, something wen't wrong while trying to update the servers prefix!\nPlease, try again later."
     },
-    "translate": {
-        "description": "This command translates something to English.",
-        "usage": "<text>",
-        "original": "Original",
-        "translated": "Translated",
-        "googleTranslate": "Google Translate"
-    },
     "servericon": {
         "description": "This command shows the server icon.",
-        "text": "Click [here]({{- iconURL }}) to download the icon!"
+        "text": "Click [here]({{- icon }}) to download the icon!"
     },
     "uptime": {
         "description": "This command shows the time I've been up for.",
@@ -43,8 +36,7 @@
     },
     "ping": {
         "description": "This command shows the latency of the bot.",
-        "sucess": "**Latency:** {{- HOST }} ms\n**API Latency:** {{- API }} ms",
-        "loading": "Loading..."
+        "success": "Pong! `{{- ping }}ms`"
     },
     "serverinfo": {
         "description": "This command shows info about the server.",
@@ -59,9 +51,9 @@
         "verificationName": ["None", "Low", "Medium", "(╯°□°）╯︵ ┻━┻", "┻━┻彡 ヽ(ಠ益ಠ)ノ彡┻━┻"],
         "verificationDetails": [
             "Unrestricted.",
-            "Must have a verified email on their Discord account.", 
-            "Must be registered on Discord for longer than 5 minutes.", 
-            "Must be a member of the server for longer than 10 minutes.", 
+            "Must have a verified email on their Discord account.",
+            "Must be registered on Discord for longer than 5 minutes.",
+            "Must be a member of the server for longer than 10 minutes.",
             "Must have a verified phone on their Discord account."
         ]
     },
@@ -73,20 +65,16 @@
         "nameTooShort": "The name for the emoji you provided was too short.",
         "invalidName": "Please, note that the emoji name can only have letters, numbers or underscores.",
         "invalidURL": "The URL you provided was not a valid url.",
-        "emojiCreated": "The emoji has been created!",
+        "emojiCreated": "The {{- emoji }} emoji has been created!",
         "error": "There was an error when creating the emoji."
-    },
-    "invite": {
-        "description": "This command shows how many persons the user has invited to the server.",
-        "usage": "<mention/id>",
-        "invitedMembers": "Invited members:"
     },
     "clear": {
         "description": "This command clears messages from the chat.",
         "usage": "[amount]",
         "invalidValue": "Please, give a value between 2 and 100!",
-        "deleted": "{{- amt }} messages have been deleted by {{- auth }}.",
-        "reason": "{{- auth }} [{{- authID }}] | Deleted {{- count }} messages."
+        "deleted": "{{- amount }} messages have been deleted by {{- author }}.",
+        "reason": "{{- auth }} [{{- authID }}] | Deleted {{- amount }} messages.",
+        "error": "Something wen't wrong when deleting the messages."
     },
     "userinfo": {
         "description": "This command shows info about the user.",
@@ -135,18 +123,6 @@
         "success": "{{- auth }} has kicked {{- memb }} from a Voice Channel.",
         "action": "voice kick"
     },
-    "emojify": {
-        "description": "This command replaces your text but using emojis.",
-        "usage": "[text]",
-        "invalidCharacters": "Invalid characters!",
-        "messageTooBig": "The message you provided is too big!"
-    },
-    "urban": {
-        "description": "This command lets you search for a definition in the Urban Dictionary.",
-        "usage": "[keywords]",
-        "noDef": "There is not a definition for the keywords you provided!",
-        "example": "Example"
-    },
     "config": {
         "description": "This command is the basis to config the bot on your server.",
         "usage": "<module> <statement>",
@@ -156,6 +132,12 @@
     "ascii": {
         "description": "This command translates normal text into ascii format.",
         "usage": "<text>",
-        "queryTooBig": "Please, use a text that is lower than 15 characters."
+        "queryTooBig": "Please, use a text that is lower than {{- amount }} characters.",
+        "error": "There was an error while trying to display the result"
+    },
+    "emoji": {
+        "description": "This command sends the emoji image but bigger.",
+        "usage": "<emoji>",
+        "error": "The emoji was invalid."
     }
 }

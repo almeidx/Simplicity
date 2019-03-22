@@ -10,7 +10,6 @@ class CommandParameters {
     return parameters.map(async (p) => {
       const name = p.type && (p.type[0].toUpperCase() + p.type.slice(1))
       const Parameter = name && Parameters[name]
-
       if (!name || !Parameter) throw new Error('Invalid Parameter:', p.type)
       const parameter = new Parameter(p)
       const result = await parameter.handle(context, args)
@@ -18,7 +17,7 @@ class CommandParameters {
       console.log(args)
       if (!result) {
         if (!parameter.required) return null
-        else throw new CommandError(parameter.missingError)
+        else throw new CommandError(parameter.missingError, { onUsage: true })
       }
       return result
     })
