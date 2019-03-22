@@ -1,15 +1,35 @@
+const LogUtils = require('../utils/LogUtils')
+const Embed = require('./Embed')
+
 class Listener {
   constructor (client, logs = []) {
     this.client = client
+    this.database = client.database
     this.logs = logs
   }
 
   on () {}
 
-  sendMessage (envName, content) {
+  async sendMessage (id, content) {
+    const resultPrivate = this.sendMessagePrivate(id, content)
+    if (resultPrivate === false) return resultPrivate
+    else await this.sendMessageLog(id, content)
+  }
+
+  async sendMessageLog (guildID, content) {
+    const guild = this.client && guildID && this.client.guilds.get(guildID)
+    const channelData = guild && await LogUtils.getChannel(this.client, guild, this.logs[0])
+    if (channelData) {
+      if (content instanceof Embed) content.setTranslator(channelData.t)
+      LogUtils.send(channelData.channel, content)
+    }
+  }
+
+  sendMessagePrivate (envName, content) {
     const id = envName && process.env[envName.toUpperCase()]
     const channel = this.client && id && this.client.channels.get(id)
-    if (channel) channel.send(content)
+    if (channel) return channel.send(content)
+    else return false
   }
 }
 
