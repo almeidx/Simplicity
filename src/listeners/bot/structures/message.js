@@ -1,4 +1,4 @@
-const { CommandContext, Listener } = require('../..')
+const { CommandContext, Listener } = require('../../../')
 
 class Message extends Listener {
   constructor (client) {

@@ -1,4 +1,4 @@
-const { Listener, Embed } = require('../../..')
+const { Listener, Embed } = require('../../')
 
 class UserUpdate extends Listener {
   constructor (client) {
