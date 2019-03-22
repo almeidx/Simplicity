@@ -6,7 +6,7 @@ class GuildMemberAdd extends Listener {
     super(client)
   }
 
-  on (client, member, t) { // aqui
+  on (_, member, t) { // aqui
     const guild = member.guild
     const user = member.user
 

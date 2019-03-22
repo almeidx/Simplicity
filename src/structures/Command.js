@@ -39,8 +39,9 @@ class Command {
       .setError()
       .setDescription(error.message, error.options)
 
-    if (error.onUsage && t(`commands:${this.name}.usage`) !== `${this.name}.usage`) {
-      embed.addField('errors:usage', `${prefix + this.name} ${t(`commands:${this.name}.usage`)}`)
+    const usage = t(`commands:${this.name}.usage`)
+    if (error.onUsage && usage !== `${this.name}.usage`) {
+      embed.addField('errors:usage', `${prefix + this.name} ${usage}`)
     }
 
     return send(embed)
