@@ -99,6 +99,16 @@ class Embed extends MessageEmbed {
   addField (name, value, inline, options = {}, valueOptions = {}) {
     return super.addField(name, value, inline)
   }
+
+  setThumbnail (url) {
+    const thumbnail = checkIcon(url) || url
+    return super.setThumbnail(thumbnail)
+  }
+
+  setImage (url) {
+    const image = checkIcon(url) || url
+    return super.setImage(image)
+  }
 }
 
 module.exports = Embed
