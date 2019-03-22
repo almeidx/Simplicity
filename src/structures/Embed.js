@@ -1,62 +1,103 @@
-const { MessageEmbed } = require('discord.js')
+const { MessageEmbed, User, GuildMember, Message, Guild } = require('discord.js')
+const { CommandContext } = require('../')
+
+const types = { normal: process.env.COLOR, error: 'RED', warn: 0xfdfd96 }
+
+function checkName (resolvable) {
+  if (resolvable instanceof User) return resolvable.tag
+  if (resolvable instanceof GuildMember) return resolvable.user.tag
+  if (resolvable instanceof Guild) return resolvable.name
+}
+
+function checkIcon (resolvable) {
+  const o = { size: 2048 }
+  if (resolvable instanceof User) return resolvable.displayAvatarURL(o)
+  if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o)
+  if (resolvable instanceof Guild) return resolvable.displayAvatarURL(o)
+}
 
 class Embed extends MessageEmbed {
-  constructor (options, data) {
+  constructor (embedResolvable = {}, options = {}, data = {}) {
     super(data)
-    options = Object.assign({ message: null, author: null, t: null, emoji: null, autoFooter: true, autoAuthor: true, autoTimestamp: true }, options)
-
-    this._message = options.message
-    this._author = options.author
-    this._t = options.t
-    this._emoji = options.emoji
-    if (this._message || this._author) {
-      const msg = this._message
-      const author = this._author || (msg && msg.author)
-
-      if (options.autoFooter && author) this.setFooter(author.tag)
-
-      if (options.autoAuthor) this.setAuthor(author.tag, author.displayAvatarURL())
-
-      if (options.autoTimestamp) this.setTimestamp()
-    }
-
-    if (options.error) {
-      this.setError()
-    } else {
-      const color = process.env.COLOR || 'GREEN'
-      this.setColor(color)
-    }
+    this.setup(embedResolvable, options)
+    this.dataFixedT = {}
+    this.fieldsFixedT = []
   }
 
-  _tt (str = '', tOptions = {}) {
-    if (!this._t) return str
-    let result = String(str)
-    const query = this._t(str, tOptions)
-    const a = result.split(':').length >= 1 && result.split(':').slice(1)
-    const queryT = a && a[0] + '.' + a.slice(1).join('')
-    if (result.includes(':') && queryT !== query) result = query
-    if (tOptions.emoji && this._emoji) result = `${this._emoji(tOptions.emoji)} ${result}`
-    return result
+  setup (embedResolvable, options) {
+    this.options = Object.assign({
+      autoFooter: true,
+      autoAuthor: false,
+      autoTimestamp: true,
+      type: 'normal'
+    }, options)
+
+    if (embedResolvable instanceof User) embedResolvable = { author: embedResolvable }
+    if (embedResolvable instanceof GuildMember) embedResolvable = { author: embedResolvable.user }
+
+    if (typeof embedResolvable === 'function') {
+      if (embedResolvable.name === 'fixedT') embedResolvable = { t: embedResolvable }
+      if (embedResolvable.name === 'bound _emoji') embedResolvable = { emoji: embedResolvable }
+    }
+
+    if (embedResolvable instanceof Message) {
+      const context = new CommandContext({ message: embedResolvable })
+      embedResolvable = {
+        author: context.author,
+        t: context.t,
+        emoji: context.emoji
+      }
+    }
+
+    embedResolvable = Object.assign({ author: null, t: null, emoji: null }, embedResolvable)
+
+    this.t = embedResolvable.t
+    this.emoji = embedResolvable.emoji
+
+    if (embedResolvable.author) {
+      if (this.options.autoAuthor) this.setAuthor(embedResolvable.author)
+      if (this.options.autoFooter) this.setFooter(embedResolvable.author)
+      if (this.options.autoTimestamp) this.setTimestamp()
+    }
+
+    const color = types[this.options.type] || types.normal || 'GREEN'
+    this.setColor(color)
   }
 
   setError () {
     return this.setColor('RED')
   }
 
-  setTitle () {
-    return super.setTitle(this._tt(...arguments))
+  setAuthor (name, iconURL, url, options = {}) {
+    const authorName = checkName(name)
+    const authorNameIcon = checkIcon(iconURL)
+    const authorIcon = checkIcon(iconURL)
+
+    if (authorName) name = authorIcon
+    if (authorNameIcon && !iconURL) iconURL = authorIcon
+    if (authorIcon) iconURL = authorIcon
+
+    return super.setAuthor(name, iconURL, url)
   }
 
-  setAuthor (name, iconURL = null, url = null, tOptions = {}) {
-    return super.setAuthor(this._tt(name, tOptions), iconURL, url)
+  setFooter (text, iconURL, options = {}) {
+    const footerTextName = checkName(text)
+    const footerTextIcon = checkIcon(iconURL)
+    const footerIcon = checkIcon(iconURL)
+
+    if (footerTextName) text = checkName
+    if (footerTextIcon && !iconURL) iconURL = footerTextIcon
+    if (footerIcon) iconURL = footerIcon
+
+    return super.setFooter(text, iconURL, text)
   }
 
-  setDescription () {
-    return super.setDescription(this._tt(...arguments))
+  setDescription (description = {}) {
+    return super.setDescription(description)
   }
 
-  addField (name, value, inline, nameOptions = {}, valueOptions = {}) {
-    return super.addField(this._tt(name, nameOptions), this._tt(value, valueOptions), inline)
+  addField (name, value, inline, options = {}, valueOptions = {}) {
+    return super.addField(name, value, inline)
   }
 }
 
