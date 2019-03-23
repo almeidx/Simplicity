@@ -1,6 +1,6 @@
-const Requirements = require('./command/Requirements')
-const Embed = require('./Embed')
-const CommandError = require('./command/CommandError')
+const Requirements = require('./Requirements')
+const Embed = require('../Embed')
+const CommandError = require('./CommandError')
 
 class Command {
   constructor (client) {
