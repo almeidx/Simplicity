@@ -2,7 +2,7 @@ module.exports = {
   // Structures
   Bot: require('./structures/Bot'),
   Embed: require('./structures/Embed'),
-  Command: require('./structures/Command'),
+  Command: require('./structures/command/Command'),
   Loggers: require('./structures/Loggers'),
   Loader: require('./structures/Loader'),
   // Command
