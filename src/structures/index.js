@@ -1,5 +1,5 @@
 module.exports = {
-  Bot: require('./Bot'),
+  SimplicityClient: require('./SimplicityClient'),
   Command: require('./Command'),
   Loggers: require('./Loggers'),
   Parameters: require('./command/Parameters'),

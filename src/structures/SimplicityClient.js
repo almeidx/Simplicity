@@ -1,3 +1,4 @@
+@@ -1,65 +0,0 @@
 const { Client, Collection } = require('discord.js')
 const Loaders = require('../loaders')
 const Loggers = require('./Loggers')
@@ -8,7 +9,7 @@ const { promisify } = require('util')
 const readdir = promisify(fs.readdir)
 const translationBackend = require('i18next-node-fs-backend')
 
-module.exports = class Bot extends Client {
+module.exports = class SimplicityClient extends Client {
   constructor (options) {
     super(options)
     this.logger = Loggers

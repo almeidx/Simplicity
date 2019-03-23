@@ -1,6 +1,6 @@
 module.exports = {
   // Structures
-  Bot: require('./structures/Bot'),
+  SimplicityClient: require('./structures/SimplicityClient'),
   Embed: require('./structures/Embed'),
   Command: require('./structures/Command'),
   Loggers: require('./structures/Loggers'),
