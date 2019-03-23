@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.imgur.com/gT3qVkd.png">
+    <img src="https://i.imgur.com/xNjwuEx.png">
 </p>
 <a title="code style" target="_blank" href="http://standardjs.com"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square"></a>
 <a title="Dependencies" target="_blank" href="https://david-dm.org/Almeeida/Simplicity/"><img src="https://david-dm.org/Almeeida/Simplicity/status.svg?style=flat-square"></a>
