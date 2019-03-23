@@ -1,5 +1,5 @@
 const FileUtils = require('../utils/FileUtils')
-const Loader = require('../structures/Loggers')
+const Loader = require('../structures/Loader')
 const { Collection } = require('discord.js')
 
 class CommandStore extends Collection {
@@ -11,7 +11,6 @@ class CommandStore extends Collection {
 class CommandLoader extends Loader {
   constructor (client) {
     super(client)
-    this.client = client
     this.required = true
     this.commands = new CommandStore()
   }

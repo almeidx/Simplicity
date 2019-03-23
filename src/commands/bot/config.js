@@ -5,6 +5,7 @@ class Config extends Command {
   constructor (client) {
     super(client)
     this.category = 'bot'
+    this.WIP = true
     this.requirements = { permissions: ['MANAGE_GUILD'] }
   }
 

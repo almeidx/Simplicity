@@ -23,15 +23,6 @@ module.exports = {
     'THUMBS_UP': '👍',
     'THUMBS_DOWN': '👎'
   },
-  TAGS_LOGGERS: [
-    'COMMAND',
-    'PARAMETER',
-    'CLIENT',
-    'START',
-    'READY',
-    'EVAL-RESULT',
-    'USAGE'
-  ],
   COLORS: {
     'MESSAGE_DELETE': '36393f',
     'MESSAGE_BULK_DELETE': '36393f',
@@ -40,5 +31,12 @@ module.exports = {
     'MESSAGE_UNPIN': '36393f',
     'MEMBER_UNBAN': '2ECC71',
     'MEMBER_BAN': 'ff3535'
+  },
+  LOG_COLORS: {
+    'ERROR': 'red',
+    'WARN': 'yellow',
+    'SUCCESS': 'green',
+    'COMMAND_USAGE': 'blue',
+    'COLOR_TAG': 'magenta'
   }
 }

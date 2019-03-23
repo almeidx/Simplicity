@@ -1,4 +1,4 @@
-const { Embed } = require('../')
+const { Embed } = require('../src')
 async function guildCreate (guild) {
   await this.database.guilds.create(guild.id)
 

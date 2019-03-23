@@ -5,6 +5,7 @@ module.exports = {
   Command: require('./structures/Command'),
   Loggers: require('./structures/Loggers'),
   Loader: require('./structures/Loader'),
+  Listener: require('./structures/Listener'),
   // Command
   CommandContext: require('./structures/command/CommandContext'),
   CommandError: require('./structures/command/CommandError'),
@@ -13,6 +14,8 @@ module.exports = {
   Utils: require('./utils/Utils'),
   LogUtils: require('./utils/LogUtils'),
   FileUtils: require('./utils/FileUtils'),
+  TextUtils: require('./utils/TextUtils'),
+  PermissionsUtils: require('./utils/PermissionsUtils'),
   // Database
   Database: require('./database/Database.js')
 }

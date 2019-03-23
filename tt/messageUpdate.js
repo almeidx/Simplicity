@@ -1,4 +1,4 @@
-const { Embed, LogUtils, Constants } = require('../')
+const { Embed, LogUtils, Constants } = require('../src')
 const clean = (str) => str.slice(0, 1020) + str.length >= 1024 ? '...' : str
 
 async function messageUpdate (oldMessage, newMessage) {

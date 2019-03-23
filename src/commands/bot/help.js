@@ -1,4 +1,4 @@
-const { Command, Embed } = require('../../')
+const { Command, Embed, PermissionsUtils } = require('../../')
 
 class Help extends Command {
   constructor (client) {
@@ -12,11 +12,14 @@ class Help extends Command {
     const name = this.client.user.username
 
     const embed = new Embed({ t, author })
-      .setAuthor(this.client.user.username, this.client.user.displayAvatarURL({ size: 2048 }))
+      .setAuthor(this.client.user)
 
     if (args.length === 0) {
       embed.setDescription(t('commands:help.about', { prefix, name }))
-      categories.filter(c => c.name !== 'help').each((cmds, i) => embed.addField(`categories:${i}.name`, `${t(`categories:${i}.description`)}\n${cmds.keyArray().map(c => `\`${c}\``).join(', ')}`))
+      categories.filter(c => c.name !== 'help').each((cmds, i) => {
+        if (i === 'dev' && !PermissionsUtils.verifyDev(author.id, this.client)) return
+        return embed.addField(`categories:${i}.name`, `${t(`categories:${i}.description`)}\n${cmds.keyArray().map(c => `\`${c}\``).join(', ')}`)
+      })
       return send(embed)
     }
 

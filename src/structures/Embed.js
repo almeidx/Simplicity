@@ -1,63 +1,125 @@
-const { MessageEmbed } = require('discord.js')
+const { MessageEmbed, User, GuildMember, Message, Guild } = require('discord.js')
+const { CommandContext } = require('../')
+const TextUtils = require('../utils/TextUtils')
 
-class Embed extends MessageEmbed {
-  constructor (options, data) {
+const types = { normal: process.env.COLOR, error: 'RED', warn: 0xfdfd96 }
+
+function checkName (resolvable) {
+  if (resolvable instanceof User) return resolvable.tag
+  if (resolvable instanceof GuildMember) return resolvable.user.tag
+  if (resolvable instanceof Guild) return resolvable.name
+}
+
+function checkIcon (resolvable) {
+  const o = { size: 2048 }
+  if (resolvable instanceof User) return resolvable.displayAvatarURL(o)
+  if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o)
+  if (resolvable instanceof Guild) return resolvable.iconURL(o)
+}
+
+class SimplicityEmbed extends MessageEmbed {
+  constructor (embedResolvable = {}, options = {}, data = {}) {
     super(data)
-    options = Object.assign({ message: null, author: null, t: null, emoji: null, autoFooter: true, autoAuthor: true, autoTimestamp: true }, options)
-
-    this._message = options.message
-    this._author = options.author
-    this._t = options.t
-    this._emoji = options.emoji
-    if (this._message || this._author) {
-      const msg = this._message
-      const author = this._author || (msg && msg.author)
-
-      if (options.autoFooter && author) this.setFooter(author.tag)
-
-      if (options.autoAuthor) this.setAuthor(author.tag, author.displayAvatarURL())
-
-      if (options.autoTimestamp) this.setTimestamp()
-    }
-
-    if (options.error) {
-      this.setError()
-    } else {
-      const color = process.env.COLOR || 'GREEN'
-      this.setColor(color)
-    }
+    this.dataFixedT = {}
+    this.fieldsFixedT = []
+    this.setupEmbed(embedResolvable, options)
   }
 
-  _tt (str = '', tOptions = {}) {
-    if (!this._t) return str
-    let result = String(str)
-    const query = this._t(str, tOptions)
-    const a = result.split(':').length >= 1 && result.split(':').slice(1)
-    const queryT = a && a[0] + '.' + a.slice(1).join('')
-    if (result.includes(':') && queryT !== query) result = query
-    if (tOptions.emoji && this._emoji) result = `${this._emoji(tOptions.emoji)} ${result}`
-    return result
+  setupEmbed (embedResolvable, options) {
+    this.options = Object.assign({
+      autoFooter: true,
+      autoAuthor: false,
+      autoTimestamp: true,
+      type: 'normal'
+    }, options)
+
+    if (embedResolvable instanceof User) embedResolvable = { author: embedResolvable }
+    if (embedResolvable instanceof GuildMember) embedResolvable = { author: embedResolvable.user }
+
+    if (typeof embedResolvable === 'function') {
+      if (embedResolvable.name === 'fixedT') embedResolvable = { t: embedResolvable }
+    }
+
+    if (embedResolvable instanceof Message) {
+      const context = new CommandContext({ message: embedResolvable })
+      embedResolvable = {
+        author: context.author,
+        t: context.t
+      }
+    }
+
+    embedResolvable = Object.assign({ author: null, t: null }, embedResolvable)
+
+    this.t = embedResolvable.t
+
+    if (embedResolvable.author) {
+      if (this.options.autoAuthor) this.setAuthor(embedResolvable.author)
+      if (this.options.autoFooter) this.setFooter(embedResolvable.author)
+      if (this.options.autoTimestamp) this.setTimestamp()
+    }
+
+    const color = types[this.options.type] || types.normal || 'GREEN'
+    this.setColor(color)
+  }
+
+  setupOptions (options) {
+    return { t: this.t, options }
   }
 
   setError () {
     return this.setColor('RED')
   }
 
-  setTitle () {
-    return super.setTitle(this._tt(...arguments))
+  setAuthor (name = '', iconURL = null, url = null, options = {}) {
+    const authorName = checkName(name)
+    const authorNameIcon = checkIcon(name)
+    const authorIcon = checkIcon(iconURL)
+
+    if (authorName) name = authorName
+    if (authorNameIcon && !iconURL) iconURL = authorNameIcon
+    if (authorIcon) iconURL = authorIcon
+
+    this.dataFixedT['author'] = { name, iconURL, url, options }
+    return super.setAuthor(TextUtils.parse(name, this.setupOptions(options)), iconURL, url)
   }
 
-  setAuthor (name, iconURL = null, url = null, tOptions = {}) {
-    return super.setAuthor(this._tt(name, tOptions), iconURL, url)
+  setFooter (text = '', iconURL = null, options = {}) {
+    const footerTextName = checkName(text)
+    const footerTextIcon = checkIcon(text)
+    const footerIcon = checkIcon(iconURL)
+
+    if (footerTextName) text = footerTextName
+    if (footerTextIcon && !iconURL) iconURL = footerTextIcon
+    if (footerIcon) iconURL = footerIcon
+
+    this.dataFixedT['footer'] = { text, iconURL, options }
+    return super.setFooter(TextUtils.parse(text, this.setupOptions(options)), iconURL)
   }
 
-  setDescription () {
-    return super.setDescription(this._tt(...arguments))
+  setDescription (description, options = {}) {
+    this.dataFixedT['description'] = { description, options }
+    return super.setDescription(TextUtils.parse(description, this.setupOptions(options)))
   }
 
-  addField (name, value, inline, nameOptions = {}, valueOptions = {}) {
-    return super.addField(this._tt(name, nameOptions), this._tt(value, valueOptions), inline)
+  setTitle (title, options) {
+    this.dataFixedT['title'] = { title, options }
+    return super.setTitle(TextUtils.parse(title, this.setupOptions(options)))
+  }
+
+  addField (name = '', value = '', inline = null, options = {}, valueOptions = {}) {
+    this.fieldsFixedT.push({ name, value, inline, options, valueOptions })
+    return super.addField(TextUtils.parse(name, this.setupOptions(options)), TextUtils.parse(value, this.setupOptions(valueOptions)), inline)
+  }
+
+  setThumbnail (url) {
+    const thumbnail = checkIcon(url) || url
+    return super.setThumbnail(thumbnail)
+  }
+
+  setImage (url) {
+    const image = checkIcon(url) || url
+    return super.setImage(image)
   }
 }
 
-module.exports = Embed
+module.exports = SimplicityEmbed

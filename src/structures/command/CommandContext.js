@@ -10,14 +10,17 @@ class CommandContext {
     this.channel = options.message.channel
     this.client = options.message.client
     this.voiceChannel = options.message.member.voiceChannel
+
     this.prefix = options.prefix
     this.command = options.command
-    this.language = Object.keys(options.message.client.i18next.store.data).includes(options.language) ? options.language : process.env.DEFAULT_LANG
+    this.language = Object.keys(options.message.client.i18next.store.data).includes(options.language) ? options.language : (this.message.language || process.env.DEFAULT_LANG)
     this.query = options.query
     this.args = options.args
-    this.t = options.message.client.i18next.getFixedT(options.language)
+    this.t = options.message.client.i18next.getFixedT(this.language)
     this.emoji = this._emoji.bind(this)
     this.send = this._send.bind(this)
+
+    this.message.language = this.language
   }
 
   _emoji (name = 'QUESTION', options) {

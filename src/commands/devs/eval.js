@@ -1,4 +1,4 @@
-const { Command, Embed, Loggers } = require('../../')
+const { Command, Embed } = require('../../')
 const { inspect } = require('util')
 const value = (l, c) => `\`\`\`${l}\n${String(c).slice(0, 1000) + (c.length >= 1000 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length))
 
@@ -23,12 +23,12 @@ class Eval extends Command {
         .addField('Result', value('js', toEval))
         .addField('Type', value('css', typeof evald))
 
-      if (evald) Loggers.warn(['COMMAND', 'EVAL-RESULT'], toEval)
+      if (toEval) console.warn(['COMMAND', 'EVAL-RESULT'], toEval)
     } catch (error) {
       embed
         .addField('Error', value('js', error))
 
-      Loggers.error(['COMMAND', 'EVAL-RESULT'], error)
+      console.error(['COMMAND', 'EVAL-RESULT'], error)
     } finally {
       const msg = await send(embed)
 

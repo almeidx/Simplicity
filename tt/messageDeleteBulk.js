@@ -1,4 +1,4 @@
-const { Embed, LogUtils, Constants } = require('../')
+const { Embed, LogUtils, Constants } = require('../src')
 
 async function messageDeleteBulk (messages) {
   const message = messages.first()

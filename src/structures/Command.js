@@ -9,6 +9,7 @@ class Command {
     this.name = 'none'
     this.category = 'none'
     this.aliases = []
+    this.WIP = false
     this.requirements = null
     this.parameters = null
   }
@@ -16,6 +17,7 @@ class Command {
   async run () {}
 
   async _run (context) {
+    if (this.WIP) this.requirements = typeof this.requirements === 'object' ? this.requirements['ownerOnly'] = true : { ownerOnly: true }
     const requirements = new Requirements(this.requirements)
     try {
       await requirements.handle(context)
@@ -39,8 +41,9 @@ class Command {
       .setError()
       .setDescription(error.message, error.options)
 
-    if (error.onUsage && t(`commands:${this.name}.usage`) !== `${this.name}.usage`) {
-      embed.addField('errors:usage', `${prefix + this.name} ${t(`commands:${this.name}.usage`)}`)
+    const usage = t(`commands:${this.name}.usage`)
+    if (error.onUsage && usage !== `${this.name}.usage`) {
+      embed.addField('errors:usage', `${prefix + this.name} ${usage}`)
     }
 
     return send(embed)

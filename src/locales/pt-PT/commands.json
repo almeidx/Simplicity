@@ -1,6 +1,6 @@
 {
     "botinfo": {
-        "botinfo": "Informações do Bot",
+        "title": "Informações do Bot",
         "guildAndUsers": "Guilds | Usuários",
         "channelAndEmojis": "Canais | Emojis",
         "uptime": "Uptime",
