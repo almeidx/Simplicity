@@ -43,19 +43,22 @@ module.exports = class Bot extends Client {
   }
 
   async initLocales (path) {
-    this.i18next.use(translationBackend).init({
-      ns: [ 'categories', 'commands', 'errors', 'permissions', 'utils', 'loggers' ],
-      preload: await readdir(path),
-      fallbackLng: 'en-US',
-      backend: {
-        loadPath: `${path}/{{lng}}/{{ns}}.json`
-      },
-      interpolation: {
-        escapeValue: false
-      },
-      returnEmptyString: false
-    }, () => {
-      console.log(Object.keys(this.i18next.store.data))
-    })
+    this.i18next
+      .use(translationBackend)
+      .init({
+        ns: [ 'categories', 'commands', 'errors', 'permissions', 'utils', 'loggers' ],
+        preload: await readdir(path),
+        fallbackLng: 'en-US',
+        defaultNS: 'commands',
+        backend: {
+          loadPath: `${path}/{{lng}}/{{ns}}.json`
+        },
+        interpolation: {
+          escapeValue: false
+        },
+        returnEmptyString: false
+      }, () => {
+        console.log(Object.keys(this.i18next.store.data))
+      })
   }
 }
