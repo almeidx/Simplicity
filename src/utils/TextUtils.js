@@ -1,3 +1,4 @@
+const i18next = require('i18next')
 const { Embed } = require('../')
 
 class TextUtils {
@@ -26,11 +27,8 @@ class TextUtils {
   }
 
   static t (t, key, options = {}) {
-    if (!t) throw Error('T invalid')
-    const result = t(key, options)
-    const spltKey = key.split(':')
-    if (spltKey.length > 2 || spltKey.slice(1).join(':') === result) return key
-    else return result
+    if (!i18next.exists(key)) return key
+    else if (t) return t(key, options)
   }
 }
 
