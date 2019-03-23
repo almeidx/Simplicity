@@ -14,5 +14,7 @@ module.exports = {
   LogUtils: require('./utils/LogUtils'),
   FileUtils: require('./utils/FileUtils'),
   // Database
-  Database: require('./database/Database.js')
+  Database: require('./database/Database.js'),
+  // Parameters
+  Parameters: require('./parameters')
 }
