@@ -8,10 +8,6 @@ class TextUtils {
     if (emoji) {
       text = text.replace(/(?:#)\w+/g, (e) => emoji(e.slice(1).toUpperCase()))
     }
-    // add translaton in $"..."
-    if (t) {
-      text = text.replace(/(?:\$")(\S+)(?:")/g, (s) => this.t(t, s.slice(2, -1), options.options))
-    }
     // add text embed in @...
     if (embed && embed instanceof Embed) {
       text = text.replace(/(?:@)\w+/g, (k) => {
@@ -22,12 +18,16 @@ class TextUtils {
         return result2 || result1 || result || k
       })
     }
-
-    return this.t(t, text, options.options)
+    // add translaton in $"..."
+    if (t) {
+      text = text.replace(/(?:\$")(\S+)(?:")/g, (s) => this.t(t, s.slice(2, -1), options.options))
+      return this.t(t, text, options.options)
+    }
+    return text
   }
 
-  static t (t, key, options = {}) {
-    if (!i18next.exists(key)) return key
+  static t (t, key = '', options = {}) {
+    if (!i18next.exists(key) || !t) return key
     else if (t) return t(key, options)
   }
 }

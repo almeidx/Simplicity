@@ -14,15 +14,15 @@ function checkIcon (resolvable) {
   const o = { size: 2048 }
   if (resolvable instanceof User) return resolvable.displayAvatarURL(o)
   if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o)
-  if (resolvable instanceof Guild) return resolvable.displayAvatarURL(o)
+  if (resolvable instanceof Guild) return resolvable.iconURL(o)
 }
 
 class SimplicityEmbed extends MessageEmbed {
   constructor (embedResolvable = {}, options = {}, data = {}) {
     super(data)
-    this.setupEmbed(embedResolvable, options)
     this.dataFixedT = {}
     this.fieldsFixedT = []
+    this.setupEmbed(embedResolvable, options)
   }
 
   setupEmbed (embedResolvable, options) {
@@ -62,44 +62,48 @@ class SimplicityEmbed extends MessageEmbed {
     this.setColor(color)
   }
 
+  setupOptions (options) {
+    return Object.assign({ t: this.t }, options)
+  }
+
   setError () {
     return this.setColor('RED')
   }
 
   setAuthor (name = '', iconURL = null, url = null, options = {}) {
     const authorName = checkName(name)
-    const authorNameIcon = checkIcon(iconURL)
+    const authorNameIcon = checkIcon(name)
     const authorIcon = checkIcon(iconURL)
-
+    console.log(authorName, authorNameIcon)
     if (authorName) name = authorIcon
     if (authorNameIcon && !iconURL) iconURL = authorIcon
     if (authorIcon) iconURL = authorIcon
 
     this.dataFixedT['author'] = { name, iconURL, url, options }
-    return super.setAuthor(TextUtils.parse(name, options), iconURL, url)
+    return super.setAuthor(TextUtils.parse(name, this.setupOptions(options)), iconURL, url)
   }
 
   setFooter (text = '', iconURL = null, options = {}) {
     const footerTextName = checkName(text)
-    const footerTextIcon = checkIcon(iconURL)
+    const footerTextIcon = checkIcon(text)
     const footerIcon = checkIcon(iconURL)
 
-    if (footerTextName) text = checkName
+    if (footerTextName) text = footerTextName
     if (footerTextIcon && !iconURL) iconURL = footerTextIcon
     if (footerIcon) iconURL = footerIcon
 
     this.dataFixedT['footer'] = { text, iconURL, options }
-    return super.setFooter(TextUtils.parse(text, options), iconURL)
+    return super.setFooter(TextUtils.parse(text, this.setupOptions(options)), iconURL)
   }
 
   setDescription (description, options = {}) {
     this.dataFixedT['description'] = { description, options }
-    return super.setDescription(TextUtils.parse(description, options))
+    return super.setDescription(TextUtils.parse(description, this.setupOptions(options)))
   }
 
   addField (name = '', value = '', inline = null, options = {}, valueOptions = {}) {
     this.fieldsFixedT.push({ name, value, inline, options, valueOptions })
-    return super.addField(TextUtils.parse(name, options), TextUtils.parse(value, valueOptions), inline)
+    return super.addField(TextUtils.parse(name, this.setupOptions(options)), TextUtils.parse(value, this.setupOptions(valueOptions)), inline)
   }
 
   setThumbnail (url) {
