@@ -63,7 +63,7 @@ class SimplicityEmbed extends MessageEmbed {
   }
 
   setupOptions (options) {
-    return Object.assign({ t: this.t }, options)
+    return { t: this.t, options }
   }
 
   setError () {
