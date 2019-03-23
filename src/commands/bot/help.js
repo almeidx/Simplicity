@@ -12,7 +12,7 @@ class Help extends Command {
     const name = this.client.user.username
 
     const embed = new Embed({ t, author })
-      .setAuthor(this.client.user.username, this.client.user.displayAvatarURL({ size: 2048 }))
+      .setAuthor(this.client.user)
 
     if (args.length === 0) {
       embed.setDescription(t('commands:help.about', { prefix, name }))

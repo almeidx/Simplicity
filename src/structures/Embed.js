@@ -74,9 +74,9 @@ class SimplicityEmbed extends MessageEmbed {
     const authorName = checkName(name)
     const authorNameIcon = checkIcon(name)
     const authorIcon = checkIcon(iconURL)
-    console.log(authorName, authorNameIcon)
-    if (authorName) name = authorIcon
-    if (authorNameIcon && !iconURL) iconURL = authorIcon
+
+    if (authorName) name = authorName
+    if (authorNameIcon && !iconURL) iconURL = authorNameIcon
     if (authorIcon) iconURL = authorIcon
 
     this.dataFixedT['author'] = { name, iconURL, url, options }
