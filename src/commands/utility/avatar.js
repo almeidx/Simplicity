@@ -1,4 +1,5 @@
-const { Command, Embed } = require('../../')
+const { Command, Embed, Parameters: { UserParameter } } = require('../../')
+const User = new UserParameter({ required: false, checkUserGlobal: true })
 
 class Avatar extends Command {
   constructor (client) {
@@ -13,10 +14,12 @@ class Avatar extends Command {
     this.requirements = { permissions: ['EMBED_LINKS'] }
   }
 
-  run ({ author, send, t }, user) {
+  async run (context) {
+    const { author, args, send } = context
+    let user = await User.handle(context, args)
     if (!user) user = author
 
-    const embed = new Embed({ author, t, autoAuthor: false })
+    const embed = new Embed({ author, autoAuthor: false })
       .setImage(user.displayAvatarURL({ size: 2048 }))
       .setAuthor(user.tag, user.displayAvatarURL())
 

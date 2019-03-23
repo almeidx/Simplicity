@@ -1,5 +1,5 @@
-const Parameter = require('./Parameter')
-const CommandError = require('../CommandError')
+const { CommandError } = require('../')
+const Parameter = require('../structures/Parameter')
 const REGEX_ID = /[0-9]{16,18}/g
 
 class User extends Parameter {
@@ -93,8 +93,6 @@ class User extends Parameter {
 
     const userUsernameStartsWithAndLowercase = this.useLowerCase && this.checkUsername && this.useStartsWith && users.find(u => u.username.toLowerCase().startsWith(str.toLowerCase()))
     if (userUsernameStartsWithAndLowercase) return userUsernameStartsWithAndLowercase
-
-    // if (resultRegex && this.checkUserGlobal) { }
 
     if (resultRegex && this.checkUserGlobal) {
       try {
