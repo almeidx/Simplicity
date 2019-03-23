@@ -15,6 +15,5 @@
     "noVoiceChannel": "The user is not in a Voice Channel.",
     "invalidUser": "You must either mention, provide an ID, tag or the name of a member!",
     "nsfwChannel": "This command can only be used in NSFW Channels!",
-    "noReason": "No reason provided.",
-    "invalidParameters": "Invalid Parameters."
+    "noReason": "No reason provided."
 }
