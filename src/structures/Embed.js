@@ -1,5 +1,5 @@
 const { MessageEmbed, User, GuildMember, Message, Guild } = require('discord.js')
-const { CommandContext } = require('../')
+const { CommandContext, TextUtils } = require('../')
 
 const types = { normal: process.env.COLOR, error: 'RED', warn: 0xfdfd96 }
 
@@ -65,7 +65,7 @@ class SimplicityEmbed extends MessageEmbed {
     return this.setColor('RED')
   }
 
-  setAuthor (name, iconURL, url, options = {}) {
+  setAuthor (name = '', iconURL = null, url = null, options = {}) {
     const authorName = checkName(name)
     const authorNameIcon = checkIcon(iconURL)
     const authorIcon = checkIcon(iconURL)
@@ -74,10 +74,11 @@ class SimplicityEmbed extends MessageEmbed {
     if (authorNameIcon && !iconURL) iconURL = authorIcon
     if (authorIcon) iconURL = authorIcon
 
-    return super.setAuthor(name, iconURL, url)
+    this.dataFixedT['author'] = { name, iconURL, url, options }
+    return super.setAuthor(TextUtils.parse(name, options), iconURL, url)
   }
 
-  setFooter (text, iconURL, options = {}) {
+  setFooter (text = '', iconURL = null, options = {}) {
     const footerTextName = checkName(text)
     const footerTextIcon = checkIcon(iconURL)
     const footerIcon = checkIcon(iconURL)
@@ -86,15 +87,18 @@ class SimplicityEmbed extends MessageEmbed {
     if (footerTextIcon && !iconURL) iconURL = footerTextIcon
     if (footerIcon) iconURL = footerIcon
 
-    return super.setFooter(text, iconURL, text)
+    this.dataFixedT['footer'] = { text, iconURL, options }
+    return super.setFooter(TextUtils.parse(text, options), iconURL)
   }
 
-  setDescription (description = {}) {
-    return super.setDescription(description)
+  setDescription (description, options = {}) {
+    this.dataFixedT['description'] = { description, options }
+    return super.setDescription(TextUtils.parse(description, options))
   }
 
-  addField (name, value, inline, options = {}, valueOptions = {}) {
-    return super.addField(name, value, inline)
+  addField (name = '', value = '', inline = null, options = {}, valueOptions = {}) {
+    this.fieldsFixedT.push({ name, value, inline, options, valueOptions })
+    return super.addField(TextUtils.parse(name, options), TextUtils.parse(value, valueOptions), inline)
   }
 
   setThumbnail (url) {
