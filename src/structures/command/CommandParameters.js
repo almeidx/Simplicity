@@ -14,7 +14,6 @@ class CommandParameters {
       const parameter = new Parameter(p)
       const result = await parameter.handle(context, args)
       if (result) args.splice(0, 1)
-      console.log(args)
       if (!result) {
         if (!parameter.required) return null
         else throw new CommandError(parameter.missingError, { onUsage: true })

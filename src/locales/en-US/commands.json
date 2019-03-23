@@ -94,7 +94,7 @@
         "reason": "Reason",
         "noReason": "No reason provided.",
         "action": "ban",
-        "noUser": "You must provide a valid user!"
+        "noUser": "You must provide a valid user!",
         "alreadyBannedReason": "It seems that {{- user }} is already banned from this guild for {{- reason }}!",
         "alreadyBannedNoReason": "It seems that {{- user }} is already banned from this guild!"
     },
