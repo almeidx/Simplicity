@@ -1,4 +1,3 @@
-@@ -1,65 +0,0 @@
 const { Client, Collection } = require('discord.js')
 const Loaders = require('../loaders')
 const Loggers = require('./Loggers')
