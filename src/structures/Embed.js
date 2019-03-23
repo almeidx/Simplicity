@@ -1,5 +1,6 @@
 const { MessageEmbed, User, GuildMember, Message, Guild } = require('discord.js')
-const { CommandContext, TextUtils } = require('../')
+const { CommandContext } = require('../')
+const TextUtils = require('../utils/TextUtils')
 
 const types = { normal: process.env.COLOR, error: 'RED', warn: 0xfdfd96 }
 
