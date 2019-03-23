@@ -18,7 +18,7 @@ class BotInfo extends Command {
     const PLATFORM = process.platform[0].toUpperCase() + process.platform.slice(1)
 
     const embed = new Embed({ author, guild, t, emoji })
-      .setTitle('commands:botinfo.botinfo')
+      .setTitle('commands:botinfo.title')
       .setThumbnail(this.client.user.displayAvatarURL({ size: 2048 }))
       .addField('Ping', `${Math.round(guild.shard.ping)}ms`, true, { emoji: 'PING' })
       .addField('commands:botinfo.guildAndUsers', `${this.client.guilds.size} | ${this.client.users.size}`, true, { emoji: 'USERS' })

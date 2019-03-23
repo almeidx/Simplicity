@@ -101,6 +101,11 @@ class SimplicityEmbed extends MessageEmbed {
     return super.setDescription(TextUtils.parse(description, this.setupOptions(options)))
   }
 
+  setTitle (title, options) {
+    this.dataFixedT['title'] = { title, options }
+    return super.setTitle(TextUtils.parse(title, this.setupOptions(options)))
+  }
+
   addField (name = '', value = '', inline = null, options = {}, valueOptions = {}) {
     this.fieldsFixedT.push({ name, value, inline, options, valueOptions })
     return super.addField(TextUtils.parse(name, this.setupOptions(options)), TextUtils.parse(value, this.setupOptions(valueOptions)), inline)

@@ -3,6 +3,9 @@ const { Embed } = require('../')
 
 class TextUtils {
   static parse (text = '', options = {}) {
+    if (typeof text !== 'string') {
+      return text
+    }
     const { emoji, t, embed } = Object.assign({ emoji: null, t: null, embed: null, options: {} }, options)
     // add Emojis in #...
     if (emoji) {

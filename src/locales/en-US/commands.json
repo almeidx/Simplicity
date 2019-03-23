@@ -1,9 +1,9 @@
 {
     "botinfo": {
         "description": "This command shows you info about myself.",
-        "botInfo": "Bot Information",
+        "title": "Bot Information",
         "guildAndUsers": "Guilds | Users",
-        "channelAndEmotes": "Channels | Emotes",
+        "channelAndEmojis": "Channels | Emotes",
         "uptime": "Uptime",
         "commands": "Commands",
         "pings": "Last Pings",
