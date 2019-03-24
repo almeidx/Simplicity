@@ -1,19 +1,29 @@
-class Parameter {
-  constructor (options = {}) {
-    options = Object.assign({
-      required: true,
-      missingError: 'errors:missingParameters' },
-    options)
-    this.required = !!options.required
-    this.missingError = options.missingError
-    this.limit = 1
+const { CommandError } = require('../')
+
+class Argument {
+  static async parse (query, options = {}, dependencies = {}) {
+    options = this.parseOptions(options)
+    const result = await this.search(query, dependencies, options)
+
+    if (!result && options.required) throw new CommandError(options.missingError)
+    await this.verifyExceptions(result, dependencies, options)
+    return result || null
   }
 
-  handle () {}
+  static parseOptions (options = {}) {
+    return Object.assign({
+      required: false,
+      missingError: 'errors:missingParameters'
+    }, options)
+  }
 
-  search () {}
+  static search () {
+    return null
+  }
 
-  verify () {}
+  static verifyExceptions () {
+    return true
+  }
 }
 
-module.exports = Parameter
+module.exports = Argument
