@@ -1,43 +1,67 @@
-const { Command, Embed } = require('../../')
+const { Command, Embed, Parameters: { MemberParameter }, CommandError } = require('../../')
+const Collector = require('../../utils/Collector')
+
+const missingError = 'errors:invalidUser'
+const Member = new MemberParameter({
+  acceptSelf: false,
+  required: false,
+  argFirst: true,
+  onlyRoleHighest: true,
+  onlyBotRoleHighest: true,
+  missingError
+})
 
 class Ban extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['bean']
     this.category = 'mod'
-    this.parameters = [{
-      type: 'member',
-      required: true,
-      argFirst: true,
-      onlyRoleHighest: true,
-      onlyBotRoleHighest: true,
-      missingError: 'errors:invalidUser'
-    }, {
-      type: 'string',
-      default: 'errors:noReason'
-    }]
     this.requirements = { permissions: ['BAN_MEMBERS'], clientPermissions: ['BAN_MEMBERS'] }
   }
 
-  async run ({ author, guild, send, t }, member, reason) {
-    const embed = new Embed({ t, author })
-    const bans = await guild.fetchBans()
+  async run (context) {
+    const { guild, send, author, t, args, emoji, message } = context
+    const query = args[0] || ''
+    let member = await Member.handle(context, query)
+    let id = member && member.id
 
-    if (bans && bans.has(user.id)) {
-      const reason = bans[user.id].reason
-      embed
-        .setTitle('errors:oops')
-        .setDescription(reason ? 'commands:ban.alreadyBannedReason' : 'commands:ban.alreadyBannedNoReason', { user, reason ? reason : '' })
+    if (!member) {
+      const user = await this.client.users.fetch(query).catch(() => { throw new CommandError(missingError) })
+      const bans = await guild.fetchBans()
+      const alreadyBanned = bans && bans.get(user.id)
+
+      if (alreadyBanned) {
+        const message = alreadyBanned.reason ? 'commands:ban.alreadyBannedReason' : 'commands:ban.alreadyBannedNoReason'
+        throw new CommandError(message, { user, reason: (alreadyBanned.reason || '') })
+      }
+      id = user.id
+      member = user
     }
 
-    await member.ban(reason)
+    let days = 0
+    const reason = args.slice(1).join(' ').replace(/(--(d|days)\s[0-9]{1,})/i, (i) => {
+      const number = Number(i.replace(/--(days|d)/i, ''))
+      if (!isNaN(number)) days = number
+      return ''
+    }) || t('errors:noReason')
 
-    embed
-      .setTitle('commands:ban.success')
-      .setDescription('commands:ban.userBanned', { user: member })
-      .addField('commands:ban.bannedBy', `${author}`, true)
-      .addField('commands:ban.reason', reason, true)
-    send(embed)
+    const { type, collector } = Collector.handle(message, {
+      reactions: [emoji('SUCCESS', { id: true }), emoji('CANCEL', { id: true })],
+      text: `Para continua reaja com ${emoji('SUCCESS')} e para cancelar ${emoji('CANCEL')}`,
+      options: { max: 1 }
+    }, {
+
+    })
+
+    // await guild.users.ban(id, { reason, days })
+    return send(
+      new Embed({ t })
+        .setTitle('commands:ban.success')
+        .setDescription('commands:ban.userBanned', { user: member })
+        .addField('commands:ban.bannedBy', `${author}`, true)
+        .addField('commands:ban.reason', reason, true)
+        .setFooter('ba e' + days)
+    )
   }
 }
 
