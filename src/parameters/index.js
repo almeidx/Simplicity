@@ -1,3 +1,4 @@
 module.exports = {
-  UserParameter: require('./UserParameter')
+  UserParameter: require('./UserParameter'),
+  MemberParameter: require('./MemberParameter')
 }

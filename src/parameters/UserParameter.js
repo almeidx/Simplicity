@@ -2,7 +2,7 @@ const { CommandError } = require('../')
 const Parameter = require('../structures/Parameter')
 const REGEX_ID = /[0-9]{16,18}/g
 
-class User extends Parameter {
+class UserParameter extends Parameter {
   constructor (options = {}) {
     super(options)
 
@@ -103,4 +103,4 @@ class User extends Parameter {
   }
 }
 
-module.exports = User
+module.exports = UserParameter

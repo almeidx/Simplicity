@@ -1,8 +1,8 @@
-const Parameter = require('./Parameter')
-const CommandError = require('../CommandError')
+const Parameter = require('../structures/Parameter')
+const CommandError = require('../structures/command/CommandError')
 const REGEX_ID = /[0-9]{16,18}/g
 
-class User extends Parameter {
+class MemberParameter extends Parameter {
   constructor (options = {}) {
     super(options)
 
@@ -44,10 +44,12 @@ class User extends Parameter {
     }, options.errors)
   }
 
-  async handle ({ member: memberAuthor, author, guild, command, t }, args) {
-    const member = args.length > 0 && await this.getMember(guild, this.argFirst ? args[0] : args.join(' '))
-    if (!member) return null
-
+  async handle ({ member: memberAuthor, author, guild, command, t }, query) {
+    const member = query && typeof query === 'string' && await this.getMember(guild, query)
+    if (!member) {
+      if (this.required) throw new CommandError(this.missingError)
+      else return null
+    }
     if (!this.acceptSelf && member.user.id === author.id) throw new CommandError(this.errors.acceptSelf)
     if (!this.acceptBot && member.user.bot) throw new CommandError(this.errors.acceptBot)
     if (!this.acceptUser && !member.user.bot) throw new CommandError(this.errors.acceptSelf)
@@ -62,29 +64,29 @@ class User extends Parameter {
     if (userRegex) return userRegex
 
     const memberName = this.checkUsername && guild.members.find(m => m.user.username === str)
-    if (memberName) return memberName.user
+    if (memberName) return memberName
 
     const memberNameLower = this.checkUsername && this.useLowerCase && guild.members.find(m => m.user.username.toLowerCase() === str.toLowerCase())
-    if (memberNameLower) return memberNameLower.user
+    if (memberNameLower) return memberNameLower
 
     const memberNick = this.checkNick && guild.members.find(m => m.nickname && (m.nickname === str))
     if (memberNick) return memberNick
 
     const memberNickLower = this.checkNick && this.useLowerCase && guild.members.find(m => m.nickname && (m.nickname.toLowerCase() === str.toLowerCase()))
-    if (memberNickLower) return memberNickLower.user
+    if (memberNickLower) return memberNickLower
 
     const memberStartName = this.useStartsWith && this.checkUsername && guild.members.find(m => m.user.username.startsWith(str))
-    if (memberStartName) return memberStartName.user
+    if (memberStartName) return memberStartName
 
     const userUsernameStartsWithAndLowercase = this.useStartsWith && this.checkUsername && this.useLowerCase && guild.members.find(m => m.user.username.toLowerCase().startsWith(str.toLowerCase()))
     if (userUsernameStartsWithAndLowercase) return userUsernameStartsWithAndLowercase.user
 
     const userNickStartsWith = this.useStartsWith && this.checkNick && guild.members.find(m => m.nickname && m.nickname.startsWith(str))
-    if (userNickStartsWith) return userNickStartsWith.user
+    if (userNickStartsWith) return userNickStartsWith
 
     const userNickStartsWithAndLowercase = this.checkNick && this.useLowerCase && this.useStartsWith && guild.members.find(m => m.nickname && m.nickname.toLowerCase().startsWith(str.toLowerCase()))
-    if (userNickStartsWithAndLowercase) return userNickStartsWithAndLowercase.user
+    if (userNickStartsWithAndLowercase) return userNickStartsWithAndLowercase
   }
 }
 
-module.exports = User
+module.exports = MemberParameter
