@@ -15,5 +15,7 @@
     "bot": "Bot",
     "bots": "Bots",
     "prefix": "My prefix on this server is: `{{- prefix }}`",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "question": "To confirm, type **{{- confirm }}** if you want to cancel, type **{{- cancel }}**",
+    "commandCanceledIdle": "command cancelled by idle"
 }

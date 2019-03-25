@@ -94,7 +94,10 @@
         "reason": "Reason",
         "noReason": "No reason provided.",
         "action": "ban",
-        "noUser": "You must provide a valid user!"
+        "banCanceled": "user ban successfully canceled",
+        "days": "messages deleted in the last {{- days }} days",
+        "alreadyBannedReason": "It seems that {{- user }} is already banned from this guild for {{- reason }}!",
+        "alreadyBannedNoReason": "It seems that {{- user }} is already banned from this guild!"
     },
     "kick": {
         "description": "This command lets you kick members of your server.",

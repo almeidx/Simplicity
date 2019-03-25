@@ -10,11 +10,12 @@
     "clientMissingPermission_plural": "I require the {{- permissions }} permissions in order to execute this command!",
     "userMissingPermission": "You require the `{{- permissions }}` permission in order to execute this command!",
     "userMissingPermission_plural": "You require the {{- permissions }} permissions in order to execute this command!",
-    "userMissingRole": "You can't {{- action }} this user because they have the same or higher role than you.",
-    "clientMissingRole": "I can't {{- action }} this user because they have the same or higher role than me.",
+    "userMissingRole": "You can't $t(commands:{{- commandName }}.action) this user because they have the same or higher role than you.",
+    "clientMissingRole": "I can't $t(commands:{{- commandName }}.action) this user because they have the same or higher role than me.",
     "noVoiceChannel": "The user is not in a Voice Channel.",
+    "guildOnly": "Command can only be run on servers",
+    "canBeGuildOwner": "Action cannot be performed in the server owner",
     "invalidUser": "You must either mention, provide an ID, tag or the name of a member!",
     "nsfwChannel": "This command can only be used in NSFW Channels!",
-    "noReason": "No reason provided.",
-    "invalidParameters": "Invalid Parameters."
+    "noReason": "No reason provided."
 }

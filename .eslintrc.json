@@ -3,7 +3,7 @@
     "rules": {
         "eqeqeq": "error",
 	"no-async-promise-executor": "error",
-	"no-await-in-loop": "error",
+	"no-await-in-loop": "off",
 	"no-eval": "off",
 	"no-extra-parens": "error",
 	"no-var": "error",

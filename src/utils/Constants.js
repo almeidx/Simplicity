@@ -21,7 +21,9 @@ module.exports = {
     'USAGE': '🖊',
     'ALIASES': '🗝',
     'THUMBS_UP': '👍',
-    'THUMBS_DOWN': '👎'
+    'THUMBS_DOWN': '👎',
+    'CANCEL': '❎',
+    'SUCCESS': '✅'
   },
   COLORS: {
     'MESSAGE_DELETE': '36393f',

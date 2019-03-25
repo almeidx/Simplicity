@@ -1,7 +1,6 @@
-const Requirements = require('./command/Requirements')
-const Embed = require('./Embed')
-const CommandError = require('./command/CommandError')
-const CommandParameters = require('./command/CommandParameters')
+const Requirements = require('./Requirements')
+const Embed = require('../Embed')
+const CommandError = require('./CommandError')
 
 class Command {
   constructor (client) {
@@ -11,7 +10,6 @@ class Command {
     this.aliases = []
     this.WIP = false
     this.requirements = null
-    this.parameters = null
   }
 
   async run () {}
@@ -21,8 +19,7 @@ class Command {
     const requirements = new Requirements(this.requirements)
     try {
       await requirements.handle(context)
-      const parameters = this.parameters ? (await Promise.all(CommandParameters.handle(context, this.parameters, context.args))) : []
-      await this.run(context, ...parameters)
+      await this.run(context)
     } catch (e) {
       return this.sendError(context, e)
     }

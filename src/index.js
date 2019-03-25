@@ -2,11 +2,12 @@ module.exports = {
   // Structures
   SimplicityClient: require('./structures/SimplicityClient'),
   Embed: require('./structures/Embed'),
-  Command: require('./structures/Command'),
   Loggers: require('./structures/Loggers'),
   Loader: require('./structures/Loader'),
   Listener: require('./structures/Listener'),
+  Parameter: require('./structures/Parameter'),
   // Command
+  Command: require('./structures/command/Command'),
   CommandContext: require('./structures/command/CommandContext'),
   CommandError: require('./structures/command/CommandError'),
   // Utils
@@ -17,5 +18,7 @@ module.exports = {
   TextUtils: require('./utils/TextUtils'),
   PermissionsUtils: require('./utils/PermissionsUtils'),
   // Database
-  Database: require('./database/Database.js')
+  Database: require('./database/Database.js'),
+  // Parameters
+  Parameters: require('./parameters')
 }
