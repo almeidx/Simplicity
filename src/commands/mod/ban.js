@@ -35,7 +35,7 @@ class Ban extends Command {
       }
     }
 
-    let days = 0
+    let days
     const reason = args.slice(1).join(' ').replace(/(--(d|days)\s[0-9]{1,})/i, (i) => {
       const number = Number(i.replace(/--(days|d)/i, ''))
       if (!isNaN(number)) days = number
@@ -49,7 +49,7 @@ class Ban extends Command {
         .setDescription('commands:ban.userBanned', { user: member })
         .addField('commands:ban.bannedBy', `${memberAuthor}`, true)
         .addField('commands:ban.reason', reason, true)
-        .setFooter('ba e' + days)
+        .setFooter(!days ? '' : 'commands:ban.days', null, { days })
     )
   }
 }

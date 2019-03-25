@@ -1,6 +1,8 @@
-const { CommandError } = require('../')
+const CommandError = require('../structures/command/CommandError')
 const Parameter = require('../structures/Parameter')
+
 const MENTION_REGEX = /^(?:<@!?)?([0-9]{16,18})(?:>)?$/
+
 class UserParameter extends Parameter {
   static parseOptions (options) {
     return Object.assign({
@@ -23,7 +25,7 @@ class UserParameter extends Parameter {
 
   static verifyExceptions (user, { author }, exeptions = {}) {
     exeptions = this.setupOptions(exeptions)
-    console.log(user)
+
     if (!exeptions.acceptSelf && user.id === author.id) throw new CommandError(exeptions.errors.acceptSelf, { onUsage: true })
     if (!exeptions.acceptBot && user.bot) throw new CommandError(exeptions.errors.acceptBot, { onUsage: true })
     if (!exeptions.acceptUser && !user.bot) throw new CommandError(exeptions.errors.acceptSelf, { onUsage: true })
