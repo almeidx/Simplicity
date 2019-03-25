@@ -7,9 +7,9 @@ class UserParameter extends Parameter {
   static parseOptions (options) {
     return Object.assign({
       ...super.parseOptions(options),
-      acceptSelf: true,
-      acceptBot: true,
-      acceptUser: true,
+      canBeAuthor: true,
+      canBeBot: true,
+      canBeUser: true,
       checkGlobally: true
     }, options)
   }
@@ -17,18 +17,18 @@ class UserParameter extends Parameter {
   static parseMessageErrors (options = {}) {
     return Object.assign({
       ...super.parseMessageErrors(options),
-      acceptBot: 'errors:acceptBot',
-      acceptSelf: 'errors:acceptSelf',
-      acceptUser: 'errors:acceptUser'
+      canBeBot: 'errors:canBeBot',
+      canBeAuthor: 'errors:canBeAuthor',
+      canBeUser: 'errors:canBeUser'
     }, options.errors)
   }
 
   static verifyExceptions (user, { author }, exeptions = {}) {
     exeptions = this.setupOptions(exeptions)
 
-    if (!exeptions.acceptSelf && user.id === author.id) throw new CommandError(exeptions.errors.acceptSelf, { onUsage: true })
-    if (!exeptions.acceptBot && user.bot) throw new CommandError(exeptions.errors.acceptBot, { onUsage: true })
-    if (!exeptions.acceptUser && !user.bot) throw new CommandError(exeptions.errors.acceptSelf, { onUsage: true })
+    if (!exeptions.canBeAuthor && user.id === author.id) throw new CommandError(exeptions.errors.canBeAuthor, { onUsage: true })
+    if (!exeptions.canBeBot && user.bot) throw new CommandError(exeptions.errors.canBeBot, { onUsage: true })
+    if (!exeptions.canBeUser && !user.bot) throw new CommandError(exeptions.errors.canBeAuthor, { onUsage: true })
 
     return user
   }

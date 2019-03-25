@@ -24,7 +24,6 @@ module.exports = class SimplicityClient extends Client {
       const loader = new Loader(this)
       let result
       try {
-        // eslint-disable-next-line no-await-in-loop
         result = await loader.load()
       } catch (err) {
         console.error(err)

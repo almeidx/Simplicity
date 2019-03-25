@@ -16,7 +16,7 @@ class MemberParameter extends UserParameter {
       ...super.parseMessageErrors(options),
       botRoleHighest: 'errors:clientMissingRole',
       userRoleHighest: 'errors:userMissingRole',
-      canBeGuildOwner: 'errors:canBeGuildOwner'
+      canBeGuildOwner: 'errors:noGuildOwner'
     }, options.errors)
   }
 
@@ -25,7 +25,7 @@ class MemberParameter extends UserParameter {
 
     await super.verifyExceptions(member.user, { author: memberAuthor.user }, options)
     const userOwner = member.user.id === guild.ownerID
-    if (options.canBeGuildOwner && userOwner) throw new CommandError(options.errors.canBeGuildOwner)
+    if (!options.canBeGuildOwner && userOwner) throw new CommandError(options.errors.canBeGuildOwner)
     if (options.userRoleHighest && !userOwner && member.roles.highest.position >= memberAuthor.roles.highest.position) throw new CommandError(this.errors.userRoleHighest, { commandName })
     if (options.botRoleHighest && !userOwner && guild.me.roles.highest.position <= member.roles.highest.position) throw new CommandError(this.errors.botRoleHighest, { commandName })
 

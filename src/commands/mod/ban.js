@@ -2,8 +2,9 @@ const { Command, Embed, Parameters: { MemberParameter, UserParameter }, CommandE
 const missingError = 'errors:invalidUser'
 const optionsParameter = {
   required: false,
-  acceptSelf: false,
+  canBeAuthor: false,
   checkGlobally: true,
+  canBeGuildOwner: false,
   errors: {
     missingError
   }
@@ -43,9 +44,10 @@ class Ban extends Command {
     }) || 'errors:noReason'
 
     const embed = new Embed({ t })
-    const msg = await send(embed.setDescription('utils:question', { confirm: 'yes', cancel: 'not' }))
+      .setDescription('utils:question', { confirm: 'yes', cancel: 'not' })
+    const msg = await send(embed)
     const wordsContinue = ['y', 'yes', 'sim', 's', 'continue']
-    const wordsCancel = ['n', 'não', 'not', 'nop', 'cancel']
+    const wordsCancel = ['n', 'não', 'not', 'cancel']
     const words = wordsContinue.concat(wordsCancel)
     const filter = (m) => m.author.id === memberAuthor.user.id && words.includes(m.content.toLowerCase())
     const collector = await message.channel.createMessageCollector(filter, { time: 15000, max: 1 })
@@ -61,13 +63,14 @@ class Ban extends Command {
       const word = m.content.toLowerCase()
       deleteMessages()
       if (wordsCancel.includes(word)) {
-        await send(embed.setDescription('commands:ban.banCanceled'))
+        embed.setDescription('commands:ban.banCanceled')
+        await send(embed)
       } else {
         await guild.users.ban(user.id, { reason, days })
         return send(
           new Embed({ t })
             .setTitle('commands:ban.success')
-            .setDescription('commands:ban.userBanned', { user: member })
+            .setDescription('commands:ban.userBanned', { member })
             .addField('commands:ban.bannedBy', `${memberAuthor}`, true)
             .addField('commands:ban.reason', reason, true)
             .setFooter(!days ? '' : 'commands:ban.days', null, { days })
@@ -77,7 +80,8 @@ class Ban extends Command {
 
     collector.once('end', () => {
       deleteMessages()
-      send(embed.setDescription('utils:commandCanceledIdle'))
+      embed.setDescription('utils:commandTimedout')
+      send(embed)
     })
   }
 }
