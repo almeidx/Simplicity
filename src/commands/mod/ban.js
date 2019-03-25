@@ -63,7 +63,7 @@ class Ban extends Command {
       if (wordsCancel.includes(word)) {
         await send(embed.setDescription('commands:ban.banCanceled'))
       } else {
-        // await guild.users.ban(user.id, { reason, days })
+        await guild.users.ban(user.id, { reason, days })
         return send(
           new Embed({ t })
             .setTitle('commands:ban.success')
