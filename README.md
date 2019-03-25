@@ -8,7 +8,3 @@
 <a href="https://github.com/Almeeida/Simplicity/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/SwitchbladeBot/switchblade.svg?style=flat-square" alt="License"/></a><br>
 <h2>Yet another Discord bot</h2>
 Created by Almeida#0001 and Tsugami#261
-
-<h2>Bot Commands</h2>
--<b>Moderation<b>
-    [...]
