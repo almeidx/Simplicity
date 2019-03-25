@@ -28,7 +28,7 @@ class UserParameter extends Parameter {
   static async search (query, { client, guild }, options) {
     options = this.parseOptions(options)
     if (!query || typeof query !== 'string') return
-    const regexResult = MENTION_REGEX.exec(query)
+    const regexResult = client && MENTION_REGEX.exec(query)
     const id = regexResult && regexResult[0]
     const fetchID = id && (client.users.get(id) || (options.checkGlobally && (await client.users.fetch(id, true).catch(() => null))))
     const findName = guild && guild.members.find((m) => m.user.username.toLowerCase() === query.toLowerCase())
