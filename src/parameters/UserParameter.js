@@ -8,16 +8,22 @@ class UserParameter extends Parameter {
       acceptSelf: true,
       acceptBot: true,
       acceptUser: true,
-      errors: {
-        acceptBot: 'errors:acceptBot',
-        acceptSelf: 'acceptSelf',
-        acceptUser: 'acceptUser'
-      }
-    })
+      checkGlobally: true
+    }, options)
+  }
+
+  static parseMessageErrors (options = {}) {
+    return Object.assign({
+      ...super.parseMessageErrors(options),
+      acceptBot: 'errors:acceptBot',
+      acceptSelf: 'errors:acceptSelf',
+      acceptUser: 'errors:acceptUser'
+    }, options.errors)
   }
 
   static verifyExceptions (user, { author }, exeptions = {}) {
-    exeptions = this.parseOptions(exeptions)
+    exeptions = this.setupOptions(exeptions)
+    console.log(user)
     if (!exeptions.acceptSelf && user.id === author.id) throw new CommandError(exeptions.errors.acceptSelf, { onUsage: true })
     if (!exeptions.acceptBot && user.bot) throw new CommandError(exeptions.errors.acceptBot, { onUsage: true })
     if (!exeptions.acceptUser && !user.bot) throw new CommandError(exeptions.errors.acceptSelf, { onUsage: true })
@@ -26,11 +32,11 @@ class UserParameter extends Parameter {
   }
 
   static async search (query, { client, guild }, options) {
-    options = this.parseOptions(options)
+    options = this.setupOptions(options)
     if (!query || typeof query !== 'string') return
-    const regexResult = client && MENTION_REGEX.exec(query)
-    const id = regexResult && regexResult[0]
-    const fetchID = id && (client.users.get(id) || (options.checkGlobally && (await client.users.fetch(id, true).catch(() => null))))
+    const regexResult = MENTION_REGEX.exec(query)
+    const id = regexResult && regexResult[1]
+    const fetchID = id && ((client && client.users.get(id)) || (options.checkGlobally && (await client.users.fetch(id, true).catch(() => null))))
     const findName = guild && guild.members.find((m) => m.user.username.toLowerCase() === query.toLowerCase())
     const findNick = guild && guild.members.find((m) => m.displayName.toLowerCase() === query.toLowerCase())
     const findStartName = guild && guild.members.find((m) => m.user.username.toLowerCase().startsWith(query.toLowerCase()))
