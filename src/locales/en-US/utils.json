@@ -17,5 +17,5 @@
     "prefix": "My prefix on this server is: `{{- prefix }}`",
     "loading": "Loading...",
     "question": "Type **{{- confirm }}** to continue. Else, type **{{- cancel }}**",
-    "commandTimedout": "command cancelled by idle"
+    "commandTimedout": "The command has been cancelled due to inactivity"
 }
