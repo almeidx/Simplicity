@@ -7,7 +7,9 @@ class Requirements {
     this.ownerOnly = false
     this.clientPermissions = []
     this.permissions = []
+    this.guildOnly = true
     this.responses = {
+      guildOnly: 'errors:guildOnly',
       ownerOnly: 'errors:developerOnly',
       clientPermissions: 'errors:clientMissingPermission',
       userMissingPermission: 'errors:userMissingPermission',
@@ -35,6 +37,10 @@ class Requirements {
       if ((devRole && !devRole.members.has(author.id)) || (process.env.DEVS_IDS && !process.env.DEVS_IDS.split(', ').includes(author.id))) {
         throw new CommandError(this.responses.ownerOnly)
       }
+    }
+
+    if (this.guildOnly && !guild) {
+      throw new CommandError(this.responses.guildOnly)
     }
 
     const clientPerms = this.clientPermissions.filter((p) => !channel.permissionsFor(guild.me).has(p)).map(p => t('permissions:' + p))

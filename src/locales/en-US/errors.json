@@ -13,6 +13,8 @@
     "userMissingRole": "You can't $t(commands:{{- commandName }}.action) this user because they have the same or higher role than you.",
     "clientMissingRole": "I can't $t(commands:{{- commandName }}.action) this user because they have the same or higher role than me.",
     "noVoiceChannel": "The user is not in a Voice Channel.",
+    "guildOnly": "Command can only be run on servers",
+    "canBeGuildOwner": "Action cannot be performed in the server owner",
     "invalidUser": "You must either mention, provide an ID, tag or the name of a member!",
     "nsfwChannel": "This command can only be used in NSFW Channels!",
     "noReason": "No reason provided."
