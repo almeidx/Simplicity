@@ -5,7 +5,8 @@ module.exports = {
     'IDLE': '493050914614280192',
     'DND': '488658928540975104',
     'OFFLINE': '488658962535809034',
-    'CANCEL': '537327435180408842'
+    'CANCEL': '537327435180408842',
+    'SPOTIFY': '560221641922052123'
   },
   EMOJIS: {
     'PING': '🏓',
@@ -23,7 +24,8 @@ module.exports = {
     'THUMBS_UP': '👍',
     'THUMBS_DOWN': '👎',
     'CANCEL': '❎',
-    'SUCCESS': '✅'
+    'SUCCESS': '✅',
+    'MUSIC': '🎵'
   },
   COLORS: {
     'MESSAGE_DELETE': '36393f',
