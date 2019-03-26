@@ -3,7 +3,7 @@
         "description": "This command shows you info about myself.",
         "title": "Bot Information",
         "guildAndUsers": "Guilds | Users",
-        "channelAndEmotes": "Channels | Emotes",
+        "channelsAndEmotes": "Channels | Emotes",
         "uptime": "Uptime",
         "commands": "Commands",
         "pings": "Last Pings",
