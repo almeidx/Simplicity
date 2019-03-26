@@ -23,12 +23,12 @@ class UserParameter extends Parameter {
     }, options.errors)
   }
 
-  static verifyExceptions (user, { author }, exeptions = {}) {
-    exeptions = this.setupOptions(exeptions)
+  static verifyExceptions (user, { author }, exceptions = {}) {
+    exceptions = this.setupOptions(exceptions)
 
-    if (!exeptions.canBeAuthor && user.id === author.id) throw new CommandError(exeptions.errors.canBeAuthor, { onUsage: true })
-    if (!exeptions.canBeBot && user.bot) throw new CommandError(exeptions.errors.canBeBot, { onUsage: true })
-    if (!exeptions.canBeUser && !user.bot) throw new CommandError(exeptions.errors.canBeAuthor, { onUsage: true })
+    if (!exceptions.canBeAuthor && user.id === author.id) throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true })
+    if (!exceptions.canBeBot && user.bot) throw new CommandError(exceptions.errors.canBeBot, { onUsage: true })
+    if (!exceptions.canBeUser && !user.bot) throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true })
 
     return user
   }
