@@ -5,12 +5,7 @@ class Avatar extends Command {
     super(client)
     this.aliases = ['av']
     this.category = 'util'
-    this.parameters = [{
-      type: 'user',
-      required: false,
-      checkUserGlobal: true
-    }]
-    this.requirements = { permissions: ['EMBED_LINKS'] }
+    this.requirements = { clientPermissions: ['EMBED_LINKS'] }
   }
 
   async run ({ author, send, guild, client, query }) {
