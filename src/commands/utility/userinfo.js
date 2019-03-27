@@ -1,9 +1,5 @@
-const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG }, Parameters: { UserParameter } } = require('../../')
-const { MessageAttachment } = require('discord.js')
+const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL }, Parameters: { UserParameter } } = require('../../')
 const moment = require('moment')
-
-const nameAttachment = 'spotify-logo.png'
-const spotifyAttachment = new MessageAttachment(SPOTIFY_LOGO_PNG, nameAttachment)
 
 class UserInfo extends Command {
   constructor (client) {
@@ -59,12 +55,12 @@ class UserInfo extends Command {
       const image = activity.assets && activity.assets.largeImage && `https://i.scdn.co/image/${activity.assets.largeImage.replace('spotify:', '')}`
 
       const spotifyEmbed = new Embed({ author, t })
-        .attachFiles(spotifyAttachment)
-        .setAuthor('commands:userinfo.spotify', 'attachment://' + nameAttachment)
+        .setAuthor('commands:userinfo.spotify', SPOTIFY_LOGO_PNG_URL)
         .addField('commands:userinfo.track', trackName, true)
         .addField('commands:userinfo.artist', artist, true)
         .addField('commands:userinfo.album', album, true)
         .setColor('GREEN')
+
       if (image) spotifyEmbed.setThumbnail(image)
 
       const filter = (r, u) => r.me && author.id === u.id
@@ -72,7 +68,7 @@ class UserInfo extends Command {
 
       collector.on('collect', async ({ emoji, users }) => {
         const name = emoji.id || emoji.name
-        if (perms.has('MANAGE_MESSAGES')) users.remove(user.id)
+        if (perms.has('MANAGE_MESSAGES')) await users.remove(user.id)
         if (name === spotifyEmoji) await msg.edit(spotifyEmbed)
         if (name === userinfoEmoji) await msg.edit(embed)
       })
