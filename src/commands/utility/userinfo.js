@@ -70,11 +70,13 @@ class UserInfo extends Command {
       const filter = (r, u) => r.me && author.id === u.id
       const collector = await msg.createReactionCollector(filter, { errors: ['time'], time: 30000 })
 
-      collector.on('collect', async ({ emoji, users }) => {
+      collector.on('collect', async ({ emoji, users, message }) => {
         const name = emoji.id || emoji.name
+        const checkEmbed = (e) => e.author.name === message.embeds[0].author.name
+
         if (perms.has('MANAGE_MESSAGES')) await users.remove(user.id)
-        if (name === spotifyEmoji) await msg.edit(spotifyEmbed)
-        if (name === userinfoEmoji) await msg.edit(embed)
+        if (name === spotifyEmoji && !checkEmbed(spotifyEmbed)) await msg.edit(spotifyEmbed)
+        if (name === userinfoEmoji && !checkEmbed(embed)) await msg.edit(embed)
       })
       collector.on('end', () => {
         if (msg) msg.reactions.removeAll()
