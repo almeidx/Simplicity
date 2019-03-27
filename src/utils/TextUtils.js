@@ -9,7 +9,7 @@ class TextUtils {
     const { emoji, t, embed } = Object.assign({ emoji: null, t: null, embed: null, options: {} }, options)
     // add Emojis in #...
     if (emoji) {
-      text = text.replace(/(?:#)\w+/g, (e) => emoji(e.slice(1).toUpperCase()))
+      text = text.replace(/(?:#)\w+/g, (e) => emoji(e.slice(1).toUpperCase()) || e)
     }
     // add text embed in @...
     if (embed && embed instanceof Embed) {
@@ -23,7 +23,7 @@ class TextUtils {
     }
     // add translaton in $"..."
     if (t) {
-      text = text.replace(/(?:\$")(\S+)(?:")/g, (s) => this.t(t, s.slice(2, -1), options.options))
+      text = text.replace(/(?:\$\$)(\S+)/g, (s) => this.t(t, s.slice(2), options.options))
       return this.t(t, text, options.options)
     }
     return text
