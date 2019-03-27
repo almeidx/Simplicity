@@ -28,22 +28,27 @@ class UserInfo extends Command {
       .setAuthor(user.tag, user.displayAvatarURL())
       .setThumbnail(user.displayAvatarURL())
       .addField('commands:userinfo.username', user.tag, true)
-      
+
     if (member && member.nickname) embed.addField('commands:userinfo.nickname', member.nickname, true)
-    
+
     embed.addField('commands:userinfo.id', user.id, true)
 
     if (status) embed.addField('commands:userinfo.status', `#${presence.status} $$utils:status.${presence.status}`, true)
-    if (member && member.roles && member.roles.highest && member.roles.highest.name !== '@everyone') embed.addField('commands:userinfo.highestRole', member.roles.highest.name, true)
 
-    embed.addField('commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`)
+    const role = member && member.roles && member.roles.highest && member.roles.highest
+    if (role && role.name !== '@everyone') embed.addField('commands:userinfo.highestRole', member.roles.highest.name, true)
 
-    if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
-    
+    embed.addField('commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`, true)
+
+    if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`, true)
+
+    const activity = presence && presence.activity
+
+    if (activity && activity.type && activity.name) embed.addField('utils:activityType.' + activity.type, activity.name, true)
+
     const msg = await send(embed)
 
     const perms = channel.permissionsFor(guild.me)
-    const activity = presence && presence.activity
     const restriction = activity && (activity.type === 'LISTENING') && activity.party && activity.party.id && activity.party.id.includes('spotify:')
 
     if (perms.has('ADD_REACTIONS') && restriction && !user.bot) {
