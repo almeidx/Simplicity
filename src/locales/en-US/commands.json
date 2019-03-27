@@ -79,15 +79,17 @@
     "userinfo": {
         "description": "This command shows info about the user.",
         "usage": "<id/mention>",
-        "name": "» Name",
+        "username": "» Username",
+        "nickname": "» Nickname",
         "id": "» ID",
         "createdAt": "» Created At",
         "joinedAt": "» Joined At",
         "status": "» Status",
-        "spotify": "Spotify",
-        "track": "Track",
-        "artist": "Artist",
-        "album": "Album"
+        "spotify": "» Spotify",
+        "track": "» Track",
+        "artist": "» Artist",
+        "album": "» Album",
+        "highestRole": "» Highest Role"
     },
     "ban": {
         "description": "This command lets you ban members of your server.",
