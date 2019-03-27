@@ -36,7 +36,7 @@ class UserInfo extends Command {
     if (status) embed.addField('commands:userinfo.status', `#${presence.status} $$utils:status.${presence.status}`, true)
 
     const role = member && member.roles && member.roles.highest && member.roles.highest
-    if (role && role.name !== '@everyone') embed.addField('commands:userinfo.highestRole', member.roles.highest.name, true)
+    if (role && role.name !== '@everyone') embed.addField('commands:userinfo.highestRole', role.name, true)
 
     embed.addField('commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`, true)
 
