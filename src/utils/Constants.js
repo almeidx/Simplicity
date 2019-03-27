@@ -25,7 +25,8 @@ module.exports = {
     'THUMBS_DOWN': '👎',
     'CANCEL': '❎',
     'SUCCESS': '✅',
-    'MUSIC': '🎵'
+    'MUSIC': '🎵',
+    'PAGE': '📄'
   },
   COLORS: {
     'MESSAGE_DELETE': '36393f',
@@ -42,5 +43,7 @@ module.exports = {
     'SUCCESS': 'green',
     'COMMAND_USAGE': 'blue',
     'COLOR_TAG': 'magenta'
-  }
+  },
+  // ASSETS
+  SPOTIFY_LOGO_PNG: 'src/assets/spotify-logo.png'
 }
