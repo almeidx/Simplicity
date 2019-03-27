@@ -45,5 +45,7 @@ module.exports = {
     'COLOR_TAG': 'magenta'
   },
   // ASSETS
-  SPOTIFY_LOGO_PNG: 'src/assets/spotify-logo.png'
+  SPOTIFY_LOGO_PNG: 'src/assets/spotify-logo.png',
+  // URL
+  SPOTIFY_LOGO_PNG_URL: 'https://images-na.ssl-images-amazon.com/images/I/51rttY7a%2B9L.png'
 }
