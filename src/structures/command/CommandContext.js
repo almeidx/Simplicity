@@ -1,6 +1,9 @@
 const Constants = require('../../utils/Constants')
 const Embed = require('../Embed')
 
+const getCustomEmoji = (id) => Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[id]
+const getDefaultEmoji = (name) => Constants.EMOJIS && Constants.EMOJIS[name]
+
 class CommandContext {
   constructor (options) {
     this.message = options.message
@@ -24,13 +27,17 @@ class CommandContext {
   }
 
   _emoji (name = 'QUESTION', options) {
-    const { id, noEmoji } = Object.assign({ id: false, noEmoji: false }, options)
+    const { id, othur } = Object.assign({ id: false, othur: null }, options)
     name = name.toUpperCase()
-    if (this.guild && this.channel.permissionsFor(this.guild.me).has('USE_EXTERNAL_EMOJIS') && Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[name]) {
-      const emoji = this.client.emojis.get(Constants.EMOJIS_CUSTOM[name])
+
+    const custom = getCustomEmoji(name) || (othur && getCustomEmoji(othur))
+    const normal = getDefaultEmoji(name) || (othur && getDefaultEmoji(othur))
+
+    if (this.guild && this.channel.permissionsFor(this.guild.me).has('USE_EXTERNAL_EMOJIS') && custom) {
+      const emoji = this.client.emojis.get(custom)
       if (emoji) return id ? emoji.id : emoji.toString()
     }
-    return Constants.EMOJIS[name] || (noEmoji ? '' : '❓')
+    return normal || false
   }
 
   _send (embed, options) {
