@@ -48,9 +48,10 @@ class SimplicityEmbed extends MessageEmbed {
       }
     }
 
-    embedResolvable = Object.assign({ author: null, t: null }, embedResolvable)
+    embedResolvable = Object.assign({ author: null, t: null, emoji: null }, embedResolvable)
 
     this.t = embedResolvable.t
+    this.emoji = embedResolvable.emoji
 
     if (embedResolvable.author) {
       if (this.options.autoAuthor) this.setAuthor(embedResolvable.author)
@@ -63,7 +64,7 @@ class SimplicityEmbed extends MessageEmbed {
   }
 
   setupOptions (options) {
-    return { t: this.t, options }
+    return { t: this.t, emoji: this.emoji, options }
   }
 
   setError () {
