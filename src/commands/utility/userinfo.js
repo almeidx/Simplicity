@@ -13,16 +13,17 @@ class UserInfo extends Command {
     this.requirements = { clientPermissions: ['EMBED_LINKS'] }
   }
 
-  async run ({ author, channel, client, guild, send, t, query, emoji }) {
-    const user = (!query ? author : await UserParameter.parse(query, { client, guild }, {
+  async run ({ author, channel, guild, client, send, t, query, emoji }) {
+    const user = (!query ? author : await UserParameter.parse(query, {
       errors: { missingError: 'errors:invalidUser' },
       required: true
-    }))
+    }, { client, guild }))
 
     const member = guild && guild.member(user)
 
     const presence = client.users.has(user.id) && user.presence
-    const status = presence && presence.status
+    const clientStatus = presence && presence.clientStatus
+    const status = clientStatus && (clientStatus.desktop || clientStatus.mobile || clientStatus.web)
 
     const created = moment(user.createdAt)
     const joined = member && moment(member.joinedAt)
@@ -44,7 +45,7 @@ class UserInfo extends Command {
     const perms = channel.permissionsFor(guild.me)
     const activity = presence && presence.activity
     const restriction = activity && (activity.type === 'LISTENING') && activity.party && activity.party.id && activity.party.id.includes('spotify:')
-    console.log(presence.activity)
+
     if (perms.has('ADD_REACTIONS') && restriction && !user.bot) {
       const spotifyEmoji = emoji('SPOTIFY', { id: true, othur: 'MUSIC' })
       const userinfoEmoji = emoji('PAGE', { id: true })
@@ -53,14 +54,13 @@ class UserInfo extends Command {
       await msg.react(userinfoEmoji)
 
       const trackName = activity.details
-      const artist = activity.state
+      const artist = activity.state.split(';').join(',')
       const album = activity.assets && activity.assets.largeText
       const image = activity.assets && activity.assets.largeImage && `https://i.scdn.co/image/${activity.assets.largeImage.replace('spotify:', '')}`
 
       const spotifyEmbed = new Embed({ author, t })
         .attachFiles(spotifyAttachment)
-        .setTitle('commands:userinfo.spotify')
-        .setImage('attachment://' + nameAttachment)
+        .setAuthor('commands:userinfo.spotify', 'attachment://' + nameAttachment)
         .addField('commands:userinfo.track', trackName, true)
         .addField('commands:userinfo.artist', artist, true)
         .addField('commands:userinfo.album', album, true)
