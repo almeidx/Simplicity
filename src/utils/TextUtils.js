@@ -33,6 +33,16 @@ class TextUtils {
     if (!i18next.exists(key) || !t) return key
     else if (t) return t(key, options)
   }
+
+  static parseImage (text, imageURL, permissions) {
+    const arrCount = []
+    if (!imageURL) return text
+    return text.replace(/(?:\?\{image\})(\S+)/gi, (_, a) => {
+      arrCount.push(a)
+      if (permissions.has('ATTACH_FILES')) return ''
+      else return imageURL[arrCount.indexOf(a)]
+    })
+  }
 }
 
 module.exports = TextUtils

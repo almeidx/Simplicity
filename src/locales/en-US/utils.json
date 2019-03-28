@@ -12,6 +12,12 @@
         "dnd": "Do not Disturb",
         "offline": "Offline"
     },
+    "activityType": {
+        "PLAYING": "Playing",
+        "STREAMING": "Streaming",
+        "LISTENING": "Listening",
+        "WATCHING": "Watching"
+    },
     "bot": "Bot",
     "bots": "Bots",
     "prefix": "My prefix on this server is: `{{- prefix }}`",

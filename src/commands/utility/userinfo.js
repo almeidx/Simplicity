@@ -24,29 +24,34 @@ class UserInfo extends Command {
     const created = moment(user.createdAt)
     const joined = member && moment(member.joinedAt)
 
+    const role = member && member.roles && member.roles.highest && (member.roles.highest.name !== '@everyone') && member.roles.highest
+    const activity = presence && presence.activity
+
+    const nickname = member && member.nickname
+
     const embed = new Embed({ author, t, emoji, autoAuthor: false })
-      .setAuthor(user.tag, user.displayAvatarURL())
-      .setThumbnail(user.displayAvatarURL())
+      .setAuthor(user)
+      .setThumbnail(user)
       .addField('commands:userinfo.username', user.tag, true)
-      
-    if (member && member.nickname) embed.addField('commands:userinfo.nickname', member.nickname, true)
-    
+
+    if (nickname) embed.addField('commands:userinfo.nickname', nickname, true)
+
     embed.addField('commands:userinfo.id', user.id, true)
 
     if (status) embed.addField('commands:userinfo.status', `#${presence.status} $$utils:status.${presence.status}`, true)
-    if (member && member.roles && member.roles.highest && member.roles.highest.name !== '@everyone') embed.addField('commands:userinfo.highestRole', member.roles.highest.name, true)
+    if (activity && activity.type && activity.name) embed.addField('utils:activityType.' + activity.type, activity.name, true)
+    if (role) embed.addField('commands:userinfo.highestRole', role.name, true)
 
     embed.addField('commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`)
 
     if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
-    
+
     const msg = await send(embed)
 
-    const perms = channel.permissionsFor(guild.me)
-    const activity = presence && presence.activity
+    const permissions = channel.permissionsFor(guild.me)
     const restriction = activity && (activity.type === 'LISTENING') && activity.party && activity.party.id && activity.party.id.includes('spotify:')
 
-    if (perms.has('ADD_REACTIONS') && restriction && !user.bot) {
+    if (permissions.has('ADD_REACTIONS') && restriction && !user.bot) {
       const spotifyEmoji = emoji('SPOTIFY', { id: true, othur: 'MUSIC' })
       const userinfoEmoji = emoji('PAGE', { id: true })
 
@@ -70,14 +75,16 @@ class UserInfo extends Command {
       const filter = (r, u) => r.me && author.id === u.id
       const collector = await msg.createReactionCollector(filter, { errors: ['time'], time: 30000 })
 
-      collector.on('collect', async ({ emoji, users }) => {
+      collector.on('collect', async ({ emoji, users, message }) => {
         const name = emoji.id || emoji.name
-        if (perms.has('MANAGE_MESSAGES')) await users.remove(user.id)
-        if (name === spotifyEmoji) await msg.edit(spotifyEmbed)
-        if (name === userinfoEmoji) await msg.edit(embed)
+        const checkEmbed = (e) => e.author.name === message.embeds[0].author.name
+
+        if (permissions.has('MANAGE_MESSAGES')) await users.remove(user.id)
+        if (name === spotifyEmoji && !checkEmbed(spotifyEmbed)) await msg.edit(spotifyEmbed)
+        if (name === userinfoEmoji && !checkEmbed(embed)) await msg.edit(embed)
       })
       collector.on('end', () => {
-        if (msg) msg.reactions.removeAll()
+        if (msg && permissions.has('MANAGE_MESSAGES')) msg.reactions.removeAll()
       })
     }
   }
