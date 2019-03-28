@@ -9,7 +9,7 @@ class GuildDelete extends Listener {
     await client.database.guilds.remove(guild.id)
     const owner = guild.owner
 
-    this.sendMessage('guild_join',
+    this.sendMessage('guild_leave',
       new Embed()
         .setAuthor(owner.user.tag, owner.user.displayAvatarURL())
         .addField('Guild Name', guild.name, true)
