@@ -24,6 +24,9 @@ class UserInfo extends Command {
     const created = moment(user.createdAt)
     const joined = member && moment(member.joinedAt)
 
+    const role = member && member.roles && member.roles.highest
+    const activity = presence && presence.activity
+
     const embed = new Embed({ author, t, emoji, autoAuthor: false })
       .setAuthor(user.tag, user.displayAvatarURL())
       .setThumbnail(user.displayAvatarURL())
@@ -35,23 +38,20 @@ class UserInfo extends Command {
 
     if (status) embed.addField('commands:userinfo.status', `#${presence.status} $$utils:status.${presence.status}`, true)
 
-    const role = member && member.roles && member.roles.highest
     if (role && role.name !== '@everyone') embed.addField('commands:userinfo.highestRole', role.name, true)
 
     embed.addField('commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`, true)
 
     if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`, true)
 
-    const activity = presence && presence.activity
-
     if (activity && activity.type && activity.name) embed.addField('utils:activityType.' + activity.type, activity.name, true)
 
     const msg = await send(embed)
 
-    const perms = channel.permissionsFor(guild.me)
+    const permissions = channel.permissionsFor(guild.me)
     const restriction = activity && (activity.type === 'LISTENING') && activity.party && activity.party.id && activity.party.id.includes('spotify:')
 
-    if (perms.has('ADD_REACTIONS') && restriction && !user.bot) {
+    if (permissions.has('ADD_REACTIONS') && restriction && !user.bot) {
       const spotifyEmoji = emoji('SPOTIFY', { id: true, othur: 'MUSIC' })
       const userinfoEmoji = emoji('PAGE', { id: true })
 
@@ -79,7 +79,7 @@ class UserInfo extends Command {
         const name = emoji.id || emoji.name
         const checkEmbed = (e) => e.author.name === message.embeds[0].author.name
 
-        if (perms.has('MANAGE_MESSAGES')) await users.remove(user.id)
+        if (permissions.has('MANAGE_MESSAGES')) await users.remove(user.id)
         if (name === spotifyEmoji && !checkEmbed(spotifyEmbed)) await msg.edit(spotifyEmbed)
         if (name === userinfoEmoji && !checkEmbed(embed)) await msg.edit(embed)
       })
