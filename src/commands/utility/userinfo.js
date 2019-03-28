@@ -84,7 +84,7 @@ class UserInfo extends Command {
         if (name === userinfoEmoji && !checkEmbed(embed)) await msg.edit(embed)
       })
       collector.on('end', () => {
-        if (msg) msg.reactions.removeAll()
+        if (msg && permissions.has('MANAGE_MESSAGES')) msg.reactions.removeAll()
       })
     }
   }
