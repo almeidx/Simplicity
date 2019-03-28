@@ -22,6 +22,10 @@ class SimplicityEmbed extends MessageEmbed {
     super(data)
     this.dataFixedT = {}
     this.fieldsFixedT = []
+    this.text = ''
+    this._text = ''
+    this.optionsText = {}
+    this.textImages = []
     this.setupEmbed(embedResolvable, options)
   }
 
@@ -120,6 +124,18 @@ class SimplicityEmbed extends MessageEmbed {
   setImage (url) {
     const image = checkIcon(url) || url
     return super.setImage(image)
+  }
+
+  setText (text, optionsText = {}, options = {}, images = null) {
+    options = this.setupOptions(options)
+    this._text = { text, options }
+    this.text = Array.isArray(text) ? text.map(t => TextUtils.parse(t, options)) : TextUtils.parse(text, options)
+    this.optionsText = optionsText
+    if (images) {
+      if (Array.isArray(images)) this.textImages = images
+      else this.textImages.push(images)
+    }
+    return this
   }
 }
 

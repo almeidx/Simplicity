@@ -24,20 +24,22 @@ class UserInfo extends Command {
     const created = moment(user.createdAt)
     const joined = member && moment(member.joinedAt)
 
-    const role = member && member.roles && member.roles.highest
+    const role = member && member.roles && member.roles.highest && (member.roles.highest.name !== '@everyone') && member.roles.highest
     const activity = presence && presence.activity
 
+    const nickname = member && member.nickname
+
     const embed = new Embed({ author, t, emoji, autoAuthor: false })
-      .setAuthor(user.tag, user.displayAvatarURL())
-      .setThumbnail(user.displayAvatarURL())
+      .setAuthor(user)
+      .setThumbnail(user)
       .addField('commands:userinfo.username', user.tag, true)
 
-    if (member && member.nickname) embed.addField('commands:userinfo.nickname', member.nickname, true)
+    if (nickname) embed.addField('commands:userinfo.nickname', nickname, true)
 
     embed.addField('commands:userinfo.id', user.id, true)
 
     if (status) embed.addField('commands:userinfo.status', `#${presence.status} $$utils:status.${presence.status}`, true)
-    if (role && role.name !== '@everyone') embed.addField('commands:userinfo.highestRole', role.name, true)
+    if (role) embed.addField('commands:userinfo.highestRole', role.name, true)
 
     embed.addField('commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`, true)
 
