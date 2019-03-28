@@ -39,12 +39,12 @@ class UserInfo extends Command {
     embed.addField('commands:userinfo.id', user.id, true)
 
     if (status) embed.addField('commands:userinfo.status', `#${presence.status} $$utils:status.${presence.status}`, true)
+    if (activity && activity.type && activity.name) embed.addField('utils:activityType.' + activity.type, activity.name, true)
     if (role) embed.addField('commands:userinfo.highestRole', role.name, true)
 
-    embed.addField('commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`, true)
+    embed.addField('commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`)
 
-    if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`, true)
-    if (activity && activity.type && activity.name) embed.addField('utils:activityType.' + activity.type, activity.name, true)
+    if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
 
     const msg = await send(embed)
 
