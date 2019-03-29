@@ -1,14 +1,14 @@
-const { Listener, Embed } = require('../../../index')
+const { Listener, Embed } = require('../../')
 
 class GuildCreate extends Listener {
   constructor (client) {
     super(client)
   }
-  
+
   async on (client, guild) {
     await client.database.guilds.create(guild.id)
     const owner = guild.owner
-    
+
     this.sendMessage('guild_join',
       new Embed()
         .setAuthor(owner.user.tag, owner.user.displayAvatarURL())

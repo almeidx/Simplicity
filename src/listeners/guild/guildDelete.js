@@ -1,10 +1,10 @@
-const { Listener, Embed } = require('../../../index')
+const { Listener, Embed } = require('../../')
 
 class GuildDelete extends Listener {
   constructor (client) {
     super(client)
   }
-  
+
   async on (client, guild) {
     await client.database.guilds.remove(guild.id)
     const owner = guild.owner
