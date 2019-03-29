@@ -98,8 +98,8 @@ class UserInfo extends Command {
         if (name === spotifyEmoji && !checkEmbed(spotifyEmbed)) await msg.edit(spotifyEmbed)
         if (name === userinfoEmoji && !checkEmbed(embed)) await msg.edit(embed)
       })
-      collector.on('end', () => {
-        if (msg && permissions.has('MANAGE_MESSAGES')) msg.reactions.removeAll()
+      collector.on('end', async () => {
+        if (msg && permissions.has('MANAGE_MESSAGES')) await msg.reactions.removeAll().catch(() => {})
       })
     }
   }
