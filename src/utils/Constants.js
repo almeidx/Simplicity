@@ -26,7 +26,9 @@ module.exports = {
     'CANCEL': '❎',
     'SUCCESS': '✅',
     'MUSIC': '🎵',
-    'PAGE': '📄'
+    'PAGE': '📄',
+    'CROWN': '👑',
+    'BOT': '🤖'
   },
   COLORS: {
     'MESSAGE_DELETE': '36393f',

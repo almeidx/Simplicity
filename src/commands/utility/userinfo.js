@@ -15,7 +15,15 @@ class UserInfo extends Command {
       required: true
     }, { client, guild }))
 
+    const text = ['commands:userinfo.username', '> ' + user.tag]
+
+    const titles = []
+
+    if (guild && guild.ownerID === user.id) titles.push(`#crown`)
+    if (user.bot) titles.push(`#bot`)
+
     const member = guild && guild.member(user)
+    const nickname = member && member.nickname
 
     const presence = client.users.has(user.id) && user.presence
     const clientStatus = presence && presence.clientStatus
@@ -26,26 +34,33 @@ class UserInfo extends Command {
 
     const role = member && member.roles && member.roles.highest && (member.roles.highest.name !== '@everyone') && member.roles.highest
     const activity = presence && presence.activity
-
-    const nickname = member && member.nickname
+    const activityType = activity && activity.type && activity.name
 
     const embed = new Embed({ author, t, emoji, autoAuthor: false })
       .setAuthor(user)
+      .setTitle(titles.join(' '))
       .setThumbnail(user)
       .addField('commands:userinfo.username', user.tag, true)
 
-    if (nickname) embed.addField('commands:userinfo.nickname', nickname, true)
+    if (nickname) {
+      text.push('commands:userinfo.nickname')
+      text.push('> ' + nickname)
+      embed.addField('commands:userinfo.nickname', nickname, true)
+    }
 
+    text.push('commands:userinfo.id')
+    text.push('> ' + user.id)
     embed.addField('commands:userinfo.id', user.id, true)
 
     if (status) embed.addField('commands:userinfo.status', `#${presence.status} $$utils:status.${presence.status}`, true)
-    if (activity && activity.type && activity.name) embed.addField('utils:activityType.' + activity.type, activity.name, true)
-    if (role) embed.addField('commands:userinfo.highestRole', role.name, true)
+    if (role) embed.addField('commands:userinfo.highestRole', role.name || role.toString(), true)
+    if (activityType) embed.addField('» $$utils:activityType.' + activity.type, activity.name, true)
 
     embed.addField('commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`)
 
     if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
 
+    embed.setText(text, { code: 'markdown' })
     const msg = await send(embed)
 
     const permissions = channel.permissionsFor(guild.me)
