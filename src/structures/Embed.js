@@ -129,7 +129,7 @@ class SimplicityEmbed extends MessageEmbed {
   setText (text, optionsText = {}, options = {}, images = null) {
     options = this.setupOptions(options)
     this._text = { text, options }
-    this.text = Array.isArray(text) ? text.map(t => TextUtils.parse(t, options)) : TextUtils.parse(text, options)
+    this.text = Array.isArray(text) ? text.map(t => TextUtils.parse(t, options)).join('\n') : TextUtils.parse(text, options)
     this.optionsText = optionsText
     if (images) {
       if (Array.isArray(images)) this.textImages = images

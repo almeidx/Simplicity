@@ -61,8 +61,8 @@ class CommandContext {
         throw Error(this.command.name + ': No has embed.text')
       } else if (embed.text && !embedPermission) {
         if (permissions.has('ATTACH_FILES')) embed.optionsText.attachments = embed.textImages.map((url, i) => new MessageAttachment(url, `image${i}.png`))
-        const o = (TextUtils.parseImage(embed.text, embed.textImages, permissions), embed.optionsText)
-        return msg ? msg.edit(...o) : this.channel.send(...o)
+        const text = TextUtils.parse(TextUtils.parseImage(embed.text, embed.textImages, permissions), { t: this.t, emoji: this.emoji, embed })
+        return msg ? msg.edit(text, embed.optionsText) : this.channel.send(text, embed.optionsText)
       }
     }
     return msg ? msg.edit(embed) : this.channel.send(embed)
