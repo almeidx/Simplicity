@@ -1,4 +1,4 @@
-{   
+{
     "errorCommand": "An error occurred while executing the command, try again later",
     "denied": "Denied!",
     "usage": "Usage",
@@ -17,5 +17,6 @@
     "noGuildOwner": "This action cannot be performed on the server owner",
     "invalidUser": "You must either mention, provide an ID, tag or the name of a member!",
     "nsfwChannel": "This command can only be used in NSFW Channels!",
-    "noReason": "No reason provided."
+    "noReason": "No reason provided.",
+    "canBeBotRole": "The role you provided cannot be a bot role!"
 }
