@@ -58,7 +58,7 @@ class UserInfo extends Command {
     const resultPermissions = memberPermissions &&
     (memberPermissions.includes(admPermission) ? t('permissions:' + admPermission) : memberPermissions.map(p => t('permissions:' + p)).join(', '))
 
-    if (resultPermissions) embed.addField('commands:userinfo.permissions', resultPermissions)
+    if (resultPermissions) embed.addField('» $$commands:userinfo.permissions', resultPermissions)
     const msg = await send(embed)
 
     const permissions = channel.permissionsFor(guild.me)
