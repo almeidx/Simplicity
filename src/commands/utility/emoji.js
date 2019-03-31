@@ -1,19 +1,18 @@
 const { Command, CommandError, RegexEmojis } = require('../../')
-const { MessageAttachment } = require('discord.js')
-const fetch = require('node-fetch')
+const { MessageAttachment } = require('discord.js'), fetch = require('node-fetch')
 
-const regexAnimated = /<a:/gi
+const ANIMATED_EMOJI_REGEX = /<a:/gi
 
 class Emoji extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['emote']
+    this.aliases = ['emote', 'jumbo']
     this.category = 'util'
     this.requirements = { argsRequired: true }
     this.responses = { argsRequired: 'commands:emoji.error' }
   }
 
-  async run ({ channel, send, args }) {
+  async run ({ args, channel, send }) {
     let result
     let type = 'png'
 
@@ -23,20 +22,19 @@ class Emoji extends Command {
     const emoji = defaultEmoji && await fetch(defaultUrl).then((r) => r.status !== 404).catch(() => null)
 
     if (emoji) result = defaultUrl
-
-    if (!emoji && regexAnimated.test(args[0])) type = 'gif'
+    if (!emoji && ANIMATED_EMOJI_REGEX.test(args[0])) type = 'gif'
 
     const id = !emoji && args[0].split(':').pop().replace('>', '')
-    const CustomUrl = id && `https://cdn.discordapp.com/emojis/${id}.${type}?v=1`
-    const resultFetchURL = CustomUrl && await fetch(CustomUrl).then((r) => r.status !== 404).catch(() => null)
+    const customUrl = id && `https://cdn.discordapp.com/emojis/${id}.${type}?v=1`
+    const resultFetchURL = customUrl && await fetch(customUrl).then((r) => r.status !== 404).catch(() => null)
 
-    if (resultFetchURL) result = CustomUrl
+    if (resultFetchURL) result = customUrl
+  
+    const attachment = result && new MessageAttachment(result, `emoji.${type}`)
+  
+    if (!result || !attachment) throw new CommandError('commands:emoji.error')
 
-    if (!result) throw new CommandError('commands:emoji.error')
-
-    const attachment = new MessageAttachment(result, `emoji.${type}`)
-
-    return send(attachment).then(() => channel.stopTyping(true))
+    return send(attachment)
   }
 }
 
