@@ -1,5 +1,6 @@
 const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL }, Parameters: { UserParameter } } = require('../../')
 const moment = require('moment')
+const admPermission = 'ADMINISTRATOR'
 
 class UserInfo extends Command {
   constructor (client) {
@@ -52,6 +53,12 @@ class UserInfo extends Command {
 
     if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
 
+    // get Permissions
+    const memberPermissions = member && member.permissions.toArray()
+    const resultPermissions = memberPermissions &&
+    (memberPermissions.includes(admPermission) ? t('permissions:' + admPermission) : memberPermissions.map(p => t('permissions:' + p)).join(', '))
+
+    if (resultPermissions) embed.addField('commands:userinfo.permissions', resultPermissions)
     const msg = await send(embed)
 
     const permissions = channel.permissionsFor(guild.me)

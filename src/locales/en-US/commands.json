@@ -89,7 +89,8 @@
         "track": "» Track",
         "artist": "» Artist",
         "album": "» Album",
-        "highestRole": "» Highest Role"
+        "highestRole": "» Highest Role",
+        "permissions": "Permissions"
     },
     "ban": {
         "description": "This command lets you ban members of your server.",
