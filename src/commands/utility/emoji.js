@@ -10,24 +10,31 @@ class Emoji extends Command {
     this.requirements = { argsRequired: true }
   }
 
-  async run ({ channel, send, query, t }) {
+  async run ({ channel, send, args, t }) {
     channel.startTyping().catch(() => {})
+    const query = args[0]
     try {
-      const customEmoji = query.split(RegexEmojis)[0]
-
-      if (customEmoji) {
-        const id = customEmoji.split(':')[ customEmoji.split(':').length - 1 ].replace(/>/g, '')
-        const gif = customEmoji.split(':')[0].replace(/</g, '') === 'a'
-        return await send(new MessageAttachment(`https://cdn.discordapp.com/emojis/${id}.${gif ? 'gif' : 'png'}?v=1`, `emoji.${gif ? 'gif' : 'png'}`)).then(() => channel.stopTyping(true))
-      }
-
       const clean = query.codePointAt().toString(16)
-      const url = `https://twemoji.maxcdn.com/2/72x72/${clean}.png`
-      console.log(url)
-      const defaultEmoji = await request.get(url).catch(() => null)
+      const defaultEmoji = clean.split(RegexEmojis)[0]
+      console.log(defaultEmoji, clean.match(RegexEmojis))
 
-      if (defaultEmoji && defaultEmoji.readable) {
-        await send(new MessageAttachment(url, 'emoji.png')).then(() => channel.stopTyping(true))
+      if (defaultEmoji) {
+        const clean = query.codePointAt().toString(16)
+        const url = `https://twemoji.maxcdn.com/2/72x72/${clean}.png`
+        console.log(url)
+
+        const emoji = await request.get(url).catch(() => null)
+
+        const attachment = new MessageAttachment(url, 'emoji.png')
+
+        if (emoji && attachment) {
+          return send(attachment).then(() => channel.stopTyping(true))
+        }
+      } else {
+        console.log('custom')
+        const id = defaultEmoji.split(':')[ defaultEmoji.split(':').length - 1 ].replace(/>/g, '')
+        const gif = defaultEmoji.split(':')[0].replace(/</g, '') === 'a'
+        return await send(new MessageAttachment(`https://cdn.discordapp.com/emojis/${id}.${gif ? 'gif' : 'png'}?v=1`, `emoji.${gif ? 'gif' : 'png'}`)).then(() => channel.stopTyping(true))
       }
     } catch (e) {
       console.error(e)
