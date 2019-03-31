@@ -28,7 +28,8 @@ module.exports = {
     'MUSIC': '🎵',
     'PAGE': '📄',
     'CROWN': '👑',
-    'BOT': '🤖'
+    'BOT': '🤖',
+    'ROLES': '📜'
   },
   COLORS: {
     'MESSAGE_DELETE': '36393f',

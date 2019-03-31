@@ -54,7 +54,7 @@ class UserInfo extends Command {
     if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
 
     // get Permissions
-    const memberPermissions = member && member.permissions.toArray()
+    const memberPermissions = member && member.permissions && member.permissions.toArray()
     const resultPermissions = memberPermissions &&
     (memberPermissions.includes(admPermission) ? t('permissions:' + admPermission) : memberPermissions.map(p => t('permissions:' + p)).join(', '))
 
@@ -67,9 +67,11 @@ class UserInfo extends Command {
     if (permissions.has('ADD_REACTIONS') && restriction && !user.bot) {
       const spotifyEmoji = emoji('SPOTIFY', { id: true, othur: 'MUSIC' })
       const userinfoEmoji = emoji('PAGE', { id: true })
+      const roleEmoji = emoji('ROLES', { id: true })
 
-      await msg.react(spotifyEmoji)
       await msg.react(userinfoEmoji)
+      await msg.react(spotifyEmoji)
+      if (member && member.roles && member.roles.size > 5) await msg.react(roleEmoji)
 
       const trackName = activity.details
       const artist = activity.state.split(';').join(',')
@@ -84,6 +86,12 @@ class UserInfo extends Command {
         .setColor('GREEN')
 
       if (image) spotifyEmbed.setThumbnail(image)
+
+      const roles = member.roles.sort((a, b) => b.position - a.position).map(r => r.name || r.toString()).slice(0, -1)
+
+      const roleEmbed = new Embed({ author, t })
+        .setAuthor('commands:userinfo.roles', user.displayAvatarURL(), {}, { user: user.username})
+        .setDescription(roles)
 
       const filter = (r, u) => r.me && author.id === u.id
       const collector = await msg.createReactionCollector(filter, { errors: ['time'], time: 30000 })

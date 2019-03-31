@@ -90,7 +90,8 @@
         "artist": "» Artist",
         "album": "» Album",
         "highestRole": "» Highest Role",
-        "permissions": "Permissions"
+        "permissions": "» Permissions",
+        "roles": "{{- user }}'s Roles"
     },
     "ban": {
         "description": "This command lets you ban members of your server.",
