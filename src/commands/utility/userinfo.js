@@ -15,8 +15,6 @@ class UserInfo extends Command {
       required: true
     }, { client, guild }))
 
-    const text = ['commands:userinfo.username', '> ' + user.tag]
-
     const titles = []
 
     if (guild && guild.ownerID === user.id) titles.push(`#crown`)
@@ -42,14 +40,8 @@ class UserInfo extends Command {
       .setThumbnail(user)
       .addField('commands:userinfo.username', user.tag, true)
 
-    if (nickname) {
-      text.push('commands:userinfo.nickname')
-      text.push('> ' + nickname)
-      embed.addField('commands:userinfo.nickname', nickname, true)
-    }
+    if (nickname) embed.addField('commands:userinfo.nickname', nickname, true)
 
-    text.push('commands:userinfo.id')
-    text.push('> ' + user.id)
     embed.addField('commands:userinfo.id', user.id, true)
 
     if (status) embed.addField('commands:userinfo.status', `#${presence.status} $$utils:status.${presence.status}`, true)
@@ -60,7 +52,6 @@ class UserInfo extends Command {
 
     if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
 
-    embed.setText(text, { code: 'markdown' })
     const msg = await send(embed)
 
     const permissions = channel.permissionsFor(guild.me)
