@@ -1,6 +1,8 @@
 const { Command, CommandError, RegexEmojis } = require('../../')
 const { MessageAttachment } = require('discord.js')
-const request = require('snekfetch')
+const fetch = require('node-fetch')
+
+const regexAnimated = /<a:/gi
 
 class Emoji extends Command {
   constructor (client) {
@@ -8,39 +10,33 @@ class Emoji extends Command {
     this.aliases = ['emote']
     this.category = 'util'
     this.requirements = { argsRequired: true }
+    this.responses = { argsRequired: 'commands:emoji.error' }
   }
 
-  async run ({ channel, send, args, t }) {
-    channel.startTyping().catch(() => {})
-    const query = args[0]
-    try {
-      const clean = query.codePointAt().toString(16)
-      const defaultEmoji = clean.split(RegexEmojis)[0]
-      console.log(defaultEmoji, clean.match(RegexEmojis))
+  async run ({ channel, send, args }) {
+    let result
+    let type = 'png'
 
-      if (defaultEmoji) {
-        const clean = query.codePointAt().toString(16)
-        const url = `https://twemoji.maxcdn.com/2/72x72/${clean}.png`
-        console.log(url)
+    const clean = args[0].codePointAt().toString(16)
+    const defaultEmoji = clean && clean.split(RegexEmojis)[0]
+    const defaultUrl = defaultEmoji && `https://twemoji.maxcdn.com/2/72x72/${defaultEmoji}.png`
+    const emoji = defaultEmoji && await fetch(defaultUrl).then((r) => r.status !== 404).catch(() => null)
 
-        const emoji = await request.get(url).catch(() => null)
+    if (emoji) result = defaultUrl
 
-        const attachment = new MessageAttachment(url, 'emoji.png')
+    if (!emoji && regexAnimated.test(args[0])) type = 'gif'
 
-        if (emoji && attachment) {
-          return send(attachment).then(() => channel.stopTyping(true))
-        }
-      } else {
-        console.log('custom')
-        const id = defaultEmoji.split(':')[ defaultEmoji.split(':').length - 1 ].replace(/>/g, '')
-        const gif = defaultEmoji.split(':')[0].replace(/</g, '') === 'a'
-        return await send(new MessageAttachment(`https://cdn.discordapp.com/emojis/${id}.${gif ? 'gif' : 'png'}?v=1`, `emoji.${gif ? 'gif' : 'png'}`)).then(() => channel.stopTyping(true))
-      }
-    } catch (e) {
-      console.error(e)
-      await channel.stopTyping(true)
-      throw new CommandError('commands:emoji.error')
-    }
+    const id = !emoji && args[0].split(':').pop().replace('>', '')
+    const CustomUrl = id && `https://cdn.discordapp.com/emojis/${id}.${type}?v=1`
+    const resultFetchURL = CustomUrl && await fetch(CustomUrl).then((r) => r.status !== 404).catch(() => null)
+
+    if (resultFetchURL) result = CustomUrl
+
+    if (!result) throw new CommandError('commands:emoji.error')
+
+    const attachment = new MessageAttachment(result, `emoji.${type}`)
+
+    return send(attachment).then(() => channel.stopTyping(true))
   }
 }
 
