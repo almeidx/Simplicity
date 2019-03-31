@@ -1,7 +1,15 @@
 const i18next = require('i18next')
-const { Embed } = require('../')
 
 class TextUtils {
+  /**
+   * text convert
+   * @param {String} text text to convert
+   * @param {Object} options dependencies and translation options
+   * @param {i18next.t} options.t
+   * @param {CommandContext.emoji} options.emoji
+   * @param {Embed} options.embed
+   * @return {String}
+   */
   static parse (text = '', options = {}) {
     if (typeof text !== 'string') {
       return text
@@ -9,11 +17,11 @@ class TextUtils {
     const { emoji, t, embed } = Object.assign({ emoji: null, t: null, embed: null, options: {} }, options)
     // add Emojis in #...
     if (emoji) {
-      text = text.replace(/(?:#)\w+/g, (e) => emoji(e.slice(1).toUpperCase()))
+      text = text.replace(/(?:#)\w+/g, (e) => emoji(e.slice(1).toUpperCase()) || e)
     }
     // add text embed in @...
-    if (embed && embed instanceof Embed) {
-      text = text.replace(/(?:@)\w+/g, (k) => {
+    if (embed) {
+      text = text.replace(/(?:@)\S+/g, (k) => {
         const [key, v1, v2] = k.slice(1).split('.')
         const result = key && embed[key]
         const result1 = v1 && result && result[v1]
@@ -23,7 +31,7 @@ class TextUtils {
     }
     // add translaton in $"..."
     if (t) {
-      text = text.replace(/(?:\$")(\S+)(?:")/g, (s) => this.t(t, s.slice(2, -1), options.options))
+      text = text.replace(/(?:\$\$)(\S+)/g, (s) => this.t(t, s.slice(2), options.options))
       return this.t(t, text, options.options)
     }
     return text
@@ -32,6 +40,16 @@ class TextUtils {
   static t (t, key = '', options = {}) {
     if (!i18next.exists(key) || !t) return key
     else if (t) return t(key, options)
+  }
+
+  static parseImage (text, imageURL, permissions) {
+    const arrCount = []
+    if (!imageURL) return text
+    return text.replace(/(?:\?\{image\})(\S+)/gi, (_, a) => {
+      arrCount.push(a)
+      if (permissions.has('ATTACH_FILES')) return ''
+      else return imageURL[arrCount.indexOf(a)]
+    })
   }
 }
 

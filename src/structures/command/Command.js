@@ -10,13 +10,14 @@ class Command {
     this.aliases = []
     this.WIP = false
     this.requirements = null
+    this.responses = {}
   }
 
   async run () {}
 
   async _run (context) {
     if (this.WIP) this.requirements = typeof this.requirements === 'object' ? this.requirements['ownerOnly'] = true : { ownerOnly: true }
-    const requirements = new Requirements(this.requirements)
+    const requirements = new Requirements(this.requirements, this.responses)
     try {
       await requirements.handle(context)
       await this.run(context)

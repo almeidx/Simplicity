@@ -1,39 +1,40 @@
 const { Command, CommandError, RegexEmojis } = require('../../')
-const { MessageAttachment } = require('discord.js')
-const request = require('snekfetch')
+const { MessageAttachment } = require('discord.js'), fetch = require('node-fetch')
+
+const ANIMATED_EMOJI_REGEX = /<a:/gi
 
 class Emoji extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['emote']
+    this.aliases = ['emote', 'jumbo']
     this.category = 'util'
     this.requirements = { argsRequired: true }
+    this.responses = { argsRequired: 'commands:emoji.error' }
   }
 
-  async run ({ channel, send, query, t }) {
-    channel.startTyping().catch(() => {})
-    try {
-      const customEmoji = query.split(RegexEmojis)[0]
+  async run ({ args, channel, send }) {
+    let result
+    let type = 'png'
 
-      if (customEmoji) {
-        const id = customEmoji.split(':')[ customEmoji.split(':').length - 1 ].replace(/>/g, '')
-        const gif = customEmoji.split(':')[0].replace(/</g, '') === 'a'
-        return await send(new MessageAttachment(`https://cdn.discordapp.com/emojis/${id}.${gif ? 'gif' : 'png'}?v=1`, `emoji.${gif ? 'gif' : 'png'}`)).then(() => channel.stopTyping(true))
-      }
+    const clean = args[0].codePointAt().toString(16)
+    const defaultEmoji = clean && clean.split(RegexEmojis)[0]
+    const defaultUrl = defaultEmoji && `https://twemoji.maxcdn.com/2/72x72/${defaultEmoji}.png`
+    const emoji = defaultEmoji && await fetch(defaultUrl).then((r) => r.status !== 404).catch(() => null)
 
-      const clean = query.codePointAt().toString(16)
-      const url = `https://twemoji.maxcdn.com/2/72x72/${clean}.png`
-      console.log(url)
-      const defaultEmoji = await request.get(url).catch(() => null)
+    if (emoji) result = defaultUrl
+    if (!emoji && ANIMATED_EMOJI_REGEX.test(args[0])) type = 'gif'
 
-      if (defaultEmoji && defaultEmoji.readable) {
-        await send(new MessageAttachment(url, 'emoji.png')).then(() => channel.stopTyping(true))
-      }
-    } catch (e) {
-      console.error(e)
-      await channel.stopTyping(true)
-      throw new CommandError('commands:emoji.error')
-    }
+    const id = !emoji && args[0].split(':').pop().replace('>', '')
+    const customUrl = id && `https://cdn.discordapp.com/emojis/${id}.${type}?v=1`
+    const resultFetchURL = customUrl && await fetch(customUrl).then((r) => r.status !== 404).catch(() => null)
+
+    if (resultFetchURL) result = customUrl
+  
+    const attachment = result && new MessageAttachment(result, `emoji.${type}`)
+  
+    if (!result || !attachment) throw new CommandError('commands:emoji.error')
+
+    return send(attachment)
   }
 }
 

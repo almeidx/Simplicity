@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { Listener, Embed } = require('../../..')
+const { Listener, Embed } = require('../../../index')
 
 class GuildMemberAdd extends Listener {
   constructor (client) {

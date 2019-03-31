@@ -2,21 +2,21 @@ const CommandError = require('./CommandError')
 const PermissionsUtils = require('../../utils/PermissionsUtils')
 
 class Requirements {
-  constructor (requirements = {}) {
+  constructor (requirements = {}, responses = {}) {
     this.argsRequired = false
     this.nsfwChannelOnly = false
     this.ownerOnly = false
     this.clientPermissions = []
     this.permissions = []
     this.guildOnly = true
-    this.responses = {
+    this.responses = Object.assign({
       guildOnly: 'errors:guildOnly',
       ownerOnly: 'errors:developerOnly',
       clientPermissions: 'errors:clientMissingPermission',
       userMissingPermission: 'errors:userMissingPermission',
       argsRequired: 'errors:missingParameters',
       nsfwChannelOnly: 'errors:nsfwChannel'
-    }
+    }, responses)
 
     for (const req in requirements) {
       let opts = requirements[req]

@@ -5,7 +5,8 @@ module.exports = {
     'IDLE': '493050914614280192',
     'DND': '488658928540975104',
     'OFFLINE': '488658962535809034',
-    'CANCEL': '537327435180408842'
+    'CANCEL': '537327435180408842',
+    'SPOTIFY': '560221641922052123'
   },
   EMOJIS: {
     'PING': '🏓',
@@ -23,7 +24,11 @@ module.exports = {
     'THUMBS_UP': '👍',
     'THUMBS_DOWN': '👎',
     'CANCEL': '❎',
-    'SUCCESS': '✅'
+    'SUCCESS': '✅',
+    'MUSIC': '🎵',
+    'PAGE': '📄',
+    'CROWN': '👑',
+    'BOT': '🤖'
   },
   COLORS: {
     'MESSAGE_DELETE': '36393f',
@@ -40,5 +45,9 @@ module.exports = {
     'SUCCESS': 'green',
     'COMMAND_USAGE': 'blue',
     'COLOR_TAG': 'magenta'
-  }
+  },
+  // ASSETS
+  SPOTIFY_LOGO_PNG: 'src/assets/spotify-logo.png',
+  // URL
+  SPOTIFY_LOGO_PNG_URL: 'https://images-na.ssl-images-amazon.com/images/I/51rttY7a%2B9L.png'
 }

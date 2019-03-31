@@ -1,5 +1,10 @@
 const Constants = require('../../utils/Constants')
 const Embed = require('../Embed')
+const TextUtils = require('../../utils/TextUtils')
+const { MessageAttachment } = require('discord.js')
+
+const getCustomEmoji = (id) => Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[id]
+const getDefaultEmoji = (name) => Constants.EMOJIS && Constants.EMOJIS[name]
 
 class CommandContext {
   constructor (options) {
@@ -17,37 +22,50 @@ class CommandContext {
     this.query = options.query
     this.args = options.args
     this.t = options.message.client.i18next.getFixedT(this.language)
+
+    this.executeMessage = this._executeMessage.bind(this)
     this.emoji = this._emoji.bind(this)
     this.send = this._send.bind(this)
-
+    this.edit = this._edit.bind(this)
+    this.sendMessage = options.message.channel.send
     this.message.language = this.language
   }
 
   _emoji (name = 'QUESTION', options) {
-    const { id, noEmoji } = Object.assign({ id: false, noEmoji: false }, options)
+    const { id, othur } = Object.assign({ id: false, othur: null }, options)
     name = name.toUpperCase()
-    if (this.guild && this.channel.permissionsFor(this.guild.me).has('USE_EXTERNAL_EMOJIS') && Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[name]) {
-      const emoji = this.client.emojis.get(Constants.EMOJIS_CUSTOM[name])
+
+    const custom = getCustomEmoji(name) || (othur && getCustomEmoji(othur))
+    const normal = getDefaultEmoji(name) || (othur && getDefaultEmoji(othur))
+
+    if (this.guild && this.channel.permissionsFor(this.guild.me).has('USE_EXTERNAL_EMOJIS') && custom) {
+      const emoji = this.client.emojis.get(custom)
       if (emoji) return id ? emoji.id : emoji.toString()
     }
-    return Constants.EMOJIS[name] || (noEmoji ? '' : '❓')
+    return normal || false
   }
 
-  _send (embed, options) {
-    options = Object.assign({ convertText: true }, options)
-    if (embed instanceof Embed) {
-      if (options.convertText && !this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS')) {
-        const message = []
+  _send (embed) {
+    return this.executeMessage(embed)
+  }
 
-        if (embed.title) message.push(`**${embed.title}**`)
-        if (embed.description) message.push(embed.description)
-        if (embed.fields.length !== 0) embed.fields.forEach(e => message.push(`**${e.name}\n${e.value}`))
-        return this.channel.send(message, options)
+  _edit (msg, embed) {
+    return this.executeMessage(embed, msg)
+  }
+
+  _executeMessage (embed, msg) {
+    if (embed instanceof Embed) {
+      const permissions = this.channel.permissionsFor(this.guild.me)
+      const embedPermission = permissions.has('EMBED_LINKS')
+      if (!embed.text && !embedPermission) {
+        throw Error(this.command.name + ': No has embed.text')
+      } else if (embed.text && !embedPermission) {
+        if (permissions.has('ATTACH_FILES')) embed.optionsText.attachments = embed.textImages.map((url, i) => new MessageAttachment(url, `image${i}.png`))
+        const text = TextUtils.parse(TextUtils.parseImage(embed.text, embed.textImages, permissions), { t: this.t, emoji: this.emoji, embed })
+        return msg ? msg.edit(text, embed.optionsText) : this.channel.send(text, embed.optionsText)
       }
-      options.embed = embed
-      return this.channel.send(options)
     }
-    return this.channel.send(embed)
+    return msg ? msg.edit(embed) : this.channel.send(embed)
   }
 }
 

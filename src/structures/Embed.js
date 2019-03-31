@@ -22,13 +22,17 @@ class SimplicityEmbed extends MessageEmbed {
     super(data)
     this.dataFixedT = {}
     this.fieldsFixedT = []
+    this.text = ''
+    this._text = ''
+    this.optionsText = {}
+    this.textImages = []
     this.setupEmbed(embedResolvable, options)
   }
 
   setupEmbed (embedResolvable, options) {
     this.options = Object.assign({
       autoFooter: true,
-      autoAuthor: false,
+      autoAuthor: true,
       autoTimestamp: true,
       type: 'normal'
     }, options)
@@ -48,9 +52,10 @@ class SimplicityEmbed extends MessageEmbed {
       }
     }
 
-    embedResolvable = Object.assign({ author: null, t: null }, embedResolvable)
+    embedResolvable = Object.assign({ author: null, t: null, emoji: null }, embedResolvable)
 
     this.t = embedResolvable.t
+    this.emoji = embedResolvable.emoji
 
     if (embedResolvable.author) {
       if (this.options.autoAuthor) this.setAuthor(embedResolvable.author)
@@ -63,7 +68,7 @@ class SimplicityEmbed extends MessageEmbed {
   }
 
   setupOptions (options) {
-    return { t: this.t, options }
+    return { t: this.t, emoji: this.emoji, options }
   }
 
   setError () {
@@ -89,7 +94,7 @@ class SimplicityEmbed extends MessageEmbed {
     const footerIcon = checkIcon(iconURL)
 
     if (footerTextName) text = footerTextName
-    if (footerTextIcon && !iconURL) iconURL = footerTextIcon
+    if (footerTextIcon && !iconURL && !this.options.autoFooter) iconURL = footerTextIcon
     if (footerIcon) iconURL = footerIcon
 
     this.dataFixedT['footer'] = { text, iconURL, options }
@@ -119,6 +124,18 @@ class SimplicityEmbed extends MessageEmbed {
   setImage (url) {
     const image = checkIcon(url) || url
     return super.setImage(image)
+  }
+
+  setText (text, optionsText = {}, options = {}, images = null) {
+    options = this.setupOptions(options)
+    this._text = { text, options }
+    this.text = Array.isArray(text) ? text.map(t => TextUtils.parse(t, options)).join('\n') : TextUtils.parse(text, options)
+    this.optionsText = optionsText
+    if (images) {
+      if (Array.isArray(images)) this.textImages = images
+      else this.textImages.push(images)
+    }
+    return this
   }
 }
 
