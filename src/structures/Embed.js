@@ -94,7 +94,7 @@ class SimplicityEmbed extends MessageEmbed {
     const footerIcon = checkIcon(iconURL)
 
     if (footerTextName) text = footerTextName
-    if (footerTextIcon && !iconURL && !this.options.autoFooter) iconURL = footerTextIcon
+    if (footerTextIcon && !iconURL) iconURL = footerTextIcon
     if (footerIcon) iconURL = footerIcon
 
     this.dataFixedT['footer'] = { text, iconURL, options }
