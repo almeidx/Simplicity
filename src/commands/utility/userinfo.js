@@ -1,6 +1,20 @@
 const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL }, Parameters: { UserParameter } } = require('../../')
 const moment = require('moment')
-const admPermission = 'ADMINISTRATOR'
+const ADMINISTRATOR_PERMISSION = 'ADMINISTRATOR'
+const NORMAL_PERMISSIONS = [
+  'CHANGE_NICKNAME',
+  'USE_VAD',
+  'SPEAK',
+  'CONNECT',
+  'USE_EXTERNAL_EMOJIS',
+  'READ_MESSAGE_HISTORY',
+  'ATTACH_FILES',
+  'EMBED_LINKS',
+  'SEND_MESSAGES',
+  'VIEW_CHANNEL',
+  'ADD_REACTIONS',
+  'CREATE_INSTANT_INVITE'
+]
 
 class UserInfo extends Command {
   constructor (client) {
@@ -10,7 +24,7 @@ class UserInfo extends Command {
     this.requirements = { clientPermissions: ['EMBED_LINKS'] }
   }
 
-  async run ({ author, channel, guild, client, send, t, query, emoji }) {
+  async run ({ author, client, channel, emoji, guild, query, send, t }) {
     const user = (!query ? author : await UserParameter.parse(query, {
       errors: { missingError: 'errors:invalidUser' },
       required: true
@@ -23,21 +37,19 @@ class UserInfo extends Command {
 
     const member = guild && guild.member(user)
     const nickname = member && member.nickname
+    const created = moment(user.createdAt)
+    const joined = member && moment(member.joinedAt)
 
     const presence = client.users.has(user.id) && user.presence
     const clientStatus = presence && presence.clientStatus
     const status = clientStatus && (clientStatus.desktop || clientStatus.mobile || clientStatus.web)
 
-    const created = moment(user.createdAt)
-    const joined = member && moment(member.joinedAt)
-
-    const role = member && member.roles && member.roles.highest && (member.roles.highest.name !== '@everyone') && member.roles.highest
+    const role = member && member.roles && member.roles.highest && (member.roles.highest.id !== guild.id) && member.roles.highest
     const activity = presence && presence.activity
     const activityType = activity && activity.type && activity.name
 
     const embed = new Embed({ author, t, emoji, autoAuthor: false })
       .setAuthor(user)
-      .setTitle(titles.join(' '))
       .setThumbnail(user)
       .addField('commands:userinfo.username', user.tag, true)
 
@@ -53,12 +65,13 @@ class UserInfo extends Command {
 
     if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
 
-    // get Permissions
-    const memberPermissions = member && member.permissions && member.permissions.toArray()
+    // PERMISSIONS
+    const array = []
+    const memberPermissions = member && member.permissions && member.permissions.toArray().map(i => { if (!NORMAL_PERMISSIONS.includes(i)) array.push(i) }) && array
     const resultPermissions = memberPermissions &&
-    (memberPermissions.includes(admPermission) ? t('permissions:' + admPermission) : memberPermissions.map(p => t('permissions:' + p)).join(', '))
+    (memberPermissions.includes(ADMINISTRATOR_PERMISSION) ? t('permissions:' + ADMINISTRATOR_PERMISSION) : memberPermissions.map(p => t('permissions:' + p)).sort().join(', '))
 
-    if (resultPermissions) embed.addField('» $$commands:userinfo.permissions', resultPermissions)
+    if (resultPermissions) embed.addField('$$commands:userinfo.permissions', resultPermissions)
     const msg = await send(embed)
 
     const permissions = channel.permissionsFor(guild.me)

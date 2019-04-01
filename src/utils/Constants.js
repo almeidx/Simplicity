@@ -29,6 +29,7 @@ module.exports = {
     'PAGE': '📄',
     'CROWN': '👑',
     'BOT': '🤖',
+    'DEVELOPER': '🛠',
     'ROLES': '📜'
   },
   COLORS: {
