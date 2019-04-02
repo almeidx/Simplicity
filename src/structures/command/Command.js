@@ -26,18 +26,27 @@ class Command {
     }
   }
 
-  sendError ({ t, author, prefix, send }, error) {
+  sendError ({ t, author, prefix, channel, guild, message, send }, error) {
     if (!(error instanceof CommandError)) {
       console.error(error)
-      if (process.env.CHANNEL_LOG_ERROR && this.client.channels.has(process.env.CHANNEL_LOG_ERROR)) {
-        this.client.channels.get(process.env.CHANNEL_LOG_ERROR).send(`${error}`, { code: 'js' })
+      const channelError = process.env.CHANNEL_LOG_ERROR && this.client.channels.get(process.env.CHANNEL_LOG_ERROR)
+      if (channelError) {
+        const infos = [
+          `» User: ${author.toString()} *[${author.id}]*`,
+          `» Channel: ${channel.type === 'dm' ? 'DM' : `*${channel.toString()} [${channel.id}]`}*`,
+          `» Guild: ${guild ? guild.name + ` [${guild.id}]` : 'DM'}`,
+          `» Message: ${message.content} *[${message.id}]*`
+        ]
+        const embedError = new Embed(null, { type: 'error' })
+          .addField('» Info', `**${infos.join('\n')}**`)
+          .addField('» Error', `**» ID: ${error.message}\n\`\`\`js\n${error.stack}\n\`\`\`**`)
+        channelError.send(embedError)
       }
-      return send(t('errors:errorCommand'))
     }
 
     const embed = new Embed({ t, author })
       .setError()
-      .setDescription(error.message, error.options)
+      .setDescription(t([error.message, 'errors:errorCommand'], error.options))
 
     const usage = t(`commands:${this.name}.usage`)
     if (error.onUsage && usage !== `${this.name}.usage`) {
