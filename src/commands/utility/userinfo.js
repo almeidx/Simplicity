@@ -1,4 +1,4 @@
-const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL }, Parameters: { UserParameter } } = require('../../')
+const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL, PERMISSIONS }, Parameters: { UserParameter } } = require('../../')
 const moment = require('moment')
 const ADMINISTRATOR_PERMISSION = 'ADMINISTRATOR'
 const NORMAL_PERMISSIONS = [
@@ -69,7 +69,7 @@ class UserInfo extends Command {
     const array = []
     const memberPermissions = member && member.permissions && member.permissions.toArray().map(i => { if (!NORMAL_PERMISSIONS.includes(i)) array.push(i) }) && array
     const resultPermissions = memberPermissions &&
-    (memberPermissions.includes(ADMINISTRATOR_PERMISSION) ? t('permissions:' + ADMINISTRATOR_PERMISSION) : memberPermissions.map(p => t('permissions:' + p)).sort().join(', '))
+    (memberPermissions.includes(ADMINISTRATOR_PERMISSION) ? t('permissions:' + ADMINISTRATOR_PERMISSION) : memberPermissions.map(p => t('permissions:' + p)).sort((i, e)=> PERMISSIONS.indexOf(e) - PERMISSIONS.indexOf(i)).join(', '))
 
     if (resultPermissions) embed.addField('$$commands:userinfo.permissions', resultPermissions)
     const msg = await send(embed)

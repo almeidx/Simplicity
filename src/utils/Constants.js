@@ -51,5 +51,36 @@ module.exports = {
   // ASSETS
   SPOTIFY_LOGO_PNG: 'src/assets/spotify-logo.png',
   // URL
-  SPOTIFY_LOGO_PNG_URL: 'https://images-na.ssl-images-amazon.com/images/I/51rttY7a%2B9L.png'
+  SPOTIFY_LOGO_PNG_URL: 'https://images-na.ssl-images-amazon.com/images/I/51rttY7a%2B9L.png',
+  PERMISSIONS: [
+    'ADMINISTRATOR',
+    'VIEW_AUDIT_LOG',
+    'MANAGE_GUILD',
+    'MANAGE_ROLES',
+    'MANAGE_CHANNELS',
+    'KICK_MEMBERS',
+    'BAN_MEMBERS',
+    'CREATE_INSTANT_INVITE',
+    'CHANGE_NICKNAME',
+    'MANAGE_NICKNAMES',
+    'MANAGE_EMOJIS',
+    'MANAGE_WEBHOOKS',
+    'VIEW_CHANNEL',
+    'SEND_MESSAGES',
+    'SEND_TTS_MESSAGES',
+    'MANAGE_MESSAGES',
+    'EMBED_LINKS',
+    'ATTACH_FILES',
+    'READ_MESSAGE_HISTORY',
+    'MENTION_EVERYONE',
+    'USE_EXTERNAL_EMOJIS',
+    'ADD_REACTIONS',
+    'CONNECT',
+    'SPEAK',
+    'MUTE_MEMBERS',
+    'DEAFEN_MEMBERS',
+    'MOVE_MEMBERS',
+    'USE_VAD',
+    'PRIORITY_SPEAKER'
+  ]
 }
