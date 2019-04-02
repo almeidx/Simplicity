@@ -1,4 +1,4 @@
-const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL, PERMISSIONS }, Parameters: { UserParameter } } = require('../../')
+const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL, PERMISSIONS }, Parameters: { UserParameter }, PermissionsUtils } = require('../../')
 const moment = require('moment')
 const ADMINISTRATOR_PERMISSION = 'ADMINISTRATOR'
 const NORMAL_PERMISSIONS = [
@@ -32,7 +32,9 @@ class UserInfo extends Command {
 
     const titles = []
 
+    titles.push(user.tag)
     if (guild && guild.ownerID === user.id) titles.push(`#crown`)
+    if (PermissionsUtils.verifyDev(user.id, client)) titles.push(`#developer`)
     if (user.bot) titles.push(`#bot`)
 
     const member = guild && guild.member(user)
@@ -51,7 +53,7 @@ class UserInfo extends Command {
     const activityType = activity && activity.type && activity.name
 
     const embed = new Embed({ author, t, emoji, autoAuthor: false })
-      .setAuthor(user)
+      .setAuthor(titles.join(' '), user.displayAvatarURL())
       .setThumbnail(user)
       .addField('» $$commands:userinfo.username', user.tag, true)
 
