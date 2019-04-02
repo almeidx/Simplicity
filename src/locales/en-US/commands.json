@@ -79,17 +79,20 @@
     "userinfo": {
         "description": "This command shows info about the user.",
         "usage": "<id/mention>",
-        "username": "» Username",
-        "nickname": "» Nickname",
-        "id": "» ID",
-        "createdAt": "» Created At",
-        "joinedAt": "» Joined At",
-        "status": "» Status",
-        "spotify": "» Spotify",
-        "track": "» Track",
-        "artist": "» Artist",
-        "album": "» Album",
-        "highestRole": "» Highest Role"
+        "username": "Username",
+        "nickname": "Nickname",
+        "id": "ID",
+        "createdAt": "Created At",
+        "joinedAt": "Joined At",
+        "status": "Status",
+        "spotify": "Spotify",
+        "track": "Track",
+        "artist": "Artist",
+        "album": "Album",
+        "highestRole": "Highest Role",
+        "permissions": "Permissions",
+        "roles": "Roles",
+        "authorRoles": "{{- user }}'s Roles"
     },
     "ban": {
         "description": "This command lets you ban members of your server.",
@@ -133,7 +136,8 @@
     "config": {
         "description": "This command is the basis to config the bot on your server.",
         "usage": "<module> <statement>",
-        "serverConfig": "Server Configuration","channel": "Logging Channel"
+        "serverConfig": "Server Configuration",
+        "channel": "Logging Channel"
     },
     "ascii": {
         "description": "This command translates normal text into ascii format.",

@@ -32,7 +32,7 @@ class SimplicityEmbed extends MessageEmbed {
   setupEmbed (embedResolvable, options) {
     this.options = Object.assign({
       autoFooter: true,
-      autoAuthor: true,
+      autoAuthor: false,
       autoTimestamp: true,
       type: 'normal'
     }, options)
@@ -59,7 +59,7 @@ class SimplicityEmbed extends MessageEmbed {
 
     if (embedResolvable.author) {
       if (this.options.autoAuthor) this.setAuthor(embedResolvable.author)
-      if (this.options.autoFooter) this.setFooter(embedResolvable.author)
+      if (this.options.autoFooter) this.setFooter(embedResolvable.author.tag)
       if (this.options.autoTimestamp) this.setTimestamp()
     }
 
@@ -94,7 +94,7 @@ class SimplicityEmbed extends MessageEmbed {
     const footerIcon = checkIcon(iconURL)
 
     if (footerTextName) text = footerTextName
-    if (footerTextIcon && !iconURL && !this.options.autoFooter) iconURL = footerTextIcon
+    if (footerTextIcon && !iconURL) iconURL = footerTextIcon
     if (footerIcon) iconURL = footerIcon
 
     this.dataFixedT['footer'] = { text, iconURL, options }
