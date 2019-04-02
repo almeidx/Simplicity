@@ -1,20 +1,5 @@
-const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL, PERMISSIONS }, Parameters: { UserParameter }, PermissionsUtils } = require('../../')
+const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS }, Parameters: { UserParameter }, PermissionsUtils } = require('../../')
 const moment = require('moment')
-const ADMINISTRATOR_PERMISSION = 'ADMINISTRATOR'
-const NORMAL_PERMISSIONS = [
-    'CHANGE_NICKNAME',
-    'USE_VAD',
-    'SPEAK',
-    'CONNECT',
-    'USE_EXTERNAL_EMOJIS',
-    'READ_MESSAGE_HISTORY',
-    'ATTACH_FILES',
-    'EMBED_LINKS',
-    'SEND_MESSAGES',
-    'VIEW_CHANNEL',
-    'ADD_REACTIONS',
-    'CREATE_INSTANT_INVITE'
-]
 
 class UserInfo extends Command {
   constructor (client) {
