@@ -1,20 +1,6 @@
 const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL, PERMISSIONS }, Parameters: { UserParameter } } = require('../../')
 const moment = require('moment')
 const ADMINISTRATOR_PERMISSION = 'ADMINISTRATOR'
-const NORMAL_PERMISSIONS = [
-  'CHANGE_NICKNAME',
-  'USE_VAD',
-  'SPEAK',
-  'CONNECT',
-  'USE_EXTERNAL_EMOJIS',
-  'READ_MESSAGE_HISTORY',
-  'ATTACH_FILES',
-  'EMBED_LINKS',
-  'SEND_MESSAGES',
-  'VIEW_CHANNEL',
-  'ADD_REACTIONS',
-  'CREATE_INSTANT_INVITE'
-]
 
 class UserInfo extends Command {
   constructor (client) {
@@ -66,12 +52,12 @@ class UserInfo extends Command {
     if (joined) embed.addField('commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
 
     // PERMISSIONS
-    const array = []
-    const memberPermissions = member && member.permissions && member.permissions.toArray().map(i => { if (!NORMAL_PERMISSIONS.includes(i)) array.push(i) }) && array
-    const resultPermissions = memberPermissions &&
-    (memberPermissions.includes(ADMINISTRATOR_PERMISSION) ? t('permissions:' + ADMINISTRATOR_PERMISSION) : memberPermissions.map(p => t('permissions:' + p)).sort((i, e)=> PERMISSIONS.indexOf(e) - PERMISSIONS.indexOf(i)).join(', '))
+    const memberPermissions = member && member.permissions && member.permissions.toArray()
+    const resultAdministrator = memberPermissions && memberPermissions.includes(ADMINISTRATOR_PERMISSION) && t('permissions:' + ADMINISTRATOR_PERMISSION)
+    const resultAllPermissions = memberPermissions && memberPermissions.sort((a, b) => PERMISSIONS.indexOf(a) - PERMISSIONS.indexOf(b))
+    const resultPermissions = memberPermissions && (resultAdministrator || (resultAllPermissions && resultAllPermissions.map(p => t('permissions:' + p)).join(', ')))
 
-    if (resultPermissions) embed.addField('$$commands:userinfo.permissions', resultPermissions)
+    if (resultPermissions) embed.addField('» $$commands:userinfo.permissions', resultPermissions)
     const msg = await send(embed)
 
     const permissions = channel.permissionsFor(guild.me)
@@ -103,7 +89,7 @@ class UserInfo extends Command {
       const roles = member.roles.sort((a, b) => b.position - a.position).map(r => r.name || r.toString()).slice(0, -1)
 
       const roleEmbed = new Embed({ author, t })
-        .setAuthor('commands:userinfo.roles', user.displayAvatarURL(), {}, { user: user.username})
+        .setAuthor('commands:userinfo.roles', user.displayAvatarURL(), {}, { user: user.username })
         .setDescription(roles)
 
       const filter = (r, u) => r.me && author.id === u.id
