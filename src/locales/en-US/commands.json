@@ -136,7 +136,8 @@
     "config": {
         "description": "This command is the basis to config the bot on your server.",
         "usage": "<module> <statement>",
-        "serverConfig": "Server Configuration","channel": "Logging Channel"
+        "serverConfig": "Server Configuration",
+        "channel": "Logging Channel"
     },
     "ascii": {
         "description": "This command translates normal text into ascii format.",
