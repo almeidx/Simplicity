@@ -27,6 +27,7 @@ module.exports = {
     'SUCCESS': '✅',
     'MUSIC': '🎵',
     'PAGE': '📄',
+    'BACK': '↩',
     'CROWN': '👑',
     'BOT': '🤖',
     'DEVELOPER': '🛠',
