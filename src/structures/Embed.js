@@ -32,7 +32,7 @@ class SimplicityEmbed extends MessageEmbed {
   setupEmbed (embedResolvable, options) {
     this.options = Object.assign({
       autoFooter: true,
-      autoAuthor: false,
+      autoAuthor: true,
       autoTimestamp: true,
       type: 'normal'
     }, options)
