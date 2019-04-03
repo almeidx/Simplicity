@@ -69,10 +69,10 @@ class UserInfo extends Command {
     const permissions = channel.permissionsFor(guild.me)
     const restriction = activity && (activity.type === 'LISTENING') && activity.party && activity.party.id && activity.party.id.includes('spotify:')
 
-    if (permissions.has('ADD_REACTIONS') && !user.bot) {
+    if (permissions.has('ADD_REACTIONS')) {
       let spotify, role
 
-      if (restriction) {
+      if (restriction && !user.bot) {
         spotify = {
           emoji: emoji('SPOTIFY', { id: true, othur: 'MUSIC' }),
           embed: createEmbedSpotify(activity, { author, t })
@@ -133,8 +133,8 @@ function createEmbedSpotify (activity, embedOptions) {
 function createEmbedRoles (roles, user, embedOptions) {
   const role = roles && roles.find(r => r.color)
   return new Embed(embedOptions)
-    .setAuthor('» $$commands:userinfo.authorRoles', user ? user.displayAvatarURL() : '', '', { user: user.username || user })
-    .setDescription(roles ? roles.join(', ') : '')
+    .setAuthor('» $$commands:userinfo.authorRoles', user.displayAvatarURL(), '', { user: user.username })
+    .setDescription(roles.join(', '))
     .setColor(role ? role.color : process.env.COLOR)
 }
 
