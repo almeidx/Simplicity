@@ -49,7 +49,7 @@ class Command {
       .setDescription(t([error.message, 'errors:errorCommand'], error.options))
 
     const strUsage = `commands:${this.name}.usage`
-    const usage = error.onUsage && this.client.exists(strUsage) && t(strUsage)
+    const usage = error.onUsage && this.client.i18next.exists(strUsage) && t(strUsage)
 
     if (usage) embed.addField('errors:usage', `${prefix + this.name} ${usage}`)
 

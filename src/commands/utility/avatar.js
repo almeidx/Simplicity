@@ -10,7 +10,7 @@ class Avatar extends Command {
 
   async run ({ author, send, guild, channel, client, query, emoji, t }) {
     const user = (await UserParameter.search(query, { client, guild })) || author
-    const avatarURL = user.displayAvatarURL({ format: 'png', size: 2048 })
+    const avatarURL = user.displayAvatarURL({ size: 2048 })
 
     const clientPermissions = channel.permissionsFor(guild.me)
 
