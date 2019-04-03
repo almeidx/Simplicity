@@ -117,6 +117,9 @@
         "reason": "Reason",
         "action": "kick"
     },
+    "avatar": {
+        "message": "{{- user.username }}'s Avatar"
+    },
     "unban": {
         "description": "This command lets you unban members of your server.",
         "usage": "[id] <reason>",

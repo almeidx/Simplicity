@@ -31,7 +31,8 @@ module.exports = {
     'CROWN': '👑',
     'BOT': '🤖',
     'DEVELOPER': '🛠',
-    'ROLES': '📜'
+    'ROLES': '📜',
+    'PHOTO': '🖼'
   },
   COLORS: {
     'MESSAGE_DELETE': '36393f',

@@ -48,11 +48,12 @@ class Command {
       .setError()
       .setDescription(t([error.message, 'errors:errorCommand'], error.options))
 
-    const usage = t(`commands:${this.name}.usage`)
-    if (error.onUsage && usage !== `${this.name}.usage`) {
-      embed.addField('errors:usage', `${prefix + this.name} ${usage}`)
-    }
+    const strUsage = `commands:${this.name}.usage`
+    const usage = error.onUsage && this.client.exists(strUsage) && t(strUsage)
 
+    if (usage) embed.addField('errors:usage', `${prefix + this.name} ${usage}`)
+
+    embed.setText('@description \n' + (usage ? '`@fields.0.name ` @fields.0.value' : ''))
     return send(embed)
   }
 }
