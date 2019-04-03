@@ -1,4 +1,4 @@
-const { Command, Embed, Constants, Parameters: { UserParameter }, Utils, PermissionsUtils } = require('../../')
+const { Command, Embed, Constants, Parameters: { UserParameter }, PermissionsUtils } = require('../../')
 const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = Constants
 const moment = require('moment')
 
@@ -67,12 +67,12 @@ class UserInfo extends Command {
     const message = await send(embed)
 
     const permissions = channel.permissionsFor(guild.me)
-    const restriction = activity && (activity.type === 'LISTENING') && activity.party && activity.party.id && activity.party.id.includes('spotify:')
+    const spotifyRestriction = activity && (activity.type === 'LISTENING') && activity.party && activity.party.id && activity.party.id.includes('spotify:')
 
     if (permissions.has('ADD_REACTIONS')) {
       let spotify, role
 
-      if (restriction && !user.bot) {
+      if (spotifyRestriction && !user.bot) {
         spotify = {
           emoji: emoji('SPOTIFY', { id: true, othur: 'MUSIC' }),
           embed: createEmbedSpotify(activity, { author, t })
