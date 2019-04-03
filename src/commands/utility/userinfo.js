@@ -1,4 +1,5 @@
-const { Command, Embed, Constants: { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS }, Parameters: { UserParameter }, PermissionsUtils } = require('../../')
+const { Command, Embed, Constants, Parameters: { UserParameter }, Utils, PermissionsUtils } = require('../../')
+const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = Constants
 const moment = require('moment')
 
 class UserInfo extends Command {
@@ -31,9 +32,9 @@ class UserInfo extends Command {
     const clientStatus = presence && presence.clientStatus
     const status = clientStatus && (clientStatus.desktop || clientStatus.mobile || clientStatus.web)
 
-    const role = member && member.roles && member.roles.highest && (member.roles.highest.id !== guild.id) && member.roles.highest
-    const rolesClean = member && member.roles && member.roles.sort((a, b) => b.position - a.position).map(r => r.name || r.toString()).slice(0, -1)
+    const highestRole = member && member.roles && member.roles.highest && (member.roles.highest.id !== guild.id) && member.roles.highest
     const roles = member && member.roles && member.roles.sort((a, b) => b.position - a.position).map(r => r).slice(0, -1)
+    const rolesClean = roles && roles.map(r => r.name || r.toString())
     const activity = presence && presence.activity
     const activityType = activity && activity.type && activity.name
 
@@ -47,7 +48,7 @@ class UserInfo extends Command {
     embed.addField('» $$commands:userinfo.id', user.id, true)
 
     if (status) embed.addField('» $$commands:userinfo.status', `#${presence.status} $$utils:status.${presence.status}`, true)
-    if (role && rolesClean.length > 5) embed.addField('» $$commands:userinfo.highestRole', role.name || role.toString(), true)
+    if (highestRole && roles.length > 5) embed.addField('» $$commands:userinfo.highestRole', highestRole.name || highestRole.toString(), true)
     if (rolesClean && rolesClean.length <= 5) embed.addField('» $$commands:userinfo.roles', rolesClean.join(', '), true)
     if (activityType) embed.addField('» $$utils:activityType.' + activity.type, activity.name, true)
 
@@ -63,55 +64,78 @@ class UserInfo extends Command {
 
     if (resultPermissions) embed.addField('» $$commands:userinfo.permissions', resultPermissions)
 
-    const msg = await send(embed)
+    const message = await send(embed)
 
     const permissions = channel.permissionsFor(guild.me)
     const restriction = activity && (activity.type === 'LISTENING') && activity.party && activity.party.id && activity.party.id.includes('spotify:')
 
-    if (permissions.has('ADD_REACTIONS') && restriction && !user.bot) {
-      const spotifyEmoji = emoji('SPOTIFY', { id: true, othur: 'MUSIC' })
-      const userinfoEmoji = emoji('BACK', { id: true })
-      const roleEmoji = emoji('ROLES', { id: true })
+    if (permissions.has('ADD_REACTIONS') && !user.bot) {
+      let spotify, role
 
-      if (restriction || (rolesClean && rolesClean.length > 5)) await msg.react(userinfoEmoji)
-      if (restriction) await msg.react(spotifyEmoji)
-      if (rolesClean && rolesClean.length > 5) await msg.react(roleEmoji)
+      if (restriction) {
+        spotify = {
+          emoji: emoji('SPOTIFY', { id: true, othur: 'MUSIC' }),
+          embed: createEmbedSpotify(activity, { author, t })
+        }
+        await message.react(spotify.emoji)
+      }
 
-      const trackName = activity.details
-      const artist = activity.state.split(';').join(',')
-      const album = activity.assets && activity.assets.largeText
-      const image = activity.assets && activity.assets.largeImage && `https://i.scdn.co/image/${activity.assets.largeImage.replace('spotify:', '')}`
+      if (rolesClean && rolesClean.length > 5) {
+        role = {
+          emoji: emoji('ROLES', { id: true }),
+          embed: createEmbedRoles(roles, user, { author, t })
+        }
+        await message.react(role.emoji)
+      }
 
-      const spotifyEmbed = new Embed({ author, t })
-        .setAuthor('» $$commands:userinfo.spotify', SPOTIFY_LOGO_PNG_URL)
-        .addField('» $$commands:userinfo.track', trackName, true)
-        .addField('» $$commands:userinfo.artist', artist, true)
-        .addField('» $$commands:userinfo.album', album, true)
-        .setColor('GREEN')
+      if (spotify || role) {
+        const userinfoEmoji = emoji('BACK', { id: true })
+        await message.react(userinfoEmoji)
 
-      if (image) spotifyEmbed.setThumbnail(image)
+        const filter = (r, u) => r.me && author.id === u.id
+        const collector = await message.createReactionCollector(filter, { errors: ['time'], time: 30000 })
 
-      const roleEmbed = new Embed({ author, t })
-        .setAuthor('» $$commands:userinfo.authorRoles', user.displayAvatarURL(), '', { user: user.username })
-        .setDescription(roles.join('\n'))
+        collector.on('collect', async ({ emoji, users, message }) => {
+          const name = emoji.id || emoji.name
+          const checkEmbed = (e) => e.author.name === message.embeds[0].author.name
 
-      const filter = (r, u) => r.me && author.id === u.id
-      const collector = await msg.createReactionCollector(filter, { errors: ['time'], time: 30000 })
+          if (permissions.has('MANAGE_MESSAGES')) await users.remove(user.id)
+          if (spotify && name === spotify.emoji && !checkEmbed(spotify.embed)) await message.edit(spotify.embed)
+          if (name === userinfoEmoji && !checkEmbed(embed)) await message.edit(embed)
+          if (role && name === role.emoji && !checkEmbed(role.embed)) await message.edit(role.embed)
+        })
 
-      collector.on('collect', async ({ emoji, users, message }) => {
-        const name = emoji.id || emoji.name
-        const checkEmbed = (e) => e.author.name === message.embeds[0].author.name
-
-        if (permissions.has('MANAGE_MESSAGES')) await users.remove(user.id)
-        if (name === spotifyEmoji && !checkEmbed(spotifyEmbed)) await msg.edit(spotifyEmbed)
-        if (name === userinfoEmoji && !checkEmbed(embed)) await msg.edit(embed)
-        if (name === roleEmoji && !checkEmbed(roleEmbed)) await msg.edit(roleEmbed)
-      })
-      collector.on('end', async () => {
-        if (msg && permissions.has('MANAGE_MESSAGES')) await msg.reactions.removeAll().catch(() => {})
-      })
+        collector.on('end', async () => {
+          if (message && permissions.has('MANAGE_MESSAGES')) await message.reactions.removeAll().catch(() => {})
+        })
+      }
     }
   }
+}
+
+function createEmbedSpotify (activity, embedOptions) {
+  const trackName = activity.details
+  const artist = activity.state.split(';').join(',')
+  const album = activity.assets && activity.assets.largeText
+  const image = activity.assets && activity.assets.largeImage && `https://i.scdn.co/image/${activity.assets.largeImage.replace('spotify:', '')}`
+
+  const embed = new Embed(embedOptions)
+    .setAuthor('» $$commands:userinfo.spotify', SPOTIFY_LOGO_PNG_URL)
+    .addField('» $$commands:userinfo.track', trackName, true)
+    .addField('» $$commands:userinfo.artist', artist, true)
+    .addField('» $$commands:userinfo.album', album, true)
+    .setColor('GREEN')
+
+  if (image) embed.setThumbnail(image)
+  return embed
+}
+
+function createEmbedRoles (roles, user, embedOptions) {
+  const role = roles && roles.find(r => r.color)
+  return new Embed(embedOptions)
+    .setAuthor('» $$commands:userinfo.authorRoles', user ? user.displayAvatarURL() : '', '', { user: user.username || user })
+    .setDescription(roles ? roles.join(', ') : '')
+    .setColor(role ? role.color : process.env.COLOR)
 }
 
 module.exports = UserInfo

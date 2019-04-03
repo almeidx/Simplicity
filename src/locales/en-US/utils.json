@@ -15,7 +15,7 @@
     "activityType": {
         "PLAYING": "Playing",
         "STREAMING": "Streaming",
-        "LISTENING": "Listening",
+        "LISTENING": "Listening to",
         "WATCHING": "Watching"
     },
     "bot": "Bot",
