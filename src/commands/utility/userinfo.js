@@ -120,7 +120,7 @@ function createEmbedSpotify (activity, embedOptions) {
   const image = activity.assets && activity.assets.largeImage && `https://i.scdn.co/image/${activity.assets.largeImage.replace('spotify:', '')}`
 
   const embed = new Embed(embedOptions)
-    .setAuthor('» $$commands:userinfo.spotify', SPOTIFY_LOGO_PNG_URL)
+    .setAuthor('commands:userinfo.spotify', SPOTIFY_LOGO_PNG_URL)
     .addField('» $$commands:userinfo.track', trackName, true)
     .addField('» $$commands:userinfo.artist', artist, true)
     .addField('» $$commands:userinfo.album', album, true)
