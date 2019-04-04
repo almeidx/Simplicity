@@ -49,7 +49,7 @@ class UserInfo extends Command {
 
     if (status) embed.addField('» $$commands:userinfo.status', `#${presence.status} $$utils:status.${presence.status}`, true)
     if (highestRole && roles.length > 5) embed.addField('» $$commands:userinfo.highestRole', highestRole.name || highestRole.toString(), true)
-    if (rolesClean && rolesClean.length <= 5) embed.addField('» $$commands:userinfo.roles', rolesClean.join(', '), true)
+    if (rolesClean && rolesClean.length <= 5 && rolesClean.join(', ')) embed.addField('» $$commands:userinfo.roles', rolesClean.join(', '), true)
     if (activityType) embed.addField('» $$utils:activityType.' + activity.type, activity.name, true)
 
     embed.addField('» $$commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`)
