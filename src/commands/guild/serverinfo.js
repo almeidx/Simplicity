@@ -87,7 +87,7 @@ function createEmbedRoles (roles, guild, embedOptions) {
   const guildIconURL = getServerIconURL(guild)
   return new Embed(embedOptions)
     .setAuthor('$$commands:serverinfo.roles', guildIconURL, '', { totalRoles: roles.length })
-    .setDescription(roles.join(', '))
+    .setDescription(roles.join('\n'))
     .setColor(process.env.COLOR)
 }
 

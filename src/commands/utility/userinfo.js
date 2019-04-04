@@ -134,7 +134,7 @@ function createEmbedRoles (roles, user, embedOptions) {
   const role = roles && roles.find(r => r.color)
   return new Embed(embedOptions)
     .setAuthor('» $$commands:userinfo.authorRoles', user.displayAvatarURL(), '', { user: user.username })
-    .setDescription(roles.join(', '))
+    .setDescription(roles.join('\n'))
     .setColor(role ? role.color : process.env.COLOR)
 }
 
