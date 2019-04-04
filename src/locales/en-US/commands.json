@@ -40,22 +40,27 @@
     },
     "serverinfo": {
         "description": "This command shows info about the server.",
-        "name": "» Guild Name",
-        "id": "» Guild ID",
-        "owner": "» Guild Owner",
-        "created": "» Guild Created at",
-        "EmojisRoles": "» Emojis | Roles",
-        "Channels": "» Text | Voice | Categories",
-        "onlineOfflineBotsTotal": "» Online | Offline | Bots | Total",
-        "verificationLevel": "» Guild Verification Level: $t(commands:serverinfo.verificationName.{{- level }})",
-        "verificationName": ["None", "Low", "Medium", "(╯°□°）╯︵ ┻━┻", "┻━┻彡 ヽ(ಠ益ಠ)ノ彡┻━┻"],
+        "name": "Name",
+        "id": "ID",
+        "owner": "Owner",
+        "created": "Created At",
+        "emotes": "Total Emotes",
+        "channels": "Channels: {{- totalChannels }}",
+        "textVoice": "Text: {{- textChannels }} | Voice: {{- voiceChannels }}",
+        "members": "Members: {{- totalMembers }}",
+        "onlineOffline": "Online: {{- onlineMembers }} | Offline: {{- offlineMembers }}",
+        "roles": "Server Roles: {{- totalRoles }}",
+        "totalRoles": "Total Roles",
+        "verificationLevel": "Verification Level: $t(commands:serverinfo.verificationName.{{- level }})",
+        "verificationName": ["None", "Low", "Medium", "Hard", "Extreme"],
         "verificationDetails": [
             "Unrestricted.",
             "Must have a verified email on their Discord account.",
             "Must be registered on Discord for longer than 5 minutes.",
             "Must be a member of the server for longer than 10 minutes.",
             "Must have a verified phone on their Discord account."
-        ]
+        ],
+        "unknown": "Unknown"
     },
     "createemoji": {
         "description": "This command allows you to create emojis.",
