@@ -1,4 +1,8 @@
 const { Command, Embed } = require('../..')
+const getServerIconURL = (g) => {
+  if (g.iconURL()) return g.iconURL({ format: 'png', size: 2048 })
+  else return `https://guild-default-icon.herokuapp.com/${g.nameAcronym}`
+}
 
 class ServerIcon extends Command {
   constructor (client) {
@@ -8,9 +12,11 @@ class ServerIcon extends Command {
   }
 
   run ({ author, guild, send, t }) {
-    const embed = new Embed({ author, t, guild })
-      .setDescription('commands:servericon:text', { iconURL: guild.iconURL({ size: 2048 }) })
-      .setImage(guild.iconURL({ size: 2048 }))
+    const guildIconURL = getServerIconURL(guild)
+
+    const embed = new Embed({ author, t })
+      .setDescription('commands:servericon:text', { guildIconURL })
+      .setImage(guildIconURL)
 
     send(embed)
   }

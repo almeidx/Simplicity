@@ -28,7 +28,7 @@
     },
     "servericon": {
         "description": "This command shows the server icon.",
-        "text": "Click [here]({{- icon }}) to download the icon!"
+        "text": "Click [here]({{- guildIconURL }}) to download the icon!"
     },
     "uptime": {
         "description": "This command shows the time I've been up for.",
