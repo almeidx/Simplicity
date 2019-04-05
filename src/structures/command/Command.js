@@ -53,7 +53,21 @@ class Command {
 
     if (usage) embed.addField('errors:usage', `${prefix + this.name} ${usage}`)
 
-    embed.setText('@description \n' + (usage ? '`@fields.0.name ` @fields.0.value' : ''))
+    if (error.fields && error.fields.length > 0) {
+      for (const i in error.fields) {
+        const field = error.fields[i]
+        embed.addField(field.name, field.value, field.inline, field.options, field.valueOptions)
+      }
+    }
+
+    let fields = ''
+    if (embed.fields.length > 0) {
+      for (const i in embed.fields) {
+        fields += `\`@fields.${i}.name \` @fields.${i}.value \n`
+      }
+    }
+
+    embed.setText('@description ' + fields)
     return send(embed)
   }
 }

@@ -3,6 +3,12 @@ class CommandError extends Error {
     super(message)
     this.options = options
     this.onUsage = !!options.onUsage
+    this.fields = []
+  }
+
+  addField (name, value, inline = false, options = {}, valueOptions = {}) {
+    this.fields.push({ name, value, inline, options, valueOptions })
+    return this
   }
 }
 
