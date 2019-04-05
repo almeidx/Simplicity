@@ -18,5 +18,6 @@
     "invalidUser": "You must either mention, provide an ID, tag or the name of a member!",
     "nsfwChannel": "This command can only be used in NSFW Channels!",
     "noReason": "No reason provided.",
-    "canBeBotRole": "The role you provided cannot be a bot role!"
+    "canBeBotRole": "The role you provided cannot be a bot role!",
+    "caracteresInvalid": "Caracteres Invalid"
 }

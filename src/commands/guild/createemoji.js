@@ -1,56 +1,37 @@
-const { MessageEmbed } = require('discord.js')
-const { Command } = require('../..')
+const { Command, MessageUtils, CommandError } = require('../..')
+const { MessageAttachment } = require('discord.js')
+
+const REGEX_CARACTERES_VALID = /[a-z0-9_]/gi
+const REGEX_CARACTERES_INVALID = /[^a-z0-9_]/gi
 
 class CreateEmoji extends Command {
   constructor (client) {
     super(client)
     this.aliases = ['createmoji', 'addemoji']
     this.category = 'guild'
-    this.requirements = { argsRequired: true, permissions: ['MANAGE_EMOJIS'], clientPermissions: ['MANAGE_EMOJIS'] }
+    this.requirements = {
+      argsRequired: true,
+      guildOnly: true,
+      permissions: ['MANAGE_EMOJIS'],
+      clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS'] }
   }
 
-  run ({ guild, author, send, t, args }) {
-    const embed = new MessageEmbed()
-      .setAuthor(author.tag, author.displayAvatarURL({ size: 2048 }))
+  async run ({ message, totalLength, channel, send, args: [name], author }) {
+    const image = (await MessageUtils.getImage(message, totalLength)) || (await MessageUtils.fetchImage(channel))
 
-    if (args.length <= 1) {
-      embed.setDescription(t('commands:createemoji.noNameLink'))
-      return send(embed, { error: true })
+    if (!image) throw new CommandError('commands:createemoji:noNameLink', { onUsage: true })
+
+    const nameEmoji = name || 'emojiBy' + author.id
+    if (nameEmoji.length >= 32) throw new CommandError('commands:createemoji:nameTooBig')
+    if (nameEmoji.length <= 2) throw new CommandError('commands:createemoji:nameTooShort')
+
+    if (REGEX_CARACTERES_INVALID.test(nameEmoji)) {
+      const caracteresInvalid = name.replace(REGEX_CARACTERES_VALID, '').split('').filter((e, i, ar) => ar.indexOf(e) === i).join('')
+      throw new CommandError('commands:createemoji:nameInvalid')
+        .addField('errors:caracteresInvalid', `**${caracteresInvalid}**`)
     }
 
-    const name = args.shift()
-    const url = args.join('')
-
-    if (!name.length >= 32) {
-      embed
-        .setDescription(t('commands:createemoji.nameTooBig'))
-      return send(embed, { error: true })
-    } else if (!name.length >= 2) {
-      embed
-        .setDescription(t('commands:createemoji.nameTooShort'))
-      return send(embed, { error: true })
-    } else if (!name.match('(^[a-zA-Z0-9_]*$)')) {
-      embed
-        .setDescription(t('commands:createemoji.invalidName'))
-      return send(embed, { error: true })
-    } else if (url.startsWith('http://' || 'https://') && url.includes('.png' || '.gif' || '.webp' || '.jpg' || '.jpeg')) {
-      embed
-        .setDescription(t('commands:createemoji.invalidURL'))
-      return send(embed, { error: true })
-    } else {
-      guild.emojis.create(url, name)
-        .then(e => {
-          embed
-            .setTitle(t('commands:createemoji.emojiCreated'))
-            .setDescription(e)
-          send(embed)
-        })
-        .catch(() => {
-          embed
-            .setDescription(t('commands:createemoji.error'))
-          return send(embed, { error: true })
-        })
-    }
+    const collector = channel.createMessageCollector((m) => author.id === m.author.id, { errors: ['time'], time: 60000 })
   }
 }
 
