@@ -17,6 +17,7 @@ module.exports = {
   FileUtils: require('./utils/FileUtils'),
   TextUtils: require('./utils/TextUtils'),
   PermissionsUtils: require('./utils/PermissionsUtils'),
+  MessageUtils: require('./utils/MessageUtils'),
   // Database
   Database: require('./database/Database'),
   // Parameters
