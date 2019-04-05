@@ -62,7 +62,7 @@
         ],
         "unknown": "Unknown"
     },
-    "createemoji": {
+    "addemoji": {
         "description": "This command allows you to create emojis.",
         "usage": "[name] [link]",
         "noNameLink": "You either didn't specify the link of the emoji or the name of it.",
@@ -71,7 +71,8 @@
         "invalidName": "Please, note that the emoji name can only have letters, numbers or underscores.",
         "invalidURL": "The URL you provided was not a valid url.",
         "emojiCreated": "The {{- emoji }} emoji has been created!",
-        "error": "There was an error when creating the emoji."
+        "error": "There was an error when creating the emoji.",
+        "emojiBy": "Emoji by: {{- user }}"
     },
     "clear": {
         "description": "This command clears messages from the chat.",

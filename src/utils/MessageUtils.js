@@ -9,16 +9,14 @@ const AllowedImageFormats = [
 ]
 
 async function checkRequestURL (url) {
-  const result = await fetch(url).then(r => r.status !== 404).catch(() => null)
-  return result
+  return await fetch(url).then(r => r.status !== 404).catch(() => null)
 }
 
 class MessageUtils {
   static getContentUrl (message, sliceCount = 0) {
     const query = typeof message === 'string' ? message : (message.content ? message.content.slice(sliceCount) : null)
     const resultRegex = query && REGEX_URL.exec(query)
-    const result = resultRegex && resultRegex[0]
-    return result
+    return resultRegex && resultRegex[0]
   }
 
   static async getImage (message, sliceCount = 0) {
@@ -27,23 +25,19 @@ class MessageUtils {
     if (resultQuery) return url
     const attachments = message && message.attachments
     const attachment = attachments && attachments.find(a => AllowedImageFormats.some(format => a.name.endsWith(format)))
-    const resultAttachment = attachment && (await checkRequestURL(attachment.url)) && attachment.url
-    return resultAttachment
+    return attachment && (await checkRequestURL(attachment.url)) && attachment.url
   }
 
   static async fetchImages (channel, limit = 100) {
     const messages = await channel.messages.fetch(limit).catch(() => null)
-    const result = messages && (await Promise.all(messages.map(async message => {
-      const r = await this.getImage(message)
-      return r
+    return messages && (await Promise.all(messages.map(async message => {
+      return await this.getImage(message)
     }))).filter(r => r)
-    return result
   }
 
   static async fetchImage (channel, limit = 100) {
     const fetchResult = await this.fetchImages(channel, limit)
-    const result = fetchResult && fetchResult[0]
-    return result
+    return fetchResult && fetchResult[0]
   }
 }
 
