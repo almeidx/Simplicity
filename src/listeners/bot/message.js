@@ -30,7 +30,9 @@ class Message extends Listener {
       }
 
       if (command) {
+        const totalLength = usedPrefix.length + commandName.length
         command._run(new CommandContext({
+          totalLength,
           prefix,
           language,
           query: args.join(' '),

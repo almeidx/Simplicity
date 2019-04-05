@@ -8,6 +8,8 @@ const getDefaultEmoji = (name) => Constants.EMOJIS && Constants.EMOJIS[name]
 
 class CommandContext {
   constructor (options) {
+    this.totalLength = options.totalLength
+
     this.message = options.message
     this.member = options.message.member
     this.guild = options.message.guild
