@@ -72,7 +72,9 @@
         "invalidURL": "The URL you provided was not a valid url.",
         "emojiCreated": "The {{- emoji }} emoji has been created!",
         "error": "There was an error when creating the emoji.",
-        "emojiBy": "Emoji by: {{- user }}"
+        "reason": "Responsible user: {{- user }}",
+        "success": "Emoji Created",
+        "cancelled": "The emoji creation has been cancelled."
     },
     "clear": {
         "description": "This command clears messages from the chat.",

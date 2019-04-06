@@ -14,7 +14,11 @@ class VoiceKick extends Command {
     super(client)
     this.aliases = ['voicekick', 'vkick']
     this.category = 'mod'
-    this.requirements = { argsRequired: true, permissions: ['KICK_MEMBERS'], clientPermissions: ['MANAGE_CHANNELS', 'MOVE_MEMBERS'] }
+    this.requirements = {
+      argsRequired: true,
+      permissions: ['KICK_MEMBERS'],
+      clientPermissions: ['MANAGE_CHANNELS', 'MOVE_MEMBERS']
+    }
   }
 
   async run ({ args, author, client, guild, message, member: memberAuthor, send, t }) {
