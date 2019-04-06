@@ -1,9 +1,8 @@
 const { Command, Embed, Parameters: { MemberParameter, UserParameter }, CommandError } = require('../../')
 const missingError = 'errors:invalidUser'
 const optionsParameter = {
-  required: false,
+  required: true,
   canBeAuthor: false,
-  checkGlobally: true,
   canBeGuildOwner: false,
   errors: {
     missingError
