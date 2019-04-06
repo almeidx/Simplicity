@@ -139,8 +139,10 @@
     "vckick": {
         "description": "This command lets you kick members of voice channels.",
         "usage": "[mention/id] <reason>",
-        "success": "{{- auth }} has kicked {{- memb }} from a Voice Channel.",
-        "action": "voice kick"
+        "success": "{{- author }} kicked {{- user }} from a the **{{- voiceChannel }}** voice channel",
+        "action": "voice kick",
+        "voiceKicked": "Voice Kicked by: {{- user }}",
+        "reason": "{{- author }} | Voice kicked:  {{- user }}"
     },
     "config": {
         "description": "This command is the basis to config the bot on your server.",
