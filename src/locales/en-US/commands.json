@@ -75,7 +75,7 @@
         "reason": "Responsible user: {{- author.tag }} [{{- author.id }}]",
         "success": "Emoji Created",
         "cancelled": "The emoji creation has been cancelled.",
-        "waitingResponse": "If you want to create the emoji, send \"confirm\", else, send \"cancel\""
+        "waitingResponse": "If you want to create the emoji, send \"**confirm**\", else, send \"**cancel**\""
     },
     "clear": {
         "description": "This command clears messages from the chat.",
