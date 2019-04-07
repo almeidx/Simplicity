@@ -1,6 +1,19 @@
 const { Embed, Command, MessageUtils, CommandError, MessageCollectorUtils, Parameters } = require('../..')
 const { StringParameter } = Parameters
+
 const INVALID_CHARACTERS_REGEX = /[^a-z0-9_]/gi
+
+const options = {
+  defaultString: 'emoji',
+  maxLength: 32,
+  minLength: 2,
+  regex: INVALID_CHARACTERS_REGEX,
+  errors: {
+    maxLength: 'commands:addemoji:nameTooBig',
+    minLength: 'commands:addemoji:nameTooShort',
+    regex: 'commands:addemoji:nameInvalid'
+  }
+}
 
 class AddEmoji extends Command {
   constructor (client) {
@@ -14,31 +27,22 @@ class AddEmoji extends Command {
       clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS'] }
   }
 
-  async run ({ args, author, channel, message, send, totalLength, t }) {
-    const embed = new Embed({ author, t })
-
-    const name = StringParameter.parse(args[0], {
-      defaultString: 'emoji',
-      maxLength: 32,
-      minLength: 2,
-      regex: INVALID_CHARACTERS_REGEX,
-      errors: {
-        maxLength: 'commands:addemoji:nameTooBig',
-        minLength: 'commands:addemoji:nameTooShort',
-        regex: 'commands:addemoji:nameInvalid'
-      }
-    })
+  async run ({ args, author, channel, message, send, totalLength, t, guild }) {
+    const name = await StringParameter.parse(args[0], options)
     const image = (await MessageUtils.getImage(message, totalLength)) || (await MessageUtils.fetchImage(channel))
     if (!image) throw new CommandError('commands:addemoji:noNameLink', { onUsage: true })
 
-    const msg = await send(t('commands:addemoji.waitingResponse'))
+    const embed = new Embed({ author, t }, { autoAuthor: false })
+      .setDescription('commands:addemoji.waitingResponse')
+      .setThumbnail(image)
+    const msg = await send(embed)
     msg.delete({ timeout: 60000 })
 
-    MessageCollectorUtils.run({ channel, author, send, t }, {}, async () => {
-      const emoji = await guild.emojis.create(image, name).catch(() => send('there was an error'))
+    MessageCollectorUtils.run({ msg, command: this, channel, author, send, t }, {}, async () => {
+      const emoji = await guild.emojis.create(image, name).catch(() => null)
 
       if (emoji) {
-        embed
+        const embed = new Embed({ author, t }, { autoAuthor: false })
           .setTitle('commands:addemoji.success')
           .setDescription('commands:addemoji.emojiCreated', { emoji: emoji.toString() })
         return send(embed)
