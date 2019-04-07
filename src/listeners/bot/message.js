@@ -29,7 +29,7 @@ class Message extends Listener {
         return message.react(process.env.EMOJI_PINGSOCK_ID)
       }
 
-      if (command && (!command.running.includes(message.channel.id))) {
+      if (command && (!command.running.has(message.channel.id, message.author.id))) {
         const totalLength = usedPrefix.length + commandName.length
         command._run(new CommandContext({
           totalLength,
