@@ -1,6 +1,7 @@
 const Requirements = require('./Requirements')
 const Embed = require('../Embed')
 const CommandError = require('./CommandError')
+const RunStore = require('./stores/RunStore')
 
 class Command {
   constructor (client) {
@@ -11,7 +12,7 @@ class Command {
     this.WIP = false
     this.requirements = null
     this.responses = {}
-    this.running = []
+    this.running = new RunStore()
   }
 
   async run () {}
