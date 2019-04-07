@@ -1,6 +1,6 @@
-const SimplicityEmbed = require('../structures/Embed')
+const SimplicityEmbed = require('../../structures/Embed')
 // Only Collector Message
-class CollectorMessageUtils {
+class MessageCollectorUtils {
   static checkContent (content, query) {
     return (content === query) || (content.startsWith(query))
   }
@@ -30,4 +30,4 @@ class CollectorMessageUtils {
   }
 }
 
-module.exports = { CollectorMessageUtils }
+module.exports = MessageCollectorUtils
