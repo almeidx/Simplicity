@@ -15,6 +15,8 @@ class AddEmoji extends Command {
   }
 
   async run ({ args, author, channel, message, send, totalLength, t }) {
+    const embed = new Embed({ author, t })
+
     const name = StringParameter.parse(args[0], {
       defaultString: 'emoji',
       maxLength: 32,
@@ -29,11 +31,18 @@ class AddEmoji extends Command {
     const image = (await MessageUtils.getImage(message, totalLength)) || (await MessageUtils.fetchImage(channel))
     if (!image) throw new CommandError('commands:addemoji:noNameLink', { onUsage: true })
 
-    const msg = await send('to esperando a resposta po')
+    const msg = await send(t('commands:addemoji.waitingResponse'))
     msg.delete({ timeout: 60000 })
 
-    MessageCollectorUtils.run({ channel, author, send, t }, {}, () => {
-      // coloca aqui oq o bot tem q fazer quando o cara manda confirm
+    MessageCollectorUtils.run({ channel, author, send, t }, { }, async () => {
+      const emoji = await guild.emojis.create(image, name).catch(() => send('there was an error'))
+
+      if (emoji) {
+        embed
+          .setTitle('commands:addemoji.success')
+          .setDescription('commands:addemoji.emojiCreated', { emoji: emoji.toString() })
+        return send(embed)
+      } else throw new CommandError('commands:addemoji.error')
     })
   }
 }
