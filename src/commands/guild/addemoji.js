@@ -1,10 +1,6 @@
-const { Command, Embed, MessageUtils, CommandError } = require('../..')
-
-const VALID_CHARACTERS_REGEX = /[a-z0-9_]/gi
+const { Embed, Command, MessageUtils, CommandError, MessageCollectorUtils, Parameters } = require('../..')
+const { StringParameter } = Parameters
 const INVALID_CHARACTERS_REGEX = /[^a-z0-9_]/gi
-
-const wordsContinue = ['y', 'yes', 'sim', 's', 'continue']
-const wordsCancel = ['n', 'não', 'not', 'cancel']
 
 class AddEmoji extends Command {
   constructor (client) {
@@ -18,47 +14,27 @@ class AddEmoji extends Command {
       clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS'] }
   }
 
-  async run ({ args: [name], author, channel, client, message, send, totalLength, t }) {
-    const embed = new Embed({ author, t })
-
+  async run ({ args, author, channel, message, send, totalLength, t }) {
+    const name = StringParameter.parse(args[0], {
+      defaultString: 'emoji',
+      maxLength: 32,
+      minLength: 2,
+      regex: INVALID_CHARACTERS_REGEX,
+      errors: {
+        maxLength: 'commands:addemoji:nameTooBig',
+        minLength: 'commands:addemoji:nameTooShort',
+        regex: 'commands:addemoji:nameInvalid'
+      }
+    })
     const image = (await MessageUtils.getImage(message, totalLength)) || (await MessageUtils.fetchImage(channel))
-
     if (!image) throw new CommandError('commands:addemoji:noNameLink', { onUsage: true })
-    const nameEmoji = name || t('commands:addemoji.emojiBy', { user: author.tag})
-    if (nameEmoji.length >= 32) throw new CommandError('commands:addemoji:nameTooBig')
-    if (nameEmoji.length <= 2) throw new CommandError('commands:addemoji:nameTooShort')
 
-    if (INVALID_CHARACTERS_REGEX.test(nameEmoji)) {
-      const invalidCharacters = name.replace(VALID_CHARACTERS_REGEX, '').split('').filter((e, i, ar) => ar.indexOf(e) === i).join('')
-      throw new CommandError('commands:addemoji:nameInvalid')
-        .addField('errors:invalidCharacters', `**${invalidCharacters}**`)
-    }
+    const msg = await send('to esperando a resposta po')
+    msg.delete({ timeout: 60000 })
 
-    const permissions = channel.permissionsFor(client.user)
-    const reason = t('commands:addemoji.reason', { user: author.tag })
-
-    if (permissions.has('ADD_REACTIONS')) {
-      await send('to esperando a resposta po')
-      const filter = (u) => author.id === u.id
-      const collector = channel.createMessageCollector(filter, { errors: ['time'], time: 60000 })
-
-      collector.on('collect',async ({ content }) => {
-        if (wordsContinue.includes(conten.toLowerCase())) {
-          const emoji = await guild.emojis.create(image, nameEmoji, { reason }).catch(() => { return send('deu merda') })
-          embed
-            .setTitle('commands:addemoji.success')
-            .setDescription('commands:addemoji.emojiCreated', { emoji: emoji.toString() })
-
-          return send(embed)
-        } else if (wordsCancel.includes(content.toLowerCase())) {
-          embed
-            .setTitle('utils:cancelled')
-            .setDescription('commands:addemoji.cancelled')
-
-          return send(embed)
-        }
-      })
-    }
+    MessageCollectorUtils.run({ channel, author, send, t }, {}, () => {
+      // coloca aqui oq o bot tem q fazer quando o cara manda confirm
+    })
   }
 }
 

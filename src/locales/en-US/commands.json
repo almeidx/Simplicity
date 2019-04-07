@@ -72,7 +72,7 @@
         "invalidURL": "The URL you provided was not a valid url.",
         "emojiCreated": "The {{- emoji }} emoji has been created!",
         "error": "There was an error when creating the emoji.",
-        "reason": "Responsible user: {{- user }}",
+        "reason": "Responsible user: {{- author.tag }} [{{- author.id }}]",
         "success": "Emoji Created",
         "cancelled": "The emoji creation has been cancelled."
     },
