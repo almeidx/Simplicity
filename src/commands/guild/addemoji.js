@@ -34,7 +34,7 @@ class AddEmoji extends Command {
     const msg = await send(t('commands:addemoji.waitingResponse'))
     msg.delete({ timeout: 60000 })
 
-    MessageCollectorUtils.run({ channel, author, send, t }, { }, async () => {
+    MessageCollectorUtils.run({ channel, author, send, t }, {}, async () => {
       const emoji = await guild.emojis.create(image, name).catch(() => send('there was an error'))
 
       if (emoji) {
