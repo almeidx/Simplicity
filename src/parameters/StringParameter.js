@@ -4,7 +4,7 @@ const CommandError = require('../structures/command/CommandError')
 class StringParameter extends Parameter {
   static parseOptions (options) {
     return Object.assign({
-      ...this.parseOptions(options),
+      ...super.parseOptions(options),
       maxLength: Infinity,
       minLength: 0,
       defaultString: null,
