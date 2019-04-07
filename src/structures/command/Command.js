@@ -11,6 +11,7 @@ class Command {
     this.WIP = false
     this.requirements = null
     this.responses = {}
+    this.running = []
   }
 
   async run () {}
