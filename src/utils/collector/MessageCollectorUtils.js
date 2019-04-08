@@ -5,18 +5,18 @@ class MessageCollectorUtils {
     const { channel, author, command } = dependencies
 
     const filter = (m) => m.author.id === author.id
-    const collector = channel.createMessageCollector(filter, { max: 5, time: 60000, errors: ['time'] })
+    const collector = channel.createMessageCollector(filter, { max: 3, time: 30000, errors: ['time'] })
 
     command.running.add(channel.id, author.id)
 
     collector.on('collect', (message) => {
       if (this.checkContent(message, 'confirm')) {
         callback(dependencies)
-        collector.stop('finisth')
+        collector.stop('finish')
       } else if (this.checkContent(message, 'cancel')) {
         collector.stop('cancel')
       } else {
-        if (collector.collected !== collector.option.max) this.incorrectResponse(dependencies, message, collector.collected)
+        if (collector.collected !== collector.options.max) this.incorrectResponse(dependencies, message, collector.collected)
       }
     })
 

@@ -28,7 +28,7 @@
     "messageCollector": {
       "time": "The command has been cancelled due to inactivity",
       "cancel": "Cancelled",
-      "limit": "",
-      "incorrectResponse": ""
+      "limit": "The 5 responses you provided were invalid",
+      "incorrectResponse": "The response you provided was invalid"
     }
 }
