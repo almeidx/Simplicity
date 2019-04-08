@@ -36,17 +36,21 @@ class AddEmoji extends Command {
       .setDescription('commands:addemoji.waitingResponse')
       .setThumbnail(image)
     const msg = await send(embed)
-    msg.delete({ timeout: 60000 })
 
-    MessageCollectorUtils.run({ msg, command: this, channel, author, send, t }, { cancel: t('commands:addemoji:cancelled') }, async () => {
+    const dependencies = { msg, command: this, channel, author, send, t }
+    const reponses = { cancel: t('commands:addemoji:cancelled') }
+
+    await MessageCollectorUtils.run(dependencies, reponses, async () => {
       const emoji = await guild.emojis.create(image, name).catch(() => null)
 
-      if (emoji) {
-        const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
-          .setTitle('commands:addemoji.success')
-          .setDescription('commands:addemoji.emojiCreated', { emoji: emoji.toString() })
-        return send(embed)
-      } else throw new CommandError('commands:addemoji.error')
+      const embedTitle = emoji ? 'errors:oops' : 'commands:addemoji.sucess'
+      const embedDescription = 'commands:addemoji.' + (emoji ? 'emojiCreated' : 'error')
+
+      const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
+        .setTitle(embedTitle)
+        .setDescription(embedDescription, { emoji: emoji.toString() })
+
+      return send(embed)
     })
   }
 }
