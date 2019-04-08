@@ -1,16 +1,18 @@
 {
     "botinfo": {
         "description": "This command shows you info about myself.",
-        "guildAndUsers": "Guilds | Users",
-        "channelsAndEmotes": "Channels | Emotes",
+        "guilds": "Total Guilds",
+        "users": "Total Users",
         "uptime": "Uptime",
         "commands": "Commands",
-        "os": "Operational System",
         "ping": "Ping",
         "links": "Links",
         "inviteBot": "Invite Bot",
         "prefix": "Prefix",
-        "developers": "Developers"
+        "developers": "Developers",
+        "ramUsage": "RAM Usage",
+        "discordjs": "Discord.js Version",
+        "nodejs": "Node.js Version"
     },
     "help": {
         "about": "{{- name }} is a bot with focus on moderation, utility, server management, and much more!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo see my commands, type **{{- prefix }}help <module>**",
