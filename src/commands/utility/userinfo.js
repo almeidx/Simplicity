@@ -123,7 +123,7 @@ function createEmbedSpotify (activity, embedOptions) {
     .setAuthor('commands:userinfo.spotify', SPOTIFY_LOGO_PNG_URL)
     .addField('» $$commands:userinfo.track', trackName, true)
     .addField('» $$commands:userinfo.artist', artist, true)
-    .addField('» $$commands:userinfo.album', album, true)
+    .addField('» $$commands:userinfo.album', album)
     .setColor('GREEN')
 
   if (image) embed.setThumbnail(image)
