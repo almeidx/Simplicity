@@ -62,7 +62,7 @@ class MessageCollectorUtils {
     const client = message.client
     const guild = message.guild
     const memberClient = guild && client && guild.member(client.user)
-    if (memberClient && message.channel.permissionsFor(memberClient).has('MANAGE_MESSAGS')) message.delete()
+    if (!message.deleted && memberClient && message.channel.permissionsFor(memberClient).has('MANAGE_MESSAGS')) message.delete()
   }
 }
 
