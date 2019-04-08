@@ -38,18 +38,19 @@ class AddEmoji extends Command {
     const msg = await send(embed)
 
     const dependencies = { msg, command: this, channel, author, send, t }
-    const reponses = { cancel: t('commands:addemoji:cancelled') }
+    const responses = { cancel: t('commands:addemoji:cancelled') }
 
-    await MessageCollectorUtils.run(dependencies, reponses, async () => {
-      const emoji = await guild.emojis.create(image, name).catch(() => null)
+    await MessageCollectorUtils.run(dependencies, responses, async () => {
+      const emoji = await guild.emojis.create(image, name).catch(error => { return send(t(`errors:${error.codo}`)) })
 
-      const embedTitle = emoji ? 'errors:oops' : 'commands:addemoji.sucess'
+      const embedTitle = emoji ? 'commands:addemoji.success' : 'errors:oops'
       const embedDescription = 'commands:addemoji.' + (emoji ? 'emojiCreated' : 'error')
+      const embedColor = emoji ? process.env.COLOR : 'RED'
 
-      const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
+      const embed = new SimplicityEmbed({ author, t }, { autoAuthor: !!emoji })
         .setTitle(embedTitle)
         .setDescription(embedDescription, { emoji: emoji.toString() })
-
+        .setColor(embedColor)
       return send(embed)
     })
   }
