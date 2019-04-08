@@ -21,15 +21,14 @@ class StringParameter extends Parameter {
     }, options.errors)
   }
 
-  static verifyExceptions (str, _, options = {}) {
+  static verifyExceptions (str, options = {}) {
     options = this.setupOptions(options)
-
     if (str.length > options.maxLength) throw new CommandError(options.errors.maxLength)
     if (str.length < options.minlength) throw new CommandError(options.errors.minLength)
     if (options.regex && options.regex.test(str)) throw new CommandError(options.errors.regex)
   }
 
-  static search (str, _, options) {
+  static search (str, _, options = {}) {
     options = this.setupOptions(options)
     return str || options.defaultString
   }

@@ -23,7 +23,7 @@ class UserParameter extends Parameter {
     }, options.errors)
   }
 
-  static verifyExceptions (user, { author }, exceptions = {}) {
+  static verifyExceptions (user, exceptions = {}, { author }) {
     exceptions = this.setupOptions(exceptions)
 
     if (!exceptions.canBeAuthor && user.id === author.id) throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true })

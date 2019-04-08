@@ -25,7 +25,7 @@ class Ban extends Command {
     const member = user && guild.member(user)
 
     if (member) {
-      await MemberParameter.verifyExceptions(member, { guild, memberAuthor, commandName: this.name }, optionsParameter)
+      await MemberParameter.verifyExceptions(member, optionsParameter, { guild, memberAuthor, commandName: this.name })
     } else {
       const bans = await guild.fetchBans()
       const alreadyBanned = bans && bans.get(user.id)

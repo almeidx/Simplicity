@@ -1,4 +1,5 @@
-const { Command, SimplicityEmbed, CommandError } = require('../..')
+const { Command, SimplicityEmbed, CommandError, Parameters } = require('../..')
+const { StringParameter } = Parameters
 
 class Prefix extends Command {
   constructor (client) {
@@ -9,19 +10,22 @@ class Prefix extends Command {
       permissions: ['MANAGE_GUILD'] }
   }
 
-  async run ({ author, client, guild, query: prefix, send, t }) {
-    const embed = new SimplicityEmbed({ author, t })
+  async run ({ author, client, guild, query, send, t }) {
+    const prefix = await StringParameter.parse(query, {
+      maxLength: 15,
+      minLength: 1,
+      errors: {
+        maxLength: 'commands:prefix.multiCharacters'
+      }
+    })
 
-    const amount = 15
-    if (prefix.length > amount) throw new CommandError('commands:prefix.multiCharacters', { amount })
-
-    const data = await client.database.guilds.edit(guild.id, { prefix })
+    const data = await client.database.guilds.edit(guild.id, { prefix }).catch(() => null)
     if (!data) throw new CommandError('commands:prefix.failed')
 
-    embed
+    const embed = new SimplicityEmbed({ author, t })
       .setTitle('commands:prefix.done')
       .setDescription('commands:prefix.success', { prefix })
-    return send(embed)
+    await send(embed)
   }
 }
 

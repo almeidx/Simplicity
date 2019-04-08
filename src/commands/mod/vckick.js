@@ -31,7 +31,7 @@ class VoiceKick extends Command {
       .setColor('RED')
 
     if (member) {
-      await MemberParameter.verifyExceptions(member, { guild, memberAuthor: member, commandName: this.name }, optionsParameter)
+      await MemberParameter.verifyExceptions(member, optionsParameter, { guild, memberAuthor: member, commandName: this.name })
     }
 
     if (!(member && member.voice && member.voice.channel)) throw new CommandError('errors:noVoiceChannel')

@@ -20,7 +20,7 @@ class MemberParameter extends UserParameter {
     }, options.errors)
   }
 
-  static async verifyExceptions (member, { guild, memberAuthor, commandName }, options = {}) {
+  static async verifyExceptions (member, options = {}, { guild, memberAuthor, commandName }) {
     options = this.setupOptions(options)
 
     await super.verifyExceptions(member.user, { author: memberAuthor.user }, options)
