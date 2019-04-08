@@ -7,7 +7,7 @@ class TextUtils {
    * @param {Object} options dependencies and translation options
    * @param {i18next.t} options.t
    * @param {CommandContext.emoji} options.emoji
-   * @param {Embed} options.embed
+   * @param {SimplicityEmbed} options.embed
    * @return {String}
    */
   static parse (text = '', options = {}) {

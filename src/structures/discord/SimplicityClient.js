@@ -1,7 +1,7 @@
 const { Client, Collection } = require('discord.js')
-const Loaders = require('../loaders')
-const Loggers = require('./Loggers')
-const Database = require('../database/Database')
+const Loaders = require('../../loaders')
+const Loggers = require('../Loggers')
+const Database = require('../../database/Database')
 const fs = require('fs')
 const Path = require('path')
 const { promisify } = require('util')
@@ -16,7 +16,7 @@ module.exports = class SimplicityClient extends Client {
     this.database = new Database(this)
 
     this.loadFiles()
-    this.initLocales(Path.join(__dirname, '../locales'))
+    this.initLocales(Path.join(__dirname, '../../locales'))
   }
 
   async loadFiles () {

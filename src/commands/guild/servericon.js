@@ -1,4 +1,4 @@
-const { Command, Embed, Utils } = require('../..')
+const { Command, SimplicityEmbed, Utils } = require('../..')
 
 class ServerIcon extends Command {
   constructor (client) {
@@ -10,7 +10,7 @@ class ServerIcon extends Command {
   run ({ author, guild, send, t }) {
     const guildIconURL = Utils.getServerIconURL(guild)
 
-    const embed = new Embed({ author, t })
+    const embed = new SimplicityEmbed({ author, t })
       .setDescription('commands:servericon:text', { guildIconURL })
       .setImage(guildIconURL)
 

@@ -1,5 +1,5 @@
 const LogUtils = require('../utils/LogUtils')
-const Embed = require('./Embed')
+const SimplicityEmbed = require('./discord/SimplicityEmbed')
 
 class Listener {
   constructor (client, logs = []) {
@@ -20,7 +20,7 @@ class Listener {
     const guild = this.client && guildID && this.client.guilds.get(guildID)
     const channelData = guild && await LogUtils.getChannel(this.client, guild, this.logs[0])
     if (channelData) {
-      if (content instanceof Embed) content.setTranslator(channelData.t)
+      if (content instanceof SimplicityEmbed) content.setTranslator(channelData.t)
       LogUtils.send(channelData.channel, content)
     }
   }

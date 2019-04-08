@@ -1,4 +1,4 @@
-const { Command, Embed } = require('../../')
+const { Command, SimplicityEmbed } = require('../../')
 const { exec } = require('child_process')
 const clean = (str) => typeof str === 'string' ? str.slice(0, 1020) + str.length >= 1024 ? '...' : str : str.toString().slice(0, 1020) + str.toString().length >= 1024 ? '...' : str.toString()
 
@@ -11,7 +11,7 @@ class Exec extends Command {
   }
 
   async run ({ author, emoji, send, query, t }) {
-    const embed = new Embed({ author, emoji, t })
+    const embed = new SimplicityEmbed({ author, emoji, t })
       .setDescription('utils:loading', { emoji: 'LOADING_EMOJI' })
 
     const msg = await send(embed)

@@ -1,4 +1,4 @@
-const { Embed, Command, MessageUtils, CommandError, MessageCollectorUtils, Parameters } = require('../..')
+const { SimplicityEmbed, Command, MessageUtils, CommandError, MessageCollectorUtils, Parameters } = require('../..')
 const { StringParameter } = Parameters
 
 const INVALID_CHARACTERS_REGEX = /[^a-z0-9_]/gi
@@ -32,7 +32,7 @@ class AddEmoji extends Command {
     const image = (await MessageUtils.getImage(message, totalLength)) || (await MessageUtils.fetchImage(channel))
     if (!image) throw new CommandError('commands:addemoji:noNameLink', { onUsage: true })
 
-    const embed = new Embed({ author, t }, { autoAuthor: false })
+    const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
       .setDescription('commands:addemoji.waitingResponse')
       .setThumbnail(image)
     const msg = await send(embed)
@@ -42,7 +42,7 @@ class AddEmoji extends Command {
       const emoji = await guild.emojis.create(image, name).catch(() => null)
 
       if (emoji) {
-        const embed = new Embed({ author, t }, { autoAuthor: false })
+        const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
           .setTitle('commands:addemoji.success')
           .setDescription('commands:addemoji.emojiCreated', { emoji: emoji.toString() })
         return send(embed)

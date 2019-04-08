@@ -1,4 +1,4 @@
-const { Command, Embed, CommandError, Parameters: { UserParameter } } = require('../../')
+const { Command, SimplicityEmbed, CommandError, Parameters: { UserParameter } } = require('../../')
 const { MessageAttachment } = require('discord.js')
 
 class Avatar extends Command {
@@ -15,7 +15,7 @@ class Avatar extends Command {
     const clientPermissions = channel.permissionsFor(guild.me)
 
     if (!guild || clientPermissions.has('EMBED_LINKS')) {
-      const embed = new Embed({ author })
+      const embed = new SimplicityEmbed({ author })
         .setAuthor(user)
         .setImage(avatarURL)
 

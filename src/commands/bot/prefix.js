@@ -1,4 +1,4 @@
-const { Command, Embed, CommandError } = require('../..')
+const { Command, SimplicityEmbed, CommandError } = require('../..')
 
 class Prefix extends Command {
   constructor (client) {
@@ -8,7 +8,7 @@ class Prefix extends Command {
   }
 
   async run ({ message, guild, query, send, t }) {
-    const embed = new Embed({ t, message })
+    const embed = new SimplicityEmbed({ t, message })
 
     if (query.length > 15) throw new CommandError('commands:prefix.multiCharacters', { count: 15 })
 

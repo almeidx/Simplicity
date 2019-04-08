@@ -1,4 +1,4 @@
-const { Embed, LogUtils } = require('../src')
+const { SimplicityEmbed, LogUtils } = require('../src')
 
 async function voiceStateUpdate (oldState, newState) {
   const { channel, t } = await LogUtils.getChannel(this, oldState.guild, 'JOIN_AND_LEAVE')
@@ -8,7 +8,7 @@ async function voiceStateUpdate (oldState, newState) {
     const oldChannel = oldState.channel && `**${oldState.channel.name}**`
     const newChannel = newState.channel && `**${newState.channel.name}**`
 
-    const embed = new Embed({ t })
+    const embed = new SimplicityEmbed({ t })
       .setTimestamp()
       .setAuthor(user.tag, user.displayAvatarURL())
       .setFooter(user.id)

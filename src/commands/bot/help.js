@@ -1,4 +1,4 @@
-const { Command, Embed, PermissionsUtils } = require('../../')
+const { Command, SimplicityEmbed, PermissionsUtils } = require('../../')
 
 class Help extends Command {
   constructor (client) {
@@ -11,7 +11,7 @@ class Help extends Command {
     const categories = this.client.categories
     const name = this.client.user.username
 
-    const embed = new Embed({ t, author })
+    const embed = new SimplicityEmbed({ t, author })
       .setAuthor(this.client.user)
 
     if (args.length === 0) {

@@ -1,5 +1,4 @@
-const { MessageEmbed } = require('discord.js')
-const { Command } = require('../../')
+const { Command, SimplicityEmbed } = require('../../')
 
 class Unban extends Command {
   constructor (client) {
@@ -10,7 +9,7 @@ class Unban extends Command {
   }
 
   run ({ author, send, guild, t, args }) {
-    const embed = new MessageEmbed()
+    const embed = new SimplicityEmbed()
       .setAuthor(author.username, author.displayAvatarURL({ size: 2048 }))
       .setColor('RED')
 
