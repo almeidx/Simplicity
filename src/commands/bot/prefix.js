@@ -4,23 +4,24 @@ class Prefix extends Command {
   constructor (client) {
     super(client)
     this.category = 'bot'
-    this.requirements = { argsRequired: true, permissions: ['MANAGE_ROLE'] }
+    this.requirements = {
+      argsRequired: true,
+      permissions: ['MANAGE_GUILD'] }
   }
 
-  async run ({ message, guild, query, send, t }) {
-    const embed = new SimplicityEmbed({ t, message })
+  async run ({ author, client, guild, query: prefix, send, t }) {
+    const embed = new SimplicityEmbed({ author, t })
 
-    if (query.length > 15) throw new CommandError('commands:prefix.multiCharacters', { count: 15 })
+    const amount = 15
+    if (prefix.length > amount) throw new CommandError('commands:prefix.multiCharacters', { amount })
 
-    const data = await this.client.database.guilds.edit(guild.id, { prefix: query })
-
+    const data = await client.database.guilds.edit(guild.id, { prefix })
     if (!data) throw new CommandError('commands:prefix.failed')
 
     embed
       .setTitle('commands:prefix.done')
-      .setDescription('commands:prefix.success', { prefix: query })
-
-    send(embed)
+      .setDescription('commands:prefix.success', { prefix })
+    return send(embed)
   }
 }
 
