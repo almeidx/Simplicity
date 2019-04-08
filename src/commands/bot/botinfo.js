@@ -1,4 +1,4 @@
-const { Command, Embed } = require('../../')
+const { Command, SimplicityEmbed } = require('../../')
 const { version } = require('discord.js')
 const moment = require('moment')
 require('moment-duration-format')
@@ -17,7 +17,7 @@ class BotInfo extends Command {
     const RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)
     const PLATFORM = process.platform[0].toUpperCase() + process.platform.slice(1)
 
-    const embed = new Embed({ author, guild, t, emoji })
+    const embed = new SimplicityEmbed({ author, guild, t, emoji })
       .setTitle('commands:botinfo.title')
       .setThumbnail(this.client.user.displayAvatarURL({ size: 2048 }))
       .addField('Ping', `${Math.round(guild.shard.ping)}ms`, true, { emoji: 'PING' })
