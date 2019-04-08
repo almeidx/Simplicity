@@ -16,7 +16,7 @@ class MessageCollectorUtils {
       } else if (this.checkContent(message, 'cancel')) {
         collector.stop('cancel')
       } else {
-        this.incorrectResponse(dependencies, message, collector.collected)
+        if (collector.collected !== collector.option.max) this.incorrectResponse(dependencies, message, collector.collected)
       }
     })
 
