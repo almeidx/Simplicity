@@ -1,4 +1,4 @@
-const { Command, Embed, Constants, Parameters: { UserParameter }, PermissionsUtils } = require('../../')
+const { Command, SimplicityEmbed, Constants, Parameters: { UserParameter }, PermissionsUtils } = require('../../')
 const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = Constants
 const moment = require('moment')
 
@@ -38,7 +38,7 @@ class UserInfo extends Command {
     const activity = presence && presence.activity
     const activityType = activity && activity.type && activity.name
 
-    const embed = new Embed({ author, t, emoji, autoAuthor: false })
+    const embed = new SimplicityEmbed({ author, t, emoji, autoAuthor: false })
       .setAuthor(titles.join(' '), user.displayAvatarURL())
       .setThumbnail(user)
       .addField('» $$commands:userinfo.username', user.tag, true)
@@ -119,7 +119,7 @@ function createEmbedSpotify (activity, embedOptions) {
   const album = activity.assets && activity.assets.largeText
   const image = activity.assets && activity.assets.largeImage && `https://i.scdn.co/image/${activity.assets.largeImage.replace('spotify:', '')}`
 
-  const embed = new Embed(embedOptions)
+  const embed = new SimplicityEmbed(embedOptions)
     .setAuthor('commands:userinfo.spotify', SPOTIFY_LOGO_PNG_URL)
     .addField('» $$commands:userinfo.track', trackName, true)
     .addField('» $$commands:userinfo.artist', artist, true)
@@ -132,7 +132,7 @@ function createEmbedSpotify (activity, embedOptions) {
 
 function createEmbedRoles (roles, user, embedOptions) {
   const role = roles && roles.find(r => r.color)
-  return new Embed(embedOptions)
+  return new SimplicityEmbed(embedOptions)
     .setAuthor('» $$commands:userinfo.authorRoles', user.displayAvatarURL(), '', { user: user.username })
     .setDescription(roles.join('\n'))
     .setColor(role ? role.color : process.env.COLOR)

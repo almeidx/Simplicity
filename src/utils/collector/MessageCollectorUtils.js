@@ -1,4 +1,4 @@
-const SimplicityEmbed = require('../../structures/Embed')
+const SimplicityEmbed = require('../../structures/discord/SimplicityEmbed')
 
 class MessageCollectorUtils {
   static run (dependencies, responses, callback) {

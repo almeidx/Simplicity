@@ -1,4 +1,4 @@
-const { Embed, LogUtils, Constants } = require('../src')
+const { SimplicityEmbed, LogUtils, Constants } = require('../src')
 const clean = (str) => str.slice(0, 1020) + str.length >= 1024 ? '...' : str
 
 async function messageDelete (message) {
@@ -6,7 +6,7 @@ async function messageDelete (message) {
   const user = message.author
 
   if (channel) {
-    const embed = new Embed({ t })
+    const embed = new SimplicityEmbed({ t })
       .setTimestamp()
       .setAuthor(user.tag, user.displayAvatarURL())
       .setFooter(`ID: ${user.id}`, user.displayAvatarURL())

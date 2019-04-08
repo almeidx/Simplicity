@@ -1,4 +1,4 @@
-const { Command, Embed, CommandError } = require('../..')
+const { Command, SimplicityEmbed, CommandError } = require('../..')
 
 class Prefix extends Command {
   constructor (client) {
@@ -10,17 +10,17 @@ class Prefix extends Command {
   }
 
   async run ({ author, client, guild, query: prefix, send, t }) {
-    const embed = new Embed({ author, t })
+    const embed = new SimplicityEmbed({ author, t })
 
     const amount = 15
-    if (prefix.length > count) throw new CommandError('commands:prefix.multiCharacters', { amount })
+    if (prefix.length > amount) throw new CommandError('commands:prefix.multiCharacters', { amount })
 
     const data = await client.database.guilds.edit(guild.id, { prefix })
     if (!data) throw new CommandError('commands:prefix.failed')
 
     embed
       .setTitle('commands:prefix.done')
-      .setDescription('commands:prefix.success', { prefix: query })
+      .setDescription('commands:prefix.success', { prefix })
     return send(embed)
   }
 }

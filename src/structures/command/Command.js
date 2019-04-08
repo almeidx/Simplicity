@@ -1,5 +1,5 @@
 const Requirements = require('./Requirements')
-const Embed = require('../Embed')
+const SimplicityEmbed = require('../discord/SimplicityEmbed')
 const CommandError = require('./CommandError')
 const RunStore = require('./stores/RunStore')
 
@@ -39,14 +39,14 @@ class Command {
           `» Guild: ${guild ? guild.name + ` [${guild.id}]` : 'DM'}`,
           `» Message: ${message.content} *[${message.id}]*`
         ]
-        const embedError = new Embed(null, { type: 'error' })
+        const embedError = new SimplicityEmbed(null, { type: 'error' })
           .addField('» Info', `**${infos.join('\n')}**`)
           .addField('» Error', `**» ID: ${error.message}\n\`\`\`js\n${error.stack}\n\`\`\`**`)
         channelError.send(embedError)
       }
     }
 
-    const embed = new Embed({ t, author })
+    const embed = new SimplicityEmbed({ t, author })
       .setError()
       .setDescription(t([error.message, 'errors:errorCommand'], error.options))
 

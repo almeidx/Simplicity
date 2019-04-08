@@ -1,4 +1,5 @@
-const { Command, Embed, Utils } = require('../..'), moment = require('moment')
+const { Command, SimplicityEmbed, Utils } = require('../..')
+const moment = require('moment')
 
 class ServerInfo extends Command {
   constructor (client) {
@@ -26,10 +27,10 @@ class ServerInfo extends Command {
 
     const guildIconURL = Utils.getServerIconURL(guild)
     const emojis = guild.emojis && guild.emojis.size
-    const owner = guild.owner && guild.owner.user.tag || t('commands:serverinfo.unknown')
+    const owner = (guild.owner && guild.owner.user.tag) || t('commands:serverinfo.unknown')
     const date = moment(guild.createdAt)
 
-    const embed = new Embed({ author, guild, t })
+    const embed = new SimplicityEmbed({ author, guild, t })
       .setThumbnail(guildIconURL)
       .addField('» $$commands:serverinfo.name', guild.name, true)
       .addField('» $$commands:serverinfo.id', guild.id, true)
@@ -81,7 +82,7 @@ class ServerInfo extends Command {
 
 function createEmbedRoles (roles, guild, embedOptions) {
   const guildIconURL = Utils.getServerIconURL(guild)
-  return new Embed(embedOptions)
+  return new SimplicityEmbed(embedOptions)
     .setAuthor('$$commands:serverinfo.roles', guildIconURL, '', { totalRoles: roles.length })
     .setDescription(roles.join('\n'))
     .setColor(process.env.COLOR)

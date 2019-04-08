@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { Listener, Embed } = require('../../../index')
+const { Listener, SimplicityEmbed } = require('../../../index')
 
 class GuildMemberAdd extends Listener {
   constructor (client) {
@@ -11,7 +11,7 @@ class GuildMemberAdd extends Listener {
     const user = member.user
 
     this.sendMessage('channel_log_start', // falta adicionar o coiso no Listener.js para a database
-      new Embed({ t })
+      new SimplicityEmbed({ t })
         .setTimestamp()
         .setColor(process.env.COLOR)
         .setAuthor(user.tag, user.displayAvatarURL())

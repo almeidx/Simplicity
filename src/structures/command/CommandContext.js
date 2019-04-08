@@ -1,5 +1,5 @@
 const Constants = require('../../utils/Constants')
-const Embed = require('../Embed')
+const SimplicityEmbed = require('../discord/SimplicityEmbed')
 const TextUtils = require('../../utils/TextUtils')
 const { MessageAttachment } = require('discord.js')
 
@@ -56,7 +56,7 @@ class CommandContext {
   }
 
   _executeMessage (embed, msg) {
-    if (embed instanceof Embed) {
+    if (embed instanceof SimplicityEmbed) {
       const permissions = this.channel.permissionsFor(this.guild.me)
       const embedPermission = permissions.has('EMBED_LINKS')
       if (!embed.text && !embedPermission) {

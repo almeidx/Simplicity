@@ -1,4 +1,4 @@
-const { Command, CommandError, Embed } = require('../../')
+const { Command, CommandError, SimplicityEmbed } = require('../../')
 
 class Clear extends Command {
   constructor (client) {
@@ -9,7 +9,7 @@ class Clear extends Command {
   }
 
   async run ({ author, channel, send, t, query }) {
-    const embed = new Embed({ t, author })
+    const embed = new SimplicityEmbed({ t, author })
     const total = parseInt(query)
 
     if (!total || total < 2 || total > 100) throw new CommandError('commands:clear.invalidValue')

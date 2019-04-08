@@ -1,4 +1,4 @@
-const { Command, Embed, Parameters: { MemberParameter, UserParameter }, CommandError } = require('../../')
+const { Command, SimplicityEmbed, Parameters: { MemberParameter, UserParameter }, CommandError } = require('../../')
 const missingError = 'errors:invalidUser'
 const optionsParameter = {
   required: true,
@@ -27,7 +27,7 @@ class VoiceKick extends Command {
 
     if (!user) throw new CommandError(missingError)
 
-    const embed = new Embed({ author, t })
+    const embed = new SimplicityEmbed({ author, t })
       .setColor('RED')
 
     if (member) {
@@ -38,7 +38,7 @@ class VoiceKick extends Command {
     else {
       const oldChannelName = member.voice.channel.name
       const channelName = t('commands:vckick.voiceKicked', { user: author.tag })
-      const reason = t('commands:vckick.reason', { author: author.tag, user: user.tag})
+      const reason = t('commands:vckick.reason', { author: author.tag, user: user.tag })
 
       const channel = await guild.channels.create(channelName, {
         type: 'voice',
