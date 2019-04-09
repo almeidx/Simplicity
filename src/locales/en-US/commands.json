@@ -168,7 +168,8 @@
             "p"
         ],
         "failed": "Failed to edit the information into the database",
-        "langChanged": "The server language has been changed to {{- value }}",
+        "langChanged": "The server language has been changed to **{{- value }}**",
+        "prefixChanged": "The server prefix has been changed to **{{- value }}**",
         "invalidLanguage": "The language you provided isn't valid"
     },
     "ascii": {

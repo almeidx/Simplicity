@@ -36,12 +36,12 @@ class Config extends Command {
     } else if (langArray.includes(key)) {
       if (value) {
         if (botLanguages.includes(value)) {
-          const edited = await client.database.guilds.edit(guild.id, { lang: value }).catch(() => null)
+          const edited = await client.database.guilds.edit(guild.id, {lang: value}).catch(() => null)
           if (!edited) throw new CommandError('commands:config.failed')
           else {
             embed
               .setTitle('utils:success')
-              .setDescription('commands:config.langChanged', { value })
+              .setDescription('commands:config.langChanged', {value})
             return send(embed)
           }
         } else {
@@ -54,7 +54,25 @@ class Config extends Command {
         return send(embed)
       }
     } else if (prefixArray.includes(key)) {
-      send('prefix')
+      if (value) {
+        if (value.length <= 15) {
+          const edited = await client.database.guilds.edit(guild.id, { prefix: value }).catch(() => null)
+          if (!edited) throw new CommandError('commands:config.failed')
+          else {
+            embed
+              .setTitle('utils:success')
+              .setDescription('commands:config.prefixChanged', { value })
+            return send(embed)
+          }
+        } else {
+          throw new CommandError('commands:prefix.multiCharacters')
+        }
+      } else {
+        embed
+          .setTitle('commands:config.prefix')
+          .setDescription(data.prefix || process.env.PREFIX)
+        return send(embed)
+      }
     } else {
       embed
         .addField('» $$commands:config.prefix', data.prefix || process.env.PREFIX)
