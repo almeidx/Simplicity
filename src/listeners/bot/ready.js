@@ -1,4 +1,4 @@
-const { Embed, Listener } = require('../..')
+const { SimplicityEmbed, Listener } = require('../..')
 
 class Ready extends Listener {
   constructor (client) {
@@ -10,7 +10,7 @@ class Ready extends Listener {
 
     client.user.setActivity(`@${client.user.username} help`).catch(e => console.error(e))
     this.sendMessage('channel_log_start',
-      new Embed()
+      new SimplicityEmbed()
         .setDescription(`Logged on ${client.guilds.size} guilds with ${client.users.size} users`)
         .setTimestamp()
         .setColor('GREEN')

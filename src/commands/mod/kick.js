@@ -1,4 +1,4 @@
-const { Command, Embed, CommandError } = require('../../')
+const { Command, SimplicityEmbed, CommandError } = require('../../')
 const ID_REGEX = /^([0-9]{16,18})/g
 
 class Kick extends Command {
@@ -33,7 +33,7 @@ class Kick extends Command {
     const reason = query.replace(new RegExp(`^(${guilty}|${id})`, 'g'), '').trim() || t('errors:noReason')
     await guilty.kick(`${author.tag} [${author.id}] | ${reason}`)
 
-    const embed = new Embed({ t, author })
+    const embed = new SimplicityEmbed({ t, author })
       .setTitle('commands:kick.success')
       .setDescription('commands:kick.userKicked', { user: guilty })
       .addField('commands:kick.kickedBy', author, true)

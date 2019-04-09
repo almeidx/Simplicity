@@ -1,4 +1,4 @@
-const { Listener, Embed } = require('../../')
+const { Listener, SimplicityEmbed } = require('../../')
 
 class UserUpdate extends Listener {
   constructor (client) {
@@ -10,7 +10,7 @@ class UserUpdate extends Listener {
     if (oldUser.displayAvatarURL() !== newUser.displayAvatarURL()) {
       client.guilds.filter(guild => guild.members.get(oldUser.id)).forEach(guild => {
         this.sendMessage('channel_log_start', // falta adicionar o coiso no Listener.js para a database
-          new Embed({ t })
+          new SimplicityEmbed({ t })
             .setTimestamp()
             .setAuthor(newUser.tag, newUser.displayAvatarURL())
             .setImage(newUser.displayAvatarURL({ size: 2048 }))

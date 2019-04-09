@@ -23,5 +23,12 @@
     "prefix": "My prefix on this server is: `{{- prefix }}`",
     "loading": "Loading...",
     "question": "Type **{{- confirm }}** to continue. Else, type **{{- cancel }}**",
-    "commandTimedout": "The command has been cancelled due to inactivity"
+    "commandTimedout": "The command has been cancelled due to inactivity",
+    "cancelled": "Cancelled",
+    "messageCollector": {
+      "time": "The command has been cancelled due to inactivity",
+      "cancel": "Cancelled",
+      "limit": "The {{ amount }} responses you provided were invalid",
+      "incorrectResponse": "The response you provided was invalid"
+    }
 }

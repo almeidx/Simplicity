@@ -17,7 +17,7 @@
         "commandUndefined": "Este comando não existe ou está desativado!"
     },
     "prefix": {
-        "multiCharacters": "O meu novo prefixo não pode ter mais de {{- count }} caracteres!",
+        "multiCharacters": "O meu novo prefixo não pode ter mais de 15 caracteres!",
         "done": "Pronto!",
         "sucess": "O meu prefixo neste servidor foi alterado para: `{{- prefix }}`",
         "oops": "Oops!",

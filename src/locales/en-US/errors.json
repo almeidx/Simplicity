@@ -19,5 +19,6 @@
     "nsfwChannel": "This command can only be used in NSFW Channels!",
     "noReason": "No reason provided.",
     "canBeBotRole": "The role you provided cannot be a bot role!",
-    "invalidCharacters": "Invalid characters"
+    "invalidCharacters": "Invalid characters",
+    "50035": "There are no more emoji slots available"
 }

@@ -1,4 +1,4 @@
-const { Embed, Listener, Loggers } = require('../..')
+const { SimplicityEmbed, Listener, Loggers } = require('../..')
 
 class ErrorListener extends Listener {
   constructor (client) {
@@ -8,7 +8,7 @@ class ErrorListener extends Listener {
   on (client, error) {
     Loggers.error('Error', error)
     this.sendMessage('channel_log_error',
-      new Embed(client.user, { type: 'error' })
+      new SimplicityEmbed(client.user, { type: 'error' })
         .setDescription(error.stack))
   }
 }

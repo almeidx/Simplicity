@@ -1,8 +1,5 @@
-const { Command, Embed } = require('../..'), moment = require('moment')
-const getServerIconURL = (g) => {
-  if (g.iconURL()) return g.iconURL({ format: 'png', size: 2048 })
-  else return `https://guild-default-icon.herokuapp.com/${g.nameAcronym}`
-}
+const { Command, SimplicityEmbed, Utils } = require('../..')
+const moment = require('moment')
 
 class ServerInfo extends Command {
   constructor (client) {
@@ -28,12 +25,12 @@ class ServerInfo extends Command {
     const roles = guild.roles && guild.roles.sort((a, b) => b.position - a.position).map(r => r).slice(0, -1)
     const rolesClean = roles && roles.map(r => r.name || r.toString())
 
-    const guildIconURL = getServerIconURL(guild)
+    const guildIconURL = Utils.getServerIconURL(guild)
     const emojis = guild.emojis && guild.emojis.size
-    const owner = guild.owner && guild.owner.user.tag || t('commands:serverinfo.unknown')
+    const owner = (guild.owner && guild.owner.user.tag) || t('commands:serverinfo.unknown')
     const date = moment(guild.createdAt)
 
-    const embed = new Embed({ author, guild, t })
+    const embed = new SimplicityEmbed({ author, guild, t })
       .setThumbnail(guildIconURL)
       .addField('» $$commands:serverinfo.name', guild.name, true)
       .addField('» $$commands:serverinfo.id', guild.id, true)
@@ -84,8 +81,8 @@ class ServerInfo extends Command {
 }
 
 function createEmbedRoles (roles, guild, embedOptions) {
-  const guildIconURL = getServerIconURL(guild)
-  return new Embed(embedOptions)
+  const guildIconURL = Utils.getServerIconURL(guild)
+  return new SimplicityEmbed(embedOptions)
     .setAuthor('$$commands:serverinfo.roles', guildIconURL, '', { totalRoles: roles.length })
     .setDescription(roles.join('\n'))
     .setColor(process.env.COLOR)

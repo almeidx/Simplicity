@@ -1,4 +1,4 @@
-const { Command, Embed, Parameters: { MemberParameter, UserParameter }, CommandError } = require('../../')
+const { Command, SimplicityEmbed, Parameters: { MemberParameter, UserParameter }, CommandError } = require('../../')
 const missingError = 'errors:invalidUser'
 const optionsParameter = {
   required: false,
@@ -25,7 +25,7 @@ class Ban extends Command {
     const member = user && guild.member(user)
 
     if (member) {
-      await MemberParameter.verifyExceptions(member, { guild, memberAuthor, commandName: this.name }, optionsParameter)
+      await MemberParameter.verifyExceptions(member, optionsParameter, { guild, memberAuthor, commandName: this.name })
     } else {
       const bans = await guild.fetchBans()
       const alreadyBanned = bans && bans.get(user.id)
@@ -43,7 +43,7 @@ class Ban extends Command {
       return ''
     }) || 'errors:noReason'
 
-    const embed = new Embed({ t })
+    const embed = new SimplicityEmbed({ t })
       .setDescription('utils:question', { confirm: 'yes', cancel: 'not' })
     const msg = await send(embed)
     const wordsContinue = ['y', 'yes', 'sim', 's', 'continue']
@@ -68,7 +68,7 @@ class Ban extends Command {
       } else {
         await guild.users.ban(user.id, { reason, days })
         return send(
-          new Embed({ t })
+          new SimplicityEmbed({ t })
             .setTitle('commands:ban.success')
             .setDescription('commands:ban.userBanned', { member })
             .addField('commands:ban.bannedBy', `${memberAuthor}`, true)

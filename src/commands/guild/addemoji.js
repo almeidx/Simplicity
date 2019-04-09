@@ -1,8 +1,19 @@
-const { Command, MessageUtils, CommandError } = require('../..')
-const { MessageAttachment } = require('discord.js')
+const { SimplicityEmbed, Command, MessageUtils, CommandError, MessageCollectorUtils, Parameters } = require('../..')
+const { StringParameter } = Parameters
 
-const VALID_CHARACTERS_REGEX = /[a-z0-9_]/gi
 const INVALID_CHARACTERS_REGEX = /[^a-z0-9_]/gi
+
+const options = {
+  defaultString: 'emoji',
+  maxLength: 32,
+  minLength: 2,
+  regex: INVALID_CHARACTERS_REGEX,
+  errors: {
+    maxLength: 'commands:addemoji:nameTooBig',
+    minLength: 'commands:addemoji:nameTooShort',
+    regex: 'commands:addemoji:nameInvalid'
+  }
+}
 
 class AddEmoji extends Command {
   constructor (client) {
@@ -16,24 +27,32 @@ class AddEmoji extends Command {
       clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS'] }
   }
 
-  async run ({ message, totalLength, channel, send, args: [name], author }) {
+  async run ({ args, author, channel, message, send, totalLength, t, guild }) {
+    const name = await StringParameter.parse(args[0], options)
     const image = (await MessageUtils.getImage(message, totalLength)) || (await MessageUtils.fetchImage(channel))
-
     if (!image) throw new CommandError('commands:addemoji:noNameLink', { onUsage: true })
 
-    const nameEmoji = name || t('commands:addemoji.emojiBy', { user: author.tag})
-    if (nameEmoji.length >= 32) throw new CommandError('commands:addemoji:nameTooBig')
-    if (nameEmoji.length <= 2) throw new CommandError('commands:addemoji:nameTooShort')
+    const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
+      .setDescription('commands:addemoji.waitingResponse')
+      .setThumbnail(image)
+    const msg = await send(embed)
 
-    if (INVALID_CHARACTERS_REGEX.test(nameEmoji)) {
-      const invalidCharacters = name.replace(VALID_CHARACTERS_REGEX, '').split('').filter((e, i, ar) => ar.indexOf(e) === i).join('')
-      throw new CommandError('commands:addemoji:nameInvalid')
-        .addField('errors:invalidCharacters', `**${invalidCharacters}**`)
-    }
+    const dependencies = { msg, command: this, channel, author, send, t }
+    const responses = { cancel: t('commands:addemoji:cancelled') }
 
-    const filter = (r, u) => r.me && author.id === u.id
-    const collector = channel.createMessageCollector(filter, { errors: ['time'], time: 60000 })
+    await MessageCollectorUtils.run(dependencies, responses, async () => {
+      const emoji = await guild.emojis.create(image, name).catch(error => { return send(t(`errors:${error.codo}`)) })
 
+      const embedTitle = emoji ? 'commands:addemoji.success' : 'errors:oops'
+      const embedDescription = 'commands:addemoji.' + (emoji ? 'emojiCreated' : 'error')
+      const embedColor = emoji ? process.env.COLOR : 'RED'
+
+      const embed = new SimplicityEmbed({ author, t }, { autoAuthor: !!emoji })
+        .setTitle(embedTitle)
+        .setDescription(embedDescription, { emoji: emoji.toString() })
+        .setColor(embedColor)
+      return send(embed)
+    })
   }
 }
 

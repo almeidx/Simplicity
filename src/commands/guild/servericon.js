@@ -1,24 +1,20 @@
-const { Command, Embed } = require('../..')
-const getServerIconURL = (g) => {
-  if (g.iconURL()) return g.iconURL({ format: 'png', size: 2048 })
-  else return `https://guild-default-icon.herokuapp.com/${g.nameAcronym}`
-}
+const { Command, SimplicityEmbed, Utils } = require('../..')
 
 class ServerIcon extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['svicon']
+    this.aliases = ['svicon', 'sicon']
     this.category = 'guild'
   }
 
   run ({ author, guild, send, t }) {
-    const guildIconURL = getServerIconURL(guild)
+    const guildIconURL = Utils.getServerIconURL(guild)
 
-    const embed = new Embed({ author, t })
+    const embed = new SimplicityEmbed({ author, t })
       .setDescription('commands:servericon:text', { guildIconURL })
       .setImage(guildIconURL)
 
-    send(embed)
+    return send(embed)
   }
 }
 

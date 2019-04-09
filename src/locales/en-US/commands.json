@@ -1,13 +1,18 @@
 {
     "botinfo": {
         "description": "This command shows you info about myself.",
-        "title": "Bot Information",
-        "guildAndUsers": "Guilds | Users",
-        "channelsAndEmotes": "Channels | Emotes",
+        "guilds": "Total Guilds",
+        "users": "Total Users",
         "uptime": "Uptime",
         "commands": "Commands",
-        "pings": "Last Pings",
-        "os": "Operational System"
+        "ping": "Ping",
+        "links": "Links",
+        "inviteBot": "Invite Bot",
+        "prefix": "Prefix",
+        "developers": "Developers",
+        "ramUsage": "RAM Usage",
+        "discordjs": "Discord.js Version",
+        "nodejs": "Node.js Version"
     },
     "help": {
         "about": "{{- name }} is a bot with focus on moderation, utility, server management, and much more!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo see my commands, type **{{- prefix }}help <module>**",
@@ -20,7 +25,7 @@
     "prefix": {
         "description": "This command sets my prefix on the server the command was used!",
         "usage": "<prefix>",
-        "multiCharacters": "My new prefix can\\'t have more than {{- count }} characters!",
+        "multiCharacters": "My new prefix can\\'t have more than 15 characters!",
         "done": "Done!",
         "success": "My prefix on this server has been changed to: `{{- prefix }}`",
         "oops": "Oops!",
@@ -72,7 +77,10 @@
         "invalidURL": "The URL you provided was not a valid url.",
         "emojiCreated": "The {{- emoji }} emoji has been created!",
         "error": "There was an error when creating the emoji.",
-        "emojiBy": "Emoji by: {{- user }}"
+        "reason": "Responsible user: {{- author.tag }} [{{- author.id }}]",
+        "success": "Emoji Created",
+        "cancelled": "The emoji creation has been cancelled.",
+        "waitingResponse": "If you want to create the emoji, send \"**confirm**\", else, send \"**cancel**\""
     },
     "clear": {
         "description": "This command clears messages from the chat.",
@@ -139,8 +147,10 @@
     "vckick": {
         "description": "This command lets you kick members of voice channels.",
         "usage": "[mention/id] <reason>",
-        "success": "{{- auth }} has kicked {{- memb }} from a Voice Channel.",
-        "action": "voice kick"
+        "success": "{{- author }} kicked {{- user }} from a the **{{- voiceChannel }}** voice channel",
+        "action": "voice kick",
+        "voiceKicked": "Voice Kicked by: {{- user }}",
+        "reason": "{{- author }} | Voice kicked:  {{- user }}"
     },
     "config": {
         "description": "This command is the basis to config the bot on your server.",

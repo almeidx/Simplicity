@@ -1,4 +1,4 @@
-const { Listener, Embed } = require('../../')
+const { Listener, SimplicityEmbed } = require('../../')
 
 class GuildCreate extends Listener {
   constructor (client) {
@@ -10,7 +10,7 @@ class GuildCreate extends Listener {
     const owner = guild.owner
 
     this.sendMessage('guild_join',
-      new Embed()
+      new SimplicityEmbed()
         .setAuthor(owner.user.tag, owner.user.displayAvatarURL())
         .addField('Guild Name', guild.name, true)
         .addField('Guild ID', guild.id, true)

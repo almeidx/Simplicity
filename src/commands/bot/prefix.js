@@ -1,26 +1,31 @@
-const { Command, Embed, CommandError } = require('../..')
+const { Command, SimplicityEmbed, CommandError, Parameters } = require('../..')
+const { StringParameter } = Parameters
 
 class Prefix extends Command {
   constructor (client) {
     super(client)
     this.category = 'bot'
-    this.requirements = { argsRequired: true, permissions: ['MANAGE_ROLE'] }
+    this.requirements = {
+      argsRequired: true,
+      permissions: ['MANAGE_GUILD'] }
   }
 
-  async run ({ message, guild, query, send, t }) {
-    const embed = new Embed({ t, message })
+  async run ({ author, client, guild, query, send, t }) {
+    const prefix = await StringParameter.parse(query, {
+      maxLength: 15,
+      minLength: 1,
+      errors: {
+        maxLength: 'commands:prefix.multiCharacters'
+      }
+    })
 
-    if (query.length > 15) throw new CommandError('commands:prefix.multiCharacters', { count: 15 })
-
-    const data = await this.client.database.guilds.edit(guild.id, { prefix: query })
-
+    const data = await client.database.guilds.edit(guild.id, { prefix }).catch(() => null)
     if (!data) throw new CommandError('commands:prefix.failed')
 
-    embed
+    const embed = new SimplicityEmbed({ author, t })
       .setTitle('commands:prefix.done')
-      .setDescription('commands:prefix.success', { prefix: query })
-
-    send(embed)
+      .setDescription('commands:prefix.success', { prefix })
+    await send(embed)
   }
 }
 

@@ -24,7 +24,7 @@ class RoleParameter extends Parameter {
     }, options.errors)
   }
   
-  static verifyExceptions (role, { guild }, exceptions = {}) {
+  static verifyExceptions (role, exceptions = {}, { guild }) {
     exceptions = this.setupOptions(exceptions)
 
     const higherRole = guild.me.roles.highest.position > role.position
