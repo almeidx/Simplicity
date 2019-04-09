@@ -30,5 +30,6 @@
       "cancel": "Cancelled",
       "limit": "The {{ amount }} responses you provided were invalid",
       "incorrectResponse": "The response you provided was invalid"
-    }
+    },
+    "success": "Success"
 }

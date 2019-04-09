@@ -1,44 +1,65 @@
-const { MessageEmbed } = require('discord.js')
-const { Command } = require('../..')
+const { Command, CommandError, SimplicityEmbed } = require('../..')
 
 class Config extends Command {
   constructor (client) {
     super(client)
     this.category = 'bot'
+    this.aliases = ['configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration']
     this.WIP = true
     this.requirements = { permissions: ['MANAGE_GUILD'] }
   }
 
-  async run ({ message, guild, query, args, send, prefix, t }) {
-    const embed = new MessageEmbed()
+  async run ({ args, author, client, guild, send, t }) {
+    const embed = new SimplicityEmbed({ author, t })
 
-    if (query.length === 0) {
-      embed.setTitle(t('commands:config.serverConfig'))
-        .addField(t('commands:config.channel'), `${prefix}config \`channel\` #channel`)
-      return send(embed)
+    let data = await client.database.guilds.get(guild.id)
+    if (!data) data = await client.database.guilds.create(guild.id)
+
+    const key = args[0] && args[0].toLowerCase()
+    const value = args[1]
+    const botLanguages = Object.keys(client.i18next.store.data)
+
+    const langArray = []
+    for (let x = 0; x < 3; x++) {
+      langArray.push(t(`commands:config.languageKeys.${x}`))
+    }
+    const prefixArray = []
+    for (let x = 0; x < 2; x++) {
+      prefixArray.push(t(`commands:config.prefixKeys.${x}`))
     }
 
-    if (args[0].toLowerCase === ('channel' || 'canal' || 'chan')) {
-      const chan = message.mentions.channels.first()
-
-      if (chan) {
-        try {
-          await this.client.database.guilds.edit(guild.id, { channel: chan.id })
-
-          embed
-            .setTitle('commands:config.done')
-            .setDescription(t('commands:config.sucess', { prefix: query }))
-
-          send(embed)
-        } catch (err) {
-          embed
-            .setTitle('commands:config.oops')
-            .setDescription('commands:config.failed')
-
-          send(embed, { error: true })
-          console.log(err)
+    if (!key) {
+      embed
+        .addField('» $$commands:config.prefix', data.prefix || process.env.PREFIX)
+        .addField('» $$commands:config.language', data.lang || process.env.DEFAULT_LANG)
+      return send(embed)
+    } else if (langArray.includes(key)) {
+      if (value) {
+        if (botLanguages.includes(value)) {
+          const edited = await client.database.guilds.edit(guild.id, { lang: value }).catch(() => null)
+          if (!edited) throw new CommandError('commands:config.failed')
+          else {
+            embed
+              .setTitle('utils:success')
+              .setDescription('commands:config.langChanged', { value })
+            return send(embed)
+          }
+        } else {
+          throw new CommandError('commands:config.invalidLanguage')
         }
+      } else {
+        embed
+          .setTitle('commands:config.language')
+          .setDescription(data.lang || process.env.DEFAULT_LANG)
+        return send(embed)
       }
+    } else if (prefixArray.includes(key)) {
+      send('prefix')
+    } else {
+      embed
+        .addField('» $$commands:config.prefix', data.prefix || process.env.PREFIX)
+        .addField('» $$commands:config.language', data.lang || process.env.DEFAULT_LANG)
+      return send(embed)
     }
   }
 }

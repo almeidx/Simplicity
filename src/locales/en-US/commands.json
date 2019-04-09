@@ -155,8 +155,21 @@
     "config": {
         "description": "This command is the basis to config the bot on your server.",
         "usage": "<module> <statement>",
-        "serverConfig": "Server Configuration",
-        "channel": "Logging Channel"
+        "channel": "Logging Channel",
+        "prefix": "Prefix",
+        "language": "Language",
+        "languageKeys": [
+            "lang",
+            "language",
+            "l"
+        ],
+        "prefixKeys": [
+            "prefix",
+            "p"
+        ],
+        "failed": "Failed to edit the information into the database",
+        "langChanged": "The server language has been changed to {{- value }}",
+        "invalidLanguage": "The language you provided isn't valid"
     },
     "ascii": {
         "description": "This command translates normal text into ascii format.",
