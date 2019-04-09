@@ -49,7 +49,7 @@ class Config extends Command {
         }
       } else {
         embed
-          .setTitle('commands:config.language')
+          .setTitle('» $$commands:config.language')
           .setDescription(data.lang || process.env.DEFAULT_LANG)
         return send(embed)
       }
@@ -69,7 +69,7 @@ class Config extends Command {
         }
       } else {
         embed
-          .setTitle('commands:config.prefix')
+          .setTitle('» $$commands:config.prefix')
           .setDescription(data.prefix || process.env.PREFIX)
         return send(embed)
       }
