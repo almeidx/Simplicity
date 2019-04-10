@@ -1,4 +1,5 @@
 const { Command, SimplicityEmbed, Parameters: { MemberParameter, UserParameter }, CommandError } = require('../../')
+
 const missingError = 'errors:invalidUser'
 const optionsParameter = {
   required: true,
@@ -14,11 +15,11 @@ class VoiceKick extends Command {
     super(client)
     this.aliases = ['voicekick', 'vkick']
     this.category = 'mod'
+    this.WIP = true
     this.requirements = {
       argsRequired: true,
       permissions: ['KICK_MEMBERS'],
-      clientPermissions: ['MANAGE_CHANNELS', 'MOVE_MEMBERS']
-    }
+      clientPermissions: ['MANAGE_CHANNELS', 'MOVE_MEMBERS'] }
   }
 
   async run ({ args, author, client, guild, message, member: memberAuthor, send, t }) {

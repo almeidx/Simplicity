@@ -31,7 +31,7 @@ class BotInfo extends Command {
       .addField('» $$commands:botinfo.discordjs', version, true)
       .addField('» $$commands:botinfo.nodejs', process.versions.node, true)
       .addField('» $$commands:botinfo.commands', this.client.commands.size, true)
-      .addField('» $$commands:botinfo.links', `#bot [$$commands:botinfo.inviteBot ](${link})`, true)
+      .addField('» $$commands:botinfo.links', `#bot_tag [$$commands:botinfo.inviteBot ](${link})`, true)
       .addField('» $$commands:botinfo.developers', OWNERS)
       .addField('» $$commands:botinfo.uptime', UPTIME)
     return send(embed)

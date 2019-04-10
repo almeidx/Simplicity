@@ -182,5 +182,10 @@
         "description": "This command sends the emoji image but bigger.",
         "usage": "<emoji>",
         "error": "The emoji was invalid."
+    },
+    "say": {
+        "description": "Makes the bot repeat a message of your choise",
+        "usage": "<message>",
+        "error": "You need to insert a message"
     }
 }
