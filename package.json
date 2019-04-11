@@ -21,7 +21,7 @@
     "discord.js": "git+https://github.com/discordjs/discord.js.git#master",
     "dotenv": "^7.0.0",
     "eslint": "^5.15.3",
-    "i18next": "^13.1.2",
+    "i18next": "^15.0.9",
     "i18next-node-fs-backend": "^2.1.2",
     "moment": "^2.23.0",
     "moment-duration-format": "^2.2.2",
