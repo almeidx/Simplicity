@@ -11,12 +11,12 @@ class Language extends Command {
       permissions: ['MANAGE_GUILD'] }
   }
 
-  async run ({ author, client, guild, query: lang, send, t }) {
-    const botLanguages = Object.keys(client.i18next.store.data).map(i => `\`${i}\``).join(', ')
-    if (!botLanguages.includes(lang)) throw new CommandError('commands:language.invalidLang', { botLanguages })
+  async run ({ author, client, guild, language, query, send, t }) {
+    const languages = Object.keys(client.i18next.store.data)
+    const lang = languages.find(i => i.toLowerCase() === query.toLowerCase())
+    if (!lang) throw new CommandError('commands:language.invalidLang', { botLanguages: languages.map(i => `\`${i}\``).join(', ') })
 
-    const currentLanguage = await client.database.guilds.get(guild.id).then(i => i.lang).catch(() => null)
-    if (currentLanguage && lang === currentLanguage) throw new CommandError('commands:language.alreadySet', { lang })
+    if (language === lang) throw new CommandError('commands:language.alreadySet', { lang })
 
     const data = await client.database.guilds.edit(guild.id, { lang }).catch(() => null)
     if (!data) throw new CommandError('commands:language.failed')
