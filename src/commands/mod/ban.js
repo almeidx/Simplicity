@@ -44,7 +44,7 @@ class Ban extends Command {
     }) || 'errors:noReason'
 
     const embed = new SimplicityEmbed({ t })
-      .setDescription('utils:question', { confirm: 'yes', cancel: 'not' })
+      .setDescription('common:question', { confirm: 'yes', cancel: 'not' })
     const msg = await send(embed)
     const wordsContinue = ['y', 'yes', 'sim', 's', 'continue']
     const wordsCancel = ['n', 'não', 'not', 'cancel']
@@ -80,7 +80,7 @@ class Ban extends Command {
 
     collector.once('end', () => {
       deleteMessages()
-      embed.setDescription('utils:commandTimedout')
+      embed.setDescription('common:commandTimedout')
       send(embed)
     })
   }
