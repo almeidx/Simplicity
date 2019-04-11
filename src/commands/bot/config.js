@@ -36,12 +36,12 @@ class Config extends Command {
     } else if (langArray.includes(key)) {
       if (value) {
         if (botLanguages.includes(value)) {
-          const edited = await client.database.guilds.edit(guild.id, {lang: value}).catch(() => null)
+          const edited = await client.database.guilds.edit(guild.id, { lang: value }).catch(() => null)
           if (!edited) throw new CommandError('commands:config.failed')
           else {
             embed
               .setTitle('utils:success')
-              .setDescription('commands:config.langChanged', {value})
+              .setDescription('commands:config.langChanged', { value })
             return send(embed)
           }
         } else {

@@ -29,7 +29,7 @@
         "done": "Done!",
         "success": "My prefix on this server has been changed to: `{{- prefix }}`",
         "oops": "Oops!",
-        "failed": "Sadly, something wen't wrong while trying to update the servers prefix!\nPlease, try again later."
+        "failed": "Sadly, something wen't wrong while trying to update the server's prefix!\nPlease, try again later."
     },
     "servericon": {
         "description": "This command shows the server icon.",
@@ -187,5 +187,14 @@
         "description": "Makes the bot repeat a message of your choise",
         "usage": "<message>",
         "error": "You need to insert a message"
+    },
+    "language": {
+        "description": "This command sets my language on the server the command was used!",
+        "usage": "<language>",
+        "success": "My language has been changed to **{{- lang }}**",
+        "failed": "Sadly, something wen't wrong while trying to update the server's language!\nPlease, try again later.",
+        "done": "Done!",
+        "invalidLang": "The language you provided is invalid.\n**Valid languages:** {{- botLanguages}}",
+        "alreadySet": "My language is already set to **{{- lang }}**"
     }
 }
