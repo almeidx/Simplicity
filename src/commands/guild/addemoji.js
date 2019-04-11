@@ -48,8 +48,8 @@ class AddEmoji extends Command {
       const embedColor = emoji ? process.env.COLOR : 'RED'
 
       const embed = new SimplicityEmbed({ author, t }, { autoAuthor: !!emoji })
-        .setTitle(embedTitle)
         .setDescription(embedDescription, { emoji: emoji.toString() })
+        .setTitle(embedTitle)
         .setColor(embedColor)
       return send(embed)
     })
