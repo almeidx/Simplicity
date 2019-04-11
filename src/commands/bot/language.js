@@ -3,6 +3,7 @@ const { Command, CommandError, SimplicityEmbed } = require('../..')
 class Language extends Command {
   constructor (client) {
     super(client)
+    this.name = 'language'
     this.aliases = ['lang', 'l', 'botlanguage']
     this.category = 'bot'
     this.requirements = {
