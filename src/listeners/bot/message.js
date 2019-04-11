@@ -17,7 +17,7 @@ class Message extends Listener {
     const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.toLowerCase().startsWith(prefix.toLowerCase()) ? prefix : null)
 
     if (message.content === botMention) {
-      return message.reply(client.i18next.getFixedT(language)('utils:prefix', { prefix: prefix }))
+      return message.reply(client.i18next.getFixedT(language)('common:prefix', { prefix: prefix }))
     }
 
     if (usedPrefix) {

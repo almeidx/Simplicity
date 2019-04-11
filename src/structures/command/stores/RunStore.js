@@ -25,8 +25,7 @@ class RunStore extends Map {
 
   has (channelID, userID) {
     const data = this.get(userID)
-    const hasChannelID = data && data.has(channelID)
-    return hasChannelID
+    return data && data.has(channelID)
   }
 }
 

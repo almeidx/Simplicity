@@ -28,7 +28,7 @@ class MessageCollectorUtils {
 
   static incorrectResponse ({ send, t }, message, collected, messages) {
     const embed = new SimplicityEmbed(t)
-      .setDescription('utils:messageCollector:incorrectResponse', { count: collected.size })
+      .setDescription('common:messageCollector:incorrectResponse', { count: collected.size })
       .setText('@description')
 
     send(embed).then(m => {
@@ -52,9 +52,9 @@ class MessageCollectorUtils {
     messages.forEach(m => this.deleteMessage(m))
 
     responses = Object.assign({
-      time: t('utils:messageCollector.time'),
-      cancel: t('utils:messageCollector.cancel'),
-      limit: t('utils:messageCollector.limit', { amount })
+      time: t('common:messageCollector.time'),
+      cancel: t('common:messageCollector.cancel'),
+      limit: t('common:messageCollector.limit', { amount })
     }, responses)
 
     const response = responses[reasonParam]

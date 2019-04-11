@@ -3,7 +3,7 @@ require('moment-duration-format')
 
 class Utils {
   static convertDateLang (t, time) {
-    return moment.duration(time).format(`D[ ${t('utils:date.days')}], H[ ${t('utils:date.hours')}], m[ ${t('utils:date.minutes')}], s[ ${t('utils:date.seconds')}]`)
+    return moment.duration(time).format(`D[ ${t('common:date.days')}], H[ ${t('common:date.hours')}], m[ ${t('common:date.minutes')}], s[ ${t('common:date.seconds')}]`)
   }
   static getImageHex (hex) {
     return `http://www.colourlovers.com/img/${hex}/200/200/Sminted.png`

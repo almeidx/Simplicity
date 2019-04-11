@@ -4,7 +4,7 @@ const CommandError = require('./CommandError')
 const RunStore = require('./stores/RunStore')
 
 class Command {
-  constructor (client) {
+  constructor (client, options = {}) {
     this.client = client
     this.name = 'none'
     this.category = 'none'
@@ -12,7 +12,15 @@ class Command {
     this.WIP = false
     this.requirements = null
     this.responses = {}
+    this.subcommands = []
     this.running = new RunStore()
+    this.setup(options)
+  }
+
+  setup (options) {
+    if (options.aliases) {
+      options.aliases.forEach(e => this.aliases.push(e))
+    }
   }
 
   async run () {}
@@ -21,11 +29,26 @@ class Command {
     if (this.WIP) this.requirements = typeof this.requirements === 'object' ? this.requirements['ownerOnly'] = true : { ownerOnly: true }
     const requirements = new Requirements(this.requirements, this.responses)
     try {
+      const subcommand = context.args[0] && this.getSubCommand(context.args[0].toLowerCase())
+      if (subcommand) {
+        await this.runSubCommand(subcommand, context)
+        return
+      }
       await requirements.handle(context)
       await this.run(context)
     } catch (e) {
       return this.sendError(context, e)
     }
+  }
+
+  getSubCommand (name) {
+    return this.subcommands.length > 0 && this.subcommands.find(i => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)))
+  }
+
+  runSubCommand (subcommand, context) {
+    context.query = context.query.replace(context.args[0], '').slice(1)
+    context.args = context.args.slice(1)
+    return subcommand._run(context)
   }
 
   sendError ({ t, author, prefix, channel, guild, message, send }, error) {

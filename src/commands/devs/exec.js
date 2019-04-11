@@ -12,7 +12,7 @@ class Exec extends Command {
 
   async run ({ author, emoji, send, query, t }) {
     const embed = new SimplicityEmbed({ author, emoji, t })
-      .setDescription('utils:loading', { emoji: 'LOADING_EMOJI' })
+      .setDescription('common:loading', { emoji: 'LOADING_EMOJI' })
 
     const msg = await send(embed)
 

@@ -29,7 +29,7 @@
         "done": "Done!",
         "success": "My prefix on this server has been changed to: `{{- prefix }}`",
         "oops": "Oops!",
-        "failed": "Sadly, something wen't wrong while trying to update the servers prefix!\nPlease, try again later."
+        "failed": "Sadly, something wen't wrong while trying to update the server's prefix!\nPlease, try again later."
     },
     "servericon": {
         "description": "This command shows the server icon.",
@@ -155,8 +155,22 @@
     "config": {
         "description": "This command is the basis to config the bot on your server.",
         "usage": "<module> <statement>",
-        "serverConfig": "Server Configuration",
-        "channel": "Logging Channel"
+        "channel": "Logging Channel",
+        "prefix": "Prefix",
+        "language": "Language",
+        "languageKeys": [
+            "lang",
+            "language",
+            "l"
+        ],
+        "prefixKeys": [
+            "prefix",
+            "p"
+        ],
+        "failed": "Failed to edit the information into the database",
+        "langChanged": "The server language has been changed to **{{- value }}**",
+        "prefixChanged": "The server prefix has been changed to **{{- value }}**",
+        "invalidLanguage": "The language you provided isn't valid"
     },
     "ascii": {
         "description": "This command translates normal text into ascii format.",
@@ -168,5 +182,19 @@
         "description": "This command sends the emoji image but bigger.",
         "usage": "<emoji>",
         "error": "The emoji was invalid."
+    },
+    "say": {
+        "description": "Makes the bot repeat a message of your choise",
+        "usage": "<message>",
+        "error": "You need to insert a message"
+    },
+    "language": {
+        "description": "This command sets my language on the server the command was used!",
+        "usage": "<language>",
+        "success": "My language has been changed to **{{- lang }}**",
+        "failed": "Sadly, something wen't wrong while trying to update the server's language!\nPlease, try again later.",
+        "done": "Done!",
+        "invalidLang": "The language you provided is invalid.\n**Valid languages:** {{- botLanguages}}",
+        "alreadySet": "My language is already set to **{{- lang }}**"
     }
 }

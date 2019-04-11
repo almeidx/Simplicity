@@ -46,7 +46,7 @@ module.exports = class SimplicityClient extends Client {
     this.i18next
       .use(translationBackend)
       .init({
-        ns: [ 'categories', 'commands', 'errors', 'permissions', 'utils', 'loggers' ],
+        ns: [ 'categories', 'commands', 'errors', 'permissions', 'common', 'loggers' ],
         preload: await readdir(path),
         fallbackLng: 'en-US',
         defaultNS: 'commands',

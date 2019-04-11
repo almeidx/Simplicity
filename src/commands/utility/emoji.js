@@ -1,7 +1,8 @@
 const { Command, CommandError, RegexEmojis } = require('../../')
-const { MessageAttachment } = require('discord.js'), fetch = require('node-fetch')
+const { MessageAttachment } = require('discord.js')
+const fetch = require('node-fetch')
 
-const ANIMATED_EMOJI_REGEX = /<a:/gi
+const ANIMATED_EMOJI_REGEX = /^<a:/
 
 class Emoji extends Command {
   constructor (client) {
@@ -12,7 +13,7 @@ class Emoji extends Command {
     this.responses = { argsRequired: 'commands:emoji.error' }
   }
 
-  async run ({ args, channel, send }) {
+  async run ({ args, send }) {
     let result
     let type = 'png'
 
@@ -29,9 +30,9 @@ class Emoji extends Command {
     const resultFetchURL = customUrl && await fetch(customUrl).then((r) => r.status !== 404).catch(() => null)
 
     if (resultFetchURL) result = customUrl
-  
+
     const attachment = result && new MessageAttachment(result, `emoji.${type}`)
-  
+
     if (!result || !attachment) throw new CommandError('commands:emoji.error')
 
     return send(attachment)

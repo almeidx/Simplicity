@@ -27,7 +27,7 @@ class Eval extends Command {
       if (toEval) console.warn(['COMMAND', 'EVAL-RESULT'], toEval)
     } catch (error) {
       embed
-        .setDescription(value('js', error.stack))
+        .setDescription(value('js', error))
         .setColor('RED')
 
       console.error(['COMMAND', 'EVAL-RESULT'], error)

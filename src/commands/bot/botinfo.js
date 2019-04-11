@@ -12,7 +12,7 @@ class BotInfo extends Command {
   }
 
   async run ({ author, client, emoji, guild, send, t }) {
-    const UPTIME = moment.duration(this.client.uptime).format(`D[ ${t('utils:date.days')}], H[ ${t('utils:date.hours')}], m[ ${t('utils:date.minutes')}], s[ ${t('utils:date.seconds')}]`)
+    const UPTIME = moment.duration(this.client.uptime).format(`D[ ${t('common:date.days')}], H[ ${t('common:date.hours')}], m[ ${t('common:date.minutes')}], s[ ${t('common:date.seconds')}]`)
     const RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)
 
     const link = `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=379968`
@@ -31,7 +31,7 @@ class BotInfo extends Command {
       .addField('» $$commands:botinfo.discordjs', version, true)
       .addField('» $$commands:botinfo.nodejs', process.versions.node, true)
       .addField('» $$commands:botinfo.commands', this.client.commands.size, true)
-      .addField('» $$commands:botinfo.links', `#bot [$$commands:botinfo.inviteBot ](${link})`, true)
+      .addField('» $$commands:botinfo.links', `#bot_tag [$$commands:botinfo.inviteBot ](${link})`, true)
       .addField('» $$commands:botinfo.developers', OWNERS)
       .addField('» $$commands:botinfo.uptime', UPTIME)
     return send(embed)
