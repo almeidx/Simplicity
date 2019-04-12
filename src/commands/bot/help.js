@@ -3,7 +3,7 @@ const { Command, SimplicityEmbed, PermissionsUtils } = require('../../')
 class Help extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['h', 'commands']
+    this.aliases = [ 'h', 'commands' ]
     this.category = 'bot'
   }
 

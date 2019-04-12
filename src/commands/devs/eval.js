@@ -5,9 +5,11 @@ const value = (lang, code) => `\`\`\`${lang}\n${String(code).slice(0, 2045) + (c
 class Eval extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['compile', 'ev', 'evaluate']
+    this.aliases = [ 'compile', 'ev', 'evaluate' ]
     this.category = 'dev'
-    this.requirements = { ownerOnly: true, argsRequired: true }
+    this.requirements = {
+      ownerOnly: true,
+      argsRequired: true }
   }
 
   async run ({ author, client, guild, channel, member, language, command, prefix, message, query, send, args, t, emoji }) {

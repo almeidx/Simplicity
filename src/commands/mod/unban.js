@@ -5,7 +5,10 @@ class Unban extends Command {
     super(client)
     this.aliases = ['ub']
     this.category = 'mod'
-    this.requirements = { argsRequired: true, permissions: ['BAN_MEMBERS'], clientPermissions: ['BAN_MEMBERS'] }
+    this.requirements = {
+      argsRequired: true,
+      permissions: [ 'BAN_MEMBERS' ],
+      clientPermissions: [ 'BAN_MEMBERS' ] }
   }
 
   run ({ author, send, guild, t, args }) {

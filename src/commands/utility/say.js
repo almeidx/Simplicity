@@ -3,7 +3,7 @@ const { Command } = require('../../')
 class Say extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['send']
+    this.aliases = [ 'send' ]
     this.category = 'util'
     this.requirements = { argsRequired: true }
     this.responses = { argsRequired: 'commands:say.error' }

@@ -5,9 +5,11 @@ const clean = (str) => typeof str === 'string' ? str.slice(0, 1020) + str.length
 class Exec extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['execute', 'run']
+    this.aliases = [ 'execute', 'run' ]
     this.category = 'dev'
-    this.requirements = { argsRequired: true, ownerOnly: true }
+    this.requirements = {
+      argsRequired: true,
+      ownerOnly: true }
   }
 
   async run ({ author, emoji, send, query, t }) {

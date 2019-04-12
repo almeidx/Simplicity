@@ -5,7 +5,10 @@ class Kick extends Command {
   constructor (client) {
     super(client)
     this.category = 'mod'
-    this.requirements = { argsRequired: true, permissions: ['KICK_MEMBERS'], clientPermissions: ['KICK_MEMBERS'] }
+    this.requirements = {
+      argsRequired: true,
+      permissions: [ 'KICK_MEMBERS' ],
+      clientPermissions: [ 'KICK_MEMBERS' ] }
   }
 
   async run ({ author, guild, send, message, member, t, query }) {

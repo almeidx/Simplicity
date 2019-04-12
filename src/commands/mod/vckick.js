@@ -13,13 +13,13 @@ const optionsParameter = {
 class VoiceKick extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['voicekick', 'vkick']
+    this.aliases = [ 'voicekick', 'vkick' ]
     this.category = 'mod'
     this.WIP = true
     this.requirements = {
       argsRequired: true,
-      permissions: ['KICK_MEMBERS'],
-      clientPermissions: ['MANAGE_CHANNELS', 'MOVE_MEMBERS'] }
+      permissions: [ 'KICK_MEMBERS' ],
+      clientPermissions: [ 'MANAGE_CHANNELS', 'MOVE_MEMBERS' ] }
   }
 
   async run ({ args, author, client, guild, message, member: memberAuthor, send, t }) {

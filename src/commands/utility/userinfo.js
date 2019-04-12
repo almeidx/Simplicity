@@ -5,9 +5,9 @@ const moment = require('moment')
 class UserInfo extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['ui', 'user']
+    this.aliases = [ 'ui', 'user' ]
     this.category = 'util'
-    this.requirements = { clientPermissions: ['EMBED_LINKS'] }
+    this.requirements = { clientPermissions: [ 'EMBED_LINKS' ] }
   }
 
   async run ({ author, client, channel, emoji, guild, query, send, t }) {

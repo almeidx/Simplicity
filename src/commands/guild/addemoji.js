@@ -18,13 +18,13 @@ const options = {
 class AddEmoji extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['createmoji', 'createemoji']
+    this.aliases = [ 'createmoji', 'createemoji' ]
     this.category = 'guild'
     this.requirements = {
       argsRequired: true,
       guildOnly: true,
-      permissions: ['MANAGE_EMOJIS'],
-      clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS'] }
+      permissions: [ 'MANAGE_EMOJIS' ],
+      clientPermissions: [ 'EMBED_LINKS', 'MANAGE_EMOJIS' ] }
   }
 
   async run ({ args, author, channel, message, send, totalLength, t, guild }) {

@@ -7,7 +7,7 @@ class Prefix extends Command {
     this.category = 'bot'
     this.requirements = {
       argsRequired: true,
-      permissions: ['MANAGE_GUILD'] }
+      permissions: [ 'MANAGE_GUILD' ] }
   }
 
   async run ({ author, client, guild, query, send, t }) {

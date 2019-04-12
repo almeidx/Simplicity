@@ -4,7 +4,7 @@ const { MessageAttachment } = require('discord.js')
 class Avatar extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['av']
+    this.aliases = [ 'av' ]
     this.category = 'util'
   }
 

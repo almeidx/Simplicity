@@ -3,7 +3,7 @@ const { Command, SimplicityEmbed, Utils } = require('../..')
 class ServerIcon extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['svicon', 'sicon']
+    this.aliases = [ 'svicon', 'sicon' ]
     this.category = 'guild'
   }
 
