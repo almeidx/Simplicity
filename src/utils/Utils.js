@@ -15,13 +15,13 @@ class Utils {
     else return `https://guild-default-icon.herokuapp.com/${guild.nameAcronym}`
   }
 
-  static getJoinPosition (ID, guild) {
-    if (!guild.member(ID)) return
+  static getJoinPosition (id, guild) {
+    if (!guild.member(id)) return
 
     const array = guild.members.array()
     array.sort((a, b) => a.joinedAt - b.joinedAt)
 
-    const result = array.map((m, i) => { return { index: i, id: m.user.id } }).find(m => m.id === ID)
+    const result = array.map((m, i) => { return { index: i, id: m.user.id } }).find(m => m.id === id)
     return (result && result.index) || null
   }
 }
