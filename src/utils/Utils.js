@@ -21,9 +21,8 @@ class Utils {
     const array = guild.members.array()
     array.sort((a, b) => a.joinedAt - b.joinedAt)
   
-    for (let index = 0; index < array.length; index++) {
-      if (array[index].id === ID) return index
-    }
+    const result = array.map((m, i) => { return { index: i, id: m.user.id } }).find(m => m.id === ID)
+    return (result && result.index) || null
   }
 }
 
