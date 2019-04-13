@@ -51,8 +51,8 @@ class UserInfo extends Command {
 
     if (status) embed.addField('» $$commands:userinfo.status', `#${presence.status} $$common:status.${presence.status}`, true)
     if (highestRole && roles.length > 5) embed.addField('» $$commands:userinfo.highestRole', highestRole.name || highestRole.toString(), true)
-    if (rolesClean && rolesClean.length <= 5 && rolesClean.join(', ')) embed.addField('» $$commands:userinfo.roles', rolesClean.join(', '), true)
     if (activityType) embed.addField('» $$common:activityType.' + activity.type, activity.name, true)
+    if (rolesClean && rolesClean.length <= 5 && rolesClean.join(', ')) embed.addField('» $$commands:userinfo.roles', rolesClean.join(', '), true)
     if (joinPosition) embed.addField('» $$commands:userinfo.joinPosition', joinPosition, true)
 
     embed.addField('» $$commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`)
@@ -69,10 +69,10 @@ class UserInfo extends Command {
 
     const message = await send(embed)
 
-    const permissions = channel.permissionsFor(guild.me)
+    const checkPermissions = (p) => channel.permissionsFor(guild.me).has(p)
     const spotifyRestriction = activity && (activity.type === 'LISTENING') && activity.party && activity.party.id && activity.party.id.includes('spotify:')
 
-    if (permissions.has('ADD_REACTIONS')) {
+    if (checkPermissions('ADD_REACTIONS') && checkPermissions('READ_MESSAGE_HISTORY')) {
       let spotify, role
 
       if (spotifyRestriction && !user.bot) {
@@ -102,14 +102,14 @@ class UserInfo extends Command {
           const name = emoji.id || emoji.name
           const checkEmbed = (e) => e.author.name === message.embeds[0].author.name
 
-          if (permissions.has('MANAGE_MESSAGES')) await users.remove(user.id)
+          if (checkPermissions('MANAGE_MESSAGES')) await users.remove(user.id)
           if (spotify && name === spotify.emoji && !checkEmbed(spotify.embed)) await message.edit(spotify.embed)
           if (name === userinfoEmoji && !checkEmbed(embed)) await message.edit(embed)
           if (role && name === role.emoji && !checkEmbed(role.embed)) await message.edit(role.embed)
         })
 
         collector.on('end', async () => {
-          if (message && permissions.has('MANAGE_MESSAGES')) await message.reactions.removeAll().catch(() => {})
+          if (message && checkPermissions('MANAGE_MESSAGES')) await message.reactions.removeAll().catch(() => {})
         })
       }
     }

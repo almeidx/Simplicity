@@ -31,7 +31,7 @@ module.exports = {
     'BACK': '↩',
     'CROWN': '👑',
     'BOT': '🤖',
-    'DEVELOPER': '🛠',
+    'DEVELOPER': '⚒️',
     'ROLES': '📜',
     'PHOTO': '🖼'
   },

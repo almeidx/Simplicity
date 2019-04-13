@@ -20,7 +20,7 @@ class Utils {
 
     const array = guild.members.array()
     array.sort((a, b) => a.joinedAt - b.joinedAt)
-  
+
     const result = array.map((m, i) => { return { index: i, id: m.user.id } }).find(m => m.id === ID)
     return (result && result.index) || null
   }

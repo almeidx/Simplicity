@@ -1,4 +1,4 @@
-const { Command, CommandError, SimplicityEmbed } = require('../../')
+const { Command, SimplicityEmbed } = require('../../')
 const { exec } = require('child_process')
 const clean = (str) => str.toString().slice(0, 1020) + str.toString().length >= 1024 ? '...' : str.toString()
 
@@ -12,9 +12,9 @@ class Exec extends Command {
       ownerOnly: true }
   }
 
-  async run ({ author, emoji, query, send, t }) {
+  run ({ author, emoji, query, send, t }) {
     const embed = new SimplicityEmbed({ author, emoji, t }, { autoAuthor: false })
-  
+
     exec(query, (error, stdout) => {
       if (error) {
         embed
@@ -22,8 +22,7 @@ class Exec extends Command {
           .setDescription(clean(error))
           .setError()
         return send(embed)
-      }
-      else {
+      } else {
         embed
           .setTitle('» $$commands:exec.result')
           .setDescription(clean(stdout))
