@@ -4,11 +4,11 @@ class Language extends Command {
   constructor (client) {
     super(client)
     this.name = 'language'
-    this.aliases = ['lang', 'l', 'botlanguage']
+    this.aliases = [ 'lang', 'l', 'botlanguage' ]
     this.category = 'bot'
     this.requirements = {
       argsRequired: true,
-      permissions: ['MANAGE_GUILD'] }
+      permissions: [ 'MANAGE_GUILD' ] }
   }
 
   async run ({ author, client, guild, language, query, send, t }) {

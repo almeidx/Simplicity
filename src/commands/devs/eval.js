@@ -1,13 +1,15 @@
-const { Command, SimplicityEmbed } = require('../../')
+const { Command, CommandError, SimplicityEmbed } = require('../../')
 const { inspect } = require('util')
 const value = (lang, code) => `\`\`\`${lang}\n${String(code).slice(0, 2045) + (code.length >= 2045 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length))
 
 class Eval extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['compile', 'ev', 'evaluate']
+    this.aliases = [ 'compile', 'ev', 'evaluate' ]
     this.category = 'dev'
-    this.requirements = { ownerOnly: true, argsRequired: true }
+    this.requirements = {
+      ownerOnly: true,
+      argsRequired: true }
   }
 
   async run ({ author, client, guild, channel, member, language, command, prefix, message, query, send, args, t, emoji }) {

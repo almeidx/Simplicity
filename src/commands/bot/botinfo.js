@@ -6,9 +6,9 @@ require('moment-duration-format')
 class BotInfo extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['bi']
+    this.aliases = [ 'bi' ]
     this.category = 'bot'
-    this.requirements = { clientPermissions: ['EMBED_LINKS'] }
+    this.requirements = { clientPermissions: [ 'EMBED_LINKS' ] }
   }
 
   async run ({ author, client, emoji, guild, send, t }) {

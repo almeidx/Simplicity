@@ -1,13 +1,14 @@
-const { Command, SimplicityEmbed, Constants, Parameters: { UserParameter }, PermissionsUtils } = require('../../')
+const { Command, SimplicityEmbed, Constants, Parameters, PermissionsUtils, Utils } = require('../../')
 const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = Constants
+const { UserParameter } = Parameters
 const moment = require('moment')
 
 class UserInfo extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['ui', 'user']
+    this.aliases = [ 'ui', 'user' ]
     this.category = 'util'
-    this.requirements = { clientPermissions: ['EMBED_LINKS'] }
+    this.requirements = { clientPermissions: [ 'EMBED_LINKS' ] }
   }
 
   async run ({ author, client, channel, emoji, guild, query, send, t }) {
@@ -23,6 +24,7 @@ class UserInfo extends Command {
     if (PermissionsUtils.verifyDev(user.id, client)) titles.push(`#developer`)
     if (user.bot) titles.push(`#bot`)
 
+    const joinPosition = Utils.getJoinPosition(user.id, guild)
     const member = guild && guild.member(user)
     const nickname = member && member.nickname
     const created = moment(user.createdAt)
@@ -51,6 +53,7 @@ class UserInfo extends Command {
     if (highestRole && roles.length > 5) embed.addField('» $$commands:userinfo.highestRole', highestRole.name || highestRole.toString(), true)
     if (rolesClean && rolesClean.length <= 5 && rolesClean.join(', ')) embed.addField('» $$commands:userinfo.roles', rolesClean.join(', '), true)
     if (activityType) embed.addField('» $$common:activityType.' + activity.type, activity.name, true)
+    if (joinPosition) embed.addField('» $$commands:userinfo.joinPosition', joinPosition, true)
 
     embed.addField('» $$commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`)
 

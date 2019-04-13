@@ -3,9 +3,12 @@ const { Command, CommandError, SimplicityEmbed } = require('../../')
 class Clear extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['purge', 'prune', 'clean']
+    this.aliases = [ 'purge', 'prune', 'clean' ]
     this.category = 'mod'
-    this.requirements = { argsRequired: true, permissions: ['MANAGE_MESSAGES'], clientPermissions: ['MANAGE_MESSAGES'] }
+    this.requirements = {
+      argsRequired: true,
+      permissions: [ 'MANAGE_MESSAGES' ],
+      clientPermissions: [ 'MANAGE_MESSAGES' ] }
   }
 
   async run ({ author, channel, send, t, query }) {
