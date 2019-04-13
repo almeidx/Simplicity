@@ -1,6 +1,6 @@
-const { Command, SimplicityEmbed } = require('../../')
+const { Command, CommandError, SimplicityEmbed } = require('../../')
 const { exec } = require('child_process')
-const clean = (str) => typeof str === 'string' ? str.slice(0, 1020) + str.length >= 1024 ? '...' : str : str.toString().slice(0, 1020) + str.toString().length >= 1024 ? '...' : str.toString()
+const clean = (str) => str.toString().slice(0, 1020) + str.toString().length >= 1024 ? '...' : str.toString()
 
 class Exec extends Command {
   constructor (client) {
@@ -12,22 +12,22 @@ class Exec extends Command {
       ownerOnly: true }
   }
 
-  async run ({ author, emoji, send, query, t }) {
-    const embed = new SimplicityEmbed({ author, emoji, t })
-      .setDescription('common:loading', { emoji: 'LOADING_EMOJI' })
-
-    const msg = await send(embed)
-
+  async run ({ author, emoji, query, send, t }) {
+    const embed = new SimplicityEmbed({ author, emoji, t }, { autoAuthor: false })
+  
     exec(query, (error, stdout) => {
       if (error) {
         embed
+          .setTitle('common:general')
           .setDescription(clean(error))
           .setError()
-        return msg.edit(embed)
-      } else {
+        return send(embed)
+      }
+      else {
         embed
+          .setTitle('» $$commands:exec.result')
           .setDescription(clean(stdout))
-        return msg.edit(embed)
+        return send(embed)
       }
     })
   }

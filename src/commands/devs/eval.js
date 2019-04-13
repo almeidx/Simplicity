@@ -1,4 +1,4 @@
-const { Command, SimplicityEmbed } = require('../../')
+const { Command, CommandError, SimplicityEmbed } = require('../../')
 const { inspect } = require('util')
 const value = (lang, code) => `\`\`\`${lang}\n${String(code).slice(0, 2045) + (code.length >= 2045 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length))
 

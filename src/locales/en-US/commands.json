@@ -106,7 +106,8 @@
         "highestRole": "Highest Role",
         "permissions": "Permissions",
         "roles": "Roles",
-        "authorRoles": "{{- user }}'s Roles"
+        "authorRoles": "{{- user }}'s Roles",
+        "joinPosition": "Join Position"
     },
     "ban": {
         "description": "This command lets you ban members of your server.",
@@ -196,5 +197,11 @@
         "done": "Done!",
         "invalidLang": "The language you provided is invalid.\n**Valid languages:** {{- botLanguages}}",
         "alreadySet": "My language is already set to **{{- lang }}**"
+    },
+    "exec": {
+        "description": "This command allows my developers to run bash code",
+        "usage": "<code>",
+        "error": "An error occurred",
+        "result": "Result"
     }
 }

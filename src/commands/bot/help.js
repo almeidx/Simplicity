@@ -33,7 +33,8 @@ class Help extends Command {
       return send(embed.setDescription('commands:help.commandHelp').setError())
     }
 
-    embed.setTitle(command.name)
+	const commandName = args.toString()[0].toUpperCase() + args[0].toString().toLowerCase().slice(1)
+    embed.setTitle(commandName)
 
     if (t(`commands:${command.name}.description`) !== `${command.name}.description`) embed.setDescription(`commands:${command.name}.description`, { prefix })
 
