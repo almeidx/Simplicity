@@ -1,7 +1,7 @@
 {
     "extends": "standard",
     "rules": {
-        "eqeqeq": "error",
+    	"eqeqeq": "error",
 	"no-async-promise-executor": "error",
 	"no-await-in-loop": "off",
 	"no-eval": "off",
