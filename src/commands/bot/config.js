@@ -16,7 +16,7 @@ class Config extends Command {
       new LanguageCommand(client, { aliases: aliasesLanguage }) ]
   }
 
-  run ({ author, prefix, send, t, language }) {
+  run ({ author, language, prefix, send, t }) {
     const embed = new SimplicityEmbed({ author, t })
       .addField('» $$commands:config.prefix', prefix)
       .addField('» $$commands:config.language', language)

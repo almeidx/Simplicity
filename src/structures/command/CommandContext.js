@@ -20,7 +20,8 @@ class CommandContext {
 
     this.prefix = options.prefix
     this.command = options.command
-    this.language = Object.keys(options.message.client.i18next.store.data).includes(options.language) ? options.language : (this.message.language || process.env.DEFAULT_LANG)
+    this.botLanguages = Object.keys(options.message.client.i18next.store.data)
+    this.language = this.botLanguages.includes(options.language) ? options.language : (this.message.language || process.env.DEFAULT_LANG)
     this.query = options.query
     this.args = options.args
     this.t = options.message.client.i18next.getFixedT(this.language)
