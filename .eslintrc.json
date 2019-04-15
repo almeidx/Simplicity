@@ -1,14 +1,14 @@
 {
     "extends": "standard",
     "rules": {
-        "eqeqeq": "error",
-		"no-async-promise-executor": "error",
-		"no-await-in-loop": "off",
-		"no-eval": "off",
-		"no-extra-parens": "error",
-		"no-var": "error",
-		"prefer-const": "error",
-		"require-await": "error",
-		"no-useless-constructor": "off"
+    	"eqeqeq": "error",
+	"no-async-promise-executor": "error",
+	"no-await-in-loop": "off",
+	"no-eval": "off",
+	"no-extra-parens": "error",
+	"no-var": "error",
+	"prefer-const": "error",
+	"require-await": "error",
+	"no-useless-constructor": "off"
     }
 }
