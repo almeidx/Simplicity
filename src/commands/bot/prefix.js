@@ -4,7 +4,6 @@ const { StringParameter } = Parameters
 class Prefix extends Command {
   constructor (client) {
     super(client)
-    this.name = 'prefix'
     this.category = 'bot'
     this.requirements = {
       argsRequired: true,

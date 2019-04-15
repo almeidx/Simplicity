@@ -29,7 +29,7 @@ class Command {
     if (this.WIP) this.requirements = typeof this.requirements === 'object' ? this.requirements['ownerOnly'] = true : { ownerOnly: true }
     const requirements = new Requirements(this.requirements, this.responses)
     try {
-      const subcommand = context.args[0] && this.subcommands.length > 0 && this.getSubCommand(context.args[0].toLowerCase())
+      const subcommand = context.args[0] && this.getSubCommand(context.args[0].toLowerCase())
       if (subcommand) {
         await this.runSubCommand(subcommand, context)
         return
@@ -42,7 +42,7 @@ class Command {
   }
 
   getSubCommand (name) {
-    return this.subcommands.find(i => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)))
+    return this.subcommands.length > 0 && this.subcommands.find(i => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)))
   }
 
   runSubCommand (subcommand, context) {

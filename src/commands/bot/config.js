@@ -12,8 +12,8 @@ class Config extends Command {
     this.aliases = [ 'configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration' ]
     this.requirements = { permissions: [ 'MANAGE_GUILD' ] }
     this.subcommands = [
-      new PrefixCommand(client, { aliases: aliasesPrefix }),
-      new LanguageCommand(client, { aliases: aliasesLanguage }) ]
+      new PrefixCommand(client, aliasesPrefix),
+      new LanguageCommand(client, aliasesLanguage) ]
   }
 
   run ({ author, prefix, send, t, language }) {
