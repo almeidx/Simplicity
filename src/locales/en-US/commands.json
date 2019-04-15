@@ -29,7 +29,8 @@
         "done": "Done!",
         "success": "My prefix on this server has been changed to: `{{- prefix }}`",
         "oops": "Oops!",
-        "failed": "Sadly, something wen't wrong while trying to update the server's prefix!\nPlease, try again later."
+        "failed": "Sadly, something wen't wrong while trying to update the server's prefix!\nPlease, try again later.",
+        "alreadySet": "My prefix was already set to **{{- prefix }}** on this server!"
     },
     "servericon": {
         "description": "This command shows the server icon.",
