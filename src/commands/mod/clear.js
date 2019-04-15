@@ -11,11 +11,13 @@ class Clear extends Command {
       clientPermissions: [ 'MANAGE_MESSAGES' ] }
   }
 
-  async run ({ author, channel, send, t, query }) {
+  async run ({ author, channel, message, send, t, query }) {
     const embed = new SimplicityEmbed({ t, author })
     const total = parseInt(query)
 
     if (!total || total < 2 || total > 100) throw new CommandError('commands:clear.invalidValue')
+
+    await message.delete()
 
     const res = await channel.messages.fetch({ limit: total })
     await channel.bulkDelete(res).catch(() => {

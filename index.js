@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const { SimplicityClient } = require('./src')
+
 const client = new SimplicityClient({
   fetchAllMembers: true,
   disableEveryone: true,
