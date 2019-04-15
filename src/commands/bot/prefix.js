@@ -10,7 +10,7 @@ class Prefix extends Command {
       permissions: [ 'MANAGE_GUILD' ] }
   }
 
-  async run ({ author, client, guild, query, send, t }) {
+  async run ({ author, client, guild, prefix: currentPrefix, query, send, t }) {
     const prefix = await StringParameter.parse(query, {
       maxLength: 15,
       minLength: 1,
@@ -18,6 +18,8 @@ class Prefix extends Command {
         maxLength: 'commands:prefix.multiCharacters'
       }
     })
+
+    if (currentPrefix === prefix) throw new CommandError('commands:prefix.alreadySet', { prefix })
 
     const data = await client.database.guilds.edit(guild.id, { prefix }).catch(() => null)
     if (!data) throw new CommandError('commands:prefix.failed')
