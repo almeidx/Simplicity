@@ -1,6 +1,7 @@
 const { Command, CommandError, Parameters, SimplicityEmbed, Utils } = require('../..')
 const { RoleParameter } = Parameters
 const { getServerIconURL } = Utils
+const checkTick = (c) => c ? 'TICK_YES' : 'TICK_NO'
 
 class RoleInfo extends Command {
   constructor (client) {
@@ -20,8 +21,6 @@ class RoleInfo extends Command {
     if (!role || role.id === guild.id) throw new CommandError('errors:invalidRole')
 
     const totalRolePositions = guild.roles.filter(r => r.id !== guild.id).size
-
-    const checkTick = (c) => c ? 'TICK_YES' : 'TICK_NO'
 
     const embed = new SimplicityEmbed({ author, emoji, t })
       .setThumbnail(getServerIconURL(guild))
