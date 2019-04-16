@@ -9,8 +9,9 @@ class Say extends Command {
     this.responses = { argsRequired: 'commands:say.error' }
   }
 
-  async run ({ channel, client, message, query, send }) {
-    if (channel.permissionsFor(client.user).has('MANAGE_MESSAGES')) await message.delete()
+  async run ({ channel, client, message, member, query, send }) {
+    const checkPerms = (u) => channel.permissionsFor(u).has('MANAGE_MESSAGES')
+    if (checkPerms(client.user) && checkPerms(member)) await message.delete()
     await send(query)
   }
 }

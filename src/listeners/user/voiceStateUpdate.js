@@ -1,9 +1,11 @@
-const { SimplicityEmbed, LogUtils } = require('../src')
+const { Listener, SimplicityEmbed } = require('../../index')
 
-async function voiceStateUpdate (oldState, newState) {
-  const { channel, t } = await LogUtils.getChannel(this, oldState.guild, 'JOIN_AND_LEAVE')
+class VoiceStateUpdate extends Listener {
+  constructor (client) {
+    super(client)
+  }
 
-  if (channel) {
+  on (_, oldState, newState, t) {
     const user = oldState.member.user
     const oldChannel = oldState.channel && `**${oldState.channel.name}**`
     const newChannel = newState.channel && `**${newState.channel.name}**`
@@ -16,18 +18,18 @@ async function voiceStateUpdate (oldState, newState) {
     // LEAVE CHANNEL
     if (oldChannel && !newChannel) {
       embed.setDescription('loggers:leaveVoiceChannel', { user, channel: oldChannel })
-      return LogUtils.send(channel, embed).catch(e => console.error(e))
+      return this.sendMessage('leaveVoiceChannel', embed).catch(() => null)
     } else
     // JOIN CHANNEL
     if (!oldChannel && newChannel) {
       embed.setDescription('loggers:joinVoiceChannel', { user, channel: newChannel })
-      return LogUtils.send(channel, embed).catch(e => console.error(e))
+      return this.sendMessage('joinVoiceChannel', embed).catch(() => null)
     } else {
-    // CHANGED CHANNEL
+    // MOVED CHANNEL
       embed.setDescription('loggers:hasChangedVoiceChannel', { user, newChannel, oldChannel })
-      return LogUtils.send(channel, embed).catch(e => console.error(e))
+      return this.sendMessage('movedVoiceChannel', embed).catch(() => null)
     }
   }
 }
 
-module.exports = voiceStateUpdate
+module.exports = VoiceStateUpdate

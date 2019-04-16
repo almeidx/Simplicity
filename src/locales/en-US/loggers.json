@@ -13,5 +13,7 @@
     "totalMembers": "Member Count: {{- count }}",
     "user": "User",
     "accountCreatedAt": "Account Created At",
-    "joinedAt": "Joined At"
+    "joinedAt": "Joined At",
+    "before": "Before",
+    "after": "After"
 }
