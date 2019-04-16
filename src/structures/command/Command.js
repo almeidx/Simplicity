@@ -29,9 +29,9 @@ class Command {
     if (this.WIP) this.requirements = typeof this.requirements === 'object' ? this.requirements['ownerOnly'] = true : { ownerOnly: true }
     const requirements = new Requirements(this.requirements, this.responses)
     try {
-      const subcommand = context.args[0] && this.getSubCommand(context.args[0].toLowerCase())
+      const subcommand = context.args[0] && this.getSubcommand(context.args[0].toLowerCase())
       if (subcommand) {
-        await this.runSubCommand(subcommand, context)
+        await this.runSubcommand(subcommand, context)
         return
       }
       await requirements.handle(context)
@@ -41,12 +41,12 @@ class Command {
     }
   }
 
-  getSubCommand (name) {
-    return this.subcommands.length > 0 && this.subcommands.find(i => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)))
+  getSubcommand (name) {
+    return this.subcommands.find(i => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)))
   }
 
-  runSubCommand (subcommand, context) {
-    context.query = context.query.replace(context.args[0], '').slice(1)
+  runSubcommand (subcommand, context) {
+    context.query = context.query.replace(context.args[0] + ' ', '').slice(1)
     context.args = context.args.slice(1)
     return subcommand._run(context)
   }
@@ -66,12 +66,16 @@ class Command {
           .addField('» Info', `**${infos.join('\n')}**`)
           .addField('» Error', `**» ID: ${error.message}\n\`\`\`js\n${error.stack}\n\`\`\`**`)
         channelError.send(embedError)
+        const embed = new SimplicityEmbed({ t, author }, { type: 'error' })
+          .setDescription(t('errors:errorCommand'))
+          .setText('@description')
+        return send(embed)
       }
     }
 
     const embed = new SimplicityEmbed({ t, author })
       .setError()
-      .setDescription(t([error.message, 'errors:errorCommand'], error.options))
+      .setDescription(t(error.message, error.options))
 
     const strUsage = `commands:${this.name}.usage`
     const usage = error.onUsage && this.client.i18next.exists(strUsage) && t(strUsage)
