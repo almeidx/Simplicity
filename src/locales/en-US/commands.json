@@ -216,5 +216,8 @@
         "mentionable":  "Mentionable",
         "hoisted": "Hoisted",
         "members": "Members: {{- size }}"
+    },
+    "permissions": {
+        "author": "{{- user }}'s Permissions"
     }
 }
