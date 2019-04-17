@@ -20,5 +20,6 @@
     "noReason": "No reason provided.",
     "canBeBotRole": "The role you provided cannot be a bot role!",
     "invalidCharacters": "Invalid characters",
-    "50035": "There are no more emoji slots available"
+    "50035": "There are no more emoji slots available",
+    "invalidRole": "The role you provided is invalid"
 }

@@ -204,5 +204,17 @@
         "usage": "<code>",
         "error": "An error occurred",
         "result": "Result"
+    },
+    "roleinfo": {
+        "description": "Shows information about a role",
+        "usage": "<role>",
+        "noArgs": "You need to either provide a role name or mention a role",
+        "name": "Name",
+        "id": "ID",
+        "color": "Color",
+        "position": "Position",
+        "mentionable":  "Mentionable",
+        "hoisted": "Hoisted",
+        "members": "Members: {{- size }}"
     }
 }

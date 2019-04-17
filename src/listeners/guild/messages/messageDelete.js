@@ -1,11 +1,14 @@
-const { SimplicityEmbed, LogUtils, Constants } = require('../src')
+const { Constants, Listener, SimplicityEmbed } = require('../../../index')
 const clean = (str) => str.slice(0, 1020) + str.length >= 1024 ? '...' : str
 
-async function messageDelete (message) {
-  const { channel, t } = await LogUtils.getChannel(this, message.guild, 'JOIN_AND_LEAVE')
-  const user = message.author
+class MessageDelete extends Listener {
+  constructor (client) {
+    super(client)
+  }
+  
+  async on (_, message, t) {
+    const user = message.author
 
-  if (channel) {
     const embed = new SimplicityEmbed({ t })
       .setTimestamp()
       .setAuthor(user.tag, user.displayAvatarURL())
@@ -23,8 +26,8 @@ async function messageDelete (message) {
         embed.setDescription('loggers:messageDeletedExecutor', { user, channel: message.channel, executor })
       }
     }
-    return LogUtils.send(channel, embed).catch(e => console.error(e))
+    this.sendMessage('messageDelete', embed).catch(() => null)
   }
 }
 
-module.exports = messageDelete
+module.exports = MessageDelete

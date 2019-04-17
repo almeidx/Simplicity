@@ -1,5 +1,6 @@
 module.exports = {
-  UserParameter: require('./UserParameter'),
   MemberParameter: require('./MemberParameter'),
-  StringParameter: require('./StringParameter')
+  RoleParameter: require('./RoleParameter'),
+  StringParameter: require('./StringParameter'),
+  UserParameter: require('./UserParameter')
 }
