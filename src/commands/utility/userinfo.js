@@ -77,7 +77,7 @@ class UserInfo extends Command {
 
       if (spotifyRestriction && !user.bot) {
         spotify = {
-          emoji: emoji('SPOTIFY', { id: true, othur: 'MUSIC' }),
+          emoji: emoji('SPOTIFY', { id: true, other: 'MUSIC' }),
           embed: createEmbedSpotify(activity, { author, t })
         }
         await message.react(spotify.emoji)
