@@ -45,8 +45,10 @@ class UserParameter extends Parameter {
     const findStartNick = guild && guild.members.find((m) => m.displayName.toLowerCase().startsWith(query.toLowerCase()))
     const findEndName = guild && guild.members.find((m) => m.user.username.toLowerCase().endsWith(query.toLowerCase()))
     const findEndNick = guild && guild.members.find((m) => m.displayName.toLowerCase().endsWith(query.toLowerCase()))
+    const findIncludesName = guild && guild.members.find((m) => m.user.username.toLowerCase().includes(query.toLowerCase()))
+    const findIncludesNick = guild && guild.members.find((m) => m.displayName.toLowerCase().includes(query.toLowerCase()))
 
-    return fetchID || (findName && findName.user) || (findNick && findNick.user) || (findStartName && findStartName.user) || (findStartNick && findStartNick.user) || (findEndName && findEndName.user) || (findEndNick && findEndNick.user) || null
+    return fetchID || (findName && findName.user) || (findNick && findNick.user) || (findStartName && findStartName.user) || (findStartNick && findStartNick.user) || (findEndName && findEndName.user) || (findEndNick && findEndNick.user) || (findIncludesName && findIncludesName.user) || (findIncludesNick && findIncludesNick.user)|| null
   }
 }
 
