@@ -13,6 +13,8 @@ module.exports = {
     'TICK_NO': '567751250079383552'
   },
   EMOJIS: {
+    'TICK_YES': '✅',
+    'TICK_NO': '❌',
     'PING': '🏓',
     'PINGS': '📊',
     'USERS': '👥',
