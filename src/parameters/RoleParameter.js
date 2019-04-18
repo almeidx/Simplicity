@@ -14,7 +14,7 @@ class RoleParameter extends Parameter {
       checkEndsWith: true
     }, options)
   }
-  
+
   static parseMessageErrors (options = {}) {
     return Object.assign({
       ...super.parseMessageErrors(options),
@@ -23,21 +23,21 @@ class RoleParameter extends Parameter {
       canBeLower: 'errors:'
     }, options.errors)
   }
-  
+
   static verifyExceptions (role, exceptions = {}, { guild }) {
     exceptions = this.setupOptions(exceptions)
 
     const higherRole = guild.me.roles.highest.position > role.position
     const lowerRole = guild.me.roles.highest.position > role.position
-    
+
     if (!exceptions.canBeBotRole && !role.editable && higherRole) throw new CommandError(exceptions.errors.canBeBotRole, { onUsage: true })
     if (!exceptions.canBeHigher && higherRole) throw new CommandError(exceptions.errors.canBeHigher, { onUsage: true })
     if (!exceptions.canBeLower && lowerRole) throw new CommandError(exceptions.errors.canBeLower, { onUsage: true })
-    
+
     return role
   }
-  
-  static async search (query, { client, guild }, options) {
+
+  static search (query, { guild }, options) {
     options = this.setupOptions(options)
     if (!query || typeof query !== 'string' || !guild) return
     const regexResult = MENTION_REGEX.exec(query)
@@ -46,8 +46,8 @@ class RoleParameter extends Parameter {
     const findName = guild.roles.find((r) => r.name.toLowerCase() === query.toLowerCase())
     const findStartsName = options.checkStartsWith && guild.roles.find((r) => r.name.toLowerCase().startsWith(query.toLowerCase()))
     const findEndsName = options.checkEndsWith && guild.roles.find((r) => r.name.toLowerCase().endsWith(query.toLowerCase()))
-    
-    return getID || findName || findStartsName|| findEndsName || null
+
+    return getID || findName || findStartsName || findEndsName || null
   }
 }
 

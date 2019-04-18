@@ -13,6 +13,8 @@ module.exports = {
     'TICK_NO': '567751250079383552'
   },
   EMOJIS: {
+    'TICK_YES': '✅',
+    'TICK_NO': '❌',
     'PING': '🏓',
     'PINGS': '📊',
     'USERS': '👥',
@@ -103,5 +105,22 @@ module.exports = {
     'ADD_REACTIONS',
     'CREATE_INSTANT_INVITE'
   ],
-  ADMINISTRATOR_PERMISSION: 'ADMINISTRATOR'
+  ADMINISTRATOR_PERMISSION: 'ADMINISTRATOR',
+  MANAGER_PERMISSIONS: [
+    'ADMINISTRATOR',
+    'VIEW_AUDIT_LOG',
+    'MANAGE_GUILD',
+    'MANAGE_ROLES',
+    'MANAGE_CHANNELS',
+    'KICK_MEMBERS',
+    'BAN_MEMBERS',
+    'MANAGE_NICKNAMES',
+    'MANAGE_EMOJIS',
+    'MANAGE_WEBHOOKS',
+    'MANAGE_MESSAGES',
+    'MENTION_EVERYONE',
+    'MUTE_MEMBERS',
+    'DEAFEN_MEMBERS',
+    'MOVE_MEMBERS'
+  ]
 }

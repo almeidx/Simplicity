@@ -6,8 +6,7 @@ class PermissionsUtils {
     const roleCondition = devRole && devRole.members.has(userID)
     const idCondition = process.env.DEVS_IDS && process.env.DEVS_IDS.includes(userID)
 
-    if (roleCondition || idCondition) return true
-    else return false
+    return !!(roleCondition || idCondition)
   }
 }
 

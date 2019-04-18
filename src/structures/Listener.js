@@ -21,7 +21,7 @@ class Listener {
     const channelData = guild && await LogUtils.getChannel(this.client, guild, this.logs[0])
     if (channelData) {
       if (content instanceof SimplicityEmbed) content.setTranslator(channelData.t)
-      LogUtils.send(channelData.channel, content)
+      LogUtils.send(channelData.channel, content).catch(() => null)
     }
   }
 

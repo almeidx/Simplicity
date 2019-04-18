@@ -29,7 +29,7 @@ class TextUtils {
         return result2 || result1 || result || k
       })
     }
-    // add translaton in $"..."
+    // add translation in $"..."
     if (t) {
       text = text.replace(/(?:\$\$)(\S+)/g, (s) => this.t(t, s.slice(2), options.options))
       return this.t(t, text, options.options)

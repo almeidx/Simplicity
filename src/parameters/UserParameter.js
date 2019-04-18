@@ -38,15 +38,18 @@ class UserParameter extends Parameter {
     if (!query || typeof query !== 'string') return
     const regexResult = MENTION_REGEX.exec(query)
     const id = regexResult && regexResult[1]
-    const fetchID = id && ((client && client.users.get(id)) || (options.checkGlobally && (await client.users.fetch(id, true).catch(() => null))))
+    const fetchID = client && id && ((client.users.get(id)) || (options.checkGlobally && (await client.users.fetch(id, true).catch(() => null))))
+    const fetchIdGuild = guild && id && guild.members.get(id)
     const findName = guild && guild.members.find((m) => m.user.username.toLowerCase() === query.toLowerCase())
     const findNick = guild && guild.members.find((m) => m.displayName.toLowerCase() === query.toLowerCase())
     const findStartName = guild && guild.members.find((m) => m.user.username.toLowerCase().startsWith(query.toLowerCase()))
     const findStartNick = guild && guild.members.find((m) => m.displayName.toLowerCase().startsWith(query.toLowerCase()))
     const findEndName = guild && guild.members.find((m) => m.user.username.toLowerCase().endsWith(query.toLowerCase()))
     const findEndNick = guild && guild.members.find((m) => m.displayName.toLowerCase().endsWith(query.toLowerCase()))
+    const findIncludesName = guild && guild.members.find((m) => m.user.username.toLowerCase().includes(query.toLowerCase()))
+    const findIncludesNick = guild && guild.members.find((m) => m.displayName.toLowerCase().includes(query.toLowerCase()))
 
-    return fetchID || (findName && findName.user) || (findNick && findNick.user) || (findStartName && findStartName.user) || (findStartNick && findStartNick.user) || (findEndName && findEndName.user) || (findEndNick && findEndNick.user) || null
+    return fetchID || (fetchIdGuild && fetchIdGuild.user) || (findName && findName.user) || (findNick && findNick.user) || (findStartName && findStartName.user) || (findStartNick && findStartNick.user) || (findEndName && findEndName.user) || (findEndNick && findEndNick.user) || (findIncludesName && findIncludesName.user) || (findIncludesNick && findIncludesNick.user) || null
   }
 }
 
