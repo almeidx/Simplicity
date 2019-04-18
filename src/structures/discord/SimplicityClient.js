@@ -15,8 +15,8 @@ module.exports = class SimplicityClient extends Client {
     this.i18next = require('i18next')
     this.database = new Database(this)
 
-    this.loadFiles()
-    this.initLocales(Path.join(__dirname, '../../locales'))
+    this.loadFiles().catch(e => console.error(e))
+    this.initLocales(Path.join(__dirname, '../../locales')).catch(e => console.error(e))
   }
 
   async loadFiles () {

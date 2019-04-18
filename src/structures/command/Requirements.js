@@ -20,7 +20,7 @@ class Requirements {
 
     for (const req in requirements) {
       let opts = requirements[req]
-      if (this[req] == null) throw new Error(`${req} não existe`)
+      if (this[req] == null) throw new Error(`${req} doesn't exist`)
       if (typeof opts === 'object' && !Array.isArray(opts)) {
         if (opts.response) this.responses[req] = opts.response
         opts = opts.return

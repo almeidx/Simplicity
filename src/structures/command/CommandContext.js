@@ -35,11 +35,11 @@ class CommandContext {
   }
 
   _emoji (name = 'QUESTION', options) {
-    const { id, othur } = Object.assign({ id: false, othur: null }, options)
+    const { id, other } = Object.assign({ id: false, other: null }, options)
     name = name.toUpperCase()
 
-    const custom = getCustomEmoji(name) || (othur && getCustomEmoji(othur))
-    const normal = getDefaultEmoji(name) || (othur && getDefaultEmoji(othur))
+    const custom = getCustomEmoji(name) || (othur && getCustomEmoji(other))
+    const normal = getDefaultEmoji(name) || (othur && getDefaultEmoji(other))
 
     if (this.guild && this.channel.permissionsFor(this.guild.me).has('USE_EXTERNAL_EMOJIS') && custom) {
       const emoji = this.client.emojis.get(custom)
