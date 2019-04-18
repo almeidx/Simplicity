@@ -25,7 +25,6 @@ class Permissions extends Command {
     if (!m) throw new CommandError('commands:permissions.error')
 
     const isUser = m instanceof User
-    console.log(m.id, m.toString(), m.constructor.name, isUser)
     const avatar = isUser ? m.displayAvatarURL() : Utils.getServerIconURL(guild)
     const name = isUser ? m.tag : m.name
     const title = isUser ? 'commands:permissions.author' : 'commands:permissions.role'
