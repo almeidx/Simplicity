@@ -59,7 +59,7 @@ class SimplicityEmbed extends MessageEmbed {
 
     if (embedResolvable.author) {
       if (this.options.autoAuthor) this.setAuthor(embedResolvable.author)
-      if (this.options.autoFooter) this.setFooter(embedResolvable.author.tag)
+      if (this.options.autoFooter) this.setFooter(embedResolvable.author)
       if (this.options.autoTimestamp) this.setTimestamp()
     }
 

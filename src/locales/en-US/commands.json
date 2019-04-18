@@ -218,6 +218,8 @@
         "members": "Members: {{- size }}"
     },
     "permissions": {
-        "author": "{{- user }}'s Permissions"
+        "author": "{{- name }}'s Permissions",
+        "role": "{{- name}} Role Permissions",
+        "error": "errou"
     }
 }
