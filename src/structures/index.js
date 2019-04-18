@@ -1,7 +1,7 @@
 module.exports = {
-  SimplicityClient: require('./SimplicityClient'),
-  Command: require('./Command'),
+  SimplicityClient: require('./discord/SimplicityClient'),
+  Command: require('./command/Command'),
   Loggers: require('./Loggers'),
-  Parameters: require('./command/Parameters'),
+  Parameters: require('../parameters'),
   CommandError: require('./command/CommandError')
 }
