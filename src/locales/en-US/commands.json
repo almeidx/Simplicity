@@ -220,6 +220,6 @@
     "permissions": {
         "author": "{{- name }}'s Permissions",
         "role": "{{- name}} Role Permissions",
-        "error": "errou"
+        "error": "You need to either provide a user or role"
     }
 }
