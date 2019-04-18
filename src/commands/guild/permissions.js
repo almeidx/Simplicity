@@ -1,6 +1,7 @@
-const { Command, Constants, Parameters, SimplicityEmbed, CommandError } = require('../..')
+const { Command, Constants, Parameters, SimplicityEmbed, CommandError, Utils } = require('../..')
+const { User } = require('discord.js')
 const { MANAGER_PERMISSIONS } = Constants
-const { MemberParameter, RoleParameter } = Parameters
+const { UserParameter, RoleParameter } = Parameters
 const checkTick = (c) => c ? 'TICK_YES' : 'TICK_NO'
 
 const optionsRoleParameter = {
@@ -18,20 +19,23 @@ class Permissions extends Command {
     }
   }
 
-  async run ({ member, emoji, guild, query, send, t }) {
-    const m = !query ? member : (await RoleParameter.search(query, { guild }, optionsRoleParameter)) || (await MemberParameter.search(query, { guild }))
+  async run ({ author, emoji, guild, query, send, t }) {
+    const m = !query ? author : (await RoleParameter.search(query, { guild }, optionsRoleParameter)) || (await UserParameter.search(query, { guild }))
 
     if (!m) throw new CommandError('commands:permissions.error')
 
-    const avatar = m.user ? m.user.displayAvatarURL() : guild.iconURL()
-    const name = m.user ? m.user.tag : m.name
-    const title = m.user ? 'commands:permissions.author' : 'commands:permissions.role'
+    const isUser = m instanceof User
+    console.log(m.id, m.toString(), m.constructor.name, isUser)
+    const avatar = isUser ? m.displayAvatarURL() : Utils.getServerIconURL(guild)
+    const name = isUser ? m.tag : m.name
+    const title = isUser ? 'commands:permissions.author' : 'commands:permissions.role'
 
-    const embed = new SimplicityEmbed({ author: member, emoji, t })
+    const embed = new SimplicityEmbed({ author, emoji, t })
       .setAuthor(title, avatar, null, { name })
 
+    const permissions = !isUser ? m.permissions : guild.member(m).permissions
     for (const p of MANAGER_PERMISSIONS) {
-      embed.addField(`permissions:${p}`, `#${checkTick(m.permissions.has(p))}`, true)
+      embed.addField(`permissions:${p}`, `#${checkTick(permissions.has(p))}`, true)
     }
 
     let r
