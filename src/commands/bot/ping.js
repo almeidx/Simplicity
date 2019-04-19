@@ -7,8 +7,10 @@ class Ping extends Command {
     this.category = 'bot'
   }
 
-  run ({ send, guild, t }) {
-    send(t('commands:ping.success', { ping: Math.ceil(guild.shard.ping) }))
+  run ({ channel, message, t }) {
+    channel.send(t('commands:ping.loading')).then(msg => {
+     msg.edit(t('commands:ping.success', { ping: msg.createdTimestamp - message.createdTimestamp }))
+    })
   }
 }
 

@@ -14,9 +14,8 @@ class MessageUpdate extends Listener {
       const oldContent = oldMessage.content
       const newContent = newMessage.content
 
-      const embed = new SimplicityEmbed({ t })
+      const embed = new SimplicityEmbed({ user, t }, { autoFooter: false })
         .setTimestamp()
-        .setAuthor(user.tag, user.displayAvatarURL())
         .setFooter(`ID: ${user.id}`)
 
       // MESSAGE EDITED
