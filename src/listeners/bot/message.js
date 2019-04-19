@@ -14,9 +14,9 @@ class Message extends Listener {
     const language = (guildData && guildData.lang) || process.env.DEFAULT_LANG
 
     const botMention = message.guild.me.toString()
-    const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.toLowerCase().startsWith(prefix.toLowerCase()) ? prefix : null)
+    const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.toLowerCase().startsWith(prefix.toLowerCase()) ? prefix : (message.content.startsWith(client.user.toString()) ? client.user.toString() + ' ' : null))
 
-    if (message.content === botMention) {
+    if (message.content === botMention || message.content === client.user.toString()) {
       return message.reply(client.i18next.getFixedT(language)('common:prefix', { prefix: prefix }))
     }
 
