@@ -221,7 +221,16 @@
     "permissions": {
         "usage": "<role|member>",
         "author": "{{- name }}'s Permissions",
-        "role": "{{- name}} Role Permissions",
+        "role": "{{- name }} Role Permissions",
         "error": "You need to either provide a member or role"
+    },
+    "setnick": {
+        "description": "This command allows you to change the nickname of somebody",
+        "usage": "[member] <name>",
+        "nameTooBig": "The name you provided is too long! (Max: 32 characters)",
+        "reason": "Requested by: {{- author }}",
+        "failed": "There was an error when I tried to change the user's nickname",
+        "success": "The {{- user }}'s nickname has been changed to **{{- name }}**",
+        "action": "rename"
     }
 }

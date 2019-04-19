@@ -24,7 +24,8 @@ class MemberParameter extends UserParameter {
     options = this.setupOptions(options)
 
     await super.verifyExceptions(member.user, { author: memberAuthor.user }, options)
-    const userOwner = member.user.id === guild.ownerID
+    const userOwner = member.id === guild.owner.id
+
     if (!options.canBeGuildOwner && userOwner) throw new CommandError(options.errors.canBeGuildOwner)
     if (options.userRoleHighest && !userOwner && member.roles.highest.position >= memberAuthor.roles.highest.position) throw new CommandError(options.errors.userRoleHighest, { commandName })
     if (options.botRoleHighest && !userOwner && guild.me.roles.highest.position <= member.roles.highest.position) throw new CommandError(options.errors.botRoleHighest, { commandName })
