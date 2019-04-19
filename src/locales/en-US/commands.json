@@ -221,7 +221,7 @@
     "permissions": {
         "usage": "<role|member>",
         "author": "{{- name }}'s Permissions",
-        "role": "{{- name}} Role Permissions",
+        "role": "{{- name }} Role Permissions",
         "error": "You need to either provide a member or role"
     },
     "setnick": {
