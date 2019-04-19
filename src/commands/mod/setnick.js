@@ -39,7 +39,7 @@ class SetNick extends Command {
     const name = await StringParameter.parse(args[0], StringParameterOptions)
     const reason = t('commands:setnick.reason', { author: author.tag })
 
-    const nickname = member.setNickname(name, { reason }).catch(() => null)
+    const nickname = member.setNickname(name, reason).catch(() => null)
     if (!nickname) throw new CommandError('commands:setnick.failed')
     else {
       const embed = new SimplicityEmbed({ author, t })
