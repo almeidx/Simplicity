@@ -42,6 +42,7 @@
     },
     "ping": {
         "description": "This command shows the latency of the bot.",
+        "loading": "Loading...",
         "success": "Pong! `{{- ping }}ms`"
     },
     "serverinfo": {
