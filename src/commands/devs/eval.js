@@ -1,4 +1,4 @@
-const { Command, CommandError, SimplicityEmbed } = require('../../')
+const { Command, CommandError, SimplicityEmbed, Utils } = require('../../')
 const { inspect } = require('util')
 const value = (lang, code) => `\`\`\`${lang}\n${String(code).slice(0, 2045) + (code.length >= 2045 ? '...' : '')}\n\`\`\``.replace(process.env.BOT_TOKEN, () => '*'.repeat(process.env.BOT_TOKEN.length))
 
@@ -12,7 +12,7 @@ class Eval extends Command {
       argsRequired: true }
   }
 
-  async run ({ author, client, guild, channel, member, language, command, prefix, message, query, send, args, t, emoji }) {
+  async run ({ author, botLanguages, client, guild, channel, member, language, command, prefix, message, query, send, args, t, emoji }) {
     const embed = new SimplicityEmbed({ author })
 
     const code = query.replace(/^```(js|javascript ?\n)?|```$/g, '')
