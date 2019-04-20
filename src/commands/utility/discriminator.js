@@ -17,10 +17,8 @@ class Discriminator extends Command {
     else discrim = query.replace(/#/g, '')
 
     const users = guild.members.filter((m) => m.user.discriminator === discrim)
-    if (!users || !users.size) throw new CommandError('commands:discriminator.nobody')
-
-    const mapped = users.map((u) => u.user.tag)
-    if (!mapped) throw new CommandError('commands:discriminator.nobody')
+    const mapped = users && users.map((u) => u.user.tag)
+    if (!users || !users.size || !mapped) throw new CommandError('commands:discriminator.nobody')
 
     const final = mapped.slice(0, 25).join('\n') + (mapped.size > 25 ? '...' : '')
     const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
