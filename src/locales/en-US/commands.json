@@ -232,5 +232,11 @@
         "failed": "There was an error when I tried to change the user's nickname",
         "success": "The {{- user }}'s nickname has been changed to **{{- name }}**",
         "action": "rename"
+    },
+    "discriminator": {
+        "description": "This command allows you to see the members that have the same discriminator as the one provided",
+        "usage": "[discriminator]",
+        "nobody": "Couldn't find anyone in this server with that discriminator",
+        "users": "Users with #{{- discrim }} as discriminator"
     }
 }
