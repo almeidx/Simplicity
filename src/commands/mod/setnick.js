@@ -3,7 +3,7 @@ const { MemberParameter, StringParameter, UserParameter } = Parameters
 
 const MemberParameterOptions = {
   required: false,
-  canBeAuthor: false,
+  canBeAuthor: true,
   canBeGuildOwner: false,
   errors: {
     missingError: 'errors:invalidUser'
