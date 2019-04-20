@@ -21,5 +21,6 @@
     "canBeBotRole": "The role you provided cannot be a bot role!",
     "invalidCharacters": "Invalid characters",
     "50035": "There are no more emoji slots available",
-    "invalidRole": "The role you provided is invalid"
+    "invalidRole": "The role you provided is invalid",
+    "cantApplyOnAuthor": "You can't perform this action on yourself!"
 }

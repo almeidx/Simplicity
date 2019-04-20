@@ -10,7 +10,8 @@ class UserParameter extends Parameter {
       canBeAuthor: true,
       canBeBot: true,
       canBeUser: true,
-      checkGlobally: true
+      checkGlobally: true,
+      checkIncludes: true
     }, options)
   }
 
@@ -25,8 +26,8 @@ class UserParameter extends Parameter {
 
   static verifyExceptions (user, exceptions = {}, { author }) {
     exceptions = this.setupOptions(exceptions)
-
-    if (!exceptions.canBeAuthor && user.id === author.id) throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true })
+    console.log(author, user)
+    if (!exceptions.canBeAuthor && user.id === author) throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true })
     if (!exceptions.canBeBot && user.bot) throw new CommandError(exceptions.errors.canBeBot, { onUsage: true })
     if (!exceptions.canBeUser && !user.bot) throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true })
 
@@ -46,8 +47,8 @@ class UserParameter extends Parameter {
     const findStartNick = guild && guild.members.find((m) => m.displayName.toLowerCase().startsWith(query.toLowerCase()))
     const findEndName = guild && guild.members.find((m) => m.user.username.toLowerCase().endsWith(query.toLowerCase()))
     const findEndNick = guild && guild.members.find((m) => m.displayName.toLowerCase().endsWith(query.toLowerCase()))
-    const findIncludesName = guild && guild.members.find((m) => m.user.username.toLowerCase().includes(query.toLowerCase()))
-    const findIncludesNick = guild && guild.members.find((m) => m.displayName.toLowerCase().includes(query.toLowerCase()))
+    const findIncludesName = options.checkIncludes && guild && guild.members.find((m) => m.user.username.toLowerCase().includes(query.toLowerCase()))
+    const findIncludesNick = options.checkIncludes && guild && guild.members.find((m) => m.displayName.toLowerCase().includes(query.toLowerCase()))
 
     return fetchID || (fetchIdGuild && fetchIdGuild.user) || (findName && findName.user) || (findNick && findNick.user) || (findStartName && findStartName.user) || (findStartNick && findStartNick.user) || (findEndName && findEndName.user) || (findEndNick && findEndNick.user) || (findIncludesName && findIncludesName.user) || (findIncludesNick && findIncludesNick.user) || null
   }
