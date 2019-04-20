@@ -1,6 +1,7 @@
 const { Command, CommandError, Parameters, SimplicityEmbed, Utils } = require('../..')
 const { RoleParameter } = Parameters
 const { getServerIconURL } = Utils
+const moment = require('moment')
 const checkTick = (c) => c ? 'TICK_YES' : 'TICK_NO'
 
 class RoleInfo extends Command {
@@ -31,11 +32,13 @@ class RoleInfo extends Command {
 
     const size = role.members.size
     const members = role.members && `${role.members.first(15).join(', ')}${size > 15 ? ', ...' : ''}`
+    const date = moment(role.createdAt)
 
     embed
       .addField('» $$commands:roleinfo.position', `${role.position}/${totalRolePositions}`, true)
       .addField('» $$commands:roleinfo.mentionable', `#${checkTick(role.mentionable)}`, true)
       .addField('» $$commands:roleinfo.hoisted', `#${checkTick(role.hoist)}`, true)
+      .addField('» $$commands:roleinfo.createdAt', `${date.format('LLL')} (${date.fromNow()})`)
 
     if (members) embed.addField('» $$commands:roleinfo.members', members, true, { size })
     return send(embed)

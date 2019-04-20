@@ -216,7 +216,8 @@
         "position": "Position",
         "mentionable":  "Mentionable",
         "hoisted": "Hoisted",
-        "members": "Members: {{- size }}"
+        "members": "Members: {{- size }}",
+        "createdAt": "Created At"
     },
     "permissions": {
         "usage": "<role|member>",
