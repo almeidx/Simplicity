@@ -16,7 +16,7 @@ class Discriminator extends Command {
     if (!query) discrim = author.discriminator
     else discrim = query.replace(/#/g, '')
 
-    let users = guild.members.filter((m) => m.user.discriminator === discrim)
+    const users = guild.members.filter((m) => m.user.discriminator === discrim)
     if (!users || !users.size) throw new CommandError('commands:discriminator.nobody')
 
     const mapped = users.map((u) => u.user.tag)
