@@ -21,6 +21,7 @@ class SetNick extends Command {
     super(client)
     this.aliases = ['nick', 'nickname', 'setnickname']
     this.category = 'mod'
+    this.WIP = true
     this.requirements = {
       permissions: ['MANAGE_NICKNAMES'],
       clientPermissions: ['MANAGE_NICKNAMES'],
