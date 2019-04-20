@@ -7,7 +7,7 @@ class Argument {
     if (!result) {
       if (options.required) throw new CommandError(options.errors.missingError)
     } else {
-      await this.verifyExceptions(query, options, dependencies)
+      await this.verifyExceptions(result, options, dependencies)
     }
     return result || null
   }
