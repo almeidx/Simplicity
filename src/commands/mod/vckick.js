@@ -1,64 +1,61 @@
-const { Command, SimplicityEmbed, Parameters: { MemberParameter, UserParameter }, CommandError } = require('../../')
-
-const missingError = 'errors:invalidUser'
-const optionsParameter = {
+const { Command, SimplicityEmbed, Parameters, CommandError } = require('../../')
+const { MemberParameter } = Parameters
+const MemberParameterOptions = {
   required: true,
   canBeAuthor: false,
   canBeGuildOwner: false,
   errors: {
-    missingError
+    missingError: 'errors:invalidUser'
   }
 }
 
 class VoiceKick extends Command {
   constructor (client) {
     super(client)
-    this.aliases = [ 'voicekick', 'vkick' ]
+    this.aliases = [ 'voicekick', 'vkick', 'kickvoice', 'kickvc' ]
     this.category = 'mod'
     this.requirements = {
-      ownerOnly: true,
       argsRequired: true,
       permissions: [ 'KICK_MEMBERS' ],
       clientPermissions: [ 'MANAGE_CHANNELS', 'MOVE_MEMBERS' ] }
   }
 
-  async run ({ args, author, client, guild, message, member: memberAuthor, send, t }) {
-    const user = await UserParameter.search(args[0], { client, guild }, optionsParameter)
-    const member = user && guild.member(user)
+  async run ({ author, guild, member: memberAuthor, query, send, t }) {
+    const member = await MemberParameter.parse(query, MemberParameterOptions, {
+      memberAuthor,
+      commandName: this.name,
+      author,
+      guild
+    })
+    await MemberParameter.verifyExceptions(member, MemberParameterOptions, {
+      guild,
+      memberAuthor,
+      commandName: this.name
+    })
 
-    if (!user) throw new CommandError(missingError)
+    if (!(member.voice && member.voice.channel)) throw new CommandError('errors:noVoiceChannel')
+
+    const oldChannelName = member.voice.channel.name
+    const channelName = t('commands:vckick.voiceKicked', { user: author.tag })
+    const reason = t('commands:vckick.reason', { author: author.tag, user: member.user.tag })
+
+    const channel = await guild.channels.create(channelName, {
+      type: 'voice',
+      reason,
+      permissionOverwrites: [
+        {
+          id: guild.id,
+          deny: ['VIEW_CHANNEL', 'CONNECT', 'SPEAK']
+        }
+      ]
+    })
+
+    await member.setVoiceChannel(channel)
+    await channel.delete(reason)
 
     const embed = new SimplicityEmbed({ author, t })
-      .setColor('RED')
-
-    if (member) {
-      await MemberParameter.verifyExceptions(member, optionsParameter, { guild, memberAuthor: member, commandName: this.name })
-    }
-
-    if (!(member && member.voice && member.voice.channel)) throw new CommandError('errors:noVoiceChannel')
-    else {
-      const oldChannelName = member.voice.channel.name
-      const channelName = t('commands:vckick.voiceKicked', { user: author.tag })
-      const reason = t('commands:vckick.reason', { author: author.tag, user: user.tag })
-
-      const channel = await guild.channels.create(channelName, {
-        type: 'voice',
-        reason,
-        permissionOverwrites: [
-          {
-            id: guild.id,
-            deny: ['VIEW_CHANNEL', 'CONNECT', 'SPEAK']
-          }
-        ]
-      })
-
-      await member.setVoiceChannel(channel)
-      await channel.delete({ reason })
-
-      embed.setDescription(t('commands:vckick.success', { author, user, oldChannelName }))
-
-      return send(embed)
-    }
+      .setDescription(t('commands:vckick.success', { author, user: member, oldChannelName }))
+    return send(embed)
   }
 }
 
