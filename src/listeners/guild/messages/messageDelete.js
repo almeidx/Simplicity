@@ -5,8 +5,9 @@ class MessageDelete extends Listener {
   constructor (client) {
     super(client)
   }
-  
-  async on (_, message, t) {
+
+  async on (client, message) {
+    const { t } = await client.database.guilds.get(message.guild.id)
     const user = message.author
 
     const embed = new SimplicityEmbed({ t })

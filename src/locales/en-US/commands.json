@@ -150,7 +150,7 @@
     "vckick": {
         "description": "This command lets you kick members of voice channels.",
         "usage": "[mention/id] <reason>",
-        "success": "{{- author }} kicked {{- user }} from a the **{{- voiceChannel }}** voice channel",
+        "success": "{{- author }} kicked {{- user }} from the **{{- oldChannelName }}** voice channel",
         "action": "voice kick",
         "voiceKicked": "Voice Kicked by: {{- user }}",
         "reason": "{{- author }} | Voice kicked:  {{- user }}"
