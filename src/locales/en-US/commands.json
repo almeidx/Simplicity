@@ -216,7 +216,8 @@
         "position": "Position",
         "mentionable":  "Mentionable",
         "hoisted": "Hoisted",
-        "members": "Members: {{- size }}"
+        "members": "Members: {{- size }}",
+        "createdAt": "Created At"
     },
     "permissions": {
         "usage": "<role|member>",
@@ -230,8 +231,11 @@
         "nameTooBig": "The name you provided is too long! (Max: 32 characters)",
         "reason": "Requested by: {{- author }}",
         "failed": "There was an error when I tried to change the user's nickname",
-        "success": "The {{- user }}'s nickname has been changed to **{{- name }}**",
-        "action": "rename"
+        "success": "{{- user }}'s nickname has been changed to **{{- name }}**",
+        "action": "rename",
+        "removedNickname":  "{{- user }}'s nickname has been reset",
+        "alreadySet": "{{- user }}'s nickname is already set to **{{- name }}**!",
+        "alreadyReset": "{{- user }} doesn't have a nickname already"
     },
     "discriminator": {
         "description": "This command allows you to see the members that have the same discriminator as the one provided",

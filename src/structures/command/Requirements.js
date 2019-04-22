@@ -3,12 +3,22 @@ const PermissionsUtils = require('../../utils/PermissionsUtils')
 
 class Requirements {
   constructor (requirements = {}, responses = {}) {
-    this.argsRequired = false
-    this.nsfwChannelOnly = false
-    this.ownerOnly = false
-    this.clientPermissions = []
-    this.permissions = []
-    this.guildOnly = true
+    requirements = Object.assign({
+      argsRequired: false,
+      nsfwChannelOnly: false,
+      ownerOnly: false,
+      guildOnly: true,
+      permissions: [],
+      clientPermissions: []
+    }, requirements)
+
+    this.argsRequired = requirements.argsRequired
+    this.nsfwChannelOnly = requirements.nsfwChannelOnly
+    this.ownerOnly = requirements.ownerOnly
+    this.clientPermissions = requirements.clientPermissions
+    this.permissions = requirements.permissions
+    this.guildOnly = requirements.guildOnly
+
     this.responses = Object.assign({
       guildOnly: 'errors:guildOnly',
       ownerOnly: 'errors:developerOnly',
@@ -17,18 +27,6 @@ class Requirements {
       argsRequired: 'errors:missingParameters',
       nsfwChannelOnly: 'errors:nsfwChannel'
     }, responses)
-
-    for (const req in requirements) {
-      let opts = requirements[req]
-      if (this[req] == null) throw new Error(`${req} doesn't exist`)
-      if (typeof opts === 'object' && !Array.isArray(opts)) {
-        if (opts.response) this.responses[req] = opts.response
-        opts = opts.return
-      }
-      if ((Array.isArray(this[req]) && Array.isArray(opts)) || (typeof this[req] === typeof opts)) {
-        this[req] = opts
-      }
-    }
   }
 
   handle ({ author, client, channel, guild, args, t }) {

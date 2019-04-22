@@ -7,7 +7,8 @@ class MemberParameter extends UserParameter {
       ...super.parseOptions(options),
       botRoleHighest: true,
       userRoleHighest: true,
-      canBeGuildOwner: true
+      canBeGuildOwner: true,
+      canBeAuthor: false
     }, options)
   }
 
@@ -16,18 +17,18 @@ class MemberParameter extends UserParameter {
       ...super.parseMessageErrors(options),
       botRoleHighest: 'errors:clientMissingRole',
       userRoleHighest: 'errors:userMissingRole',
-      canBeGuildOwner: 'errors:noGuildOwner'
+      canBeGuildOwner: 'errors:noGuildOwner',
+      canBeAuthor: 'errors:cantApplyOnAuthor'
     }, options.errors)
   }
 
   static async verifyExceptions (member, options = {}, { guild, memberAuthor, commandName }) {
     options = this.setupOptions(options)
-
     await super.verifyExceptions(member.user, { author: memberAuthor.user }, options)
     const userOwner = member.id === guild.owner.id
 
     if (!options.canBeGuildOwner && userOwner) throw new CommandError(options.errors.canBeGuildOwner)
-    if (options.userRoleHighest && !userOwner && member.roles.highest.position >= memberAuthor.roles.highest.position) throw new CommandError(options.errors.userRoleHighest, { commandName })
+    if (options.userRoleHighest && !options.canBeAuthor && !userOwner && member.roles.highest.position >= memberAuthor.roles.highest.position) throw new CommandError(options.errors.userRoleHighest, { commandName })
     if (options.botRoleHighest && !userOwner && guild.me.roles.highest.position <= member.roles.highest.position) throw new CommandError(options.errors.botRoleHighest, { commandName })
 
     return member

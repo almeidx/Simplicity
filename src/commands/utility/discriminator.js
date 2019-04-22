@@ -6,15 +6,11 @@ class Discriminator extends Command {
     super(client)
     this.aliases = ['discrim']
     this.category = 'util'
-    this.requirements = {
-      guildOnly: true
-    }
+    this.requirements = { guildOnly: true }
   }
 
   async run ({ author, client, emoji, guild, query, send, t }) {
-    let discrim
-    if (!query) discrim = author.discriminator
-    else discrim = query.replace(/#/g, '')
+    const discrim = (query && query.replace(/#/g, '')) || author.discriminator
 
     const users = guild.members.filter((m) => m.user.discriminator === discrim)
     const mapped = users && users.map((u) => u.user.tag)

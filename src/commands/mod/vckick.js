@@ -15,8 +15,8 @@ class VoiceKick extends Command {
     super(client)
     this.aliases = [ 'voicekick', 'vkick' ]
     this.category = 'mod'
-    this.WIP = true
     this.requirements = {
+      ownerOnly: true,
       argsRequired: true,
       permissions: [ 'KICK_MEMBERS' ],
       clientPermissions: [ 'MANAGE_CHANNELS', 'MOVE_MEMBERS' ] }

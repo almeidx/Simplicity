@@ -1,18 +1,20 @@
 const { Command, CommandError, Parameters, SimplicityEmbed } = require('../../')
-const { MemberParameter, StringParameter, UserParameter } = Parameters
+const { MemberParameter, StringParameter } = Parameters
 
 const MemberParameterOptions = {
+  checkIncludes: false,
   required: false,
-  canBeAuthor: true,
   canBeGuildOwner: false,
+  canBeAuthor: true,
   errors: {
     missingError: 'errors:invalidUser'
   }
 }
 const StringParameterOptions = {
   maxLength: 32,
+  default: '',
   errors: {
-    maxLength: 'commands:nick:nameTooBig',
+    maxLength: 'commands:setnick.nameTooBig'
   }
 }
 
@@ -28,24 +30,28 @@ class SetNick extends Command {
       argsRequired: true }
   }
 
-  async run ({ args, author, channel, guild, member: memberAuthor, message, send, t }) {
-    const user = args.shift()
-    let m = await UserParameter.search(user, { guild })
+  async run ({ args, author, guild, member, send, t }) {
+    const parseMember = await MemberParameter.parse(args.shift(), MemberParameterOptions, {
+      memberAuthor: member,
+      commandName: this.name,
+      author,
+      guild
+    })
+    const name = (await StringParameter.parse(args.join(' '), StringParameterOptions)) || ''
 
-    let member = guild.member(m)
-    if (!member) member = memberAuthor
-    await MemberParameter.verifyExceptions(member, MemberParameterOptions, { guild, memberAuthor, commandName: this.name })
+    if (parseMember.displayName === name) throw new CommandError('commands:setnick.alreadySet', { user: parseMember, name })
+    else if (!parseMember.nickname && !name) throw new CommandError('commands:setnick.alreadyReset', { user: parseMember })
 
-    const name = await StringParameter.parse(args[0], StringParameterOptions)
+    const renamedTo = (name && t('commands:setnick.success', { user: parseMember, name })) || t('commands:setnick.removedNickname', { user: parseMember })
     const reason = t('commands:setnick.reason', { author: author.tag })
 
-    const nickname = member.setNickname(name, reason).catch(() => null)
-    if (!nickname) throw new CommandError('commands:setnick.failed')
-    else {
-      const embed = new SimplicityEmbed({ author, t })
-        .setDescription('commands:setnick.success', { user: member.user, name })
-      return send(embed)
-    }
+    await parseMember.setNickname(name, reason).catch(() => {
+      throw new CommandError('commands:setnick.failed')
+    })
+
+    const embed = new SimplicityEmbed({ author })
+      .setDescription(renamedTo)
+    return send(embed)
   }
 }
 
