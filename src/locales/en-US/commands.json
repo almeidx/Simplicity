@@ -242,5 +242,16 @@
         "usage": "[discriminator]",
         "nobody": "Couldn't find anyone in this server with that discriminator",
         "users": "Users with #{{- discrim }} as discriminator"
+    },
+    "role": {
+        "description": "This command allows you to add and remove roles from users",
+        "usage": "<user> <role>",
+        "noArgs": "You need to provide a user and a role",
+        "reasonAdd:": "{{- author }} Added the role to {{- user }}",
+        "reasonRemove": "{{- author }} Removed the role from {{- user }}",
+        "failedAdd": "There was an error when trying to add the role to the user",
+        "failedRemove": "There was an error when trying to remove the role from the user",
+        "added": "{{- author }} has added the {{- role }} role to {{- member }}",
+        "removed": "{{- author }} has removed the {{- role }} role from {{- member }}"
     }
 }
