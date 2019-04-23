@@ -8,7 +8,7 @@ class MessageUpdate extends Listener {
 
   async on (client, oldMessage, newMessage) {
     if (oldMessage.guild.me.permissions.has('READ_AUDIT_LOGS')) {
-      const { t } = await client.database.guilds.get(message.guild.id)
+      const { t } = await client.database.guilds.get(oldMessage.guild.id)
       const url = oldMessage.url
       const user = oldMessage.author
       const msgChannel = oldMessage.channel
