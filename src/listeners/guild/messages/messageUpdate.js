@@ -6,15 +6,16 @@ class MessageUpdate extends Listener {
     super(client)
   }
 
-  on (client, oldMessage, newMessage, t) {
+  async on (client, oldMessage, newMessage) {
     if (oldMessage.guild.me.permissions.has('READ_AUDIT_LOGS')) {
+      const { t } = await client.database.guilds.get(message.guild.id)
       const url = oldMessage.url
       const user = oldMessage.author
       const msgChannel = oldMessage.channel
       const oldContent = oldMessage.content
       const newContent = newMessage.content
 
-      const embed = new SimplicityEmbed({ user, t }, { autoFooter: false })
+      const embed = new SimplicityEmbed({ author: user, t }, { autoFooter: false })
         .setTimestamp()
         .setFooter(`ID: ${user.id}`)
 
