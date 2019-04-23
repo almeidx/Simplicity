@@ -17,8 +17,7 @@ class GuildDelete extends Listener {
         .addField('Members | Channels | Emojis', `${guild.memberCount} | ${guild.channels.size} | ${guild.emojis.size}`)
         .setFooter(`Owner ID: ${owner.id}`)
         .setThumbnail(guild.iconURl())
-        .setTimestamp()
-    )
+        .setTimestamp())
   }
 }
 

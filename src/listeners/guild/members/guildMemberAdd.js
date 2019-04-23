@@ -6,11 +6,12 @@ class GuildMemberAdd extends Listener {
     super(client)
   }
 
-  on (_, member, t) { // aqui
+  async on (client, member) {
     const guild = member.guild
     const user = member.user
+    const { t } = await client.databse.guilds.get(guild.id)
 
-    this.sendMessage('channel_log_start', // falta adicionar o coiso no Listener.js para a database
+    this.sendMessage('channel_log_start',
       new SimplicityEmbed({ t })
         .setTimestamp()
         .setColor(process.env.COLOR)

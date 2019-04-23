@@ -5,11 +5,12 @@ class UserUpdate extends Listener {
     super(client)
   }
 
-  on (client, oldUser, newUser, t) { // t
+  async on (client, oldUser, newUser) {
+    const { t } = await client.database.guilds.get(oldUser.guild.id)
   // AVATAR CHANGES
     if (oldUser.displayAvatarURL() !== newUser.displayAvatarURL()) {
       client.guilds.filter(guild => guild.members.get(oldUser.id)).forEach(guild => {
-        this.sendMessage('channel_log_start', // falta adicionar o coiso no Listener.js para a database
+        this.sendMessage('channel_log_start',
           new SimplicityEmbed({ t })
             .setTimestamp()
             .setAuthor(newUser.tag, newUser.displayAvatarURL())
