@@ -253,5 +253,10 @@
         "failedRemove": "There was an error when trying to remove the role from the user",
         "added": "{{- author }} has added the {{- role }} role to {{- member }}",
         "removed": "{{- author }} has removed the {{- role }} role from {{- member }}"
+    },
+    "logs": {
+        "description": "This command allows you to set the logs in your server",
+        "usage": "[type] [on/off]",
+        "userUpdates": "User Updates"
     }
 }
