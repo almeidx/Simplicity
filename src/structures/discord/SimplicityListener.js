@@ -36,6 +36,18 @@ class SimplicityListener {
     }
   }
 
+  async sendGlobalMessage (log, content) {
+    const guilds = client.guilds.filter(async (guild) => {
+      !!(await this.getLogOptions(guild.id, log))
+    })
+    if (guilds) {
+      for (const g of guilds) {
+        const channelData = await this.getLogOptions(g.id, log)
+        LogUtils.send(channelData.channel, content).catch(() => null)
+      }
+    }
+  }
+
   sendPrivateMessage (envName, content) {
     const id = envName && process.env[envName.toUpperCase()]
     const channel = this.client && id && this.client.channels.get(id)
