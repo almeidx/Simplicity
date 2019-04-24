@@ -1,7 +1,7 @@
-const { SimplicityEmbed, Listener, Constants } = require('../../../index')
+const { SimplicityEmbed, SimplicityListener, Constants } = require('../../../index')
 const clean = (str) => str.slice(0, 1020) + str.length >= 1024 ? '...' : str
 
-class MessageUpdate extends Listener {
+class MessageUpdate extends SimplicityListener {
   constructor (client) {
     super(client)
   }

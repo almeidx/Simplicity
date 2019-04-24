@@ -1,15 +1,15 @@
-const { Listener, SimplicityEmbed } = require('../../')
+const { SimplicityListener, SimplicityEmbed } = require('../../')
 
-class GuildCreate extends Listener {
+class GuildDelete extends SimplicityListener {
   constructor (client) {
     super(client)
   }
 
   async on (client, guild) {
-    await client.database.guilds.create(guild.id)
+    await client.database.guilds.remove(guild.id)
     const owner = guild.owner
 
-    this.sendMessage('guild_join',
+    this.sendMessage('guild_leave',
       new SimplicityEmbed()
         .setAuthor(owner.user.tag, owner.user.displayAvatarURL())
         .addField('Guild Name', guild.name, true)
@@ -21,4 +21,4 @@ class GuildCreate extends Listener {
   }
 }
 
-module.exports = GuildCreate
+module.exports = GuildDelete

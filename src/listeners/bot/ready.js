@@ -1,6 +1,6 @@
-const { SimplicityEmbed, Listener } = require('../..')
+const { SimplicityEmbed, SimplicityListener } = require('../..')
 
-class Ready extends Listener {
+class Ready extends SimplicityListener {
   constructor (client) {
     super(client)
   }

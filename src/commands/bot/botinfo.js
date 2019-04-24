@@ -17,7 +17,7 @@ class BotInfo extends Command {
 
     const inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=379968`
     const ownersId = process.env.DEVS_IDS && process.env.DEVS_IDS.split(', ')
-    const OWNERS = ownersId && ownersId.map(u => client.users.get(u).tag).join(', ')
+    const OWNERS = ownersId && ownersId.filter(id => client.users.has(id)).map(id => client.users.get(id).tag).join(', ')
 
     const embed = new SimplicityEmbed({ author, guild, t, emoji })
       .addField('» $$commands:botinfo.ping', `${Math.round(guild.shard.ping)}ms`, true)
@@ -29,8 +29,9 @@ class BotInfo extends Command {
       .addField('» $$commands:botinfo.nodejs', process.versions.node, true)
       .addField('» $$commands:botinfo.commands', this.client.commands.size, true)
       .addField('» $$commands:botinfo.links', `#bot_tag [$$commands:botinfo.inviteBot ](${inviteLink})`, true)
-      .addField('» $$commands:botinfo.developers', OWNERS)
-      .addField('» $$commands:botinfo.uptime', UPTIME)
+
+    if (OWNERS) embed.addField('» $$commands:botinfo.developers', OWNERS)
+    embed.addField('» $$commands:botinfo.uptime', UPTIME)
     return send(embed)
   }
 }
