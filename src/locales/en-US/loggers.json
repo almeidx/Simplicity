@@ -15,5 +15,6 @@
     "accountCreatedAt": "Account Created At",
     "joinedAt": "Joined At",
     "before": "Before",
-    "after": "After"
+    "after": "After",
+    "messageError": "There was an error when trying to add the message content"
 }
