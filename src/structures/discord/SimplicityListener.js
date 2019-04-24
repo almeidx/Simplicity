@@ -12,8 +12,7 @@ class SimplicityListener {
 
   async getLogOptions (guildID, id) {
     const guild = this.client && guildID && this.client.guilds.get(guildID)
-    const channelData = guild && await LogUtils.getChannel(this.client, guild, id)
-    return channelData
+    return guild && await LogUtils.getChannel(this.client, guild, id)
   }
 
   async getFixedT (guildID) {

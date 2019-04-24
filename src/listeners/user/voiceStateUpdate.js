@@ -5,10 +5,11 @@ class VoiceStateUpdate extends SimplicityListener {
     super(client)
   }
 
-  on (_, oldState, newState, t) {
+  async on (client, oldState, newState) {
     const user = oldState.member.user
     const oldChannel = oldState.channel && `**${oldState.channel.name}**`
     const newChannel = newState.channel && `**${newState.channel.name}**`
+    const { t } = await client.database.guilds.get(oldState.member.guild.id)
 
     const embed = new SimplicityEmbed({ t })
       .setTimestamp()

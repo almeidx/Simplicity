@@ -5,8 +5,10 @@ class MessageDeleteBulk extends SimplicityListener {
     super(client)
   }
 
-  on (_, messages, t) {
+on (_, messages, t) {
+
     const message = messages.first()
+    const { t } = await client.database.guilds.get(message.guild.id)
 
     const embed = new SimplicityEmbed({ t })
       .setTimestamp()
