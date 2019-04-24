@@ -17,5 +17,7 @@
     "before": "Before",
     "after": "After",
     "messageError": "There was an error when trying to add the message content",
-    "id": "ID: {{- id }}"
+    "id": "ID: {{- id }}",
+    "changedUsername": "{{- user }} has changed their username",
+    "changedDiscriminator": "{{- user }} has changed their discriminator"
 }
