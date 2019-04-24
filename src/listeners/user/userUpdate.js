@@ -1,4 +1,4 @@
-const { SimplicityListener, SimplicityEmbed } = require('../../')
+const { SimplicityListener, SimplicityEmbed, Utils } = require('../../')
 
 class UserUpdate extends SimplicityListener {
   constructor (client) {
@@ -15,7 +15,7 @@ class UserUpdate extends SimplicityListener {
             .setAuthor(newUser.tag, newUser.displayAvatarURL())
             .setImage(newUser.displayAvatarURL({ size: 2048 }))
             .setColor(process.env.COLOR)
-            .setFooter(guild.name, guild.iconURL())
+            .setFooter(guild.name, Utils.getServerIconURL(guild))
             .setDescription('loggers:changedAvatar', { user: newUser })).catch(() => null)
       })
     }
