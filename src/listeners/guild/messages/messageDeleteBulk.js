@@ -1,11 +1,12 @@
-const { SimplicityEmbed, Listener, Constants } = require('../../../index')
+const { SimplicityEmbed, SimplicityListener, Constants } = require('../../../index')
 
-class MessageDeleteBulk extends Listener {
+class MessageDeleteBulk extends SimplicityListener {
   constructor (client) {
     super(client)
   }
 
-  async on (client, messages) {
+on (_, messages, t) {
+
     const message = messages.first()
     const { t } = await client.database.guilds.get(message.guild.id)
 
