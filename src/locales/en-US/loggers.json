@@ -16,5 +16,6 @@
     "joinedAt": "Joined At",
     "before": "Before",
     "after": "After",
-    "messageError": "There was an error when trying to add the message content"
+    "messageError": "There was an error when trying to add the message content",
+    "id": "ID: {{- id }}"
 }
