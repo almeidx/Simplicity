@@ -1,12 +1,12 @@
 const moment = require('moment')
-const { Listener } = require('../..')
+const { SimplicityListener } = require('../..')
 
-class DisconnectListener extends Listener {
+class DisconnectListener extends SimplicityListener {
   constructor (client) {
     super(client)
   }
-  
-  on (client) {
+
+  on () {
     console.log(`The bot has disconnected at ${moment().format('LLL')}`)
   }
 }

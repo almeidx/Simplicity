@@ -1,10 +1,9 @@
 class LogUtils {
   static async getChannel (client, guild, logName) {
     const guildData = await client.database.guilds.get(guild.id)
-    const logData = guildData && guildData.logs && guildData.logs.find(e => e.logName === logName)
+    const logData = guildData && guildData.logs && guildData.logs[logName]
     const channel = logData && logData.channelID && guild.channels.get(logData.channelID)
-    const t = channel && guildData && client.i18next.getFixedT(guildData.lang || process.env.DEFAULT_LANG)
-    return { channel, t }
+    return channel
   }
 
   static async send (channel, ...body) {

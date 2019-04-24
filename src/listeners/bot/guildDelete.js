@@ -1,6 +1,6 @@
-const { Listener, SimplicityEmbed } = require('../../')
+const { SimplicityListener, SimplicityEmbed } = require('../../')
 
-class GuildDelete extends Listener {
+class GuildDelete extends SimplicityListener {
   constructor (client) {
     super(client)
   }

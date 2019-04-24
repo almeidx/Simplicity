@@ -1,10 +1,10 @@
-const { SimplicityEmbed, Listener, Constants } = require('../../../index')
+const { SimplicityEmbed, SimplicityListener, Constants } = require('../../../index')
 
-class MessageDeleteBulk extends Listener {
+class MessageDeleteBulk extends SimplicityListener {
   constructor (client) {
     super(client)
   }
-  
+
   on (_, messages, t) {
     const message = messages.first()
 
@@ -13,7 +13,7 @@ class MessageDeleteBulk extends Listener {
       .setAuthor(message.guild.name, message.guild.iconURL())
       .setDescription('loggers:messageDeleteBulk', { amount: messages.size, channel: message.channel })
       .setColor(Constants.COLORS.MESSAGE_BULK_DELETE)
-    
+
     this.sendMessage('messageBulkDelete', embed).catch(() => null)
   }
 }

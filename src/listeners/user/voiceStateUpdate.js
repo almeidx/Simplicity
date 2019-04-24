@@ -1,6 +1,6 @@
-const { Listener, SimplicityEmbed } = require('../../index')
+const { SimplicityListener, SimplicityEmbed } = require('../../index')
 
-class VoiceStateUpdate extends Listener {
+class VoiceStateUpdate extends SimplicityListener {
   constructor (client) {
     super(client)
   }

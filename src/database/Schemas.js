@@ -3,7 +3,8 @@ module.exports = {
     _id: { type: String, required: true },
     lang: { type: String },
     prefix: { type: String },
-    channels: [{ id: String, userID: String, date: Date }],
-    logs: [{ channelID: String, logName: String }]
+    logs: {
+      GuildMemberAdd: { type: String, default: null }
+    }
   }
 }

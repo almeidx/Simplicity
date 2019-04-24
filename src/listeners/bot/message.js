@@ -1,6 +1,6 @@
-const { CommandContext, Listener } = require('../../')
+const { CommandContext, SimplicityListener } = require('../../')
 
-class Message extends Listener {
+class Message extends SimplicityListener {
   constructor (client) {
     super(client)
   }
