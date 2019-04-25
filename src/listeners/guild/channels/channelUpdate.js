@@ -1,5 +1,4 @@
 const { SimplicityEmbed, SimplicityListener, Utils } = require('../../../index')
-const clean = (str) => str.slice(0, 1021) + (str.length > 1021 ? '...' : '')
 
 class ChannelUpdate extends SimplicityListener {
   constructor (client) {
@@ -36,8 +35,8 @@ class ChannelUpdate extends SimplicityListener {
       if (executor) embed.setDescription('loggers:channelTopicChangedExecutor', { name: newChannel.name, executor })
       else embed.setDescription('loggers:channelTopicChanged', { name: newChannel.name })
       embed
-        .addField('loggers:before', clean(oldChannel.topic), true)
-        .addField('loggers:after', clean(newChannel.topic), true)
+        .addField('loggers:before', Utils.cleanString(oldChannel.topic, 0, 1024), true)
+        .addField('loggers:after', Utils.cleanString(newChannel.topic), true, 0, 1024)
       return this.sendLogMessage(guild.id, 'ChannelUpdate', embed).catch(() => null)
     }
   }

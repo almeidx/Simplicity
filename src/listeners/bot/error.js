@@ -1,5 +1,5 @@
-const { SimplicityEmbed, SimplicityListener } = require('../..')
-const clean = (str) => str.toString().slice(0, 2045) + (str.toString().length > 2045 ? '...' : '')
+const { SimplicityEmbed, SimplicityListener, Utils } = require('../..')
+const { cleanString } = Utils
 
 class ErrorListener extends SimplicityListener {
   constructor (client) {
@@ -8,10 +8,11 @@ class ErrorListener extends SimplicityListener {
 
   on (client, error) {
     client.logger.error('Error', error)
+
     this.sendPrivateMessage('channel_log_error',
       new SimplicityEmbed()
         .setError()
-        .setDescription(clean(error.stack))).catch(() => null)
+        .setDescription(cleanString(error.stack)))
   }
 }
 

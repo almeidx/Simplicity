@@ -1,6 +1,6 @@
-const { Command, SimplicityEmbed } = require('../../')
+const { Command, SimplicityEmbed, Utils } = require('../../')
 const { exec } = require('child_process')
-const clean = (str) => str.toString().slice(0, 1020) + str.toString().length >= 1024 ? '...' : str.toString()
+const { cleanString } = Utils
 
 class Exec extends Command {
   constructor (client) {
@@ -19,13 +19,13 @@ class Exec extends Command {
       if (error) {
         embed
           .setTitle('common:general')
-          .setDescription(clean(error))
+          .setDescription(cleanString(error))
           .setError()
         return send(embed)
       } else {
         embed
           .setTitle('» $$commands:exec.result')
-          .setDescription(clean(stdout))
+          .setDescription(cleanString(stdout))
         return send(embed)
       }
     })

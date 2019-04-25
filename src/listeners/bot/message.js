@@ -19,7 +19,7 @@ class Message extends SimplicityListener {
     const startsWithPrefix = message.content.toLowerCase().startsWith(prefix.toLowerCase()) ? prefix : null
 
     const usedPrefix = startsWithBotMention || startsWithCleanMention || startsWithPrefix
-    const clientIsMentioned = message.mentions.has(client.user.id)
+    const clientIsMentioned = message.mentions.has(client.user.id, { ignoreRoles: true, ignoreEveryone: true })
 
     if (clientIsMentioned && !usedPrefix) {
       return message.reply(client.i18next.getFixedT(language)('common:prefix', { prefix }))

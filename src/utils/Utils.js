@@ -24,6 +24,16 @@ class Utils {
     const result = array.map((m, i) => { return { index: i, id: m.user.id } }).find(m => m.id === id)
     return (result && result.index) || null
   }
+
+  static cleanString (str, minLength = 0, maxLength = 1024) {
+    str = String(str)
+    return str.slice(minLength, maxLength - 3) + (str.length > maxLength - 3 ? '...' : '')
+  }
+
+  static code (str, lang, minLength = 0, maxLength = 1024) {
+    str = String(str)
+    return `\`\`\`${lang}\n${str.slice(minLength, maxLength - 3) + (str.length > maxLength - 3 ? '...' : '')}\n\`\`\``
+  }
 }
 
 module.exports = Utils

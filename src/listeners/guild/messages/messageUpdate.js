@@ -1,5 +1,5 @@
-const { SimplicityEmbed, SimplicityListener, Constants } = require('../../../index')
-const clean = (str) => str.slice(0, 1020) + (str.length >= 1024 ? '...' : str)
+const { Constants, SimplicityEmbed, SimplicityListener, Utils } = require('../../../index')
+const { cleanString } = Utils
 
 class MessageUpdate extends SimplicityListener {
   constructor (client) {
@@ -24,8 +24,8 @@ class MessageUpdate extends SimplicityListener {
       embed
         .setDescription('loggers:messageEdited', { url, user, channel: msgChannel })
         .setColor(Constants.COLORS.MESSAGE_EDIT)
-      if (oldContent) embed.addField('loggers:before', clean(oldContent) || 'loggers:messageError', true)
-      if (newContent) embed.addField('loggers:after', clean(newContent) || 'loggers:messageError', true)
+      if (oldContent) embed.addField('loggers:before', cleanString(oldContent) || 'loggers:messageError', true)
+      if (newContent) embed.addField('loggers:after', cleanString(newContent) || 'loggers:messageError', true)
       return this.sendLogMessage(oldMessage.guild.id, 'MessageUpdate', embed).catch(() => null)
     } else
     // MESSAGE PINS
