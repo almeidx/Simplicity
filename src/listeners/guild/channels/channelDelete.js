@@ -18,7 +18,7 @@ class ChannelDelete extends SimplicityListener {
     if (guild.me.permissions.has('VIEW_AUDIT_LOG')) {
       const entry = await guild.fetchAuditLogs({ type: 'CHANNEL_DELETE' }).then(audit => audit.entries.first())
       if (entry) {
-        if ((entry.target && entry.target.name === channel.name) && entry.createdTimestamp > Date.now() - 5000) {
+        if ((entry.target && entry.target.id === channel.id) && entry.createdTimestamp > Date.now() - 5000) {
           const executor = entry.executor
           if (executor) embed.setDescription('loggers:channelDeletedExecutor', { type: channel.type, name: channel.name, executor })
         }
