@@ -6,7 +6,7 @@ class MessageDeleteBulk extends SimplicityListener {
   }
 
   on (_, messages) {
-    const message = messages.first().fetch()
+    const message = messages.first()
 
     this.sendLogMessage(message.guild.id, 'MessageUpdate',
       new SimplicityEmbed(this.getFixedT(message.guild.id))

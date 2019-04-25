@@ -7,7 +7,6 @@ class MessageDelete extends SimplicityListener {
   }
 
   async on (_, message) {
-    message = await message.fetch()
     const user = message.author
 
     const embed = new SimplicityEmbed(this.getFixedT(message.guild.id))
@@ -21,6 +20,7 @@ class MessageDelete extends SimplicityListener {
 
     if (message.guild.me.permissions.has('VIEW_AUDIT_LOG')) {
       const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' }).then(audit => audit.entries.first())
+      console.log(entry)
       if (entry) {
         const channelCondition = entry.extra && entry.extra.channel.id === message.channel.id
         const userCondition = entry.target && entry.target.id === user.id
