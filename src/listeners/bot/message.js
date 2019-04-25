@@ -6,18 +6,23 @@ class Message extends SimplicityListener {
   }
 
   async on (client, message) {
-    if (message.author.bot || message.type === 'dm' || !message.guild.me.permissions.has('SEND_MESSAGES')) return
+    if (message.author.bot || (message.guild && !message.guild.me.permissions.has('SEND_MESSAGES'))) return
 
     const guildData = await client.database.guilds.get(message.guild.id)
-
     const prefix = (guildData && guildData.prefix) || process.env.PREFIX
     const language = (guildData && guildData.lang) || process.env.DEFAULT_LANG
 
-    const botMention = message.guild.me.toString()
-    const usedPrefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.toLowerCase().startsWith(prefix.toLowerCase()) ? prefix : (message.content.startsWith(client.user.toString()) ? client.user.toString() + ' ' : null))
+    const cleanMention = client.user.toString()
+    const botMention = (message.guild && message.guild.me.toString()) || cleanMention
+    const startsWithBotMention = message.content.startsWith(botMention) ? `${botMention} ` : null
+    const startsWithCleanMention = message.content.startsWith(cleanMention) ? `${cleanMention} ` : null
+    const startsWithPrefix = message.content.toLowerCase().startsWith(prefix.toLowerCase()) ? prefix : null
 
-    if (message.content === botMention || message.content === client.user.toString()) {
-      return message.reply(client.i18next.getFixedT(language)('common:prefix', { prefix: prefix }))
+    const usedPrefix = startsWithBotMention || startsWithCleanMention || startsWithPrefix
+    const clientIsMentioned = message.mentions.has(client.user.id)
+
+    if (clientIsMentioned && !usedPrefix) {
+      return message.reply(client.i18next.getFixedT(language)('common:prefix', { prefix }))
     }
 
     if (usedPrefix) {
@@ -25,11 +30,13 @@ class Message extends SimplicityListener {
       const commandName = args.shift().toLowerCase()
       const command = client.commands.fetch(commandName)
 
-      if (message.mentions.has(client.user.id) && message.guild.me.permissions.has(['USE_EXTERNAL_EMOJIS', 'ADD_REACTIONS']) && client.emojis.has(process.env.EMOJI_PINGSOCK_ID) && !command) {
-        return message.react(process.env.EMOJI_PINGSOCK_ID)
+      const permissions = message.guild.me.permissions
+      if (clientIsMentioned && permissions.has(['USE_EXTERNAL_EMOJIS', 'ADD_REACTIONS']) && client.emojis.has(process.env.EMOJI_PINGSOCK_ID) && !command) {
+        await message.react(process.env.EMOJI_PINGSOCK_ID)
+        return message.reply(client.i18next.getFixedT(language)('common:prefix', { prefix }))
       }
 
-      if (command && (!command.running.has(message.channel.id, message.author.id))) {
+      if (command && !command.running.has(message.channel.id, message.author.id)) {
         const totalLength = usedPrefix.length + commandName.length
         command._run(new CommandContext({
           totalLength,
