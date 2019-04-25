@@ -19,5 +19,15 @@
     "messageError": "There was an error when trying to add the message content",
     "id": "ID: {{- id }}",
     "changedUsername": "{{- user }} has changed their username",
-    "changedDiscriminator": "{{- user }} has changed their discriminator"
+    "changedDiscriminator": "{{- user }} has changed their discriminator",
+    "channelCreated": "The **{{- name }}** $t(loggers:channelType.{{- type }}) channel has been created",
+    "channelCreatedExecutor": "The **{{- name }}** $t(loggers:channelType.{{- type }}) channel has been created by {{- user }}",
+    "channelType": {
+        "text": "Text",
+        "voice": "Voice",
+        "category": "Category"
+    },
+    "channelDeletedExecutor": "The **{{- name }}** $t(loggers:channelType.{{- type }}) channel has been deleted by {{- user }}",
+    "channelDeleted": "The **{{- name }}** $t(loggers:channelType.{{- type }}) channel has been delete",
+    "channelId": "Channel ID: {{- id }}"
 }

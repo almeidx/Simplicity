@@ -23,7 +23,7 @@ class MessageDelete extends SimplicityListener {
       const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' }).then(audit => audit.entries.first())
       if (entry) {
         const channelCondition = entry.extra && entry.extra.channel.id === message.channel.id
-        const userCondition = entry.target && entry.targe.id === user.id
+        const userCondition = entry.target && entry.target.id === user.id
 
         if (channelCondition && userCondition && entry.createdTimestamp > Date.now() - 5000) {
           const executor = entry.executor
