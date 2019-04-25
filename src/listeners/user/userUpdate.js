@@ -27,9 +27,9 @@ class UserUpdate extends SimplicityListener {
             .setColor(process.env.COLOR)
             .setThumbnail(oldUser.displayAvatarURL())
             .setFooter(guild.name, Utils.getServerIconURL(guild))
-            .setDescription('loggers:changedUsername', { user: newUser })).catch(() => null)
+            .setDescription('loggers:changedUsername', { user: newUser })
             .addField('loggers:before', oldUser.username, true)
-            .addField('loggers:after', newUser.username, true)
+            .addField('loggers:after', newUser.username, true)).catch(() => null)
       })
     } else if (oldUser.discriminator !== newUser.discriminator) {
       client.guilds.filter((g) => g.members.get(oldUser.id)).forEach((guild) => {
@@ -40,9 +40,9 @@ class UserUpdate extends SimplicityListener {
             .setColor(process.env.COLOR)
             .setThumbnail(oldUser.displayAvatarURL())
             .setFooter(guild.name, Utils.getServerIconURL(guild))
-            .setDescription('loggers:changedDiscriminator', { user: newUser })).catch(() => null)
+            .setDescription('loggers:changedDiscriminator', { user: newUser })
             .addField('loggers:before', oldUser.discriminator, true)
-            .addField('loggers:after', newUser.discriminator, true)
+            .addField('loggers:after', newUser.discriminator, true)).catch(() => null)
       })
     }
   }
