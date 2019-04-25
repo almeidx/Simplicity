@@ -7,6 +7,7 @@ class MessageDelete extends SimplicityListener {
   }
 
   async on (_, message) {
+    message = await message.fetch()
     const user = message.author
 
     const embed = new SimplicityEmbed(this.getFixedT(message.guild.id))

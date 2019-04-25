@@ -7,6 +7,8 @@ class MessageUpdate extends SimplicityListener {
   }
 
   async on (_, oldMessage, newMessage) {
+    oldMessage = await oldMessage.fetch()
+    newMessage = await newMessage.fetch()
     const url = oldMessage.url
     const user = oldMessage.author
     const msgChannel = oldMessage.channel
@@ -15,7 +17,7 @@ class MessageUpdate extends SimplicityListener {
 
     const embed = new SimplicityEmbed(this.getFixedT(oldMessage.guild.id))
       .setTimestamp()
-    if (user) embed.setFooter('loggers:id', '', { id: user.id })
+      .setFooter('loggers:id', '', { id: user.id })
 
     // MESSAGE EDITED
     if (oldContent !== newContent) {
