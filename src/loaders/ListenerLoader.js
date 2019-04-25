@@ -11,6 +11,7 @@ class ListenerLoader extends Loader {
     const logs = []
     await FileUtils.requireDirectory('src/listeners', (Listener, fileName) => {
       const listener = new Listener(this.client)
+      logs.push(fileName)
 
       this.client.on(fileName, (...args) => listener.on(this.client, ...args))
     }, console.error)

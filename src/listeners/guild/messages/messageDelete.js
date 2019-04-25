@@ -30,7 +30,7 @@ class MessageDelete extends SimplicityListener {
         }
       }
     }
-    this.sendLogMessage(message.guild.id, 'MessageDelete', embed).catch(() => null)
+    this.sendLogMessage(message.guild.id, 'MessageUpdate', embed).catch(() => null)
   }
 }
 

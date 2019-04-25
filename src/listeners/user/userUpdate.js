@@ -9,7 +9,7 @@ class UserUpdate extends SimplicityListener {
     // AVATAR CHANGES
     if (oldUser.displayAvatarURL() !== newUser.displayAvatarURL()) {
       client.guilds.filter((g) => g.members.get(oldUser.id)).forEach((guild) => {
-        this.sendLogMessage(guild.id, 'UserAvatarChange',
+        this.sendLogMessage(guild.id, 'UserUpdate',
           new SimplicityEmbed(this.getFixedT(guild.id))
             .setTimestamp()
             .setAuthor(newUser.tag, newUser.displayAvatarURL())
@@ -20,7 +20,7 @@ class UserUpdate extends SimplicityListener {
       })
     } else if (oldUser.username !== newUser.username) {
       client.guilds.filter((g) => g.members.get(oldUser.id)).forEach((guild) => {
-        this.sendLogMessage(guild.id, 'UserUsernameChange',
+        this.sendLogMessage(guild.id, 'UserUpdate',
           new SimplicityEmbed(this.getFixedT(guild.id))
             .setTimestamp()
             .setAuthor(newUser.tag, newUser.displayAvatarURL())
@@ -33,7 +33,7 @@ class UserUpdate extends SimplicityListener {
       })
     } else if (oldUser.discriminator !== newUser.discriminator) {
       client.guilds.filter((g) => g.members.get(oldUser.id)).forEach((guild) => {
-        this.sendLogMessage(guild.id, 'UserDiscriminatorChange',
+        this.sendLogMessage(guild.id, 'UserUpdate',
           new SimplicityEmbed(this.getFixedT(guild.id))
             .setTimestamp()
             .setAuthor(newUser.tag, newUser.displayAvatarURL())

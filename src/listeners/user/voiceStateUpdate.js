@@ -19,16 +19,16 @@ class VoiceStateUpdate extends SimplicityListener {
     // LEAVE CHANNEL
     if (oldChannel && !newChannel) {
       embed.setDescription('loggers:leaveVoiceChannel', { user, channel: oldChannel })
-      return this.sendLogMessage(guild.id, 'LeaveVoiceChannel', embed).catch(() => null)
+      return this.sendLogMessage(guild.id, 'VoiceChannelLogs', embed).catch(() => null)
     } else
     // JOIN CHANNEL
     if (!oldChannel && newChannel) {
       embed.setDescription('loggers:joinVoiceChannel', { user, channel: newChannel })
-      return this.sendLogMessage(guild.id, 'JoinVoiceChannel', embed).catch(() => null)
+      return this.sendLogMessage(guild.id, 'VoiceChannelLogs', embed).catch(() => null)
     } else {
     // MOVED CHANNEL
       embed.setDescription('loggers:hasChangedVoiceChannel', { user, newChannel, oldChannel })
-      return this.sendLogMessage(guild.id, 'MovedVoiceChannel', embed).catch(() => null)
+      return this.sendLogMessage(guild.id, 'VoiceChannelLogs', embed).catch(() => null)
     }
   }
 }

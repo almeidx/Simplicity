@@ -8,7 +8,7 @@ class MessageDeleteBulk extends SimplicityListener {
   on (_, messages) {
     const message = messages.first()
 
-    this.sendLogMessage(message.guild.id, 'MessageDeleteBulk',
+    this.sendLogMessage(message.guild.id, 'MessageUpdate',
       new SimplicityEmbed(this.getFixedT(message.guild.id))
         .setTimestamp()
         .setAuthor(message.guild.name, Utils.getServerIconURL(message.guild.id))
