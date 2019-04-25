@@ -15,16 +15,15 @@ class MessageUpdate extends SimplicityListener {
 
     const embed = new SimplicityEmbed(this.getFixedT(oldMessage.guild.id))
       .setTimestamp()
-
-      if (user) embed.setFooter('loggers:id', '', { id: user.id })
+    if (user) embed.setFooter('loggers:id', '', { id: user.id })
 
     // MESSAGE EDITED
     if (oldContent !== newContent) {
       embed
         .setDescription('loggers:messageEdited', { url, user, channel: msgChannel })
-        if (oldContent) embed.addField('loggers:before', clean(oldContent) || 'loggers:messageError', true)
-        if (newContent) embed.addField('loggers:after', clean(newContent) || 'loggers:messageError', true)
         .setColor(Constants.COLORS.MESSAGE_EDIT)
+      if (oldContent) embed.addField('loggers:before', clean(oldContent) || 'loggers:messageError', true)
+      if (newContent) embed.addField('loggers:after', clean(newContent) || 'loggers:messageError', true)
       return this.sendLogMessage(oldMessage.guild.id, 'MessageUpdate', embed).catch(() => null)
     } else
     // MESSAGE PINS
