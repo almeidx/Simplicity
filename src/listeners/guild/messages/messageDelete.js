@@ -1,4 +1,5 @@
 const { Constants, SimplicityEmbed, SimplicityListener, Utils } = require('../../../index')
+const { cleanString } = Utils
 
 class MessageDelete extends SimplicityListener {
   constructor (client) {
@@ -16,7 +17,7 @@ class MessageDelete extends SimplicityListener {
       .setDescription('loggers:messageDeleted', { user, channel: message.channel })
       .setColor(Constants.COLORS.MESSAGE_DELETE)
 
-    if (message.content) embed.addField('loggers:content', Utils.cleanString(message.content, 0, 1024) || 'loggers:messageError')
+    if (message.content) embed.addField('loggers:content', cleanString(message.content, 0, 1024) || 'loggers:messageError')
 
     if (message.guild.me.permissions.has('VIEW_AUDIT_LOG')) {
       const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' }).then(audit => audit.entries.first())
