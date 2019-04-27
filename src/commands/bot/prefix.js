@@ -6,6 +6,7 @@ class Prefix extends Command {
     super(client)
     this.name = 'prefix'
     this.category = 'bot'
+    this.aliases = [ 'setprefix', 'p', 'setp', 'prefixset' ]
     this.requirements = {
       argsRequired: true,
       permissions: [ 'MANAGE_GUILD' ] }
