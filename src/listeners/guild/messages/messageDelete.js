@@ -6,8 +6,8 @@ class MessageDelete extends SimplicityListener {
     super(client)
   }
 
-  async on (_, message) {
-    const user = message.author
+  async on (client, message) {
+    const user = message.author || client.user
 
     const embed = new SimplicityEmbed(this.getFixedT(message.guild.id))
       .setTimestamp()

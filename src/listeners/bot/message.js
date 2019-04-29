@@ -30,9 +30,7 @@ class Message extends SimplicityListener {
       const commandName = args.shift().toLowerCase()
       const command = client.commands.fetch(commandName)
 
-      const permissions = message.guild.me.permissions
-      if (clientIsMentioned && permissions.has(['USE_EXTERNAL_EMOJIS', 'ADD_REACTIONS']) && client.emojis.has(process.env.EMOJI_PINGSOCK_ID) && !command) {
-        await message.react(process.env.EMOJI_PINGSOCK_ID)
+      if (clientIsMentioned && !command) {
         return message.reply(client.i18next.getFixedT(language)('common:prefix', { prefix }))
       }
 
