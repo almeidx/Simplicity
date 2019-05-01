@@ -257,6 +257,11 @@
     "logs": {
         "description": "This command allows you to set the logs in your server",
         "usage": "[type] [on/off]",
-        "userUpdates": "User Updates"
+        "GuildMemberAdd": "Member Join",
+        "GuildMemberRemove": "Member Leave",
+        "GuildUpdates": "Guild Updates",
+        "MessageUpdate": "Message Updates",
+        "UserUpdate": "User Updates",
+        "VoiceChannelLogs": "Voice Channel Logs"
     }
 }
