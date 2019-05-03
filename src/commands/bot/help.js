@@ -23,24 +23,25 @@ class Help extends Command {
       return send(embed)
     }
 
-    if (!this.client.commands.has(args[0].toLowerCase())) {
+    if (!this.client.commands.has(args[0].toLowerCase()))
       return send(embed.setDescription('commands:help.commandUndefined').setError())
-    }
 
     const command = this.client.commands.fetch(args[0].toLowerCase())
 
-    if (command.name === 'help') {
+    if (command.name === 'help')
       return send(embed.setDescription('commands:help.commandHelp').setError())
-    }
 
-	const commandName = args.toString()[0].toUpperCase() + args[0].toString().toLowerCase().slice(1)
+    const commandName = args.toString()[0].toUpperCase() + args[0].toString().toLowerCase().slice(1)
     embed.setTitle(commandName)
 
-    if (t(`commands:${command.name}.description`) !== `${command.name}.description`) embed.setDescription(`commands:${command.name}.description`, { prefix })
+    if (t(`commands:${command.name}.description`) !== `${command.name}.description`)
+      embed.setDescription(`commands:${command.name}.description`, { prefix })
 
-    if (t(`commands:${command.name}.usage`) !== `${command.name}.usage`) embed.addField(`${emoji('USAGE')} ${t('commands:help._usage')}`, t(`commands:${command.name}.usage`, { prefix }))
+    if (t(`commands:${command.name}.usage`) !== `${command.name}.usage`)
+      embed.addField(`${emoji('USAGE')} ${t('commands:help._usage')}`, t(`commands:${command.name}.usage`, { prefix }))
 
-    if (command.aliases.length !== 0) embed.addField(`${emoji('ALIASES')} ${t('commands:help.aliases')}`, command.aliases)
+    if (command.aliases.length !== 0)
+      embed.addField(`${emoji('ALIASES')} ${t('commands:help.aliases')}`, command.aliases)
 
     return send(embed)
   }

@@ -13,12 +13,15 @@ class Language extends Command {
 
   async run ({ author, botLanguages, client, guild, language, query, send, t }) {
     const lang = botLanguages.find(i => i.toLowerCase() === query.toLowerCase())
-    if (!lang) throw new CommandError('commands:language.invalidLang', { botLanguages: botLanguages.map(i => `\`${i}\``).join(', ') })
+    if (!lang)
+      throw new CommandError('commands:language.invalidLang', { botLanguages: botLanguages.map(i => `\`${i}\``).join(', ') })
 
-    if (language === lang) throw new CommandError('commands:language.alreadySet', { lang })
+    if (language === lang)
+      throw new CommandError('commands:language.alreadySet', { lang })
 
     const data = await client.database.guilds.edit(guild.id, { lang }).catch(() => null)
-    if (!data) throw new CommandError('commands:language.failed')
+    if (!data)
+      throw new CommandError('commands:language.failed')
 
     const embed = new SimplicityEmbed({ author, t })
       .setTitle('commands:language.done')

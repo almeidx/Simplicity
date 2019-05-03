@@ -14,13 +14,10 @@ class MessageCollectorUtils {
       if (this.checkContent(message, 'confirm')) {
         callback(dependencies)
         collector.stop('finish')
-      } else if (this.checkContent(message, 'cancel')) {
+      } else if (this.checkContent(message, 'cancel'))
         collector.stop('cancel')
-      } else {
-        if (collector.collected.size !== collector.options.max) {
-          this.incorrectResponse(dependencies, message, collector.collected, incorrectResponseMessages)
-        }
-      }
+      else if (collector.collected.size !== collector.options.max)
+        this.incorrectResponse(dependencies, message, collector.collected, incorrectResponseMessages)
     })
 
     collector.on('end', (...params) => this.onEnd(dependencies, responses, incorrectResponseMessages, ...params))
@@ -72,9 +69,8 @@ class MessageCollectorUtils {
     const memberClient = guild && client && guild.member(client.user)
     const clientHasPermission = memberClient && message.channel.permissionsFor(memberClient).has('MANAGE_MESSAGES')
     const authorIsClient = client && (client.user.id === message.author.id)
-    if (!message.deleted && (authorIsClient || clientHasPermission)) {
+    if (!message.deleted && (authorIsClient || clientHasPermission))
       return message.delete(options).catch(() => null)
-    }
   }
 }
 

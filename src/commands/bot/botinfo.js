@@ -1,7 +1,5 @@
-const { Command, SimplicityEmbed } = require('../../')
+const { Command, SimplicityEmbed, Utils } = require('../../')
 const { version } = require('discord.js')
-const moment = require('moment')
-require('moment-duration-format')
 
 class BotInfo extends Command {
   constructor (client) {
@@ -12,7 +10,7 @@ class BotInfo extends Command {
   }
 
   run ({ author, client, emoji, guild, prefix, send, t }) {
-    const UPTIME = moment.duration(client.uptime).format(`D[ ${t('common:date.days')}], H[ ${t('common:date.hours')}], m[ ${t('common:date.minutes')}], s[ ${t('common:date.seconds')}]`)
+    const UPTIME = Utils.convertDateLang(t, client.uptime)
     const RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)
 
     const inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=379968`
@@ -30,7 +28,9 @@ class BotInfo extends Command {
       .addField('» $$commands:botinfo.commands', this.client.commands.size, true)
       .addField('» $$commands:botinfo.links', `#bot_tag [$$commands:botinfo.inviteBot ](${inviteLink})`, true)
 
-    if (OWNERS) embed.addField('» $$commands:botinfo.developers', OWNERS)
+    if (OWNERS)
+      embed.addField('» $$commands:botinfo.developers', OWNERS)
+
     embed.addField('» $$commands:botinfo.uptime', UPTIME)
     return send(embed)
   }

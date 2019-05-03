@@ -4,7 +4,7 @@ class Logs extends Command {
   constructor (client) {
     super(client)
     this.name = 'language'
-    this.aliases = ['log', 'logger', 'loggers', 'modlog', 'modlogs', 'eventlog', 'logevent']
+    this.aliases = [ 'log', 'logger', 'loggers', 'modlog', 'modlogs', 'eventlog', 'logevent' ]
     this.category = 'bot'
     this.requirements = {
       ownerOnly: true,
@@ -19,9 +19,9 @@ class Logs extends Command {
     const logTypes = Object.keys(logs)
 
     if (!query) {
-      for (const i of logTypes) {
-        if (i !== '$init') embed.addField(`» $$commands:logs.${i}`, checkChannel(i), true)
-      }
+      for (const i of logTypes)
+        if (i !== '$init')
+          embed.addField(`» $$commands:logs.${i}`, checkChannel(i), true)
       return send(embed)
     }
   }

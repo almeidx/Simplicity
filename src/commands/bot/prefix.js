@@ -21,10 +21,12 @@ class Prefix extends Command {
       }
     })
 
-    if (currentPrefix === prefix) throw new CommandError('commands:prefix.alreadySet', { prefix })
+    if (currentPrefix === prefix)
+      throw new CommandError('commands:prefix.alreadySet', { prefix })
 
     const data = await client.database.guilds.edit(guild.id, { prefix }).catch(() => null)
-    if (!data) throw new CommandError('commands:prefix.failed')
+    if (!data)
+      throw new CommandError('commands:prefix.failed')
 
     const embed = new SimplicityEmbed({ author, t })
       .setTitle('commands:prefix.done')
