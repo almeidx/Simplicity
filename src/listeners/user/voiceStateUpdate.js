@@ -5,7 +5,7 @@ class VoiceStateUpdate extends SimplicityListener {
     super(client)
   }
 
-  async on (_, oldState, newState) {
+  on (_, oldState, newState) {
     const user = oldState.member.user
     const guild = oldState.member.guild
     const oldChannel = oldState.channel && `**${oldState.channel.name}**`

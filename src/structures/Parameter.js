@@ -4,11 +4,10 @@ class Argument {
   static async parse (query, options = {}, dependencies = {}) {
     options = this.setupOptions(options)
     const result = await this.search(query, dependencies, options)
-    if (!result) {
-      if (options.required) throw new CommandError(options.errors.missingError)
-    } else {
+    if (!result && options.required)
+      throw new CommandError(options.errors.missingError)
+    else
       await this.verifyExceptions(query, options, dependencies)
-    }
     return result || null
   }
 

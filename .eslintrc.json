@@ -12,6 +12,7 @@
         "no-useless-constructor": "off",
         "no-extra-semi": "error",
         "semi": [2, "never"],
-        "curly": ["error", "multi"]
+        "curly": ["error", "multi"],
+        "no-extra-boolean-cast": "off"
     }
 }

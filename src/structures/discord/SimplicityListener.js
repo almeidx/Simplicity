@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 const LogUtils = require('../../utils/LogUtils')
 const SimplicityEmbed = require('./SimplicityEmbed')
 const i18next = require('i18next')
@@ -10,9 +11,9 @@ class SimplicityListener {
 
   on () {}
 
-  async getLogOptions (guildID, id) {
+  getLogOptions (guildID, id) {
     const guild = this.client && guildID && this.client.guilds.get(guildID)
-    return guild && await LogUtils.getChannel(this.client, guild, id)
+    return guild && LogUtils.getChannel(this.client, guild, id)
   }
 
   async getFixedT (guildID) {
@@ -31,28 +32,30 @@ class SimplicityListener {
   async sendLogMessage (guildID, log, content) {
     const channelData = await this.getLogOptions(guildID, log)
     if (channelData) {
-      if (content instanceof SimplicityEmbed) content.setTranslator(channelData.t)
+      if (content instanceof SimplicityEmbed)
+        content.setTranslator(channelData.t)
       LogUtils.send(channelData.channel, content).catch(() => null)
     }
   }
 
   async sendGlobalMessage (log, content) {
-    const guilds = client.guilds.filter(async (guild) => {
+    const guilds = this.client.guilds.filter(async (guild) => {
       !!(await this.getLogOptions(guild.id, log))
     })
-    if (guilds) {
+    if (guilds)
       for (const g of guilds) {
         const channelData = await this.getLogOptions(g.id, log)
         LogUtils.send(channelData.channel, content).catch(() => null)
       }
-    }
   }
 
   sendPrivateMessage (envName, content) {
     const id = envName && process.env[envName.toUpperCase()]
     const channel = this.client && id && this.client.channels.get(id)
-    if (channel) return channel.send(content)
-    else return false
+    if (channel)
+      return channel.send(content)
+    else
+      return false
   }
 }
 

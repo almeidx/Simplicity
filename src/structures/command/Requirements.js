@@ -30,31 +30,31 @@ class Requirements {
   }
 
   handle ({ author, client, channel, guild, args, t }) {
-    if (this.ownerOnly && !PermissionsUtils.verifyDev(author.id, client)) {
+    if (this.ownerOnly && !PermissionsUtils.verifyDev(author.id, client))
       throw new CommandError(this.responses.ownerOnly)
-    }
 
-    if (this.guildOnly && !guild) {
+    if (this.guildOnly && !guild)
       throw new CommandError(this.responses.guildOnly)
-    }
 
     const clientPerms = this.clientPermissions.filter((p) => !channel.permissionsFor(guild.me).has(p)).map(p => t('permissions:' + p))
-    if (clientPerms.length !== 0) {
-      throw new CommandError(t(this.responses.clientPermissions, { permissions: clientPerms.join(', '), count: clientPerms.length, onUsage: true }))
-    }
+    if (clientPerms.length !== 0)
+      throw new CommandError(t(this.responses.clientPermissions, {
+        permissions: clientPerms.join(', '),
+        count: clientPerms.length,
+        onUsage: true }))
 
     const memberPerms = this.permissions.filter((p) => !channel.permissionsFor(author.id).has(p)).map(p => t('permissions:' + p))
-    if (memberPerms.length !== 0) {
-      throw new CommandError(t(this.responses.userMissingPermission, { permissions: memberPerms.join(', '), count: memberPerms.length, onUsage: true }))
-    }
+    if (memberPerms.length !== 0)
+      throw new CommandError(t(this.responses.userMissingPermission, {
+        permissions: memberPerms.join(', '),
+        count: memberPerms.length,
+        onUsage: true }))
 
-    if (this.argsRequired && args.length === 0) {
+    if (this.argsRequired && args.length === 0)
       throw new CommandError(this.responses.argsRequired, { onUsage: true })
-    }
 
-    if (this.nsfwChannelOnly && !channel.nsfw) {
+    if (this.nsfwChannelOnly && !channel.nsfw)
       throw new CommandError(this.responses.nsfwChannelOnly, { onUsage: true })
-    }
   }
 }
 

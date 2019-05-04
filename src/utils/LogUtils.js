@@ -6,9 +6,9 @@ class LogUtils {
   }
 
   static async send (channel, ...body) {
-    if (!channel.permissionsFor(channel.guild.me).has('MANAGE_WEBHOOKS')) {
+    if (!channel.permissionsFor(channel.guild.me).has('MANAGE_WEBHOOKS'))
       return channel.send(...body)
-    } else {
+    else {
       const webhook = await this.getWebhook(channel)
       return webhook.send(...body)
     }
@@ -21,9 +21,8 @@ class LogUtils {
     const webhooks = await channel.fetchWebhooks()
     let webhook = webhooks.find(wk => wk.name === name)
 
-    if (!webhook) {
+    if (!webhook)
       webhook = await channel.createWebhook(name)
-    }
 
     await webhook.edit({ name, avatar })
     return webhook

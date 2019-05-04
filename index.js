@@ -1,6 +1,5 @@
-require('dotenv').config()
-
 const { SimplicityClient } = require('./src')
+require('dotenv').config()
 
 const client = new SimplicityClient({
   fetchAllMembers: true,
@@ -8,4 +7,4 @@ const client = new SimplicityClient({
   disabledEvents: [ 'TYPING_START' ]
 })
 
-client.login(process.env.BOT_TOKEN).catch((e) => console.error(e))
+client.login(process.env.BOT_TOKEN).catch(console.error)

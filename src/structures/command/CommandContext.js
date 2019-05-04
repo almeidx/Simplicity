@@ -61,11 +61,16 @@ class CommandContext {
     if (embed instanceof SimplicityEmbed) {
       const permissions = this.channel.permissionsFor(this.guild.me)
       const embedPermission = permissions.has('EMBED_LINKS')
-      if (!embed.text && !embedPermission) {
+      if (!embed.text && !embedPermission)
         throw Error(this.command.name + ': Has no embed.text')
-      } else if (embed.text && !embedPermission) {
-        if (permissions.has('ATTACH_FILES')) embed.optionsText.attachments = embed.textImages.map((url, i) => new MessageAttachment(url, `image${i}.png`))
-        const text = TextUtils.parse(TextUtils.parseImage(embed.text, embed.textImages, permissions), { t: this.t, emoji: this.emoji, embed })
+      else if (embed.text && !embedPermission) {
+        if (permissions.has('ATTACH_FILES'))
+          embed.optionsText.attachments = embed.textImages.map((url, i) => new MessageAttachment(url, `image${i}.png`))
+
+        const text = TextUtils.parse(TextUtils.parseImage(embed.text, embed.textImages, permissions), {
+          t: this.t,
+          emoji: this.emoji,
+          embed })
         return msg ? msg.edit(text, embed.optionsText) : this.channel.send(text, embed.optionsText)
       }
     }

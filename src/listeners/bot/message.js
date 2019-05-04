@@ -21,18 +21,16 @@ class Message extends SimplicityListener {
     const usedPrefix = startsWithBotMention || startsWithCleanMention || startsWithPrefix
     const clientIsMentioned = message.mentions.has(client.user.id, { ignoreRoles: true, ignoreEveryone: true })
 
-    if (clientIsMentioned && !usedPrefix) {
+    if (clientIsMentioned && !usedPrefix)
       return message.reply(client.i18next.getFixedT(language)('common:prefix', { prefix }))
-    }
 
     if (usedPrefix) {
       const args = message.content.slice(usedPrefix.length).trim().split(/ +/g)
       const commandName = args.shift().toLowerCase()
       const command = client.commands.fetch(commandName)
 
-      if (clientIsMentioned && !command) {
+      if (clientIsMentioned && !command)
         return message.reply(client.i18next.getFixedT(language)('common:prefix', { prefix }))
-      }
 
       if (command && !command.running.has(message.channel.id, message.author.id)) {
         const totalLength = usedPrefix.length + commandName.length
@@ -44,7 +42,7 @@ class Message extends SimplicityListener {
           command,
           message,
           args
-        })).catch(e => console.error(e))
+        })).catch(console.error)
         client.logger.commandUsage('Command', `${message.guild.name} #${message.channel.name} @${message.author.tag} ${message.content}`)
       }
     }

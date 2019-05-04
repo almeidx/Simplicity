@@ -1,4 +1,5 @@
 const { SimplicityListener, SimplicityEmbed, Utils } = require('../../')
+const { getServerIconURL } = Utils
 const moment = require('moment')
 
 class GuildCreate extends SimplicityListener {
@@ -23,7 +24,7 @@ class GuildCreate extends SimplicityListener {
         .addField('» Owner', `${owner} (${owner.id})`)
         .addField('» Created At', `${date.format('LLL')} (${date.fromNow()})}`)
         .setFooter(client.user.tag)
-        .setThumbnail(Utils.getServerIconURL(guild))
+        .setThumbnail(getServerIconURL(guild))
         .setTimestamp())
   }
 }

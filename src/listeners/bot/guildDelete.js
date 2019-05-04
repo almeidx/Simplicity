@@ -1,4 +1,5 @@
-const { SimplicityListener, SimplicityEmbed } = require('../../')
+const { SimplicityListener, SimplicityEmbed, Utils } = require('../../')
+const { getServerIconURL } = Utils
 const moment = require('moment')
 
 class GuildDelete extends SimplicityListener {
@@ -8,7 +9,8 @@ class GuildDelete extends SimplicityListener {
 
   async on (client, guild) {
     const guildData = await client.database.guilds.get(guild.id)
-    if (guildData) await client.database.guilds.remove(guild.id)
+    if (guildData)
+      await client.database.guilds.remove(guild.id)
 
     const owner = guild.owner.user
     const date = moment(guild.createdAt)
@@ -23,7 +25,7 @@ class GuildDelete extends SimplicityListener {
         .addField('» Owner', `${owner} (${owner.id})`)
         .addField('» Created At', `${date.format('LLL')} (${date.fromNow()})}`)
         .setFooter(client.user.tag)
-        .setThumbnail(Utils.getServerIconURL(guild))
+        .setThumbnail(getServerIconURL(guild))
         .setTimestamp())
   }
 }

@@ -1,4 +1,5 @@
 const { Constants, SimplicityEmbed, SimplicityListener, Utils } = require('../../../index')
+const { getServerIconURL } = Utils
 
 class MessageDeleteBulk extends SimplicityListener {
   constructor (client) {
@@ -11,7 +12,7 @@ class MessageDeleteBulk extends SimplicityListener {
     this.sendLogMessage(message.guild.id, 'MessageUpdate',
       new SimplicityEmbed(this.getFixedT(message.guild.id))
         .setTimestamp()
-        .setAuthor(message.guild.name, Utils.getServerIconURL(message.guild.id))
+        .setAuthor(message.guild.name, getServerIconURL(message.guild.id))
         .setDescription('loggers:messageDeleteBulk', { amount: messages.size, channel: message.channel })
         .setColor(Constants.COLORS.MESSAGE_BULK_DELETE)).catch(() => null)
   }

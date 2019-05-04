@@ -34,6 +34,10 @@ class Utils {
     str = String(str)
     return `\`\`\`${lang}\n${str.slice(minLength, maxLength - 3) + (str.length > maxLength - 3 ? '...' : '')}\n\`\`\``
   }
+
+  static checkTick (condition) {
+    return !!condition ? '#TICK_YES' : '#TICK_NO'
+  }
 }
 
 module.exports = Utils

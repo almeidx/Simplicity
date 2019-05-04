@@ -1,5 +1,6 @@
-const moment = require('moment')
 const { SimplicityListener, SimplicityEmbed, Utils } = require('../../../index')
+const { getServerIconURL } = Utils
+const moment = require('moment')
 
 class GuildMemberAdd extends SimplicityListener {
   constructor (client) {
@@ -17,7 +18,7 @@ class GuildMemberAdd extends SimplicityListener {
         .setColor(process.env.COLOR)
         .setAuthor(user.tag, user.displayAvatarURL())
         .setThumbnail(user.displayAvatarURL())
-        .setFooter('loggers:totalMembers', Utils.getServerIconURL(guild), { count: guild.memberCount })
+        .setFooter('loggers:totalMembers', getServerIconURL(guild), { count: guild.memberCount })
         .addField('loggers:user', `${user} (${user.id})`)
         .addField('loggers:accountCreatedAt', `${date.format('LLL')} (${date.fromNow()})`)
         .addField('loggers:joinedAt', moment(member.joinedAt).format('LLL'))).catch(() => null)

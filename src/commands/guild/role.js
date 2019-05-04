@@ -1,6 +1,7 @@
 const { Command, CommandError, Parameters, SimplicityEmbed } = require('../..')
 const { MemberParameter, RoleParameter } = Parameters
-const MemberParameterOptions = {
+
+const ParameterOptions = {
   checkIncludes: false,
   required: false,
   canBeGuildOwner: true,
@@ -13,14 +14,14 @@ const MemberParameterOptions = {
 class Role extends Command {
   constructor (client) {
     super(client)
-    this.aliases = ['addrole', 'removerole', 'ar', 'rr']
+    this.aliases = [ 'addrole', 'removerole', 'ar', 'rr' ]
     this.category = 'guild'
     this.requirements = { argsRequired: true }
     this.responses = { argsRequired: 'commands:role.noArgs' }
   }
 
   async run ({ args, author, client, guild, member: memberAuthor, send, t }) {
-    const member = await MemberParameter.parse(args.shift(), MemberParameterOptions, {
+    const member = await MemberParameter.parse(args.shift(), ParameterOptions, {
       memberAuthor,
       commandName: this.name,
       author,
@@ -47,10 +48,9 @@ class Role extends Command {
         throw new CommandError('commands:role.failedRemove')
       })
       embed
-        .setDescription('commands:role.removed', { role: role.name || r.toString(), author, member })
+        .setDescription('commands:role.removed', { role: role.name || role.toString(), author, member })
       return send(embed)
     }
-
   }
 }
 

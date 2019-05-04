@@ -24,12 +24,14 @@ class MessageUpdate extends SimplicityListener {
       embed
         .setDescription('loggers:messageEdited', { url, user, channel: msgChannel })
         .setColor(Constants.COLORS.MESSAGE_EDIT)
-      if (oldContent) embed.addField('loggers:before', cleanString(oldContent) || 'loggers:messageError', true)
-      if (newContent) embed.addField('loggers:after', cleanString(newContent) || 'loggers:messageError', true)
+      if (oldContent)
+        embed.addField('loggers:before', cleanString(oldContent) || 'loggers:messageError', true)
+      if (newContent)
+        embed.addField('loggers:after', cleanString(newContent) || 'loggers:messageError', true)
       return this.sendLogMessage(oldMessage.guild.id, 'MessageUpdate', embed).catch(() => null)
     } else
     // MESSAGE PINS
-    if (oldMessage.pinned !== newMessage.pinned) {
+    if (oldMessage.pinned !== newMessage.pinned)
       // MESSAGE PINNED
       if (!oldMessage.pinned && newMessage.pinned) {
         embed
@@ -44,7 +46,6 @@ class MessageUpdate extends SimplicityListener {
           .setColor(Constants.COLORS.MESSAGE_UNPIN)
         return this.sendLogMessage(oldMessage.guild.id, 'MessageUpdate', embed).catch(() => null)
       }
-    }
   }
 }
 

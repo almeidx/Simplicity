@@ -16,18 +16,19 @@ class MessageDelete extends SimplicityListener {
       .setDescription('loggers:messageDeleted', { user, channel: message.channel })
       .setColor(Constants.COLORS.MESSAGE_DELETE)
 
-    if (message.content) embed.addField('loggers:content', cleanString(message.content, 0, 1024) || 'loggers:messageError')
+    if (message.content)
+      embed.addField('loggers:content', cleanString(message.content, 0, 1024) || 'loggers:messageError')
 
     if (message.guild.me.permissions.has('VIEW_AUDIT_LOG')) {
       const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' }).then(audit => audit.entries.first())
-      console.log(entry)
       if (entry) {
         const channelCondition = entry.extra && entry.extra.channel.id === message.channel.id
         const userCondition = entry.target && entry.target.id === user.id
 
         if (channelCondition && userCondition && entry.createdTimestamp > Date.now() - 5000) {
           const executor = entry.executor
-          if (executor) embed.setDescription('loggers:messageDeletedExecutor', { user, channel: message.channel, executor })
+          if (executor)
+            embed.setDescription('loggers:messageDeletedExecutor', { user, channel: message.channel, executor })
         }
       }
     }

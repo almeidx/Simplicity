@@ -1,12 +1,12 @@
 const { Command, SimplicityEmbed, Parameters: { MemberParameter, UserParameter }, CommandError } = require('../../')
-const missingError = 'errors:invalidUser'
-const optionsParameter = {
+
+const ParameterOptions = {
   required: false,
   canBeAuthor: false,
   checkGlobally: true,
   canBeGuildOwner: false,
   errors: {
-    missingError
+    missingError: 'errors:invalidUser'
   }
 }
 
@@ -22,14 +22,14 @@ class Ban extends Command {
   }
 
   async run ({ args, guild, client, member: memberAuthor, t, send, message }) {
-    const user = await UserParameter.search(args[0], { client, guild }, optionsParameter)
-    if (!user) throw new CommandError(missingError)
+    const user = await UserParameter.search(args[0], { client, guild }, ParameterOptions)
+    if (!user) throw new CommandError('errors:invalidUser')
 
     const member = user && guild.member(user)
 
-    if (member) {
-      await MemberParameter.verifyExceptions(member, optionsParameter, { guild, memberAuthor, commandName: this.name })
-    } else {
+    if (member)
+      await MemberParameter.verifyExceptions(member, ParameterOptions, { guild, memberAuthor, commandName: this.name })
+    else {
       const bans = await guild.fetchBans()
       const alreadyBanned = bans && bans.get(user.id)
 
