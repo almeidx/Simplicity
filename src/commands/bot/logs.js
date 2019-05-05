@@ -1,5 +1,18 @@
 const { Command, SimplicityEmbed } = require('../..')
 
+const messageUpdateAliases = [
+  'message',
+  'messageUpdates',
+  'messageLogs',
+  'messages'
+]
+const userUpdatesAliases = [
+  'userUpdates',
+  'user',
+  'userChanges',
+  'users'
+]
+
 class Logs extends Command {
   constructor (client) {
     super(client)
@@ -11,7 +24,7 @@ class Logs extends Command {
       permissions: ['MANAGE_GUILD'] }
   }
 
-  async run ({ author, client, emoji, guild, query, send, t }) {
+  async run ({ args, author, client, emoji, guild, query, send, t }) {
     const checkChannel = (c) => guild.channels.get(c) ? c : '#TICK_NO'
 
     const embed = new SimplicityEmbed({ author, emoji, t })
@@ -23,6 +36,8 @@ class Logs extends Command {
         if (i !== '$init')
           embed.addField(`» $$commands:logs.${i}`, checkChannel(i), true)
       return send(embed)
+    } else if (messageUpdateAliases.includes(args[0].toLowerCase())) {
+      
     }
   }
 }

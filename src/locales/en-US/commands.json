@@ -262,6 +262,18 @@
         "GuildUpdates": "Guild Updates",
         "MessageUpdate": "Message Updates",
         "UserUpdate": "User Updates",
-        "VoiceChannelLogs": "Voice Channel Logs"
+        "VoiceChannelLogs": "Voice Channel Logs",
+        "messageLogs": [
+            "message",
+            "messageUpdates",
+            "messageLogs",
+            "messages"
+        ],
+        "userUpdates": [
+            "userUpdates",
+            "user",
+            "userChanges",
+            "users"
+        ]
     }
 }
