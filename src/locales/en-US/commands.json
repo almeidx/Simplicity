@@ -263,17 +263,6 @@
         "MessageUpdate": "Message Updates",
         "UserUpdate": "User Updates",
         "VoiceChannelLogs": "Voice Channel Logs",
-        "messageLogs": [
-            "message",
-            "messageUpdates",
-            "messageLogs",
-            "messages"
-        ],
-        "userUpdates": [
-            "userUpdates",
-            "user",
-            "userChanges",
-            "users"
-        ]
+        "editedMessageUpdates": "You have successfully set the Message Updates channel to: {{- channel }}"
     }
 }

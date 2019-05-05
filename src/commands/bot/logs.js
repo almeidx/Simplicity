@@ -1,4 +1,5 @@
-const { Command, SimplicityEmbed } = require('../..')
+const { Command, Parameters, SimplicityEmbed } = require('../..')
+const { ChannelParameter } = Parameters
 
 const messageUpdateAliases = [
   'message',
@@ -26,18 +27,31 @@ class Logs extends Command {
 
   async run ({ args, author, client, emoji, guild, query, send, t }) {
     const checkChannel = (c) => guild.channels.get(c) ? c : '#TICK_NO'
-
     const embed = new SimplicityEmbed({ author, emoji, t })
     const { logs } = await client.database.guilds.get(guild.id)
     const logTypes = Object.keys(logs)
+
+    const type = args[0] && args.shift().toLowerCase()
 
     if (!query) {
       for (const i of logTypes)
         if (i !== '$init')
           embed.addField(`» $$commands:logs.${i}`, checkChannel(i), true)
       return send(embed)
-    } else if (messageUpdateAliases.includes(args[0].toLowerCase())) {
-      
+    } else if (messageUpdateAliases.includes(type)) {
+      const channel = await ChannelParameter.search(args.join(' '), { guild })
+      if (!channel)
+        throw new CommandError('errors:invalidChannel')
+      if (logs.MessageUpdates === channel.id)
+        throw new CommandError('commands:logs.alreadySet')
+
+      const data = await client.database.guilds.edit(guild.id, {
+        logs: { MessageUpdates: null }
+      }).catch(() => null)
+      if (!data)
+        throw new CommandError('commands:logs.error')
+      embed.setDescription('commands:logs.editedMessageUpdates', { channel })
+      return send(embed)
     }
   }
 }
