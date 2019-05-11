@@ -1,18 +1,14 @@
-const { Command, Parameters, SimplicityEmbed } = require('../..')
+const { Command, CommandError, Parameters, SimplicityEmbed } = require('../..')
 const { ChannelParameter } = Parameters
 
-const messageUpdateAliases = [
-  'message',
-  'messageUpdates',
-  'messageLogs',
-  'messages'
-]
-const userUpdatesAliases = [
-  'userUpdates',
-  'user',
-  'userChanges',
-  'users'
-]
+const Aliases = {
+  GuildMemberAdd: [ 'welcome', 'join', 'joined', 'welcomer' ],
+  GuildMemberLeave: [ 'leave', 'left' ],
+  MessageUpdate: [ 'message', 'messageUpdates', 'messageLogs', 'messages' ],
+  UserUpdate: [ 'userUpdates', 'user', 'userChanges', 'users' ],
+  VoiceChannelLogs: [ 'vc', 'voice' ]
+}
+const Condition = 'set'
 
 class Logs extends Command {
   constructor (client) {
@@ -31,22 +27,23 @@ class Logs extends Command {
     const { logs } = await client.database.guilds.get(guild.id)
     const logTypes = Object.keys(logs)
 
-    const type = args[0] && args.shift().toLowerCase()
+    const type = args.length && args.shift().toLowerCase()
+    const condition = type && args.length && args.shift().toLowerCase()
 
     if (!query) {
       for (const i of logTypes)
         if (i !== '$init')
           embed.addField(`» $$commands:logs.${i}`, checkChannel(i), true)
       return send(embed)
-    } else if (messageUpdateAliases.includes(type)) {
-      const channel = await ChannelParameter.search(args.join(' '), { guild })
+    } else if (Object.keys(Aliases).includes(type) && condition === Condition) {
+      const channel = args.length && await ChannelParameter.search(args.join(' '), { guild })
       if (!channel)
         throw new CommandError('errors:invalidChannel')
-      if (logs.MessageUpdates === channel.id)
+      if (logs[type] === channel.id)
         throw new CommandError('commands:logs.alreadySet')
 
       const data = await client.database.guilds.edit(guild.id, {
-        logs: { MessageUpdates: null }
+        logs: { MessageUpdates: channel.id }
       }).catch(() => null)
       if (!data)
         throw new CommandError('commands:logs.error')
