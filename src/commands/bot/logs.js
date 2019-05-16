@@ -35,7 +35,7 @@ class Logs extends Command {
         if (i !== '$init')
           embed.addField(`» $$commands:logs.${i}`, checkChannel(i), true)
       return send(embed)
-    } else if (Object.keys(Aliases).includes(type) && condition === Condition) {
+    } else if (Object.keys(Aliases).map(a => a.toLowerCase()).includes(type) && condition === Condition) {
       const channel = args.length && await ChannelParameter.search(args.join(' '), { guild })
       if (!channel)
         throw new CommandError('errors:invalidChannel')
@@ -43,7 +43,7 @@ class Logs extends Command {
         throw new CommandError('commands:logs.alreadySet')
 
       const data = await client.database.guilds.edit(guild.id, {
-        logs: { MessageUpdates: channel.id }
+        logs: { type: channel.id }
       }).catch(() => null)
       if (!data)
         throw new CommandError('commands:logs.error')

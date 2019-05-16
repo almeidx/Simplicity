@@ -1,5 +1,5 @@
 module.exports = {
-  ChannelParamter: require('./ChannelParameter'),
+  ChannelParameter: require('./ChannelParameter'),
   MemberParameter: require('./MemberParameter'),
   RoleParameter: require('./RoleParameter'),
   StringParameter: require('./StringParameter'),
