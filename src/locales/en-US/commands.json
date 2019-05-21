@@ -218,7 +218,8 @@
         "mentionable":  "Mentionable",
         "hoisted": "Hoisted",
         "members": "Members: {{- size }}",
-        "createdAt": "Created At"
+        "createdAt": "Created At",
+        "moreMembers": "and {{- size }} more..."
     },
     "permissions": {
         "usage": "<role|member>",

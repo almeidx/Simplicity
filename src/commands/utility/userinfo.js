@@ -62,7 +62,8 @@ class UserInfo extends Command {
 
     embed.addField('» $$commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`)
 
-    if (joined) embed.addField('» $$commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
+    if (joined)
+      embed.addField('» $$commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`)
 
     const memberPermissions = member && member.permissions && member.permissions.toArray().filter(p => !NORMAL_PERMISSIONS.includes(p))
     let resultAdministrator, resultAllPermissions, resultPermissions

@@ -31,8 +31,10 @@ class RoleInfo extends Command {
     if (role.hexColor !== '#000000')
       embed.addField('» $$commands:roleinfo.color', role.hexColor, true)
 
-    const size = role.members.size
-    const members = role.members && `${role.members.first(15).join(', ')}${size > 15 ? ', ...' : ''}`
+    const roleMembers = role.members
+    const members = role.members && `${roleMembers.first(15).join(', ')}${roleMembers.size > 15 ? ` ${t('commands:roleinfo.moreMembers', { 
+      size: roleMembers.size - 15 
+    })}` : ''}`
     const date = moment(role.createdAt)
 
     embed
@@ -42,7 +44,7 @@ class RoleInfo extends Command {
       .addField('» $$commands:roleinfo.createdAt', `${date.format('LLL')} (${date.fromNow()})`)
 
     if (members)
-      embed.addField('» $$commands:roleinfo.members', members, true, { size })
+      embed.addField('» $$commands:roleinfo.members', members, true, { size: roleMembers.size })
     return send(embed)
   }
 }
