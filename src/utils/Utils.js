@@ -38,6 +38,13 @@ class Utils {
   static checkTick (condition) {
     return !!condition ? '#TICK_YES' : '#TICK_NO'
   }
+
+  static fixText (t) {
+    if (!t || typeof t !== 'string')
+      throw new TypeError(`fixText input cannot be type '${typeof t}'`)
+
+    return t[0].toUpperCase() + t.slice(1).toLowerCase()
+  }
 }
 
 module.exports = Utils

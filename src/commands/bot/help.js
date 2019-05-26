@@ -1,47 +1,49 @@
-const { Command, SimplicityEmbed, PermissionsUtils } = require('../../')
+const { Command, SimplicityEmbed, PermissionsUtils, Utils } = require('../../')
+const { fixText } = Utils
 
 class Help extends Command {
   constructor (client) {
     super(client)
-    this.aliases = [ 'h', 'commands' ]
+    this.aliases = [ 'h', 'commands', 'cmd', 'cmds' ]
     this.category = 'bot'
   }
 
-  run ({ send, args, t, prefix, emoji, author }) {
-    const categories = this.client.categories
-    const name = this.client.user.username
+  run ({ author, client, emoji, prefix, query, send, t }) {
+    const categories = client.categories
+    const name = client.user.username
 
-    const embed = new SimplicityEmbed({ t, author })
-      .setAuthor(this.client.user)
+    const embed = new SimplicityEmbed({ author, emoji, t })
+      .setAuthor(client.user)
 
-    if (args.length === 0) {
-      embed.setDescription(t('commands:help.about', { prefix, name }))
+    if (!query) {
+      embed.setDescription('commands:help.about', { prefix, name })
       categories.filter(c => c.name !== 'help').each((cmds, i) => {
-        if (i === 'dev' && !PermissionsUtils.verifyDev(author.id, this.client)) return
-        return embed.addField(`categories:${i}.name`, `${t(`categories:${i}.description`)}\n${cmds.keyArray().map(c => `\`${c}\``).join(', ')}`)
+        if (i === 'dev' && !PermissionsUtils.verifyDev(author.id, client)) return
+        return embed.addField(`categories:${i}.name`, cmds.keyArray().map(c => `\`${c}\``).join(', '))
       })
       return send(embed)
     }
 
-    if (!this.client.commands.has(args[0].toLowerCase()))
+    query = query.toLowerCase()
+
+    if (!client.commands.has(query))
       return send(embed.setDescription('commands:help.commandUndefined').setError())
 
-    const command = this.client.commands.fetch(args[0].toLowerCase())
+    const command = client.commands.fetch(query)
 
     if (command.name === 'help')
       return send(embed.setDescription('commands:help.commandHelp').setError())
 
-    const commandName = args.toString()[0].toUpperCase() + args[0].toString().toLowerCase().slice(1)
-    embed.setTitle(commandName)
+    embed.setTitle(fixText(query))
 
     if (t(`commands:${command.name}.description`) !== `${command.name}.description`)
       embed.setDescription(`commands:${command.name}.description`, { prefix })
 
     if (t(`commands:${command.name}.usage`) !== `${command.name}.usage`)
-      embed.addField(`${emoji('USAGE')} ${t('commands:help._usage')}`, t(`commands:${command.name}.usage`, { prefix }))
+      embed.addField(`#USAGE ${t('commands:help._usage')}`, t(`commands:${command.name}.usage`, { prefix }))
 
-    if (command.aliases.length !== 0)
-      embed.addField(`${emoji('ALIASES')} ${t('commands:help.aliases')}`, command.aliases)
+    if (command.aliases.length)
+      embed.addField(`#ALIASES ${t('commands:help.aliases')}`, command.aliases)
 
     return send(embed)
   }

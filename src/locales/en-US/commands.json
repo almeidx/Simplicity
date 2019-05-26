@@ -15,7 +15,7 @@
         "nodejs": "Node.js Version"
     },
     "help": {
-        "about": "{{- name }} is a bot with focus on moderation, utility, server management, and much more!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo see my commands, type **{{- prefix }}help <module>**",
+        "about": "{{- name }} is a bot with focus on moderation, utility, server management, and more Discord based stuff!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo view more info about each command type: `{{- prefix }}help <command>`",
         "categories": "Categories",
         "aliases": "Aliases",
         "_usage": "Usage",
