@@ -9,7 +9,7 @@ class Discriminator extends Command {
     this.requirements = { guildOnly: true }
   }
 
-  async run ({ author, client, emoji, guild, query, send, t }) {
+  run ({ author, guild, query, send, t }) {
     const discrim = (query && query.replace(/#/g, '')) || author.discriminator
 
     const users = guild.members.filter((m) => m.user.discriminator === discrim)
