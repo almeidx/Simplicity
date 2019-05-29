@@ -37,31 +37,36 @@ class UserParameter extends Parameter {
   }
 
   static async search (query, { client, guild }, options) {
-    if (!query || typeof query !== 'string')
-      throw new TypeError('Search string isn\'t a String')
+    if (typeof query !== 'string')
+      throw new TypeError('Search input isn\'t a String')
 
     options = this.setupOptions(options)
     query = query.toLowerCase()
     const regexResult = MENTION_REGEX.exec(query)
     const id = regexResult && regexResult[1]
 
-    const getID = id && client && (client.users.get(id) ||
-    (guild && guild.members.get(id) && guild.members.get(id).user) ||
+    const getID = id && client && ((guild && guild.members.get(id) && guild.members.get(id).user) ||
+    client.users.get(id) ||
     (options.checkGlobally && await client.users.fetch(id).catch(() => null)))
 
-    const find = guild && guild.members.find((m) => {
-      m.user.username.toLowerCase() === query ||
-      m.displayName.toLowerCase() === query ||
-      m.user.username.toLowerCase().startsWith(query) ||
-      m.displayName.toLowerCase().startsWith(query) ||
-      m.user.username.toLowerCase().endsWith(query) ||
-      m.displayName.toLowerCase().endsWith(query) ||
-      (options.checkIncludes &&
-      (m.user.username.toLowerCase().includes(query) ||
-      m.displayName.toLowerCase().includes(query)))
-    })
+    const findUsername = guild && guild.members.find((m) => m.user.username.toLowerCase() === query)
+    const findUsernameStarts = guild && guild.members.find((m) => m.user.username.toLowerCase().startsWith(query))
+    const findUsernameEnds = guild && guild.members.find((m) => m.user.username.toLowerCase().endsWith(query))
+    const findUsernameIncludes = guild && guild.members.find((m) => m.user.username.toLowerCase().includes(query))
 
-    return getID || (find && find.user) || null
+    const findDisplay = guild && guild.members.find((m) => m.displayName.toLowerCase() === query)
+    const findDisplayStarts = guild && guild.members.find((m) => m.displayName.toLowerCase().startsWith(query))
+    const findDisplayEnds = guild && guild.members.find((m) => m.displayName.toLowerCase().endsWith(query))
+    const findDisplayIncludes = guild && guild.members.find((m) => m.displayName.toLowerCase().includes(query))
+
+    return getID || (findUsername && findUsername.user) ||
+    (findUsernameStarts && findUsernameStarts.user) ||
+    (findUsernameEnds && findUsernameStarts.user) ||
+    (options.checkIncludes && findUsernameIncludes && findUsernameIncludes.user) ||
+    (findDisplay && findDisplay.user) ||
+    (findDisplayStarts && findDisplayStarts.user) ||
+    (findDisplayEnds && findDisplayEnds.user) ||
+    (options.checkIncludes && findDisplayIncludes && findDisplayIncludes.user) || null
   }
 }
 
