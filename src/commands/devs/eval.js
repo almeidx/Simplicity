@@ -16,7 +16,7 @@ class Eval extends Command {
 
   async run ({ author, botLanguages, client, guild, channel, member, language, command, prefix, message, query, send, args, t, emoji }) {
     const embed = new SimplicityEmbed({ author })
-    const text = query.replace(/^```(js|javascript ?\n)?|```$/g, '')
+    const text = query.replace(/^```(js|javascript ?\n)?|```$/gi, '')
 
     try {
       const evald = eval(text)
