@@ -1,4 +1,5 @@
 const { Command, SimplicityEmbed, Utils } = require('../../')
+const { convertDateLang } = Utils
 const { version } = require('discord.js')
 
 class BotInfo extends Command {
@@ -9,30 +10,35 @@ class BotInfo extends Command {
     this.requirements = { clientPermissions: [ 'EMBED_LINKS' ] }
   }
 
-  run ({ author, client, emoji, guild, prefix, send, t }) {
-    const UPTIME = Utils.convertDateLang(t, client.uptime)
+  async run ({ author, client, emoji, guild, message, prefix, send, t }) {
+    const uptime = convertDateLang(t, client.uptime)
     const RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)
 
-    const inviteLink = `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=379968`
-    const ownersId = process.env.DEVS_IDS && process.env.DEVS_IDS.split(', ')
-    const OWNERS = ownersId && ownersId.filter(id => client.users.has(id)).map(id => client.users.get(id).tag).join(', ')
+    const inviteLink = await client.generateInvite(['SEND_MESSAGES', 'READ_MESSAGES_HISTORY', 'ADD_REACTIONS', 'USE_EXTERNAL_EMOJIS'])
+    const ownersId = process.env.DEVS_IDS && process.env.DEVS_IDS.split(',')
+    const owners = ownersId && ownersId.filter(id => client.users.has(id)).map(id => client.users.get(id).tag).join(', ')
+    let totalUsers = 0
+    client.guilds.filter(g => g.available).forEach(g => totalUsers += g.memberCount)
 
-    const embed = new SimplicityEmbed({ author, guild, t, emoji })
-      .addField('» $$commands:botinfo.ping', `${Math.round(guild.shard.ping)}ms`, true)
-      .addField('» $$commands:botinfo.users', this.client.users.size, true)
-      .addField('» $$commands:botinfo.guilds', this.client.guilds.size, true)
+    const embed = new SimplicityEmbed({ author, emoji, guild, t })
+      .addField('» $$commands:botinfo.ping', 'commands:botinfo.gettingLatency', true)
+      .addField('» $$commands:botinfo.users', totalUsers, true)
+      .addField('» $$commands:botinfo.guilds', client.guilds.size, true)
       .addField('» $$commands:botinfo.prefix', prefix, true)
-      .addField('» $$commands:botinfo.ramUsage', `${RAM} mb`, true)
+      .addField('» $$commands:botinfo.ramUsage', `${RAM}mb`, true)
       .addField('» $$commands:botinfo.discordjs', version, true)
       .addField('» $$commands:botinfo.nodejs', process.versions.node, true)
-      .addField('» $$commands:botinfo.commands', this.client.commands.size, true)
+      .addField('» $$commands:botinfo.commands', client.commands.size, true)
       .addField('» $$commands:botinfo.links', `#bot_tag [$$commands:botinfo.inviteBot ](${inviteLink})`, true)
 
-    if (OWNERS)
-      embed.addField('» $$commands:botinfo.developers', OWNERS)
+    if (owners)
+      embed.addField('» $$commands:botinfo.developers', owners)
 
-    embed.addField('» $$commands:botinfo.uptime', UPTIME)
-    return send(embed)
+    embed.addField('» $$commands:botinfo.uptime', uptime)
+    const msg = await send(embed)
+    const newEmbed = embed
+    newEmbed.fields[0].value = t('commands:botinfo.latency', { latency: Math.ceil(msg.createdTimestamp - message.createdTimestamp) })
+    msg.edit(newEmbed)
   }
 }
 

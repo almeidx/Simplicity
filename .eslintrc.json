@@ -13,6 +13,7 @@
         "no-extra-semi": "error",
         "semi": [2, "never"],
         "curly": ["error", "multi"],
-        "no-extra-boolean-cast": "off"
+        "no-extra-boolean-cast": "off",
+        "no-return-assign": "off"
     }
 }
