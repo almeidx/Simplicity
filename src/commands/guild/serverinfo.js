@@ -93,7 +93,7 @@ class ServerInfo extends Command {
   }
 }
 
-function createEmbedRoles (roles, guild, embedOptions) {
+function createEmbedRoles (roles, guild, embedOptions = {}) {
   const guildIconURL = getServerIconURL(guild)
   const clean = (a) => a.slice(0, 25).join('\n') + (a.length > 25 ? '\n...' : '')
   return new SimplicityEmbed(embedOptions)
