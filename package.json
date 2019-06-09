@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "Discord Bot",
   "main": "index.js",
-  "engines": {
-    "npm": "^6.7.0",
-    "node": "^11.10.0"
-  },
   "scripts": {
     "start": "node index.js",
     "test": "node index.js"

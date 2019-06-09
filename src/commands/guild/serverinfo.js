@@ -1,4 +1,5 @@
 const { Command, SimplicityEmbed, Utils } = require('../..')
+const { getServerIconURL } = Utils
 const moment = require('moment')
 
 class ServerInfo extends Command {
@@ -9,26 +10,26 @@ class ServerInfo extends Command {
   }
 
   async run ({ author, channel, emoji, guild, send, t }) {
-    // MEMBERS
     await guild.members.fetch()
     const totalMembers = guild.memberCount
     const onlineMembers = guild.members.filter(m => m.user.presence.status !== 'offline').size
     const offlineMembers = guild.members.filter(m => m.user.presence.status === 'offline').size
 
-    // CHANNELS
     const totalChannels = guild.channels.filter(channel => channel.type === 'text' || channel.type === 'voice').size
     const textChannels = guild.channels.filter(channel => channel.type === 'text').size
     const voiceChannels = guild.channels.filter(channel => channel.type === 'voice').size
 
-    // ROLES
     const totalRoles = guild.roles && guild.roles.filter(r => r.id !== guild.id).size
     const roles = guild.roles && guild.roles.sort((a, b) => b.position - a.position).map(r => r).slice(0, -1)
     const rolesClean = roles && roles.map(r => r.name || r.toString())
 
-    const guildIconURL = Utils.getServerIconURL(guild)
+    const guildIconURL = getServerIconURL(guild)
     const emojis = guild.emojis && guild.emojis.size
     const owner = (guild.owner && guild.owner.user.tag) || t('commands:serverinfo.unknown')
     const date = moment(guild.createdAt)
+
+    const boostTier = guild.premiumTier
+    const boosters = guild.premiumSubscriptionCount
 
     const embed = new SimplicityEmbed({ author, guild, t })
       .setThumbnail(guildIconURL)
@@ -37,8 +38,13 @@ class ServerInfo extends Command {
       .addField('» $$commands:serverinfo.owner', owner, true)
       .addField('» $$commands:serverinfo.emotes', emojis, true)
 
-    if (roles.length <= 5) embed.addField('» $$commands:serverinfo.roles', rolesClean.join(', '), true, { totalRoles })
-    else embed.addField('» $$commands:serverinfo.totalRoles', totalRoles, true)
+    if (roles.length && roles.length <= 5)
+      embed.addField('» $$commands:serverinfo.roles', rolesClean.join(', '), true, { totalRoles })
+    else
+      embed.addField('» $$commands:serverinfo.totalRoles', totalRoles, true)
+
+    if (boostTier && boosters)
+      embed.addField('» $$commands:serverinfo.boostTier', 'commands:serverinfo.tier', true, {}, { boostTier })
 
     embed
       .addField('» $$commands:serverinfo.members', 'commands:serverinfo.onlineOffline', true, { totalMembers }, { onlineMembers, offlineMembers })
@@ -81,7 +87,7 @@ class ServerInfo extends Command {
 }
 
 function createEmbedRoles (roles, guild, embedOptions) {
-  const guildIconURL = Utils.getServerIconURL(guild)
+  const guildIconURL = getServerIconURL(guild)
   return new SimplicityEmbed(embedOptions)
     .setAuthor('$$commands:serverinfo.roles', guildIconURL, '', { totalRoles: roles.length })
     .setDescription(roles.join('\n'))

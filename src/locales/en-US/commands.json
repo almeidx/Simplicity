@@ -69,7 +69,9 @@
             "Must be a member of the server for longer than 10 minutes.",
             "Must have a verified phone on their Discord account."
         ],
-        "unknown": "Unknown"
+        "unknown": "Unknown",
+        "boostTier": "Boost Tier",
+        "tier": "Tier {{- boostTier }}"
     },
     "addemoji": {
         "description": "This command allows you to create emojis.",
