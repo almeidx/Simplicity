@@ -20,13 +20,12 @@ class VoiceKick extends Command {
       clientPermissions: [ 'MANAGE_CHANNELS', 'MOVE_MEMBERS' ] }
   }
 
-  async run ({ author, client, guild, member: memberAuthor, query, send, t }) {
+  async run ({ author, guild, member: memberAuthor, query, send, t }) {
     const member = await MemberParameter.parse(query, MemberParameterOptions, {
       memberAuthor,
       commandName: this.name,
       author,
-      guild,
-      client
+      guild
     })
     await MemberParameter.verifyExceptions(member, MemberParameterOptions, {
       guild,
