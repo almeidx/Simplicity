@@ -29,27 +29,31 @@ class Logs extends Command {
 
     const type = args.length && args.shift().toLowerCase()
     const condition = type && args.length && args.shift().toLowerCase()
+    const aliasesList = []
+    const aliasesValues = Object.values(Aliases)
+    for (const i in aliasesValues)
+      if (aliasesValues.hasOwnProperty(i))
+        aliasesValues[i].forEach((a) => aliasesList.push(a))
 
     if (!query) {
       for (const i of logTypes)
         if (i !== '$init')
           embed.addField(`» $$commands:logs.${i}`, checkChannel(i), true)
       return send(embed)
-    } else if (Object.keys(Aliases).map(a => a.toLowerCase()).includes(type) && condition === Condition) {
+    } else if (aliasesList.includes(type) && condition === Condition) {
       const channel = args.length && await ChannelParameter.search(args.join(' '), { guild })
       if (!channel)
         throw new CommandError('errors:invalidChannel')
       if (logs[type] === channel.id)
         throw new CommandError('commands:logs.alreadySet')
 
-      const data = await client.database.guilds.edit(guild.id, {
-        logs: { type: channel.id }
-      }).catch(() => null)
+      const data = await client.database.guilds.edit(guild.id, { logs: { type: channel.id } }).catch(() => null)
       if (!data)
         throw new CommandError('commands:logs.error')
-      embed.setDescription('commands:logs.editedMessageUpdates', { channel })
+      embed.setDescription('commands:logs.edited', { type, channel })
       return send(embed)
-    }
+    } else
+      return send('What? Where??')
   }
 }
 

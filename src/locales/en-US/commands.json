@@ -265,6 +265,6 @@
         "MessageUpdate": "Message Updates",
         "UserUpdate": "User Updates",
         "VoiceChannelLogs": "Voice Channel Logs",
-        "editedMessageUpdates": "You have successfully set the Message Updates channel to: {{- channel }}"
+        "edited": "You have successfully set the {{ type }} channel to: {{- channel }}"
     }
 }
