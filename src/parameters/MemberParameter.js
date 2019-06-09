@@ -24,7 +24,7 @@ class MemberParameter extends UserParameter {
 
   static async verifyExceptions (member, options = {}, { guild, memberAuthor, commandName }) {
     options = this.setupOptions(options)
-    await super.verifyExceptions(member.user, { author: memberAuthor.user }, options)
+    await super.verifyExceptions(member.user, options, { author: memberAuthor.user })
     const userOwner = member.id === guild.owner.id
     const canBeAuthor = options.canBeAuthor && member.id === memberAuthor.id
 

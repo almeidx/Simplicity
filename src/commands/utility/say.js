@@ -14,7 +14,7 @@ class Say extends Command {
     if (checkPerms(client.user, 'MANAGE_MESSAGES') && checkPerms(member, 'ADMINISTRATOR'))
       await message.delete()
 
-    await send(query)
+    return send(query)
   }
 }
 

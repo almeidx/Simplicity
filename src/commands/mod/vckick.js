@@ -20,12 +20,13 @@ class VoiceKick extends Command {
       clientPermissions: [ 'MANAGE_CHANNELS', 'MOVE_MEMBERS' ] }
   }
 
-  async run ({ author, guild, member: memberAuthor, query, send, t }) {
+  async run ({ author, client, guild, member: memberAuthor, query, send, t }) {
     const member = await MemberParameter.parse(query, MemberParameterOptions, {
       memberAuthor,
       commandName: this.name,
       author,
-      guild
+      guild,
+      client
     })
     await MemberParameter.verifyExceptions(member, MemberParameterOptions, {
       guild,
@@ -33,7 +34,8 @@ class VoiceKick extends Command {
       commandName: this.name
     })
 
-    if (!(member.voice && member.voice.channel)) throw new CommandError('errors:noVoiceChannel')
+    if (member.voice && !member.voice.channel)
+      throw new CommandError('errors:noVoiceChannel')
 
     const oldChannelName = member.voice.channel.name
     const channelName = t('commands:vckick.voiceKicked', { user: author.tag })
@@ -45,7 +47,7 @@ class VoiceKick extends Command {
       permissionOverwrites: [
         {
           id: guild.id,
-          deny: ['VIEW_CHANNEL', 'CONNECT', 'SPEAK']
+          deny: ['VIEW_CHANNEL']
         }
       ]
     })

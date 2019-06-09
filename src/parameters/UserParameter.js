@@ -45,9 +45,8 @@ class UserParameter extends Parameter {
     const regexResult = MENTION_REGEX.exec(query)
     const id = regexResult && regexResult[1]
 
-    const getID = id && client && ((guild && guild.members.get(id) && guild.members.get(id).user) ||
-    client.users.get(id) ||
-    (options.checkGlobally && await client.users.fetch(id).catch(() => null)))
+    const getID = id && ((guild && guild.members.get(id) && guild.members.get(id).user) || (client && (client.users.get(id) ||
+    (options.checkGlobally && await client.users.fetch(id).catch(() => null)))))
 
     const findUsername = guild && guild.members.find((m) => m.user.username.toLowerCase() === query)
     const findUsernameStarts = guild && guild.members.find((m) => m.user.username.toLowerCase().startsWith(query))
@@ -61,7 +60,7 @@ class UserParameter extends Parameter {
 
     return getID || (findUsername && findUsername.user) ||
     (findUsernameStarts && findUsernameStarts.user) ||
-    (findUsernameEnds && findUsernameStarts.user) ||
+    (findUsernameEnds && findUsernameEnds.user) ||
     (options.checkIncludes && findUsernameIncludes && findUsernameIncludes.user) ||
     (findDisplay && findDisplay.user) ||
     (findDisplayStarts && findDisplayStarts.user) ||
