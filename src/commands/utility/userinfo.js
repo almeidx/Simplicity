@@ -13,33 +13,35 @@ class UserInfo extends Command {
   }
 
   async run ({ author, client, channel, emoji, guild, query, send, t }) {
+    const canShowMemberInfo = !query || client.users.has(query)
     const user = !query ? author : await UserParameter.parse(query, {
       errors: { missingError: 'errors:invalidUser' },
       required: true
     }, { client, guild })
+    const member = canShowMemberInfo && guild && guild.member(user)
+
+    const presence = canShowMemberInfo && user.presence
+    const clientStatus = presence && presence.clientStatus
+    const status = clientStatus && Object.keys(clientStatus)[0]
 
     const titles = [user.tag]
-    if (guild && guild.ownerID === user.id) titles.push('#crown')
     if (PermissionsUtils.verifyDev(user.id, client)) titles.push('#developer')
+    if (guild && guild.ownerID === user.id) titles.push('#crown')
     if (user.bot) titles.push('#bot')
+    if (status) titles.push(`#${status}`)
 
     const joinPosition = getJoinPosition(user.id, guild)
-    const member = guild && guild.member(user)
     const nickname = member && member.nickname
     const created = moment(user.createdAt)
     const joined = member && moment(member.joinedAt)
 
-    const presence = client.users.has(user.id) && user.presence
-    const clientStatus = presence && presence.clientStatus
-    const status = clientStatus && (clientStatus.desktop || clientStatus.mobile || clientStatus.web)
-
     const highestRole = member && member.roles.highest.id !== guild.id && member.roles.highest
-    const roles = member && member.roles && member.roles.sort((a, b) => b.position - a.position).map(r => r).slice(0, -1)
+    const roles = member && member.roles.sort((a, b) => b.position - a.position).map(r => r).slice(0, -1)
     const rolesClean = roles && roles.map(r => r.name || r.toString())
     const activity = presence && presence.activity
     const activityType = activity && activity.type && activity.name
 
-    const embed = new SimplicityEmbed({ author, t, emoji }, { autoAuthor: false })
+    const embed = new SimplicityEmbed({ author, emoji, t }, { autoAuthor: false })
       .setAuthor(titles.join(' '), user.displayAvatarURL())
       .setThumbnail(user)
       .addField('» $$commands:userinfo.username', user.tag, true)
@@ -49,13 +51,13 @@ class UserInfo extends Command {
 
     embed.addField('» $$commands:userinfo.id', user.id, true)
 
-    if (status)
+    if (presence)
       embed.addField('» $$commands:userinfo.status', `#${presence.status} $$common:status.${presence.status}`, true)
     if (highestRole && roles.length > 5)
       embed.addField('» $$commands:userinfo.highestRole', highestRole.name || highestRole.toString(), true)
     if (activityType)
       embed.addField(`» $$common:activityType.${activity.type}`, activity.name, true)
-    if (rolesClean && rolesClean.length <= 5)
+    if (rolesClean && rolesClean.length && rolesClean.length <= 5)
       embed.addField('» $$commands:userinfo.roles', rolesClean.join(', '), true)
     if (joinPosition)
       embed.addField('» $$commands:userinfo.joinPosition', joinPosition, true)

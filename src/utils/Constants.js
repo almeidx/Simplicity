@@ -37,6 +37,9 @@ module.exports = {
     'CROWN': '👑',
     'BOT': '🤖',
     'DEVELOPER': '⚒️',
+    'MOBILE': '📱',
+    'WEB': '🌐',
+    'DESKTOP': '💻',
     'ROLES': '📜',
     'PHOTO': '🖼'
   },
