@@ -13,13 +13,13 @@ class UserInfo extends Command {
   }
 
   async run ({ author, client, channel, emoji, guild, query, send, t }) {
-    const canShowMemberInfo = !query || client.users.has(query)
+    const canShowMemberInfo = (query && client.users.has(query)) || true
     const user = !query ? author : await UserParameter.parse(query, {
       errors: { missingError: 'errors:invalidUser' },
       required: true
     }, { client, guild })
-    const member = canShowMemberInfo && guild && guild.member(user)
 
+    const member = canShowMemberInfo && guild && guild.member(user)
     const presence = canShowMemberInfo && user.presence
     const clientStatus = presence && presence.clientStatus
     const status = clientStatus && Object.keys(clientStatus)[0]

@@ -25,5 +25,6 @@
     "cantApplyOnAuthor": "You can't perform this action on yourself!",
     "hiddenChannel": "You don't have permission to see that channel!",
     "hiddenChannelBot": "I don't have permission to see that channel!",
-    "invalidChannel": "The channel you provided was invalid."
+    "invalidChannel": "The channel you provided was invalid.",
+    "unavailableGuild": "The guild you entered is currently unavailable."
 }

@@ -29,11 +29,11 @@ class ChannelParameter extends Parameter {
     const hiddenChannelBot = channel.permissionsFor(guild.me).has('READ_MESSAGES')
 
     // if (!exceptions.canBeHidden && !hiddenChannel)
-      // throw new CommandError(exceptions.errors.canBeHidden, { onUsage: true })
+    // throw new CommandError(exceptions.errors.canBeHidden, { onUsage: true })
     if (!exceptions.canBeHiddenBot && !hiddenChannelBot)
       throw new CommandError(exceptions.errors.canBeHiddenBot, { onUsage: true })
 
-    return role
+    return true // role
   }
 
   static search (query, { guild }, options) {

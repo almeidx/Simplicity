@@ -1,6 +1,11 @@
-const { Command, SimplicityEmbed, Utils } = require('../..')
+const { Command, Parameters, SimplicityEmbed, Utils } = require('../..')
+const { GuildParameter } = Parameters
 const { getServerIconURL } = Utils
 const moment = require('moment')
+const GuildParameterOptions = {
+  required: true,
+  checkIncludes: true
+}
 
 class ServerInfo extends Command {
   constructor (client) {
@@ -9,32 +14,34 @@ class ServerInfo extends Command {
     this.category = 'guild'
   }
 
-  async run ({ author, channel, emoji, guild, send, t }) {
-    await guild.members.fetch()
-    const totalMembers = guild.memberCount
-    const onlineMembers = guild.members.filter(m => m.user.presence.status !== 'offline').size
-    const offlineMembers = guild.members.filter(m => m.user.presence.status === 'offline').size
+  async run ({ author, channel, client, emoji, guild, query, send, t }) {
+    const Guild = await GuildParameter.search(query, { client, guild }, GuildParameterOptions)
 
-    const totalChannels = guild.channels.filter(channel => channel.type === 'text' || channel.type === 'voice').size
-    const textChannels = guild.channels.filter(channel => channel.type === 'text').size
-    const voiceChannels = guild.channels.filter(channel => channel.type === 'voice').size
+    await Guild.members.fetch()
+    const totalMembers = Guild.memberCount
+    const onlineMembers = Guild.members.filter(m => m.user.presence.status !== 'offline').size
+    const offlineMembers = Guild.members.filter(m => m.user.presence.status === 'offline').size
 
-    const totalRoles = guild.roles && guild.roles.filter(r => r.id !== guild.id).size
-    const roles = guild.roles && guild.roles.sort((a, b) => b.position - a.position).map(r => r).slice(0, -1)
+    const totalChannels = Guild.channels.filter(channel => channel.type === 'text' || channel.type === 'voice').size
+    const textChannels = Guild.channels.filter(channel => channel.type === 'text').size
+    const voiceChannels = Guild.channels.filter(channel => channel.type === 'voice').size
+
+    const totalRoles = Guild.roles && Guild.roles.filter(r => r.id !== Guild.id).size
+    const roles = Guild.roles && Guild.roles.sort((a, b) => b.position - a.position).map(r => r).slice(0, -1)
     const rolesClean = roles && roles.map(r => r.name || r.toString())
 
-    const guildIconURL = getServerIconURL(guild)
-    const emojis = guild.emojis && guild.emojis.size
-    const owner = (guild.owner && guild.owner.user.tag) || t('commands:serverinfo.unknown')
-    const date = moment(guild.createdAt)
+    const GuildIconURL = getServerIconURL(Guild)
+    const emojis = Guild.emojis && Guild.emojis.size
+    const owner = (Guild.owner && Guild.owner.user.tag) || t('commands:serverinfo.unknown')
+    const date = moment(Guild.createdAt)
 
-    const boostTier = guild.premiumTier
-    const boosters = guild.premiumSubscriptionCount
+    const boostTier = Guild.premiumTier
+    const boosters = Guild.premiumSubscriptionCount
 
-    const embed = new SimplicityEmbed({ author, guild, t })
-      .setThumbnail(guildIconURL)
-      .addField('» $$commands:serverinfo.name', guild.name, true)
-      .addField('» $$commands:serverinfo.id', guild.id, true)
+    const embed = new SimplicityEmbed({ author, Guild, t })
+      .setThumbnail(GuildIconURL)
+      .addField('» $$commands:serverinfo.name', Guild.name, true)
+      .addField('» $$commands:serverinfo.id', Guild.id, true)
       .addField('» $$commands:serverinfo.owner', owner, true)
       .addField('» $$commands:serverinfo.emotes', emojis, true)
 
@@ -50,17 +57,17 @@ class ServerInfo extends Command {
       .addField('» $$commands:serverinfo.members', 'commands:serverinfo.onlineOffline', true, { totalMembers }, { onlineMembers, offlineMembers })
       .addField('» $$commands:serverinfo.channels', 'commands:serverinfo.textVoice', true, { totalChannels }, { textChannels, voiceChannels })
       .addField('» $$commands:serverinfo.created', `${date.format('LLL')} (${date.fromNow()})`)
-      .addField('» $$commands:serverinfo.verificationLevel', `commands:serverinfo.verificationDetails.${guild.verificationLevel}`, true, { level: guild.verificationLevel })
+      .addField('» $$commands:serverinfo.verificationLevel', `commands:serverinfo.verificationDetails.${Guild.verificationLevel}`, true, { level: Guild.verificationLevel })
 
     const message = await send(embed)
 
-    const permissions = channel.permissionsFor(guild.me)
+    const permissions = channel.permissionsFor(Guild.me)
     const roleRestriction = rolesClean && rolesClean.length > 5
 
     if (permissions.has('ADD_REACTIONS') && roleRestriction) {
       const role = {
         emoji: emoji('ROLES', { id: true }),
-        embed: createEmbedRoles(roles, guild, { author, t })
+        embed: createEmbedRoles(roles, Guild, { author, t })
       }
       await message.react(role.emoji)
 
@@ -86,8 +93,8 @@ class ServerInfo extends Command {
   }
 }
 
-function createEmbedRoles (roles, guild, embedOptions) {
-  const guildIconURL = getServerIconURL(guild)
+function createEmbedRoles (roles, Guild, embedOptions) {
+  const guildIconURL = getServerIconURL(Guild)
   return new SimplicityEmbed(embedOptions)
     .setAuthor('$$commands:serverinfo.roles', guildIconURL, '', { totalRoles: roles.length })
     .setDescription(roles.join('\n'))
