@@ -18,8 +18,8 @@ class UserInfo extends Command {
       errors: { missingError: 'errors:invalidUser' },
       required: true
     }, { client, guild })
-
     const member = canShowMemberInfo && guild && guild.member(user)
+
     const presence = canShowMemberInfo && user.presence
     const clientStatus = presence && presence.clientStatus
     const status = clientStatus && Object.keys(clientStatus)[0]
