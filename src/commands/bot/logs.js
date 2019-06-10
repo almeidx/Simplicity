@@ -2,7 +2,7 @@ const { Command, CommandError, Parameters, SimplicityEmbed } = require('../..')
 const { ChannelParameter } = Parameters
 
 const Aliases = {
-  GuildMemberAdd: [ 'welcome', 'join', 'joined', 'welcomer' ],
+  GuildMemberAdd: [ 'welcome', 'join', 'joined', 'welcoming' ],
   GuildMemberLeave: [ 'leave', 'left' ],
   MessageUpdate: [ 'message', 'messageUpdates', 'messageLogs', 'messages' ],
   UserUpdate: [ 'userUpdates', 'user', 'userChanges', 'users' ],
