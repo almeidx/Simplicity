@@ -32,7 +32,6 @@ class VoiceKick extends Command {
       memberAuthor,
       commandName: this.name
     })
-	console.log(member)
 
     if (!member.voice || !member.voice.channel)
       throw new CommandError('errors:noVoiceChannel')
