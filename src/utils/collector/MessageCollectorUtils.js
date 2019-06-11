@@ -72,6 +72,17 @@ class MessageCollectorUtils {
     if (!message.deleted && (authorIsClient || clientHasPermission))
       return message.delete(options).catch(() => null)
   }
+
+  static async test (message, question, limit = 60000) {
+    const filter = (m) => m.author.id === message.author.id
+    await message.channel.send(question)
+    try {
+      const collected = await message.channel.awaitMessages(filter, { max: 1, time: limit, errors: ['time'] })
+      return collected.first().content
+    } catch (_) {
+      return false
+    }
+  }
 }
 
 module.exports = MessageCollectorUtils
