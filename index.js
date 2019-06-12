@@ -20,12 +20,21 @@ const client = new SimplicityClient(CLIENT_OPTIONS)
 
 client.login(process.env.BOT_TOKEN).catch(console.error)
 
-process.on('uncaughtException', (err) => {
-  const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, 'g'), './')
-  console.error('Uncaught Exception: ', errorMsg)
-  process.exit(1)
-})
+client
+  .on('disconnect', () => console.log('Bot is disconnecting...'))
+  .on('reconnect', () => console.log('Bot reconnecting...'))
+  .on('warn', (warn) => console.log(warn))
+  .on('invalidated', () => {
+    console.log('The client\'s session is now invalidated.')
+    process.exit(1)
+  })
 
-process.on('unhandledRejection', (err) => {
-  console.error('Uncaught Promise Error: ', err)
-})
+process
+  .on('uncaughtException', (error) => {
+    const msg = error.stack.replace(new RegExp(`${__dirname}/`, 'g'), './')
+    console.error('Uncaught Exception: ', msg)
+    process.exit(1)
+  })
+  .on('unhandledRejection', (error) => {
+    console.error('Uncaught Promise Error: ', error)
+  })
