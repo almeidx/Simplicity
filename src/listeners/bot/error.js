@@ -1,7 +1,7 @@
 const { SimplicityEmbed, SimplicityListener, Utils } = require('../..')
 const { cleanString } = Utils
 
-class ErrorListener extends SimplicityListener {
+class Error extends SimplicityListener {
   constructor (client) {
     super(client)
   }
@@ -16,4 +16,4 @@ class ErrorListener extends SimplicityListener {
   }
 }
 
-module.exports = ErrorListener
+module.exports = Error

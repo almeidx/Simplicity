@@ -7,7 +7,6 @@ class Ready extends SimplicityListener {
 
   on (client) {
     client.logger.success('Ready', `Logged on ${client.guilds.size} guilds and ${client.users.size} users`)
-    client.user.setActivity(`@${client.user.username} help`, { type: 'WATCHING' }).catch(() => null)
 
     this.sendPrivateMessage('bot_log',
       new SimplicityEmbed()

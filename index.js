@@ -1,11 +1,22 @@
 const { SimplicityClient } = require('./src')
 require('dotenv').config()
 
-const client = new SimplicityClient({
+const CLIENT_OPTIONS = {
   fetchAllMembers: true,
   disableEveryone: true,
-  disabledEvents: [ 'TYPING_START' ]
-})
+  disabledEvents: [ 'TYPING_START' ],
+  presence: {
+    activity: {
+      name: '@Simplicity help',
+      type: 'WATCHING'
+    }
+  },
+  ws: {
+    large_threshold: 1000
+  }
+}
+
+const client = new SimplicityClient(CLIENT_OPTIONS)
 
 client.login(process.env.BOT_TOKEN).catch(console.error)
 
