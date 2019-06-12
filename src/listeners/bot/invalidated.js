@@ -6,7 +6,7 @@ class Invalidated extends SimplicityListener {
   }
 
   on () {
-    console.log('The client\'s session has became invalidated.')
+    console.log('The client\'s session is now invalidated.')
     process.exit(1)
   }
 }
