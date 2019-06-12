@@ -6,7 +6,7 @@ class Warn extends SimplicityListener {
   }
 
   on (_, warn) {
-    console.log('Error', warn)
+    console.log('Warning:\n', warn)
   }
 }
 
