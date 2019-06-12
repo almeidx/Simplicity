@@ -31,7 +31,7 @@ class Eval extends Command {
         console.warn(['COMMAND', 'EVAL-RESULT'], toEval)
     } catch (error) {
       embed
-        .setDescription(value('js', error))
+        .setDescription(value('xl', error))
         .setColor('RED')
       console.error(['COMMAND', 'EVAL-RESULT'], error)
     } finally {
