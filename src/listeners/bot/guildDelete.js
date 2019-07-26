@@ -1,32 +1,24 @@
-const { SimplicityListener, SimplicityEmbed, Utils } = require('../../')
-const { getServerIconURL } = Utils
-const moment = require('moment')
+const { Listener, SimplicityEmbed } = require('../../')
 
-class GuildDelete extends SimplicityListener {
+class GuildDelete extends Listener {
   constructor (client) {
     super(client)
   }
 
   async on (client, guild) {
-    const guildData = await client.database.guilds.get(guild.id)
-    if (guildData)
-      await client.database.guilds.remove(guild.id)
+    await client.database.guilds.remove(guild.id)
+    const owner = guild.owner
 
-    const owner = guild.owner.user
-    const date = moment(guild.createdAt)
-
-    this.sendPrivateMessage('guild_leave',
+    this.sendMessage('guild_leave',
       new SimplicityEmbed()
-        .setColor('RED')
-        .setAuthor(owner.tag, owner.displayAvatarURL())
-        .addField('» Guild Name', guild.name, true)
-        .addField('» Guild ID', guild.id, true)
-        .addField('» Total Members', guild.memberCount, true)
-        .addField('» Owner', `${owner} (${owner.id})`)
-        .addField('» Created At', `${date.format('LLL')} (${date.fromNow()})}`)
-        .setFooter(client.user.tag)
-        .setThumbnail(getServerIconURL(guild))
-        .setTimestamp())
+        .setAuthor(owner.user.tag, owner.user.displayAvatarURL())
+        .addField('Guild Name', guild.name, true)
+        .addField('Guild ID', guild.id, true)
+        .addField('Members | Channels | Emojis', `${guild.memberCount} | ${guild.channels.size} | ${guild.emojis.size}`)
+        .setFooter(`Owner ID: ${owner.id}`)
+        .setThumbnail(guild.iconURl())
+        .setTimestamp()
+    )
   }
 }
 

@@ -1,4 +1,4 @@
-const { SimplicityEmbed, Command, MessageUtils, CommandError, MessageCollectorUtils, Parameters } = require('../..')
+const { SimplicityEmbed, Command, MessageUtils, CommandError, Parameters, MessageCollectorUtils } = require('../..')
 const { StringParameter } = Parameters
 
 const ParameterOptions = {
@@ -41,15 +41,11 @@ class AddEmoji extends Command {
 
     await MessageCollectorUtils.run(dependencies, responses, async () => {
       const emoji = await guild.emojis.create(image, name).catch(() => null)
+      if (!emoji) throw new CommandError('commands:addemoji.error')
 
-      const embedTitle = emoji ? 'commands:addemoji.success' : 'errors:oops'
-      const embedDescription = 'commands:addemoji.' + (emoji ? 'emojiCreated' : 'error')
-      const embedColor = emoji ? process.env.COLOR : 'RED'
-
-      const embed = new SimplicityEmbed({ author, t }, { autoAuthor: !!emoji })
-        .setDescription(embedDescription, { emoji: emoji.toString() })
-        .setTitle(embedTitle)
-        .setColor(embedColor)
+      const embed = new SimplicityEmbed({ author, t })
+        .setDescription('commands:addemoji.emojiCreated', { emoji: emoji.toString() })
+        .setTitle('commands:addemoji.success')
       return send(embed)
     })
   }
