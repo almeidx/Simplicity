@@ -5,7 +5,7 @@ module.exports = {
   SimplicityEmbed: require('./structures/discord/SimplicityEmbed'),
   Loggers: require('./structures/Loggers'),
   Loader: require('./structures/Loader'),
-  Listener: require('./structures/Listener'),
+  SimplicityListener: require('./structures/discord/SimplicityListener'),
   Parameter: require('./structures/Parameter'),
   // command
   Command: require('./structures/command/Command'),

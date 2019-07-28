@@ -9,7 +9,7 @@ class Avatar extends Command {
   }
 
   async run ({ author, send, guild, channel, client, query, emoji, t }) {
-    const user = (await UserParameter.search(query, { client, guild })) || author
+    const user = !query ? author : await UserParameter.search(query, { client, guild }) || author
     const avatarURL = user.displayAvatarURL({ size: 2048 })
 
     const clientPermissions = channel.permissionsFor(guild.me)
@@ -31,4 +31,5 @@ class Avatar extends Command {
     throw new CommandError('errors:clientMissingPermission', { permissions })
   }
 }
+
 module.exports = Avatar

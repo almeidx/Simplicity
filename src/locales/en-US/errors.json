@@ -22,5 +22,9 @@
     "invalidCharacters": "Invalid characters",
     "50035": "There are no more emoji slots available",
     "invalidRole": "The role you provided is invalid",
-    "cantApplyOnAuthor": "You can't perform this action on yourself!"
+    "cantApplyOnAuthor": "You can't perform this action on yourself!",
+    "hiddenChannel": "You don't have permission to see that channel!",
+    "hiddenChannelBot": "I don't have permission to see that channel!",
+    "invalidChannel": "The channel you provided was invalid.",
+    "unavailableGuild": "The guild you entered is currently unavailable."
 }

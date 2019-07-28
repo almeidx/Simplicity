@@ -12,10 +12,12 @@
         "developers": "Developers",
         "ramUsage": "RAM Usage",
         "discordjs": "Discord.js Version",
-        "nodejs": "Node.js Version"
+        "nodejs": "Node.js Version",
+        "gettingLatency": "Getting latency...",
+        "latency": "{{- latency }}ms"
     },
     "help": {
-        "about": "{{- name }} is a bot with focus on moderation, utility, server management, and much more!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo see my commands, type **{{- prefix }}help <module>**",
+        "about": "{{- name }} is a bot with focus on moderation, utility, server management, and more Discord based stuff!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo view more info about each command type: `{{- prefix }}help <command>`",
         "categories": "Categories",
         "aliases": "Aliases",
         "_usage": "Usage",
@@ -67,7 +69,9 @@
             "Must be a member of the server for longer than 10 minutes.",
             "Must have a verified phone on their Discord account."
         ],
-        "unknown": "Unknown"
+        "unknown": "Unknown",
+        "boostTier": "Boost Tier",
+        "tier": "Tier {{- boostTier }}"
     },
     "addemoji": {
         "description": "This command allows you to create emojis.",
@@ -184,7 +188,8 @@
     "emoji": {
         "description": "This command sends the emoji image but bigger.",
         "usage": "<emoji>",
-        "error": "The emoji was invalid."
+        "error": "The emoji was invalid.",
+		"noArgs": "You must provide an emoji."
     },
     "say": {
         "description": "Makes the bot repeat a message of your choise",
@@ -217,7 +222,8 @@
         "mentionable":  "Mentionable",
         "hoisted": "Hoisted",
         "members": "Members: {{- size }}",
-        "createdAt": "Created At"
+        "createdAt": "Created At",
+        "moreMembers": "and {{- size }} more..."
     },
     "permissions": {
         "usage": "<role|member>",
@@ -242,5 +248,27 @@
         "usage": "[discriminator]",
         "nobody": "Couldn't find anyone in this server with that discriminator",
         "users": "Users with #{{- discrim }} as discriminator"
+    },
+    "role": {
+        "description": "This command allows you to add and remove roles from users",
+        "usage": "<user> <role>",
+        "noArgs": "You need to provide a user and a role",
+        "reasonAdd:": "{{- author }} Added the role to {{- user }}",
+        "reasonRemove": "{{- author }} Removed the role from {{- user }}",
+        "failedAdd": "There was an error when trying to add the role to the user",
+        "failedRemove": "There was an error when trying to remove the role from the user",
+        "added": "{{- author }} has added the {{- role }} role to {{- member }}",
+        "removed": "{{- author }} has removed the {{- role }} role from {{- member }}"
+    },
+    "logs": {
+        "description": "This command allows you to set the logs in your server",
+        "usage": "[type] [on/off]",
+        "GuildMemberAdd": "Member Join",
+        "GuildMemberRemove": "Member Leave",
+        "GuildUpdates": "Guild Updates",
+        "MessageUpdate": "Message Updates",
+        "UserUpdate": "User Updates",
+        "VoiceChannelLogs": "Voice Channel Logs",
+        "edited": "You have successfully set the {{ type }} channel to: {{- channel }}"
     }
 }

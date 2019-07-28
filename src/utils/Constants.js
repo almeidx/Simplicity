@@ -37,6 +37,9 @@ module.exports = {
     'CROWN': '👑',
     'BOT': '🤖',
     'DEVELOPER': '⚒️',
+    'MOBILE': '📱',
+    'WEB': '🌐',
+    'DESKTOP': '💻',
     'ROLES': '📜',
     'PHOTO': '🖼'
   },
@@ -103,7 +106,8 @@ module.exports = {
     'SEND_MESSAGES',
     'VIEW_CHANNEL',
     'ADD_REACTIONS',
-    'CREATE_INSTANT_INVITE'
+    'CREATE_INSTANT_INVITE',
+    'STREAM'
   ],
   ADMINISTRATOR_PERMISSION: 'ADMINISTRATOR',
   MANAGER_PERMISSIONS: [

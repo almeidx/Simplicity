@@ -8,8 +8,8 @@ const AllowedImageFormats = [
   'gif'
 ]
 
-async function checkRequestURL (url) {
-  return await fetch(url).then(r => r.status !== 404).catch(() => null)
+function checkRequestURL (url) {
+  return fetch(url).then(r => r.status !== 404).catch(() => null)
 }
 
 class MessageUtils {
@@ -22,16 +22,18 @@ class MessageUtils {
   static async getImage (message, sliceCount = 0) {
     const url = this.getContentUrl(message, sliceCount)
     const resultQuery = await checkRequestURL(url)
-    if (resultQuery) return url
+    if (resultQuery)
+      return url
+
     const attachments = message && message.attachments
     const attachment = attachments && attachments.find(a => AllowedImageFormats.some(format => a.name.endsWith(format)))
-    return attachment && (await checkRequestURL(attachment.url)) && attachment.url
+    return attachment && await checkRequestURL(attachment.url) && attachment.url
   }
 
   static async fetchImages (channel, limit = 100) {
     const messages = await channel.messages.fetch(limit).catch(() => null)
-    return messages && (await Promise.all(messages.map(async message => {
-      return await this.getImage(message)
+    return messages && (await Promise.all(messages.map(message => {
+      return this.getImage(message)
     }))).filter(r => r)
   }
 

@@ -1,20 +1,27 @@
-const { MessageEmbed, User, GuildMember, Message, Guild } = require('discord.js')
+const { Guild, GuildMember, Message, MessageEmbed, User } = require('discord.js')
 const { CommandContext } = require('../..')
+const { getServerIconURL } = require('../../utils/Utils')
 const TextUtils = require('../../utils/TextUtils')
 
 const types = { normal: process.env.COLOR, error: 'RED', warn: 0xfdfd96 }
 
 function checkName (resolvable) {
-  if (resolvable instanceof User) return resolvable.tag
-  if (resolvable instanceof GuildMember) return resolvable.user.tag
-  if (resolvable instanceof Guild) return resolvable.name
+  if (resolvable instanceof User)
+    return resolvable.tag
+  if (resolvable instanceof GuildMember)
+    return resolvable.user.tag
+  if (resolvable instanceof Guild)
+    return resolvable.name
 }
 
 function checkIcon (resolvable) {
   const o = { size: 2048 }
-  if (resolvable instanceof User) return resolvable.displayAvatarURL(o)
-  if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o)
-  if (resolvable instanceof Guild) return resolvable.iconURL(o)
+  if (resolvable instanceof User)
+    return resolvable.displayAvatarURL(o)
+  if (resolvable instanceof GuildMember)
+    return resolvable.user.displayAvatarURL(o)
+  if (resolvable instanceof Guild)
+    return getServerIconURL(resolvable)
 }
 
 class SimplicityEmbed extends MessageEmbed {
@@ -37,12 +44,13 @@ class SimplicityEmbed extends MessageEmbed {
       type: 'normal'
     }, options)
 
-    if (embedResolvable instanceof User) embedResolvable = { author: embedResolvable }
-    if (embedResolvable instanceof GuildMember) embedResolvable = { author: embedResolvable.user }
+    if (embedResolvable instanceof User)
+      embedResolvable = { author: embedResolvable }
+    if (embedResolvable instanceof GuildMember)
+      embedResolvable = { author: embedResolvable.user }
 
-    if (typeof embedResolvable === 'function') {
-      if (embedResolvable.name === 'fixedT') embedResolvable = { t: embedResolvable }
-    }
+    if (typeof embedResolvable === 'function' && embedResolvable.name === 'fixedT')
+      embedResolvable = { t: embedResolvable }
 
     if (embedResolvable instanceof Message) {
       const context = new CommandContext({ message: embedResolvable })
@@ -58,12 +66,15 @@ class SimplicityEmbed extends MessageEmbed {
     this.emoji = embedResolvable.emoji
 
     if (embedResolvable.author) {
-      if (this.options.autoAuthor) this.setAuthor(embedResolvable.author)
-      if (this.options.autoFooter) this.setFooter(embedResolvable.author.tag)
-      if (this.options.autoTimestamp) this.setTimestamp()
+      if (this.options.autoAuthor)
+        this.setAuthor(embedResolvable.author)
+      if (this.options.autoFooter)
+        this.setFooter(embedResolvable.author.tag)
+      if (this.options.autoTimestamp)
+        this.setTimestamp()
     }
 
-    const color = types[this.options.type] || types.normal || 'GREEN'
+    const color = types[this.options.type] || types.normal || 'BLUE'
     this.setColor(color)
   }
 
@@ -93,9 +104,12 @@ class SimplicityEmbed extends MessageEmbed {
     const footerTextIcon = checkIcon(text)
     const footerIcon = checkIcon(iconURL)
 
-    if (footerTextName) text = footerTextName
-    if (footerTextIcon && !iconURL) iconURL = footerTextIcon
-    if (footerIcon) iconURL = footerIcon
+    if (footerTextName)
+      text = footerTextName
+    if (footerTextIcon && !iconURL)
+      iconURL = footerTextIcon
+    if (footerIcon)
+      iconURL = footerIcon
 
     this.dataFixedT['footer'] = { text, iconURL, options }
     return super.setFooter(TextUtils.parse(text, this.setupOptions(options)), iconURL)
@@ -113,7 +127,8 @@ class SimplicityEmbed extends MessageEmbed {
 
   addField (name = '', value = '', inline = null, options = {}, valueOptions = {}) {
     this.fieldsFixedT.push({ name, value, inline, options, valueOptions })
-    return super.addField(TextUtils.parse(name, this.setupOptions(options)), TextUtils.parse(value, this.setupOptions(valueOptions)), inline)
+    return super
+      .addField(TextUtils.parse(name, this.setupOptions(options)), TextUtils.parse(value, this.setupOptions(valueOptions)), inline)
   }
 
   setThumbnail (url) {
@@ -131,10 +146,12 @@ class SimplicityEmbed extends MessageEmbed {
     this._text = { text, options }
     this.text = Array.isArray(text) ? text.map(t => TextUtils.parse(t, options)).join('\n') : TextUtils.parse(text, options)
     this.optionsText = optionsText
-    if (images) {
-      if (Array.isArray(images)) this.textImages = images
-      else this.textImages.push(images)
-    }
+    if (images)
+      if (Array.isArray(images))
+        this.textImages = images
+      else
+        this.textImages.push(images)
+
     return this
   }
 }

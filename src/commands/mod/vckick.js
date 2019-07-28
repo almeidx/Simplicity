@@ -17,7 +17,7 @@ class VoiceKick extends Command {
     this.requirements = {
       argsRequired: true,
       permissions: [ 'KICK_MEMBERS' ],
-      clientPermissions: [ 'MANAGE_CHANNELS', 'MOVE_MEMBERS' ] }
+      clientPermissions: [ 'MOVE_MEMBERS' ] }
   }
 
   async run ({ author, guild, member: memberAuthor, query, send, t }) {
@@ -33,25 +33,13 @@ class VoiceKick extends Command {
       commandName: this.name
     })
 
-    if (!(member.voice && member.voice.channel)) throw new CommandError('errors:noVoiceChannel')
+    if (!member.voice || !member.voice.channel)
+      throw new CommandError('errors:noVoiceChannel')
 
     const oldChannelName = member.voice.channel.name
-    const channelName = t('commands:vckick.voiceKicked', { user: author.tag })
     const reason = t('commands:vckick.reason', { author: author.tag, user: member.user.tag })
 
-    const channel = await guild.channels.create(channelName, {
-      type: 'voice',
-      reason,
-      permissionOverwrites: [
-        {
-          id: guild.id,
-          deny: ['VIEW_CHANNEL', 'CONNECT', 'SPEAK']
-        }
-      ]
-    })
-
-    await member.setVoiceChannel(channel)
-    await channel.delete(reason)
+    await member.voice.setChannel(null, reason)
 
     const embed = new SimplicityEmbed({ author, t })
       .setDescription(t('commands:vckick.success', { author, user: member, oldChannelName }))

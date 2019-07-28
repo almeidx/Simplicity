@@ -15,5 +15,23 @@
     "accountCreatedAt": "Account Created At",
     "joinedAt": "Joined At",
     "before": "Before",
-    "after": "After"
+    "after": "After",
+    "messageError": "There was an error when trying to add the message content",
+    "id": "ID: {{- id }}",
+    "changedUsername": "{{- user }} has changed their username",
+    "changedDiscriminator": "{{- user }} has changed their discriminator",
+    "channelCreated": "The **{{- name }}** $t(loggers:channelType.{{- type }}) channel has been created",
+    "channelCreatedExecutor": "The **{{- name }}** $t(loggers:channelType.{{- type }}) channel has been created by {{- executor }}",
+    "channelType": {
+        "text": "Text",
+        "voice": "Voice",
+        "category": "Category"
+    },
+    "channelDeletedExecutor": "The **{{- name }}** $t(loggers:channelType.{{- type }}) channel has been deleted by {{- executor }}",
+    "channelDeleted": "The **{{- name }}** $t(loggers:channelType.{{- type }}) channel has been delete",
+    "channelId": "Channel ID: {{- id }}",
+    "channelNameChanged": "The **{{- oldName }}** $t(loggers:channelType.{{- type }}) channel has been renamed to **{{- newName }}**",
+    "channelNameChangedExecutor": "The **{{- oldName }}** $t(loggers:channelType.{{- type }}) channel has been renamed to **{{- newName }}** by {{- executor }}",
+    "channelTopicChanged": "The **{{- name }}**'s channel topic has been changed",
+    "channelTopicChangedExecutor": "The **{{- name }}**'s channel topic has been changed by {{- executor }}"
 }

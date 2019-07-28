@@ -1,7 +1,7 @@
-const { SimplicityEmbed, Command, MessageUtils, CommandError, Parameters } = require('../..')
+const { SimplicityEmbed, Command, MessageUtils, CommandError, Parameters, MessageCollectorUtils } = require('../..')
 const { StringParameter } = Parameters
 
-const StringParameterOptions = {
+const ParameterOptions = {
   defaultString: 'emoji',
   maxLength: 32,
   minLength: 2,
@@ -26,17 +26,28 @@ class AddEmoji extends Command {
   }
 
   async run ({ args, author, channel, message, send, totalLength, t, guild }) {
-    const name = await StringParameter.parse(args[0], StringParameterOptions)
+    const name = await StringParameter.parse(args[0], ParameterOptions)
     const image = await MessageUtils.getImage(message, totalLength) || await MessageUtils.fetchImage(channel)
-    if (!image || !name) throw new CommandError('commands:addemoji:noNameLink', { onUsage: true })
+    if (!image)
+      throw new CommandError('commands:addemoji:noNameLink', { onUsage: true })
 
-    const emoji = await guild.emojis.create(image, name).catch(() => null)
-    if (!emoji) throw new CommandError('commands:addemoji.error')
+    const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
+      .setDescription('commands:addemoji.waitingResponse')
+      .setThumbnail(image)
+    const msg = await send(embed)
 
-    const embed = new SimplicityEmbed({ author, t })
-      .setDescription('commands:addemoji.emojiCreated', { emoji: emoji.toString() })
-      .setTitle('commands:addemoji.success')
-    return send(embed)
+    const dependencies = { msg, command: this, channel, author, send, t }
+    const responses = { cancel: t('commands:addemoji:cancelled') }
+
+    await MessageCollectorUtils.run(dependencies, responses, async () => {
+      const emoji = await guild.emojis.create(image, name).catch(() => null)
+      if (!emoji) throw new CommandError('commands:addemoji.error')
+
+      const embed = new SimplicityEmbed({ author, t })
+        .setDescription('commands:addemoji.emojiCreated', { emoji: emoji.toString() })
+        .setTitle('commands:addemoji.success')
+      return send(embed)
+    })
   }
 }
 

@@ -11,9 +11,10 @@ class Say extends Command {
 
   async run ({ channel, client, message, member, query, send }) {
     const checkPerms = (u, p) => channel.permissionsFor(u).has(p)
-    if (checkPerms(client.user, 'MANAGE_MESSAGES') && checkPerms(member, 'ADMINISTRATOR')) await message.delete()
+    if (checkPerms(client.user, 'MANAGE_MESSAGES') && checkPerms(member, 'ADMINISTRATOR'))
+      await message.delete()
 
-    await send(query)
+    return send(query)
   }
 }
 

@@ -20,7 +20,7 @@ class Collection {
   }
 
   remove (id) {
-    return this.model.findByIdAndRemove(id).then(this.parse)
+    return this.model.findById(id).then(i => this.model.deleteOne(i)).then(this.parse)
   }
 }
 

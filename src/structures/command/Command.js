@@ -17,9 +17,8 @@ class Command {
   }
 
   setup (options) {
-    if (options.aliases) {
+    if (options.aliases)
       options.aliases.forEach(e => this.aliases.push(e))
-    }
   }
 
   async run () {}
@@ -28,10 +27,9 @@ class Command {
     try {
       const requirements = new Requirements(this.requirements, this.responses)
       const subcommand = context.args[0] && this.getSubcommand(context.args[0].toLowerCase())
-      if (subcommand) {
-        await this.runSubcommand(subcommand, context)
-        return
-      }
+      if (subcommand)
+        return await this.runSubcommand(subcommand, context)
+
       await requirements.handle(context)
       await this.run(context)
     } catch (e) {
@@ -71,28 +69,26 @@ class Command {
       }
     }
 
-    const embed = new SimplicityEmbed({ t, author })
+    const embed = new SimplicityEmbed({ author, t })
       .setError()
       .setDescription(t(error.message, error.options))
 
     const strUsage = `commands:${this.name}.usage`
     const usage = error.onUsage && this.client.i18next.exists(strUsage) && t(strUsage)
 
-    if (usage) embed.addField('errors:usage', `${prefix + this.name} ${usage}`)
+    if (usage)
+      embed.addField('errors:usage', `${prefix + this.name} ${usage}`)
 
-    if (error.fields && error.fields.length > 0) {
+    if (error.fields && error.fields.length > 0)
       for (const i in error.fields) {
         const field = error.fields[i]
         embed.addField(field.name, field.value, field.inline, field.options, field.valueOptions)
       }
-    }
 
     let fields = ''
-    if (embed.fields.length > 0) {
-      for (const i in embed.fields) {
+    if (embed.fields.length > 0)
+      for (const i in embed.fields)
         fields += `\`@fields.${i}.name \` @fields.${i}.value \n`
-      }
-    }
 
     embed.setText('@description ' + fields)
     return send(embed)

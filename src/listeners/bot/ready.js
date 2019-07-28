@@ -1,6 +1,6 @@
-const { SimplicityEmbed, Listener } = require('../..')
+const { SimplicityEmbed, SimplicityListener } = require('../..')
 
-class Ready extends Listener {
+class Ready extends SimplicityListener {
   constructor (client) {
     super(client)
   }
@@ -8,13 +8,13 @@ class Ready extends Listener {
   on (client) {
     client.logger.success('Ready', `Logged on ${client.guilds.size} guilds and ${client.users.size} users`)
 
-    client.user.setActivity(`@${client.user.username} help`, { type: 'WATCHING' }).catch((e) => console.error(e))
-    this.sendMessage('channel_log_start',
+    this.sendPrivateMessage('bot_log',
       new SimplicityEmbed()
-        .setDescription(`Logged on ${client.guilds.size} guilds with ${client.users.size} users`)
         .setTimestamp()
         .setColor('GREEN')
-        .setFooter(client.user.tag, client.user.displayAvatarURL())).catch((e) => console.error(e))
+        .setDescription(`Logged on ${client.guilds.size} guilds with ${client.users.size} users`)
+        .setFooter(client.user.tag)
+        .setAuthor(client.user.tag, client.user.displayAvatarURL()))
   }
 }
 

@@ -24,7 +24,8 @@ class CommandLoader extends Loader {
   loadSuccess (Command, fileName, folderName) {
     const command = new Command(this.client)
     command.name = fileName
-    if (folderName !== 'commands' && command.category === 'none') command.category = folderName
+    if (folderName !== 'commands' && command.category === 'none')
+      command.category = folderName
     this.commands.set(fileName, command)
   }
 }
