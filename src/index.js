@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   // Structures
   // discord
@@ -7,7 +9,7 @@ module.exports = {
   Loader: require('./structures/Loader'),
   SimplicityListener: require('./structures/discord/SimplicityListener'),
   Parameter: require('./structures/Parameter'),
-  // command
+  // Command
   Command: require('./structures/command/Command'),
   CommandContext: require('./structures/command/CommandContext'),
   CommandError: require('./structures/command/CommandError'),
@@ -19,10 +21,10 @@ module.exports = {
   TextUtils: require('./utils/TextUtils'),
   PermissionsUtils: require('./utils/PermissionsUtils'),
   MessageUtils: require('./utils/MessageUtils'),
-  // collector
+  // Collector
   MessageCollectorUtils: require('./utils/collector/MessageCollectorUtils'),
   // Database
   Database: require('./database/Database'),
   // Parameters
-  Parameters: require('./parameters')
-}
+  Parameters: require('./parameters'),
+};

@@ -1,88 +1,89 @@
-const SimplicityEmbed = require('../../structures/discord/SimplicityEmbed')
+'use strict';
+
+const SimplicityEmbed = require('../../structures/discord/SimplicityEmbed');
 
 class MessageCollectorUtils {
-  static run (dependencies, responses, callback) {
-    const { channel, author, command, msg } = dependencies
+  static run(dependencies, responses, callback) {
+    const { channel, author, command, msg } = dependencies;
 
-    const filter = (m) => m.author.id === author.id
-    const collector = channel.createMessageCollector(filter, { max: 3, time: 30000, errors: ['time'] })
-    const incorrectResponseMessages = []
-    incorrectResponseMessages.push(msg)
-    command.running.add(channel.id, author.id)
+    const filter = (m) => m.author.id === author.id;
+    const collector = channel.createMessageCollector(filter, { max: 3, time: 30000, errors: ['time'] });
+    const incorrectResponseMessages = [];
+    incorrectResponseMessages.push(msg);
+    command.running.add(channel.id, author.id);
 
     collector.on('collect', (message) => {
       if (this.checkContent(message, 'confirm')) {
-        callback(dependencies)
-        collector.stop('finish')
-      } else if (this.checkContent(message, 'cancel'))
-        collector.stop('cancel')
-      else if (collector.collected.size !== collector.options.max)
-        this.incorrectResponse(dependencies, message, collector.collected, incorrectResponseMessages)
-    })
+        callback(dependencies);
+        collector.stop('finish');
+      } else if (this.checkContent(message, 'cancel')) collector.stop('cancel');
+      else if (collector.collected.size !== collector.options.max) this.incorrectResponse(
+        dependencies, message, collector.collected, incorrectResponseMessages
+      );
+    });
 
-    collector.on('end', (...params) => this.onEnd(dependencies, responses, incorrectResponseMessages, ...params))
+    collector.on('end', (...params) => this.onEnd(dependencies, responses, incorrectResponseMessages, ...params));
   }
 
-  static incorrectResponse ({ send, t }, message, collected, messages) {
+  static incorrectResponse({ send, t }, message, collected, messages) {
     const embed = new SimplicityEmbed(t)
       .setDescription('common:messageCollector:incorrectResponse', { count: collected.size })
-      .setText('@description')
+      .setText('@description');
 
-    send(embed).then(m => {
-      messages.push(m)
-      messages.push(message)
+    send(embed).then((m) => {
+      messages.push(m);
+      messages.push(message);
       setTimeout(() => {
-        this.deleteMessage(m)
-        this.deleteMessage(message)
-      }, 10000)
-    })
+        this.deleteMessage(m);
+        this.deleteMessage(message);
+      }, 10000);
+    }).catch(() => null);
   }
 
-  static checkContent (message, query) {
-    const content = message.content.toLowerCase()
-    return (content === query) || (content.startsWith(query))
+  static checkContent(message, query) {
+    const content = message.content.toLowerCase();
+    return (content === query) || content.startsWith(query);
   }
 
-  static onEnd ({ t, channel, command, author, send }, responses = {}, messages, { size: amount }, reasonParam) {
-    command.running.remove(channel.id, author.id)
+  static onEnd({ t, channel, command, author, send }, responses = {}, messages, { size: amount }, reasonParam) {
+    command.running.remove(channel.id, author.id);
 
-    messages.forEach(m => this.deleteMessage(m))
+    messages.forEach((m) => this.deleteMessage(m));
 
     responses = Object.assign({
       time: t('common:messageCollector.time'),
       cancel: t('common:messageCollector.cancel'),
-      limit: t('common:messageCollector.limit', { amount })
-    }, responses)
+      limit: t('common:messageCollector.limit', { amount }),
+    }, responses);
 
-    const response = responses[reasonParam]
+    const response = responses[reasonParam];
     if (response) {
       const embed = new SimplicityEmbed(author, { autoAuthor: false, type: 'error' })
         .setDescription(response)
-        .setText('@description')
-      send(embed).then(m => this.deleteMessage(m, { timeout: 60000 }))
+        .setText('@description');
+      send(embed).then((m) => this.deleteMessage(m, { timeout: 60000 })).catch(() => null);
     }
   }
 
-  static deleteMessage (message, options = {}) {
-    const client = message.client
-    const guild = message.guild
-    const memberClient = guild && client && guild.member(client.user)
-    const clientHasPermission = memberClient && message.channel.permissionsFor(memberClient).has('MANAGE_MESSAGES')
-    const authorIsClient = client && (client.user.id === message.author.id)
-    if (!message.deleted && (authorIsClient || clientHasPermission))
-      return message.delete(options).catch(() => null)
+  static deleteMessage(message, options = {}) {
+    const client = message.client;
+    const guild = message.guild;
+    const memberClient = guild && client && guild.member(client.user);
+    const clientHasPermission = memberClient && message.channel.permissionsFor(memberClient).has('MANAGE_MESSAGES');
+    const authorIsClient = client && (client.user.id === message.author.id);
+    if (!message.deleted && (authorIsClient || clientHasPermission)) return message.delete(options).catch(() => null);
   }
 
-  static async test (message, question, limit = 60000) {
-    const filter = (m) => m.author.id === message.author.id
-    await message.channel.send(question)
+  static async test(message, question, limit = 60000) {
+    const filter = (m) => m.author.id === message.author.id;
+    await message.channel.send(question);
     try {
-      const collected = await message.channel.awaitMessages(filter, { max: 1, time: limit, errors: ['time'] })
-      return collected.first().content
+      const collected = await message.channel.awaitMessages(filter, { max: 1, time: limit, errors: ['time'] });
+      return collected.first().content;
     } catch (_) {
-      return false
+      return false;
     }
   }
 }
 
-module.exports = MessageCollectorUtils
+module.exports = MessageCollectorUtils;

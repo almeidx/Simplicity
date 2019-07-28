@@ -1,5 +1,7 @@
+'use strict';
+
 module.exports = {
-  'guilds': {
+  guilds: {
     _id: { type: String, required: true },
     lang: { type: String },
     prefix: { type: String },
@@ -9,7 +11,7 @@ module.exports = {
       GuildUpdates: { type: String, default: null },
       MessageUpdate: { type: String, default: null },
       UserUpdate: { type: String, default: null },
-      VoiceChannelLogs: { type: String, default: null }
-    }
-  }
-}
+      VoiceChannelLogs: { type: String, default: null },
+    },
+  },
+};

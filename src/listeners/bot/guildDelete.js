@@ -1,13 +1,15 @@
-const { Listener, SimplicityEmbed } = require('../../')
+'use strict';
 
-class GuildDelete extends Listener {
-  constructor (client) {
-    super(client)
+const { SimplicityEmbed, SimplicityListener } = require('../../');
+
+class GuildDelete extends SimplicityListener {
+  constructor(client) {
+    super(client);
   }
 
-  async on (client, guild) {
-    await client.database.guilds.remove(guild.id)
-    const owner = guild.owner
+  async on(client, guild) {
+    await client.database.guilds.remove(guild.id);
+    const owner = guild.owner;
 
     this.sendMessage('guild_leave',
       new SimplicityEmbed()
@@ -18,8 +20,8 @@ class GuildDelete extends Listener {
         .setFooter(`Owner ID: ${owner.id}`)
         .setThumbnail(guild.iconURl())
         .setTimestamp()
-    )
+    );
   }
 }
 
-module.exports = GuildDelete
+module.exports = GuildDelete;

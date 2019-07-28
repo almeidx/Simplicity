@@ -1,12 +1,14 @@
-const { SimplicityEmbed, SimplicityListener } = require('../..')
+'use strict';
+
+const { SimplicityEmbed, SimplicityListener } = require('../..');
 
 class Ready extends SimplicityListener {
-  constructor (client) {
-    super(client)
+  constructor(client) {
+    super(client);
   }
 
-  on (client) {
-    client.logger.success('Ready', `Logged on ${client.guilds.size} guilds and ${client.users.size} users`)
+  on(client) {
+    client.logger.success('Ready', `Logged on ${client.guilds.size} guilds and ${client.users.size} users`);
 
     this.sendPrivateMessage('bot_log',
       new SimplicityEmbed()
@@ -14,8 +16,8 @@ class Ready extends SimplicityListener {
         .setColor('GREEN')
         .setDescription(`Logged on ${client.guilds.size} guilds with ${client.users.size} users`)
         .setFooter(client.user.tag)
-        .setAuthor(client.user.tag, client.user.displayAvatarURL()))
+        .setAuthor(client.user.tag, client.user.displayAvatarURL()));
   }
 }
 
-module.exports = Ready
+module.exports = Ready;

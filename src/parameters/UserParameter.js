@@ -1,72 +1,103 @@
-const CommandError = require('../structures/command/CommandError')
-const Parameter = require('../structures/Parameter')
+'use strict';
 
-const MENTION_REGEX = /^(?:<@!?)?([0-9]{16,18})(?:>)?$/
+const CommandError = require('../structures/command/CommandError');
+const Parameter = require('../structures/Parameter');
+
+const MENTION_REGEX = /^(?:<@!?)?([0-9]{16,18})(?:>)?$/;
 
 class UserParameter extends Parameter {
-  static parseOptions (options) {
+  static parseOptions(options) {
     return Object.assign({
       ...super.parseOptions(options),
       canBeAuthor: true,
       canBeBot: true,
       canBeUser: true,
       checkGlobally: true,
-      checkIncludes: true
-    }, options)
+      checkIncludes: true,
+    }, options);
   }
 
-  static parseMessageErrors (options = {}) {
+  static parseMessageErrors(options = {}) {
     return Object.assign({
       ...super.parseMessageErrors(options),
       canBeBot: 'errors:canBeBot',
       canBeAuthor: 'errors:canBeAuthor',
-      canBeUser: 'errors:canBeUser'
-    }, options.errors)
+      canBeUser: 'errors:canBeUser',
+    }, options.errors);
   }
 
-  static verifyExceptions (user, exceptions = {}, { author }) {
-    exceptions = this.setupOptions(exceptions)
-    if (!exceptions.canBeAuthor && user.id === author.id)
-      throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true })
-    if (!exceptions.canBeBot && user.bot)
-      throw new CommandError(exceptions.errors.canBeBot, { onUsage: true })
-    if (!exceptions.canBeUser && !user.bot)
-      throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true })
+  static verifyExceptions(user, exceptions = {}, { author }) {
+    exceptions = this.setupOptions(exceptions);
+    if (!exceptions.canBeAuthor && user.id === author.id) throw new CommandError(
+      exceptions.errors.canBeAuthor, { onUsage: true }
+    );
+    if (!exceptions.canBeBot && user.bot) throw new CommandError(exceptions.errors.canBeBot, { onUsage: true });
+    if (!exceptions.canBeUser && !user.bot) throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true });
 
-    return user
+    return user;
   }
 
-  static async search (query, { client, guild }, options) {
-    if (typeof query !== 'string')
-      throw new TypeError('Search input isn\'t a String')
+  static async search(query, { client, guild }, options = {}) {
+    if (typeof query !== 'string') throw new SyntaxError('query was invalid');
 
-    options = this.setupOptions(options)
-    query = query.toLowerCase()
-    const regexResult = MENTION_REGEX.exec(query)
-    const id = regexResult && regexResult[1]
+    options = this.setupOptions(options);
+    query = query.toLowerCase();
+    const regexResult = MENTION_REGEX.exec(query);
+    const id = regexResult && regexResult[1];
 
-    const getID = id && ((guild && guild.members.get(id) && guild.members.get(id).user) || (client && (client.users.get(id) ||
-    (options.checkGlobally && await client.users.fetch(id).catch(() => null)))))
+    const guildMember = (p, u = false, m) => {
+      if (guild) {
+        if (u) {
+          if (m) {
+            return guild.members.find((mem) => mem.user[p].toLowerCase()[m](query)) &&
+              guild.members.find((mem) => mem.user[p].toLowerCase()[m](query)).user;
+          }
+          return guild.members.find((mem) => mem.user[p].toLowerCase() === query) &&
+            guild.members.find((mem) => mem.user[p].toLowerCase() === query).user;
+        } else {
+          if (m) {
+            return guild.members.find((mem) => mem[p].toLowerCase()[m](query)) &&
+              guild.members.find((mem) => mem[p].toLowerCase()[m](query)).user;
+          }
+          return guild.members.find((mem) => mem[p].toLowerCase() === query) &&
+            guild.members.find((mem) => mem[p].toLowerCase() === query).user;
+        }
+      }
+    };
 
-    const findUsername = guild && guild.members.find((m) => m.user.username.toLowerCase() === query)
-    const findUsernameStarts = guild && guild.members.find((m) => m.user.username.toLowerCase().startsWith(query))
-    const findUsernameEnds = guild && guild.members.find((m) => m.user.username.toLowerCase().endsWith(query))
-    const findUsernameIncludes = guild && guild.members.find((m) => m.user.username.toLowerCase().includes(query))
+    let getID,
+      findTag,
+      findUsername,
+      findUsernameStarts,
+      findUsernameEnds,
+      findUsernameIncludes,
+      findDisplay,
+      findDisplayStarts,
+      findDisplayEnds,
+      findDisplayIncludes;
 
-    const findDisplay = guild && guild.members.find((m) => m.displayName.toLowerCase() === query)
-    const findDisplayStarts = guild && guild.members.find((m) => m.displayName.toLowerCase().startsWith(query))
-    const findDisplayEnds = guild && guild.members.find((m) => m.displayName.toLowerCase().endsWith(query))
-    const findDisplayIncludes = guild && guild.members.find((m) => m.displayName.toLowerCase().includes(query))
+    if (client) {
+      getID = id && (client.users.get(id) || (options.checkGlobally && await client.users.fetch(id).catch(() => null)));
 
-    return getID || (findUsername && findUsername.user) ||
-    (findUsernameStarts && findUsernameStarts.user) ||
-    (findUsernameEnds && findUsernameEnds.user) ||
-    (options.checkIncludes && findUsernameIncludes && findUsernameIncludes.user) ||
-    (findDisplay && findDisplay.user) ||
-    (findDisplayStarts && findDisplayStarts.user) ||
-    (findDisplayEnds && findDisplayEnds.user) ||
-    (options.checkIncludes && findDisplayIncludes && findDisplayIncludes.user) || null
+      findTag = client.users.find((m) => m.tag.toLowerCase() === query);
+    }
+
+    if (guild) {
+      findUsername = guildMember('username', true);
+      findUsernameStarts = guildMember('username', true, 'startsWith');
+      findUsernameEnds = guildMember('username', true, 'endsWith');
+      findUsernameIncludes = guildMember('username', true, 'includes');
+
+      findDisplay = guildMember('displayName');
+      findDisplayStarts = guildMember('displayName', false, 'startsWith');
+      findDisplayEnds = guildMember('displayName', false, 'endsWith');
+      findDisplayIncludes = guildMember('displayName', false, 'includes');
+    }
+
+    return getID || findTag || findUsername || findUsernameStarts || findUsernameEnds ||
+      (options.checkIncludes && findUsernameIncludes) || findDisplay || findDisplayStarts || findDisplayEnds ||
+      (options.checkIncludes && findDisplayIncludes) || null;
   }
 }
 
-module.exports = UserParameter
+module.exports = UserParameter;

@@ -1,67 +1,68 @@
-const { Client, Collection } = require('discord.js')
-const Loaders = require('../../loaders')
-const Loggers = require('../Loggers')
-const Database = require('../../database/Database')
-const fs = require('fs')
-const Path = require('path')
-const { promisify } = require('util')
-const readdir = promisify(fs.readdir)
-const translationBackend = require('i18next-node-fs-backend')
+'use strict';
+
+const { Client, Collection } = require('discord.js');
+const Loaders = require('../../loaders');
+const Loggers = require('../Loggers');
+const Database = require('../../database/Database');
+const fs = require('fs');
+const Path = require('path');
+const { promisify } = require('util');
+const readdir = promisify(fs.readdir);
+const translationBackend = require('i18next-node-fs-backend');
 
 class SimplicityClient extends Client {
-  constructor (options) {
-    super(options)
-    this.logger = Loggers
-    this.i18next = require('i18next')
-    this.database = new Database(this)
+  constructor(options) {
+    super(options);
+    this.logger = Loggers;
+    this.i18next = require('i18next');
+    this.database = new Database(this);
 
-    this.loadFiles().catch(console.error)
-    this.initLocales(Path.join(__dirname, '../../locales')).catch(console.error)
+    this.loadFiles().catch(console.error);
+    this.initLocales(Path.join(__dirname, '../../locales')).catch(console.error);
   }
 
-  async loadFiles () {
+  async loadFiles() {
     for (const Loader of Object.values(Loaders)) {
-      const loader = new Loader(this)
-      let result
+      const loader = new Loader(this);
+      let result;
       try {
-        result = await loader.load()
+        // eslint-disable-next-line no-await-in-loop
+        result = await loader.load();
       } catch (err) {
-        console.error(err)
-        result = false
+        console.error(err);
+        result = false;
       } finally {
-        if (!result && loader.required)
-          process.exit(1)
+        if (!result && loader.required) process.exit(1);
       }
     }
   }
 
-  get categories () {
+  get categories() {
     return this.commands.reduce((o, command) => {
-      if (!o.has(command.category))
-        o.set(command.category, new Collection())
+      if (!o.has(command.category)) o.set(command.category, new Collection());
 
-      o.get(command.category).set(command.name, command)
-      return o
-    }, new Collection())
+      o.get(command.category).set(command.name, command);
+      return o;
+    }, new Collection());
   }
 
-  async initLocales (path) {
+  async initLocales(path) {
     this.i18next
       .use(translationBackend)
       .init({
-        ns: [ 'categories', 'commands', 'errors', 'permissions', 'common', 'loggers' ],
+        ns: ['categories', 'commands', 'errors', 'permissions', 'common', 'loggers'],
         preload: await readdir(path),
         fallbackLng: 'en-US',
         defaultNS: 'commands',
         backend: {
-          loadPath: `${path}/{{lng}}/{{ns}}.json`
+          loadPath: `${path}/{{lng}}/{{ns}}.json`,
         },
         interpolation: { escapeValue: false },
-        returnEmptyString: false
+        returnEmptyString: false,
       }, () => {
-        console.log(Object.keys(this.i18next.store.data))
-      })
+        console.log(Object.keys(this.i18next.store.data));
+      });
   }
 }
 
-module.exports = SimplicityClient
+module.exports = SimplicityClient;

@@ -1,13 +1,15 @@
-const { Listener, SimplicityEmbed } = require('../../')
+'use strict';
 
-class GuildCreate extends Listener {
-  constructor (client) {
-    super(client)
+const { SimplicityEmbed, SimplicityListener } = require('../../');
+
+class GuildCreate extends SimplicityListener {
+  constructor(client) {
+    super(client);
   }
 
-  async on (client, guild) {
-    await client.database.guilds.create(guild.id)
-    const owner = guild.owner
+  async on(client, guild) {
+    await client.database.guilds.create(guild.id);
+    const owner = guild.owner;
 
     this.sendMessage('guild_join',
       new SimplicityEmbed()
@@ -18,8 +20,8 @@ class GuildCreate extends Listener {
         .setFooter(`Owner ID: ${owner.id}`)
         .setThumbnail(guild.iconURl())
         .setTimestamp()
-    )
+    );
   }
 }
 
-module.exports = GuildCreate
+module.exports = GuildCreate;
