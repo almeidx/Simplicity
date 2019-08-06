@@ -7,4 +7,4 @@
 <a class="badge-align" href="https://www.codacy.com/app/Almeeida/Simplicity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Almeeida/Simplicity&amp;utm_campaign=Badge_Grade"><img src="https://img.shields.io/codacy/grade/4f29cb30be614ad3a5af1fa381efa9f7.svg?style=flat-square"/></a>
 <a href="https://github.com/Almeeida/Simplicity/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/SwitchbladeBot/switchblade.svg?style=flat-square" alt="License"/></a><br>
 <h2>Yet another Discord bot</h2>
-Created by Almeida#0001 and Tsugami#261
+Created by Almeida#0001 and Tsugami#2619
