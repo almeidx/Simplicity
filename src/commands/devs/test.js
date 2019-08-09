@@ -1,17 +1,16 @@
 'use strict';
 
-const { Command, MessageCollectorUtils } = require('../../');
+const { Command, MessageCollectorUtils: { test } } = require('../../');
 
 class Test extends Command {
   constructor(client) {
     super(client);
     this.category = 'dev';
-    this.requirements = {
-      ownerOnly: true };
+    this.requirements = { ownerOnly: true };
   }
 
   async run({ channel, message }) {
-    const response = await MessageCollectorUtils.test(message, 'What?', 30000);
+    const response = await test(message, 'What?', 30000);
     if (!response) return channel.send('no response bruh');
     await channel.send(response);
   }
