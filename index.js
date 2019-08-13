@@ -18,6 +18,22 @@ const CLIENT_OPTIONS = {
   },
 };
 
+const express = require('express');
+const keepalive = require('express-glitch-keepalive');
+const app = express();
+
+app.use(keepalive);
+
+app.get('/', (req, res) => {
+  res.json('How did you get here?');
+});
+
+app.get('/', (request, response) => {
+  response.sendStatus(200);
+});
+
+app.listen(process.env.PORT);
+
 const client = new SimplicityClient(CLIENT_OPTIONS);
 client.login().catch(console.error);
 
