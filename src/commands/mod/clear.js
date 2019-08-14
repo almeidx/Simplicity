@@ -1,36 +1,36 @@
-const { Command, CommandError, SimplicityEmbed } = require('../../')
+'use strict';
+
+const { Command, CommandError, SimplicityEmbed } = require('../../');
 
 class Clear extends Command {
-  constructor (client) {
-    super(client)
-    this.aliases = [ 'purge', 'prune', 'clean' ]
-    this.category = 'mod'
+  constructor(client) {
+    super(client);
+    this.aliases = ['purge', 'prune', 'clean'];
+    this.category = 'mod';
     this.requirements = {
       argsRequired: true,
-      permissions: [ 'MANAGE_MESSAGES' ],
-      clientPermissions: [ 'MANAGE_MESSAGES' ] }
+      permissions: ['MANAGE_MESSAGES'],
+      clientPermissions: ['MANAGE_MESSAGES'] };
   }
 
-  async run ({ author, channel, message, send, t, query }) {
-    const embed = new SimplicityEmbed({ t, author })
-    const total = parseInt(query)
+  async run({ author, channel, message, send, t, query }) {
+    const embed = new SimplicityEmbed({ author, t });
+    const limit = Number(query);
 
-    if (!total || total < 2 || total > 100) throw new CommandError('commands:clear.invalidValue')
+    if (!limit || limit < 2 || limit > 100) throw new CommandError('commands:clear.invalidValue');
 
-    await message.delete()
+    await message.delete().catch(() => null);
 
-    const res = await channel.messages.fetch({ limit: total })
-    await channel.bulkDelete(res).catch(() => {
-      throw new CommandError('commands:clear.error')
-    })
+    const res = await channel.messages.fetch({ limit });
+    const deleted = await channel.bulkDelete(res).catch(console.error);
+    if (!deleted) throw new CommandError('commands:clear.error');
 
-    const amount = res.size
-    embed.setDescription('commands:clear.deleted', { amount, author })
+    const amount = res.size;
+    embed.setDescription('commands:clear.deleted', { amount, author });
 
-    const msg = await send(embed)
-
-    msg.delete({ timeout: 5000, reason: t('commands:clear.reason', { amount, auth: author.tag, authID: author.id }) })
+    const msg = await send(embed);
+    msg.delete({ timeout: 5000 });
   }
 }
 
-module.exports = Clear
+module.exports = Clear;

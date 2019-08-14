@@ -13,7 +13,7 @@ class MessageDeleteBulk extends SimplicityListener {
     this.sendLogMessage(message.guild.id, 'MessageUpdate',
       new SimplicityEmbed(this.getFixedT(message.guild.id))
         .setTimestamp()
-        .setAuthor(message.guild.name, getServerIconURL(message.guild.id))
+        .setAuthor(message.guild.name, getServerIconURL(message.guild))
         .setDescription('loggers:messageDeleteBulk', { amount: messages.size, channel: message.channel })
         .setColor(Constants.COLORS.MESSAGE_BULK_DELETE)).catch(() => null);
   }
