@@ -2,58 +2,44 @@
 
 const { CommandContext, SimplicityListener } = require('../../');
 
-class Message extends SimplicityListener {
+class MessageListener extends SimplicityListener {
   constructor(client) {
     super(client);
   }
 
   // eslint-disable-next-line complexity
   async on(client, message) {
-    if (message.author.bot || (message.guild && !message.guild.me.permissions.has('SEND_MESSAGES'))) return;
+    const { author, channel, content, guild, reply } = message;
+    if (author.bot || (guild && !channel.permissionsFor(client.user).has('SEND_MESSAGES'))) return;
 
     const guildData = await client.database.guilds.get(message.guild.id);
     const prefix = (guildData && guildData.prefix) || process.env.PREFIX;
     const language = (guildData && guildData.lang) || process.env.DEFAULT_LANG;
 
-    const cleanMention = client.user.toString();
-    const botMention = (message.guild && message.guild.me.toString()) || cleanMention;
-    const startsWithBotMention = message.content.startsWith(botMention) ? `${botMention} ` : null;
-    const startsWithCleanMention = message.content.startsWith(cleanMention) ? `${cleanMention} ` : null;
-    const startsWithPrefix = message.content.toLowerCase().startsWith(prefix.toLowerCase()) ? prefix : null;
+    // eslint-disable-next-line no-useless-escape
+    const PrefixRegex = new RegExp(`^(<@!?${client.user.id}>|${prefix}|${client.user.username})(\s+)?`, 'i');
+    let usedPrefix = content.match(PrefixRegex);
+    usedPrefix = usedPrefix && usedPrefix.length && usedPrefix[0];
+    const MentionRegex = new RegExp(`^(<@!?${client.user.id}>)`);
+    const mentioned = MentionRegex.test(content);
 
-    const usedPrefix = startsWithBotMention || startsWithCleanMention || startsWithPrefix;
-    const clientIsMentioned = message.mentions.has(client.user.id, { ignoreRoles: true, ignoreEveryone: true });
-
-    if (clientIsMentioned && !usedPrefix) return message.reply(
-      client.i18next.getFixedT(language)('common:prefix', { prefix })
-    );
+    if (mentioned && !usedPrefix) return reply(client.i18next.getFixedT(language)('common:prefix', { prefix }));
 
     if (usedPrefix) {
-      const args = message.content.slice(usedPrefix.length).trim().split(/ +/g);
+      const args = content.slice(usedPrefix.length).trim().split(/ +/g);
       const commandName = args.shift().toLowerCase();
       const command = client.commands.fetch(commandName);
 
-      if (clientIsMentioned && !command) return message.reply(
-        client.i18next.getFixedT(language)('common:prefix', { prefix })
-      );
+      if (mentioned && !command) return reply(client.i18next.getFixedT(language)('common:prefix', { prefix }));
 
-      if (command && !command.running.has(message.channel.id, message.author.id)) {
+      if (command && !command.running.has(channel.id, author.id)) {
         const totalLength = usedPrefix.length + commandName.length;
-        command._run(new CommandContext({
-          totalLength,
-          prefix,
-          language,
-          query: args.join(' '),
-          command,
-          message,
-          args,
-        })).catch(console.error);
-        client.logger.commandUsage(
-          'Command', `${message.guild.name} #${message.channel.name} @${message.author.tag} ${message.content}`
-        );
+        const params = { args, command, language, message, prefix, query: args.join(' '), totalLength };
+        command._run(new CommandContext(params)).catch(console.error);
+        client.logger.commandUsage('Command', `${guild.name} #${channel.name} @${author.tag} ${content}`);
       }
     }
   }
 }
 
-module.exports = Message;
+module.exports = MessageListener;

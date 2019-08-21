@@ -2,22 +2,21 @@
 
 const { SimplicityEmbed, SimplicityListener } = require('../..');
 
-class Ready extends SimplicityListener {
+class ReadyListener extends SimplicityListener {
   constructor(client) {
     super(client);
   }
 
   on(client) {
-    client.logger.success('Ready', `Logged on ${client.guilds.size} guilds and ${client.users.size} users`);
+    const message = `Logged on ${client.guilds.size} guilds and ${client.users.size} users`;
+    client.logger.success('Ready', message);
+    setInterval(() => client.user.setActivity(`@${client.user.username} help`, 21600000));
 
     this.sendPrivateMessage('bot_log',
-      new SimplicityEmbed()
-        .setTimestamp()
+      new SimplicityEmbed({ author: client.user })
         .setColor('GREEN')
-        .setDescription(`Logged on ${client.guilds.size} guilds with ${client.users.size} users`)
-        .setFooter(client.user.tag)
-        .setAuthor(client.user.tag, client.user.displayAvatarURL()));
+        .setDescription(message));
   }
 }
 
-module.exports = Ready;
+module.exports = ReadyListener;

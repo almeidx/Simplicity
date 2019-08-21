@@ -1,8 +1,8 @@
 'use strict';
 
-const { SimplicityEmbed, SimplicityListener } = require('../../');
+const { SimplicityEmbed, SimplicityListener, Utils: { getServerIconURL } } = require('../../');
 
-class GuildCreate extends SimplicityListener {
+class GuildCreateListener extends SimplicityListener {
   constructor(client) {
     super(client);
   }
@@ -12,16 +12,12 @@ class GuildCreate extends SimplicityListener {
     const owner = guild.owner;
 
     this.sendMessage('guild_join',
-      new SimplicityEmbed()
-        .setAuthor(owner.user.tag, owner.user.displayAvatarURL())
+      new SimplicityEmbed({ author: owner.user })
         .addField('Guild Name', guild.name, true)
         .addField('Guild ID', guild.id, true)
         .addField('Members | Channels | Emojis', `${guild.memberCount} | ${guild.channels.size} | ${guild.emojis.size}`)
-        .setFooter(`Owner ID: ${owner.id}`)
-        .setThumbnail(guild.iconURl())
-        .setTimestamp()
-    );
+        .setThumbnail(getServerIconURL(guild)));
   }
 }
 
-module.exports = GuildCreate;
+module.exports = GuildCreateListener;

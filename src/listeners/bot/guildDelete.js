@@ -1,8 +1,8 @@
 'use strict';
 
-const { SimplicityEmbed, SimplicityListener } = require('../../');
+const { SimplicityEmbed, SimplicityListener, Utils: { getServerIconURL } } = require('../../');
 
-class GuildDelete extends SimplicityListener {
+class GuildDeleteListener extends SimplicityListener {
   constructor(client) {
     super(client);
   }
@@ -12,16 +12,12 @@ class GuildDelete extends SimplicityListener {
     const owner = guild.owner;
 
     this.sendMessage('guild_leave',
-      new SimplicityEmbed()
-        .setAuthor(owner.user.tag, owner.user.displayAvatarURL())
+      new SimplicityEmbed({ author: owner.user })
         .addField('Guild Name', guild.name, true)
         .addField('Guild ID', guild.id, true)
         .addField('Members | Channels | Emojis', `${guild.memberCount} | ${guild.channels.size} | ${guild.emojis.size}`)
-        .setFooter(`Owner ID: ${owner.id}`)
-        .setThumbnail(guild.iconURl())
-        .setTimestamp()
-    );
+        .setThumbnail(getServerIconURL(guild)));
   }
 }
 
-module.exports = GuildDelete;
+module.exports = GuildDeleteListener;

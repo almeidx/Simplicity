@@ -1,6 +1,6 @@
 'use strict';
 
-const FileUtils = require('../utils/FileUtils');
+const { requireDirectory } = require('../utils/FileUtils');
 const Loader = require('../structures/Loader');
 
 class ListenerLoader extends Loader {
@@ -11,7 +11,7 @@ class ListenerLoader extends Loader {
 
   async load() {
     const logs = [];
-    await FileUtils.requireDirectory('src/listeners', (Listener, fileName) => {
+    await requireDirectory('src/listeners', (Listener, fileName) => {
       const listener = new Listener(this.client);
       logs.push(fileName);
       this.client.on(fileName, (...args) => listener.on(this.client, ...args));
