@@ -1,5 +1,6 @@
 'use strict';
 
+const { REGEX: { REGEX } } = require('./Constants');
 const moment = require('moment');
 require('moment-duration-format');
 
@@ -46,6 +47,10 @@ class Utils {
     if (!t || typeof t !== 'string') throw new TypeError(`fixText input cannot be type '${typeof t}'`);
 
     return t[0].toUpperCase() + t.slice(1).toLowerCase();
+  }
+
+  static escapeRegExp(str) {
+    return str.replace(REGEX, '\\$&');
   }
 }
 

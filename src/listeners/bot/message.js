@@ -1,6 +1,6 @@
 'use strict';
 
-const { CommandContext, SimplicityListener } = require('../../');
+const { CommandContext, SimplicityListener, Utils: { escapeRegExp } } = require('../../');
 
 class MessageListener extends SimplicityListener {
   constructor(client) {
@@ -14,10 +14,12 @@ class MessageListener extends SimplicityListener {
 
     const guildData = await client.database.guilds.get(message.guild.id);
     const prefix = (guildData && guildData.prefix) || process.env.PREFIX;
+    const fixedPrefix = escapeRegExp(prefix);
     const language = (guildData && guildData.lang) || process.env.DEFAULT_LANG;
 
+    const usernameFixed = escapeRegExp(client.user.username);
     // eslint-disable-next-line no-useless-escape
-    const PrefixRegex = new RegExp(`^(<@!?${client.user.id}>|${prefix}|${client.user.username})(\s+)?`, 'i');
+    const PrefixRegex = new RegExp(`^(<@!?${client.user.id}>|${fixedPrefix}|${usernameFixed})(\s+)?`, 'i');
     let usedPrefix = content.match(PrefixRegex);
     usedPrefix = usedPrefix && usedPrefix.length && usedPrefix[0];
     const MentionRegex = new RegExp(`^(<@!?${client.user.id}>)`);

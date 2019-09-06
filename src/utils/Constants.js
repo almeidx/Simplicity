@@ -129,4 +129,7 @@ module.exports = {
     'DEAFEN_MEMBERS',
     'MOVE_MEMBERS',
   ],
+  REGEX: {
+    REGEX: /[.*+?^${}()|[\]\\]/g,
+  },
 };
