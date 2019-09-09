@@ -27,13 +27,14 @@ class UserInfo extends Command {
 
     const presence = canShowMemberInfo && user.presence;
     const clientStatus = presence && presence.clientStatus;
-    const status = clientStatus && Object.keys(clientStatus)[0];
+    const status = clientStatus && Object.keys(clientStatus);
 
     const titles = [user.tag];
     if (PermissionsUtils.verifyDev(user.id, client)) titles.push('#developer');
     if (guild && guild.ownerID === user.id) titles.push('#crown');
     if (user.bot) titles.push('#bot');
-    if (status) titles.push(`#${status}`);
+    if (Array.isArray(status)) status.forEach((s) => titles.push(`#${s}`));
+    else titles.push(`#${status}`);
 
     const joinPosition = getJoinPosition(user.id, guild);
     const nickname = member && member.nickname;
