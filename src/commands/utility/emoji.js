@@ -8,11 +8,17 @@ const ANIMATED_EMOJI_REGEX = /^<a:/;
 
 class Emoji extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['emote', 'jumbo'];
-    this.category = 'util';
-    this.requirements = { argsRequired: true };
-    this.responses = { argsRequired: 'commands:emoji.noArgs' };
+    super(client, {
+        name: 'emoji',
+        aliases: ['emote', 'jumbo'],
+        category: 'util',
+        requirements: {
+            argsRequired: true
+        },
+        responses: {
+            argsRequired: 'commands:emoji.noArgs'
+        }
+    });
   }
 
   async run({ args, send }) {

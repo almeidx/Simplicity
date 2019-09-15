@@ -4,10 +4,13 @@ const { Command, CommandError, SimplicityEmbed, Utils: { getServerIconURL } } = 
 
 class Discriminator extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['discrim'];
-    this.category = 'util';
-    this.requirements = { guildOnly: true };
+    super(client, {
+      name: 'discriminator',
+      aliases: ['discrim'],
+      requirements: {
+        guildOnly: true
+      }
+    });
   }
 
   run({ author, guild, query, send, t }) {
