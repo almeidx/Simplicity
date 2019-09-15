@@ -2,13 +2,15 @@ const { Command, CommandError, SimplicityEmbed } = require('../..')
 
 class Language extends Command {
   constructor (client) {
-    super(client)
-    this.name = 'language'
-    this.aliases = [ 'lang', 'l', 'botlanguage' ]
-    this.category = 'bot'
-    this.requirements = {
-      argsRequired: true,
-      permissions: [ 'MANAGE_GUILD' ] }
+    super(client, {
+      name: 'language',
+      aliases: ['lang', 'l', 'botlanguage'],
+      category: 'bot',
+      requirements: {
+        argsRequired: true,
+        permissions: [ 'MANAGE_GUILD' ]
+      }
+    })
   }
 
   async run ({ author, botLanguages, client, guild, language, query, send, t }) {

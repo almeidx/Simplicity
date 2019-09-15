@@ -3,9 +3,10 @@ const { fixText } = Utils
 
 class Help extends Command {
   constructor (client) {
-    super(client)
-    this.aliases = [ 'h', 'commands', 'cmd', 'cmds' ]
-    this.category = 'bot'
+    super(client, {
+      aliases: [ 'h', 'commands', 'cmd', 'cmds' ],
+      category: 'bot'
+    })
   }
 
   run ({ author, client, emoji, prefix, query, send, t }) {
