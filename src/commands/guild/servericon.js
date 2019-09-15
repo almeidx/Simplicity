@@ -5,9 +5,11 @@ const { getServerIconURL } = Utils;
 
 class ServerIcon extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['svicon', 'sicon'];
-    this.category = 'guild';
+    super(client, {
+      name: 'servericon',
+      aliases: ['svicon, sicon'],
+      category: 'guild'
+    });
   }
 
   run({ author, guild, send, t }) {

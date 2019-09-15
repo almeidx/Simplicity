@@ -11,9 +11,11 @@ const GuildParameterOptions = {
 
 class ServerInfo extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['si', 'server', 'svinfo', 'sv', 'guild', 'serverinformation', 'svinformation'];
-    this.category = 'guild';
+    super(client, {
+      name: 'serverinfo',
+      aliases: ['si', 'server', 'svinfo', 'sv', 'guild', 'serverinformation', 'svinformation'],
+      category: 'guild'
+    });
   }
 
   async run({ author, channel, client, emoji, guild: currentGuild, query, send, t }) {
