@@ -1,53 +1,50 @@
 'use strict';
 
 const { SimplicityEmbed, SimplicityListener, CommandError } = require('../..');
+const i18next = require('i18next')
 
 class CommandErrorListener extends SimplicityListener {
   constructor(client) {
     super(client);
   }
 
-  on(client, error, { t, author, prefix, channel, guild, message, send }) {
+  on(client, error, { t, author, prefix, channel, guild, message, canEmbed, send, command }) {
     if (!(error instanceof CommandError)) {
-      console.error(error);
-      const channelError = process.env.CHANNEL_LOG_ERROR && client.channels.get(process.env.CHANNEL_LOG_ERROR);
-      if (channelError) {
-        const infos = [
-          `» User: ${author.toString()} *[${author.id}]*`,
-          `» Channel: ${channel.type === 'dm' ? 'DM' : `*${channel.toString()} [${channel.id}]`}*`,
-          `» Guild: ${guild ? `${guild.name} [${guild.id}]` : 'DM'}`,
-          `» Message: ${message.content} *[${message.id}]*`,
-        ];
-        const embedError = new SimplicityEmbed(null, { type: 'error' })
-          .addField('» Info', `**${infos.join('\n')}**`)
-          .addField('» Error', `**» ID: ${error.message}\n\`\`\`js\n${error.stack}\n\`\`\`**`);
-        channelError.send(embedError);
-        const embed = new SimplicityEmbed({ t, author }, { type: 'error' })
-          .setDescription(t('errors:errorCommand'))
-          .setText('@description');
-        return send(embed);
-      }
+      console.error(error)
+      this.sendErrorCommandMessage(t('error:errorCommand'))
+
+      const embed = new SimplicityEmbed(author, { type: 'error' })
+        .setDescription(`
+      » User: ${author.id}
+      » Channel: ${channel.id}
+      » Guild: ${guild ? guild.id : 'Direct Message'}
+      `)
+        .addField('» Message', message.content)
+        .addField('» Error', `\`\`\`${error}\`\`\``)
+        .setThumbnail(guild || author)
+
+      this.sendPrivateMessage('CHANNEL_LOG_ERROR', embed)
+    } else {
+      this.sendErrorCommandMessage(t(error.message, error.options), error.onUsage, { author, command, canEmbed, t, prefix, send })
+    }
+  }
+
+  sendErrorCommandMessage (errorMessage, onUsage, { send, author, prefix, command: { name }, canEmbed, t }) {
+    const strUsage = `commands:${name}.usage`;
+    const usage = onUsage && i18next.exists(strUsage) && `${prefix + name} ` + t(strUsage);
+    const keyUsage= usage && t('errors:usage')
+
+    if (!canEmbed) {
+      if (usage) errorMessage += `\n**${keyUsage}**: ${usage}`;
+      return send(errorMessage);
     }
 
-    const embed = new SimplicityEmbed({ author, t })
-      .setError()
-      .setDescription(t(error.message, error.options));
+    const embed = new SimplicityEmbed(this.client.user, { type: 'error', autoFooter: false, t })
+      .setDescription(errorMessage)
+      .setFooter(author);
 
-    const strUsage = `commands:${this.name}.usage`;
-    const usage = error.onUsage && client.i18next.exists(strUsage) && t(strUsage);
-
-    if (usage) embed.addField('errors:usage', `${prefix + this.name} ${usage}`);
-
-    if (error.fields && error.fields.length > 0) for (const i in error.fields) {
-      const field = error.fields[i];
-      embed.addField(field.name, field.value, field.inline, field.options, field.valueOptions);
-    }
-
-    let fields = '';
-    if (embed.fields.length > 0) for (const i in embed.fields) fields += `\`@fields.${i}.name \` @fields.${i}.value \n`;
-
-    embed.setText(`@description ${fields}`);
-    return send(embed);
+    if (usage) embed.addField(keyUsage, usage)
+    send(embed)
   }
 }
 

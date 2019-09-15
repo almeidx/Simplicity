@@ -37,6 +37,8 @@ class CommandContext {
     this.edit = this._edit.bind(this);
     this.sendMessage = options.message.channel.send;
     this.message.language = this.language;
+
+    this.canEmbed = this.guild ? this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS') : true
   }
 
   _emoji(name = 'QUESTION', options) {
