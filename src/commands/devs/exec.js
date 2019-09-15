@@ -5,12 +5,13 @@ const { exec } = require('child_process');
 
 class Exec extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['execute', 'run'];
-    this.category = 'dev';
-    this.requirements = {
-      argsRequired: true,
-      ownerOnly: true };
+    super(client, {
+      aliases: ['execute', 'run'],
+      category: 'dev',
+      requirements: {
+        argsRequired: true,
+        ownerOnly: true }
+    });
   }
 
   run({ author, emoji, query, send, t }) {

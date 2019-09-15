@@ -4,9 +4,12 @@ const { Command, MessageCollectorUtils: { test } } = require('../../');
 
 class Test extends Command {
   constructor(client) {
-    super(client);
-    this.category = 'dev';
-    this.requirements = { ownerOnly: true };
+    super(client, {
+      category: 'dev',
+      requirements: {
+        ownerOnly: true
+      }
+    });
   }
 
   async run({ channel, message }) {
