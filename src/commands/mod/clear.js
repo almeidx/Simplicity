@@ -4,13 +4,16 @@ const { Command, CommandError, SimplicityEmbed } = require('../../');
 
 class Clear extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['purge', 'prune', 'clean'];
-    this.category = 'mod';
-    this.requirements = {
-      argsRequired: true,
-      permissions: ['MANAGE_MESSAGES'],
-      clientPermissions: ['MANAGE_MESSAGES'] };
+    super(client, {
+      name: 'clear',
+      aliases: ['purge', 'prune', 'clean'],
+      category: 'mod',
+      requirements: {
+        argsRequired: true,
+        permissions: ['MANAGE_MESSAGES'],
+        clientPermissions: ['MANAGE_MESSAGES']
+      }
+    });
   }
 
   async run({ author, channel, message, send, t, query }) {

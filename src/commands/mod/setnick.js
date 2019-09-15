@@ -20,14 +20,15 @@ const StringParameterOptions = {
 
 class SetNick extends Command {
   constructor (client) {
-    super(client)
-    this.aliases = ['nick', 'nickname', 'setnickname']
-    this.category = 'mod'
-    this.requirements = {
-      permissions: ['MANAGE_NICKNAMES'],
-      clientPermissions: ['MANAGE_NICKNAMES'],
-      guildOnly: true,
-      argsRequired: true }
+    super(client, {
+      name: 'setnick',
+      aliases: ['nick', 'nickname', 'setnickname'],
+      requirements: {
+         permissions: ['MANAGE_NICKNAMES'],
+        clientPermissions: ['MANAGE_NICKNAMES'],
+        guildOnly: true,
+        argsRequired: true }
+    })
   }
 
   async run ({ args, author, guild, member, send, t }) {
