@@ -9,6 +9,7 @@
     "nodemon": "nodemon --inspect --watch src --watch .env --watch index.js --watch node_modules index.js",
     "eslint": "eslint . --fix"
   },
+  "license": "ISC",
   "dependencies": {
     "colors": "^1.3.3",
     "discord.js": "git+https://github.com/discordjs/discord.js.git#master",
@@ -27,10 +28,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Almeeida/Simplicity.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Almeeida/Simplicity/issues"
-  },
-  "homepage": "https://github.com/Almeeida/Simplicity#readme",
-  "license": "ISC"
+  }
 }
