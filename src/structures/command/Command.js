@@ -25,7 +25,7 @@ class Command {
   async _run(context) {
     try {
       const subcommand = context.args[0] && this.getSubCommand(context.args[0].toLowerCase());
-      if (subcommand) return await this.runSubcommand(subcommand, context);
+      if (subcommand) return await this.runSubCommand(subcommand, context);
 
       await this.runRequirements(context)
       await this.run(context);
