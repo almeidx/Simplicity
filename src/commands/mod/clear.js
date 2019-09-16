@@ -11,8 +11,8 @@ class Clear extends Command {
       requirements: {
         argsRequired: true,
         permissions: ['MANAGE_MESSAGES'],
-        clientPermissions: ['MANAGE_MESSAGES']
-      }
+        clientPermissions: ['MANAGE_MESSAGES'],
+      },
     });
   }
 

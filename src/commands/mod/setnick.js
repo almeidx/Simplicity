@@ -1,5 +1,7 @@
-const { Command, CommandError, Parameters, SimplicityEmbed } = require('../../')
-const { MemberParameter, StringParameter } = Parameters
+'use strict';
+
+const { Command, CommandError, Parameters, SimplicityEmbed } = require('../../');
+const { MemberParameter, StringParameter } = Parameters;
 
 const MemberParameterOptions = {
   checkIncludes: false,
@@ -7,53 +9,53 @@ const MemberParameterOptions = {
   canBeGuildOwner: false,
   canBeAuthor: true,
   errors: {
-    missingError: 'errors:invalidUser'
-  }
-}
+    missingError: 'errors:invalidUser',
+  },
+};
 const StringParameterOptions = {
   maxLength: 32,
   default: '',
   errors: {
-    maxLength: 'commands:setnick.nameTooBig'
-  }
-}
+    maxLength: 'commands:setnick.nameTooBig',
+  },
+};
 
 class SetNick extends Command {
-  constructor (client) {
+  constructor(client) {
     super(client, {
       name: 'setnick',
       aliases: ['nick', 'nickname', 'setnickname'],
       requirements: {
-         permissions: ['MANAGE_NICKNAMES'],
+        permissions: ['MANAGE_NICKNAMES'],
         clientPermissions: ['MANAGE_NICKNAMES'],
         guildOnly: true,
-        argsRequired: true }
-    })
+        argsRequired: true },
+    });
   }
 
-  async run ({ args, author, guild, member, send, t }) {
-    const parseMember = await MemberParameter.parse(args.shift(), MemberParameterOptions, {
+  async run({ args, author, guild, member, send, t }) {
+    const user = await MemberParameter.parse(args.shift(), MemberParameterOptions, {
       memberAuthor: member,
       commandName: this.name,
       author,
-      guild
-    })
-    const name = (await StringParameter.parse(args.join(' '), StringParameterOptions)) || ''
+      guild,
+    });
+    const name = await StringParameter.parse(args.join(' '), StringParameterOptions) || '';
 
-    if (parseMember.displayName === name) throw new CommandError('commands:setnick.alreadySet', { user: parseMember, name })
-    else if (!parseMember.nickname && !name) throw new CommandError('commands:setnick.alreadyReset', { user: parseMember })
+    if (user.displayName === name) throw new CommandError('commands:setnick.alreadySet', { user, name });
+    else if (!user.nickname && !name) throw new CommandError('commands:setnick.alreadyReset', { user });
 
-    const renamedTo = (name && t('commands:setnick.success', { user: parseMember, name })) || t('commands:setnick.removedNickname', { user: parseMember })
-    const reason = t('commands:setnick.reason', { author: author.tag })
+    const renamedTo = (name && t('commands:setnick.success', { user, name })) ||
+      t('commands:setnick.removedNickname', { user });
+    const reason = t('commands:setnick.reason', { author: author.tag });
 
-    await parseMember.setNickname(name, reason).catch(() => {
-      throw new CommandError('commands:setnick.failed')
-    })
+    const success = await user.setNickname(name, reason).catch(() => null);
+    if (!success) throw new CommandError('commands:setnick.failed');
 
     const embed = new SimplicityEmbed({ author })
-      .setDescription(renamedTo)
-    return send(embed)
+      .setDescription(renamedTo);
+    return send(embed);
   }
 }
 
-module.exports = SetNick
+module.exports = SetNick;

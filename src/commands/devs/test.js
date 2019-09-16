@@ -7,8 +7,8 @@ class Test extends Command {
     super(client, {
       category: 'dev',
       requirements: {
-        ownerOnly: true
-      }
+        ownerOnly: true,
+      },
     });
   }
 
