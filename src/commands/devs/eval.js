@@ -13,8 +13,8 @@ class Eval extends Command {
       category: 'dev',
       requirements: {
         ownerOnly: true,
-        argsRequired: true
-      } 
+        argsRequired: true,
+      },
     });
   }
 

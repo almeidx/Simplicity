@@ -2,7 +2,7 @@
 
 class LogUtils {
   static async getChannel(client, guild, logName) {
-    const guildData = await client.database.guilds.get(guild.id);
+    const guildData = client.database && await client.database.guilds.get(guild.id);
     const logData = guildData && guildData.logs && guildData.logs[logName];
     return logData && logData.channelID && guild.channels.get(logData.channelID);
   }

@@ -21,7 +21,7 @@ class SimplicityListener {
 
   async getFixedT(guildID) {
     const guild = this.client && guildID && this.client.guilds.get(guildID);
-    const guildData = guild && await this.database.guilds.get(guildID);
+    const guildData = guild && this.database && await this.database.guilds.get(guildID);
     const language = (guildData && guildData.language) || 'en-US';
     return i18next.getFixedT(language);
   }

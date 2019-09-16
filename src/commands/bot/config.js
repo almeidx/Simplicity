@@ -1,31 +1,34 @@
-const { Command, SimplicityEmbed } = require('../..')
-const PrefixCommand = require('./prefix')
-const LanguageCommand = require('./language')
+'use strict';
 
-const aliasesPrefix = [ 'p', 'setp', 'setprefix' ]
-const aliasesLanguage = [ 'l', 'lang', 'setlang', 'setlanguage', 'setl' ]
+const { Command, SimplicityEmbed } = require('../..');
+const PrefixCommand = require('./prefix');
+const LanguageCommand = require('./language');
+
+const aliasesPrefix = ['p', 'setp', 'setprefix'];
+const aliasesLanguage = ['l', 'lang', 'setlang', 'setlanguage', 'setl'];
 
 class Config extends Command {
-  constructor (client) {
+  constructor(client) {
     super(client, {
       category: 'bot',
-      aliases: [ 'configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration' ],
+      aliases: ['configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration'],
       requirements: {
-        permissions: [ 'MANAGE_GUILD' ]
+        permissions: ['MANAGE_GUILD'],
+        requireDatabase: true,
       },
       subcommands: [
         new PrefixCommand(client, { aliases: aliasesPrefix }),
-        new LanguageCommand(client, { aliases: aliasesLanguage })
-      ]
-    })
+        new LanguageCommand(client, { aliases: aliasesLanguage }),
+      ],
+    });
   }
 
-  run ({ author, language, prefix, send, t }) {
+  run({ author, language, prefix, send, t }) {
     const embed = new SimplicityEmbed({ author, t })
       .addField('» $$commands:config.prefix', prefix)
-      .addField('» $$commands:config.language', language)
-    return send(embed)
+      .addField('» $$commands:config.language', language);
+    return send(embed);
   }
 }
 
-module.exports = Config
+module.exports = Config;

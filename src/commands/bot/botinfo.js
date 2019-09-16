@@ -9,8 +9,8 @@ class BotInfo extends Command {
       aliases: ['bi'],
       category: 'bot',
       requirements: {
-        clientPermissions: ['EMBED_LINKS']
-      }
+        clientPermissions: ['EMBED_LINKS'],
+      },
     });
   }
 

@@ -1,9 +1,9 @@
 'use strict';
 
 class Loader {
-  constructor(client) {
+  constructor(client, required) {
     this.client = client;
-    this.required = false;
+    this.required = !!required;
   }
 
   load() {

@@ -3,7 +3,6 @@
 const { Client, Collection } = require('discord.js');
 const Loaders = require('../../loaders');
 const Loggers = require('../Loggers');
-const Database = require('../../database/Database');
 const fs = require('fs');
 const Path = require('path');
 const { promisify } = require('util');
@@ -15,7 +14,6 @@ class SimplicityClient extends Client {
     super(options);
     this.logger = Loggers;
     this.i18next = require('i18next');
-    this.database = new Database(this);
 
     this.loadFiles().catch(console.error);
     this.initLocales(Path.join(__dirname, '../../locales')).catch(console.error);

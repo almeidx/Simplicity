@@ -12,7 +12,7 @@ class MessageListener extends SimplicityListener {
     const { author, channel, content, guild } = message;
     if (author.bot || (guild && !channel.permissionsFor(client.user).has('SEND_MESSAGES'))) return;
 
-    const guildData = await client.database.guilds.get(message.guild.id);
+    const guildData = client.database && await client.database.guilds.get(message.guild.id);
     const prefix = (guildData && guildData.prefix) || process.env.PREFIX;
     const fixedPrefix = escapeRegExp(prefix);
     const language = (guildData && guildData.lang) || process.env.DEFAULT_LANG;
