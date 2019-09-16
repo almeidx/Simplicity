@@ -12,8 +12,7 @@ class CommandStore extends Collection {
 
 class CommandLoader extends Loader {
   constructor(client) {
-    super(client);
-    this.required = true;
+    super(client, true);
     this.commands = new CommandStore();
   }
 

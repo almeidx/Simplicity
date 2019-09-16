@@ -5,8 +5,7 @@ const Loader = require('../structures/Loader');
 
 class ListenerLoader extends Loader {
   constructor(client) {
-    super(client);
-    this.required = true;
+    super(client, true);
   }
 
   async load() {

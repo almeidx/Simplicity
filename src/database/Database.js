@@ -6,7 +6,7 @@ const Collection = require('./DBCollection');
 const Schemas = require('./Schemas');
 
 class Database {
-  constructor() {
+  connect() {
     for (const x in Schemas) {
       const schema = new Schema(Schemas[x]);
       const model = mongoose.model(x, schema);
