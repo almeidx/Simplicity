@@ -8,12 +8,14 @@ const value = (s) => code(s, 'js').replace(token, () => '*'.repeat(token.length)
 
 class Eval extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['compile', 'ev', 'evaluate'];
-    this.category = 'dev';
-    this.requirements = {
-      ownerOnly: true,
-      argsRequired: true };
+    super(client, {
+      aliases: ['compile', 'ev', 'evaluate'],
+      category: 'dev',
+      requirements: {
+        ownerOnly: true,
+        argsRequired: true
+      } 
+    });
   }
 
   async run(params) {

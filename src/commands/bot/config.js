@@ -7,13 +7,17 @@ const aliasesLanguage = [ 'l', 'lang', 'setlang', 'setlanguage', 'setl' ]
 
 class Config extends Command {
   constructor (client) {
-    super(client)
-    this.category = 'bot'
-    this.aliases = [ 'configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration' ]
-    this.requirements = { permissions: [ 'MANAGE_GUILD' ] }
-    this.subcommands = [
-      new PrefixCommand(client, { aliases: aliasesPrefix }),
-      new LanguageCommand(client, { aliases: aliasesLanguage }) ]
+    super(client, {
+      category: 'bot',
+      aliases: [ 'configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration' ],
+      requirements: {
+        permissions: [ 'MANAGE_GUILD' ]
+      },
+      subcommands: [
+        new PrefixCommand(client, { aliases: aliasesPrefix }),
+        new LanguageCommand(client, { aliases: aliasesLanguage })
+      ]
+    })
   }
 
   run ({ author, language, prefix, send, t }) {

@@ -13,10 +13,14 @@ const ParameterOptions = {
 
 class Permissions extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['perms', 'perm', 'permission'];
-    this.category = 'guild';
-    this.requirements = { guildOnly: true };
+    super(client, {
+      name: 'permissions',
+      aliases: ['perms', 'perm', 'permission'],
+      category: 'guild',
+      requirements: {
+        guildOnly: true
+      }
+    });
   }
 
   async run({ author, emoji, guild, query, send, t }) {

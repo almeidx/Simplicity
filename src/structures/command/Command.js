@@ -6,18 +6,17 @@ const RunStore = require('./stores/RunStore');
 class Command {
   constructor(client, options = {}) {
     this.client = client;
-    this.name = 'none';
-    this.category = 'none';
-    this.aliases = [];
-    this.requirements = null;
-    this.responses = {};
-    this.subcommands = [];
-    this.running = new RunStore();
     this.setup(options);
   }
 
   setup(options) {
-    if (options.aliases) options.aliases.forEach((e) => this.aliases.push(e));
+    this.name = options.name || 'none';
+    this.category = options.category || 'none';
+    this.aliases = options.aliases || [];
+    this.requirements = options.requirements;
+    this.responses = options.responses || {};
+    this.subcommands = options.subcommands || [];
+    this.running = new RunStore();
   }
 
   // eslint-disable-next-line no-empty-function

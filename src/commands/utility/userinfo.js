@@ -8,10 +8,14 @@ const moment = require('moment');
 
 class UserInfo extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['ui', 'user', 'userinformation', 'infouser', 'informationuser'];
-    this.category = 'util';
-    this.requirements = { clientPermissions: ['EMBED_LINKS'] };
+    super(client, {
+      name: 'userInfo',
+      aliases: ['ui', 'user', 'userinformation', 'infouser', 'informationuser'],
+      category: 'util',
+      requirements: {
+        clientPermissions: ['EMBED_LINKS']
+      }
+  });
   }
 
   // eslint-disable-next-line complexity

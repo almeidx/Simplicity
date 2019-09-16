@@ -13,11 +13,17 @@ const ParameterOptions = {
 
 class Role extends Command {
   constructor (client) {
-    super(client)
-    this.aliases = [ 'addrole', 'removerole', 'ar', 'rr' ]
-    this.category = 'guild'
-    this.requirements = { argsRequired: true }
-    this.responses = { argsRequired: 'commands:role.noArgs' }
+    super(client, {
+      name: 'role',
+      aliases: [ 'addrole', 'removerole', 'ar', 'rr' ],
+      category: 'guild',
+      requirements: {
+        argsRequired: true
+      },
+      responses: {
+        argsRequired: 'commands:role.noArgs'
+      }
+    })
   }
 
   async run ({ args, author, client, guild, member: memberAuthor, send, t }) {

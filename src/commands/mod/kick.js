@@ -3,12 +3,15 @@ const ID_REGEX = /^([0-9]{16,18})/g
 
 class Kick extends Command {
   constructor (client) {
-    super(client)
-    this.category = 'mod'
-    this.requirements = {
-      argsRequired: true,
+    super(client, {
+      name: 'kick',
+      category: 'mod',
+      requirements: {
+        argsRequired: true,
       permissions: [ 'KICK_MEMBERS' ],
-      clientPermissions: [ 'KICK_MEMBERS' ] }
+      clientPermissions: [ 'KICK_MEMBERS' ]
+      }
+    })
   }
 
   async run ({ author, guild, send, message, member, t, query }) {

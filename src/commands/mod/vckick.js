@@ -12,13 +12,15 @@ const MemberParameterOptions = {
 
 class VoiceKick extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['voicekick', 'vkick', 'kickvoice', 'kickvc'];
-    this.category = 'mod';
-    this.requirements = {
-      argsRequired: true,
-      permissions: ['KICK_MEMBERS'],
-      clientPermissions: ['MOVE_MEMBERS'] };
+    super(client, {
+      aliases: ['voicekick', 'vkick', 'kickvoice', 'kickvc'],
+      category: 'mod',
+      requirements: {
+        argsRequired: true,
+        permissions: ['KICK_MEMBERS'],
+        clientPermissions: ['MOVE_MEMBERS'] 
+      }
+    });
   }
 
   async run({ author, guild, member: memberAuthor, query, send, t }) {

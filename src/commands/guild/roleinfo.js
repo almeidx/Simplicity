@@ -6,11 +6,17 @@ const moment = require('moment');
 
 class RoleInfo extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['ri', 'roleinformation'];
-    this.category = 'guild';
-    this.requirements = { argsRequired: true, guildOnly: true };
-    this.responses = { argsRequired: 'commands:roleinfo.noArgs' };
+    super(client, {
+      name: 'roleinfo',
+      aliases: ['ri', 'roleinformation'],
+      requirements: {
+        argsRequired: true,
+        guildOnly: true
+      },
+      responses: {
+        argsRequired: 'commands:roleinfo.noArgs'
+      }
+    });
   }
 
   async run({ author, client, emoji, guild, query, send, t }) {

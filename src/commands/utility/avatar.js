@@ -5,9 +5,11 @@ const { MessageAttachment } = require('discord.js');
 
 class Avatar extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['av'];
-    this.category = 'util';
+    super(client, {
+      name: 'avatar',
+      aliases: ['av'],
+      category: 'util'
+    });
   }
 
   async run({ author, send, guild, channel, client, query, emoji, t }) {

@@ -12,13 +12,15 @@ const Condition = 'set'
 
 class Logs extends Command {
   constructor (client) {
-    super(client)
-    this.name = 'language'
-    this.aliases = [ 'log', 'logger', 'loggers', 'modlog', 'modlogs', 'eventlog', 'logevent' ]
-    this.category = 'bot'
-    this.requirements = {
-      ownerOnly: true,
-      permissions: ['MANAGE_GUILD'] }
+    super(client, {
+      name: 'logs',
+      aliases: [ 'log', 'logger', 'loggers', 'modlog', 'modlogs', 'eventlog', 'logevent' ],
+      category: 'bot',
+      requirements: {
+        ownerOnly: true,
+        permissions: ['MANAGE_GUILD']
+      }
+    })
   }
 
   async run ({ args, author, client, emoji, guild, query, send, t }) {

@@ -3,13 +3,14 @@ const { StringParameter } = Parameters
 
 class Prefix extends Command {
   constructor (client) {
-    super(client)
-    this.name = 'prefix'
-    this.category = 'bot'
-    this.aliases = [ 'setprefix', 'p', 'setp', 'prefixset' ]
-    this.requirements = {
+    super(client, {
+      name: 'prefix',
+      category: 'bot',
+      aliases: [ 'setprefix', 'p', 'setp', 'prefixset' ],
+      requirements: {
       argsRequired: true,
       permissions: [ 'MANAGE_GUILD' ] }
+    })
   }
 
   async run ({ author, client, guild, prefix: currentPrefix, query, send, t }) {

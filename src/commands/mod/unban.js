@@ -4,13 +4,16 @@ const { Command, SimplicityEmbed } = require('../../');
 
 class Unban extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['ub'];
-    this.category = 'mod';
-    this.requirements = {
-      argsRequired: true,
-      permissions: ['BAN_MEMBERS'],
-      clientPermissions: ['BAN_MEMBERS'] };
+    super(client, {
+      name: 'unban',
+      aliases: ['ub'],
+      category: 'mod',
+      requirements: {
+        argsRequired: true,
+        permissions: ['BAN_MEMBERS'],
+        clientPermissions: ['BAN_MEMBERS']
+      }
+    });
   }
 
   run({ author, send, guild, t, args }) {

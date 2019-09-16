@@ -4,11 +4,17 @@ const { Command } = require('../../');
 
 class Say extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['send'];
-    this.category = 'util';
-    this.requirements = { argsRequired: true };
-    this.responses = { argsRequired: 'commands:say.error' };
+    super(client, {
+      name: 'say',
+      aliases: ['send'],
+      category: 'util',
+      requirements: {
+        argsRequired: true
+      },
+      responses: {
+        argsRequired: 'commands:say.error'
+      }
+    });
   }
 
   async run({ channel, client, message, member, query, send }) {

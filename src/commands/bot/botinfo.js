@@ -5,10 +5,13 @@ const { version } = require('discord.js');
 
 class BotInfo extends Command {
   constructor(client) {
-    super(client);
-    this.aliases = ['bi'];
-    this.category = 'bot';
-    this.requirements = { clientPermissions: ['EMBED_LINKS'] };
+    super(client, {
+      aliases: ['bi'],
+      category: 'bot',
+      requirements: {
+        clientPermissions: ['EMBED_LINKS']
+      }
+    });
   }
 
   async run({ author, client, emoji, guild, message, prefix, send, t }) {

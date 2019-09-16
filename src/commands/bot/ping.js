@@ -2,9 +2,10 @@ const { Command } = require('../../')
 
 class Ping extends Command {
   constructor (client) {
-    super(client)
-    this.aliases = [ 'pong' ]
-    this.category = 'bot'
+    super(client, {
+      aliases: [ 'pong' ],
+      category: 'bot'
+    })
   }
 
   run ({ channel, message, t }) {

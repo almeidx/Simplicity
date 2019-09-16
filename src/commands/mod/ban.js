@@ -12,13 +12,15 @@ const ParameterOptions = {
 
 class Ban extends Command {
   constructor (client) {
-    super(client)
-    this.aliases = [ 'bean' ]
-    this.category = 'mod'
-    this.requirements = {
-      permissions: [ 'BAN_MEMBERS' ],
-      clientPermissions: [ 'BAN_MEMBERS' ],
-      guildOnly: true }
+    super(client, {
+      name: 'ban',
+      aliases: ['bean'],
+      requirements: {
+        permissions: [ 'BAN_MEMBERS' ],
+        clientPermissions: [ 'BAN_MEMBERS' ],
+        guildOnly: true 
+      }
+    })
   }
 
   async run ({ args, guild, client, member: memberAuthor, t, send, message }) {
