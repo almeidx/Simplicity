@@ -14,7 +14,7 @@ class Config extends Command {
       aliases: ['configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration'],
       requirements: {
         permissions: ['MANAGE_GUILD'],
-        useDatabase: true,
+        requireDatabase: true,
       },
       subcommands: [
         new PrefixCommand(client, { aliases: aliasesPrefix }),

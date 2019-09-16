@@ -20,7 +20,7 @@ class Logs extends Command {
       category: 'bot',
       requirements: {
         ownerOnly: true,
-        useDatabase: true,
+        requireDatabase: true,
         permissions: ['MANAGE_GUILD'],
       },
     });

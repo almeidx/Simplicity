@@ -1,17 +1,17 @@
 'use strict';
 
 const { SimplicityEmbed, SimplicityListener, CommandError } = require('../..');
-const i18next = require('i18next')
+const i18next = require('i18next');
 
 class CommandErrorListener extends SimplicityListener {
   constructor(client) {
     super(client);
   }
 
-  on(client, error, { t, author, prefix, channel, guild, message, canEmbed, send, command }) {
+  on(_, error, { t, author, prefix, channel, guild, message, canEmbed, send, command }) {
     if (!(error instanceof CommandError)) {
-      console.error(error)
-      this.sendErrorCommandMessage(t('errors:errorCommand'), false, { send, canEmbed, author, t, command })
+      console.error(error);
+      this.sendErrorCommandMessage(t('errors:errorCommand'), false, { send, canEmbed, author, t, command });
 
       const embed = new SimplicityEmbed(author, { type: 'error' })
         .setDescription(`
@@ -21,18 +21,19 @@ class CommandErrorListener extends SimplicityListener {
       `)
         .addField('» Message', message.content)
         .addField('» Error', `\`\`\`${error}\`\`\``)
-        .setThumbnail(guild || author)
+        .setThumbnail(guild || author);
 
-      this.sendPrivateMessage('CHANNEL_LOG_ERROR', embed)
+      this.sendPrivateMessage('CHANNEL_LOG_ERROR', embed);
     } else {
-      this.sendErrorCommandMessage(t(error.message, error.options), error.onUsage, { author, command, canEmbed, t, prefix, send })
+      const args = { author, command, canEmbed, t, prefix, send };
+      this.sendErrorCommandMessage(t(error.message, error.options), error.onUsage, args);
     }
   }
 
-  sendErrorCommandMessage (errorMessage, onUsage, { send, author, prefix, command: { name }, canEmbed, t }) {
+  sendErrorCommandMessage(errorMessage, onUsage, { send, author, prefix, command: { name }, canEmbed, t }) {
     const strUsage = name && `commands:${name}.usage`;
-    const usage = onUsage && i18next.exists(strUsage) && `${prefix + name} ` + t(strUsage);
-    const keyUsage= usage && t('errors:usage')
+    const usage = onUsage && i18next.exists(strUsage) && `${prefix + name} ${t(strUsage)}`;
+    const keyUsage = usage && t('errors:usage');
 
     if (!canEmbed) {
       if (usage) errorMessage += `\n**${keyUsage}**: ${usage}`;
@@ -43,8 +44,8 @@ class CommandErrorListener extends SimplicityListener {
       .setDescription(errorMessage)
       .setFooter(author);
 
-    if (usage) embed.addField(keyUsage, usage)
-    send(embed)
+    if (usage) embed.addField(keyUsage, usage);
+    send(embed);
   }
 }
 

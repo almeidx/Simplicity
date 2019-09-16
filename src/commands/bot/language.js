@@ -10,7 +10,7 @@ class Language extends Command {
       category: 'bot',
       requirements: {
         argsRequired: true,
-        useDatabase: true,
+        requireDatabase: true,
         permissions: ['MANAGE_GUILD'],
       },
     });

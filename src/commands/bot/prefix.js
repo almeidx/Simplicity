@@ -11,7 +11,7 @@ class Prefix extends Command {
       aliases: ['setprefix', 'p', 'setp', 'prefixset'],
       requirements: {
         argsRequired: true,
-        useDatabase: true,
+        requireDatabase: true,
         permissions: ['MANAGE_GUILD'] },
     });
   }
