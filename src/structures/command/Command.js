@@ -16,7 +16,9 @@ class Command {
     this.requirements = options.requirements;
     this.responses = options.responses || {};
     this.subcommands = options.subcommands || [];
+    this.cooldown = options.cooldown || 1000;
     this.running = new RunStore();
+    this.usersCooldown = new Map();
   }
 
   // eslint-disable-next-line no-empty-function
