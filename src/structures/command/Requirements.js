@@ -10,6 +10,7 @@ class Requirements {
       nsfwChannelOnly: false,
       ownerOnly: false,
       guildOnly: true,
+      useDatabase: false,
       permissions: [],
       clientPermissions: [],
     }, requirements);
@@ -22,6 +23,7 @@ class Requirements {
     this.guildOnly = requirements.guildOnly;
 
     this.responses = Object.assign({
+      useDatabase: 'errors:useDatabase',
       guildOnly: 'errors:guildOnly',
       ownerOnly: 'errors:developerOnly',
       clientPermissions: 'errors:clientMissingPermission',
@@ -32,6 +34,8 @@ class Requirements {
   }
 
   handle({ author, client, channel, guild, args, t }) {
+    if (this.useDatabase && !client.database) throw new CommandError(this.responses.useDatabase);
+
     if (this.ownerOnly && !PermissionsUtils.verifyDev(author.id, client)) throw new CommandError(
       this.responses.ownerOnly
     );

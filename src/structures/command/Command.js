@@ -27,16 +27,16 @@ class Command {
       const subcommand = context.args[0] && this.getSubCommand(context.args[0].toLowerCase());
       if (subcommand) return await this.runSubCommand(subcommand, context);
 
-      await this.runRequirements(context)
+      await this.runRequirements(context);
       await this.run(context);
     } catch (error) {
-      this.client.emit('commandError', error, context)
+      this.client.emit('commandError', error, context);
     }
   }
 
-  async runRequirements (ctx) {
+  async runRequirements(ctx) {
     const requirements = new Requirements(this.requirements, this.responses);
-    return await requirements.handle(ctx)
+    await requirements.handle(ctx);
   }
 
   getSubCommand(name) {

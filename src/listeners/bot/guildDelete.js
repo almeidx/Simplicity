@@ -8,7 +8,7 @@ class GuildDeleteListener extends SimplicityListener {
   }
 
   async on(client, guild) {
-    await client.database.guilds.remove(guild.id);
+    if (client.database) await client.database.guilds.remove(guild.id);
     const owner = guild.owner;
 
     this.sendMessage('guild_leave',

@@ -8,7 +8,7 @@ class GuildCreateListener extends SimplicityListener {
   }
 
   async on(client, guild) {
-    await client.database.guilds.create(guild.id);
+    if (client.database) await client.database.guilds.create(guild.id);
     const owner = guild.owner;
 
     this.sendMessage('guild_join',

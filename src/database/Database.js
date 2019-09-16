@@ -6,13 +6,15 @@ const Collection = require('./DBCollection');
 const Schemas = require('./Schemas');
 
 class Database {
-  connect() {
+  static async connect() {
+    const database = {};
     for (const x in Schemas) {
       const schema = new Schema(Schemas[x]);
       const model = mongoose.model(x, schema);
-      this[x] = new Collection(model);
+      database[x] = new Collection(model);
     }
-    mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true }).catch((e) => console.error(e));
+    await mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true });
+    return database;
   }
 }
 
