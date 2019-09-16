@@ -13,6 +13,7 @@ module.exports = {
   Command: require('./structures/command/Command'),
   CommandContext: require('./structures/command/CommandContext'),
   CommandError: require('./structures/command/CommandError'),
+  CommandUtils: require('./structures/command/CommandUtils'),
   // Utils
   Constants: require('./utils/Constants'),
   Utils: require('./utils/Utils'),

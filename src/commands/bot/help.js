@@ -1,52 +1,33 @@
 'use strict';
 
-const { Command, SimplicityEmbed, PermissionsUtils, Utils } = require('../../');
-const { fixText } = Utils;
+const { Command, CommandError, CommandUtils, PermissionsUtils, SimplicityEmbed } = require('../../');
 
 class Help extends Command {
   constructor(client) {
     super(client, {
-      aliases: ['h', 'commands', 'cmd', 'cmds'],
+      aliases: ['h', 'commands', 'cmd', 'cmds', 'howtouse'],
       category: 'bot',
     });
   }
 
-  run({ author, client, emoji, prefix, query, send, t }) {
+  async run({ author, client, prefix, query, send, t }) {
     const categories = client.categories;
-    const name = client.user.username;
-
-    const embed = new SimplicityEmbed({ author, emoji, t })
-      .setAuthor(client.user);
 
     if (!query) {
-      embed.setDescription('commands:help.about', { prefix, name });
-      categories.filter((c) => c.name !== 'help').each((cmds, i) => {
+      const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
+        .setAuthor(client.user)
+        .setDescription('commands:help.about', { prefix, name: client.user.username });
+      categories.each((cmds, i) => {
         if (i === 'dev' && !PermissionsUtils.verifyDev(author.id, client)) return;
         return embed.addField(`categories:${i}.name`, cmds.keyArray().map((c) => `\`${c}\``).join(', '));
       });
       return send(embed);
     }
 
-    query = query.toLowerCase();
+    const command = client.commands.fetch(query.toLowerCase());
+    if (!command) throw new CommandError('commands:help.commandUndefined');
 
-    if (!client.commands.has(query)) return send(embed.setDescription('commands:help.commandUndefined').setError());
-
-    const command = client.commands.fetch(query);
-
-    if (command.name === 'help') return send(embed.setDescription('commands:help.commandHelp').setError());
-
-    embed.setTitle(fixText(query));
-
-    if (t(`commands:${command.name}.description`) !== `${command.name}.description`) {
-      embed.setDescription(`commands:${command.name}.description`, { prefix });
-    }
-
-    if (t(`commands:${command.name}.usage`) !== `${command.name}.usage`) {
-      embed.addField(`#USAGE ${t('commands:help._usage')}`, t(`commands:${command.name}.usage`, { prefix }));
-    }
-
-    if (command.aliases.length) embed.addField(`#ALIASES ${t('commands:help.aliases')}`, command.aliases);
-
+    const embed = await CommandUtils.getHelp({ client, command, prefix, t });
     return send(embed);
   }
 }

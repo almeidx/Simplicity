@@ -13,7 +13,7 @@
     "block-spacing": "error",
     "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
     "callback-return": "off",
-    "capitalized-comments": ["error", "always", { "ignoreConsecutiveComments": true }],
+    "capitalized-comments": ["off"],
     "comma-dangle": ["error", "always-multiline"],
     "comma-spacing": "error",
     "comma-style": "error",
