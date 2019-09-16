@@ -24,22 +24,26 @@ class Command {
 
   async _run(context) {
     try {
-      const requirements = new Requirements(this.requirements, this.responses);
-      const subcommand = context.args[0] && this.getSubcommand(context.args[0].toLowerCase());
+      const subcommand = context.args[0] && this.getSubCommand(context.args[0].toLowerCase());
       if (subcommand) return await this.runSubcommand(subcommand, context);
 
-      await requirements.handle(context);
+      await this.runRequirements(context)
       await this.run(context);
     } catch (error) {
       this.client.emit('commandError', error, context)
     }
   }
 
-  getSubcommand(name) {
+  async runRequirements (ctx) {
+    const requirements = new Requirements(this.requirements, this.responses);
+    return await requirements.handle(ctx)
+  }
+
+  getSubCommand(name) {
     return this.subcommands.find((i) => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)));
   }
 
-  runSubcommand(subcommand, context) {
+  runSubCommand(subcommand, context) {
     context.query = context.query.replace(`${context.args[0]} `, '').slice(1);
     context.args = context.args.slice(1);
     return subcommand._run(context);
