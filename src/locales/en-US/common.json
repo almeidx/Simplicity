@@ -31,5 +31,11 @@
       "limit": "The {{ amount }} responses you provided were invalid",
       "incorrectResponse": "The response you provided was invalid"
     },
-    "success": "Success"
+    "success": "Success",
+
+    "minutes": "{{ minutes }} minutes",
+    "seconds": "{{ seconds }} seconds",
+    "and": " and ",
+    "cooldown": "Wait {{ time }} for use command again",
+    "waitLittleTime": "a little"
 }
