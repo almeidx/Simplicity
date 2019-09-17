@@ -18,8 +18,8 @@ class Permissions extends Command {
       aliases: ['perms', 'perm', 'permission'],
       category: 'guild',
       requirements: {
-        guildOnly: true
-      }
+        guildOnly: true,
+      },
     });
   }
 

@@ -1,6 +1,7 @@
 'use strict';
 
 const { REGEX: { REGEX } } = require('./Constants');
+const { Collection } = require('discord.js');
 const moment = require('moment');
 require('moment-duration-format');
 
@@ -44,13 +45,21 @@ class Utils {
   }
 
   static fixText(t) {
-    if (!t || typeof t !== 'string') throw new TypeError(`fixText input cannot be type '${typeof t}'`);
-
+    if (typeof t !== 'string') return false;
     return t[0].toUpperCase() + t.slice(1).toLowerCase();
   }
 
   static escapeRegExp(str) {
     return str.replace(REGEX, '\\$&');
+  }
+
+  static isEmpty(i) {
+    if (!i) return true;
+    else if (i.constructor === Object) return Object.keys(i).length === 0;
+    else if (i.constructor === Collection) return i.size === 0;
+    else if (i.constructor === Map) return i.size === 0;
+    else if (Array.isArray(i)) return i.length === 0;
+    else return false;
   }
 
   static getDevs() {

@@ -8,7 +8,7 @@ class Avatar extends Command {
     super(client, {
       name: 'avatar',
       aliases: ['av'],
-      category: 'util'
+      category: 'util',
     });
   }
 

@@ -11,8 +11,8 @@ class Unban extends Command {
       requirements: {
         argsRequired: true,
         permissions: ['BAN_MEMBERS'],
-        clientPermissions: ['BAN_MEMBERS']
-      }
+        clientPermissions: ['BAN_MEMBERS'],
+      },
     });
   }
 

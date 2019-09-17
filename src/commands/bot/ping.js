@@ -11,7 +11,7 @@ class Ping extends Command {
   }
 
   async run({ message, send, t }) {
-    const msg = await send('commands:ping.loading');
+    const msg = await send(t('commands:ping.loading'));
     msg.edit(t('commands:ping.success', { ping: msg.createdTimestamp - message.createdTimestamp }));
   }
 }

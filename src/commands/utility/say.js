@@ -9,11 +9,11 @@ class Say extends Command {
       aliases: ['send'],
       category: 'util',
       requirements: {
-        argsRequired: true
+        argsRequired: true,
       },
       responses: {
-        argsRequired: 'commands:say.error'
-      }
+        argsRequired: 'commands:say.error',
+      },
     });
   }
 

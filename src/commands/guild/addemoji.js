@@ -24,8 +24,8 @@ class AddEmoji extends Command {
         argsRequired: true,
         guildOnly: true,
         permissions: ['MANAGE_EMOJIS'],
-        clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS']
-      }
+        clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS'],
+      },
     });
   }
 

@@ -1,6 +1,6 @@
 'use strict';
 
-const { SimplicityEmbed, SimplicityListener, Utils: { cleanString } } = require('../..');
+const { SimplicityEmbed, Logger, SimplicityListener, Utils: { cleanString } } = require('../..');
 
 class ErrorListener extends SimplicityListener {
   constructor(client) {
@@ -8,7 +8,7 @@ class ErrorListener extends SimplicityListener {
   }
 
   on(client, error) {
-    client.logger.error('Error', error);
+    Logger.error(`[Error]\n${error.stack}`);
 
     this.sendPrivateMessage('channel_log_error',
       new SimplicityEmbed()

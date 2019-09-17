@@ -11,11 +11,11 @@ class RoleInfo extends Command {
       aliases: ['ri', 'roleinformation'],
       requirements: {
         argsRequired: true,
-        guildOnly: true
+        guildOnly: true,
       },
       responses: {
-        argsRequired: 'commands:roleinfo.noArgs'
-      }
+        argsRequired: 'commands:roleinfo.noArgs',
+      },
     });
   }
 

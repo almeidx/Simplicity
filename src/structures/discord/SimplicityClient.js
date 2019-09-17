@@ -2,21 +2,11 @@
 
 const { Client, Collection } = require('discord.js');
 const Loaders = require('../../loaders');
-const Loggers = require('../Loggers');
-const fs = require('fs');
-const Path = require('path');
-const { promisify } = require('util');
-const readdir = promisify(fs.readdir);
-const translationBackend = require('i18next-node-fs-backend');
 
 class SimplicityClient extends Client {
   constructor(options) {
     super(options);
-    this.logger = Loggers;
-    this.i18next = require('i18next');
-
     this.loadFiles().catch(console.error);
-    this.initLocales(Path.join(__dirname, '../../locales')).catch(console.error);
   }
 
   async loadFiles() {
@@ -42,24 +32,6 @@ class SimplicityClient extends Client {
       o.get(command.category).set(command.name, command);
       return o;
     }, new Collection());
-  }
-
-  async initLocales(path) {
-    this.i18next
-      .use(translationBackend)
-      .init({
-        ns: ['categories', 'commands', 'errors', 'permissions', 'common', 'loggers'],
-        preload: await readdir(path),
-        fallbackLng: 'en-US',
-        defaultNS: 'commands',
-        backend: {
-          loadPath: `${path}/{{lng}}/{{ns}}.json`,
-        },
-        interpolation: { escapeValue: false },
-        returnEmptyString: false,
-      }, () => {
-        console.log(Object.keys(this.i18next.store.data));
-      });
   }
 }
 

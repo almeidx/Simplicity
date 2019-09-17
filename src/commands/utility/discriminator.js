@@ -7,9 +7,10 @@ class Discriminator extends Command {
     super(client, {
       name: 'discriminator',
       aliases: ['discrim'],
+      category: 'util',
       requirements: {
-        guildOnly: true
-      }
+        guildOnly: true,
+      },
     });
   }
 
