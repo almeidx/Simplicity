@@ -2,6 +2,7 @@
 
 const { SimplicityEmbed, SimplicityListener, CommandError } = require('../..');
 const i18next = require('i18next');
+const getTranslation = (dirct, t) => i18next.exists(dirct) && t(dirct);
 
 class CommandErrorListener extends SimplicityListener {
   constructor(client) {
@@ -11,7 +12,9 @@ class CommandErrorListener extends SimplicityListener {
   on(_, error, { t, author, prefix, channel, guild, message, canEmbed, send, command }) {
     if (!(error instanceof CommandError)) {
       console.error(error);
-      this.sendErrorCommandMessage(t('errors:errorCommand'), false, { send, canEmbed, author, t, command });
+      const errorTranslation = error.code && getTranslation(`errors:${error.code}`);
+      const errorMessage = errorTranslation || t('errors:errorCommand');
+      this.sendErrorCommandMessage(errorMessage, false, { send, canEmbed, author, t, command });
 
       const embed = new SimplicityEmbed(author, { type: 'error' })
         .setDescription(`
