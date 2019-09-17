@@ -22,7 +22,7 @@ class LanguagesLoader extends Loader {
     const connected = await i18next
       .use(translationBackend)
       .init({
-        ns: ['categories', 'commands', 'errors', 'permissions', 'common', 'loggers'],
+        ns: ['categories', 'commands', 'errors', 'permissions', 'common', 'loggers', 'api_errors'],
         preload: await readdir(path),
         fallbackLng: 'en-US',
         defaultNS: 'commands',
