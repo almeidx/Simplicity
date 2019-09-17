@@ -18,7 +18,7 @@ class Command {
     this.requirements = options.requirements;
     this.responses = options.responses || {};
     this.subcommands = options.subcommands || [];
-    this.cooldown = options.cooldown || 10000;
+    this.cooldown = options.cooldown || process.env.COMMAND_COOLDOWN || 10000;
     this.running = new RunStore();
     this.usersCooldown = new CommandCooldown(this.cooldown);
   }

@@ -132,4 +132,5 @@ module.exports = {
   REGEX: {
     REGEX: /[.*+?^${}()|[\]\\]/g,
   },
+  BOT_DEFAULT_PERMISSIONS: ['SEND_MESSAGES', 'READ_MESSAGES_HISTORY', 'ADD_REACTIONS', 'USE_EXTERNAL_EMOJIS'],
 };

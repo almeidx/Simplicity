@@ -5,9 +5,10 @@ const { Command, CommandError, SimplicityEmbed } = require('../..');
 class Language extends Command {
   constructor(client) {
     super(client, {
-      name: 'language',
       aliases: ['lang', 'l', 'botlanguage'],
       category: 'bot',
+      name: 'language',
+      cooldown: 60000,
       requirements: {
         argsRequired: true,
         requireDatabase: true,

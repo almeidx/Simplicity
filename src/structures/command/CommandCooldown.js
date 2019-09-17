@@ -2,16 +2,18 @@
 
 
 class CommandCooldown extends Map {
-  constructor(cooldown) {
+  constructor(cooldown, ratelimitCooldown) {
     super();
     this.cooldown = cooldown;
+    this.ratelimitCooldown = ratelimitCooldown || cooldown / 3;
   }
 
   isCooldown(userID) {
     const user = this.get(userID);
     if (!user) return 'continue';
 
-    const time = Date.now() - user.timestamp;
+    const current = Date.now();
+    const time = current - user.timestamp;
     if (this.cooldown > time && user.ratelimit < 3) {
       user.ratelimit += 1;
       this.set(userID, user);
@@ -19,7 +21,17 @@ class CommandCooldown extends Map {
     } else if (this.cooldown < time) {
       this.delete(userID);
       return 'continue';
-    } else if (user.ratelimit >= 3) return 'ratelimit';
+    } else if (user.ratelimit >= 3) {
+      if (!user.ratelimitTimestamp) {
+        user.ratelimitTimestamp = current;
+        this.set(userID, user);
+      } else if (this.ratelimitCooldown && (current - user.ratelimitTimestamp) > this.ratelimitCooldown) {
+        user.ratelimitTimestamp = current;
+        user.ratelimit = 0;
+        this.set(userID, user);
+      }
+      return 'ratelimit';
+    }
   }
 
   toMessage(timestamp, t) {
@@ -38,7 +50,7 @@ class CommandCooldown extends Map {
   }
 
   add(userID) {
-    return this.set(userID, { timestamp: Date.now(), ratelimit: 0 });
+    return this.set(userID, { timestamp: Date.now(), ratelimit: 0, ratelimitTimestamp: null });
   }
 }
 

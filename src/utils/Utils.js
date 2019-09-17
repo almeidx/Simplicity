@@ -52,6 +52,12 @@ class Utils {
   static escapeRegExp(str) {
     return str.replace(REGEX, '\\$&');
   }
+
+  static getDevs() {
+    let IDs = process.env.DEVS_IDS;
+    if (IDs && IDs.includes(',')) IDs = IDs.split(',');
+    return IDs;
+  }
 }
 
 module.exports = Utils;

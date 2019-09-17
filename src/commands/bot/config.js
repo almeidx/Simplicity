@@ -11,6 +11,7 @@ class Config extends Command {
   constructor(client) {
     super(client, {
       category: 'bot',
+      cooldown: 60000,
       aliases: ['configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration'],
       requirements: {
         permissions: ['MANAGE_GUILD'],

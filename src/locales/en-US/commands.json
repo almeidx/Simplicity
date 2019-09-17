@@ -13,8 +13,7 @@
         "ramUsage": "RAM Usage",
         "discordjs": "Discord.js Version",
         "nodejs": "Node.js Version",
-        "gettingLatency": "Getting latency...",
-        "latency": "{{- latency }}ms"
+        "latency": "{{- ping }}ms"
     },
     "help": {
         "about": "{{- name }} is a bot with focus on moderation, utility, server management, and more Discord based stuff!\nMy prefix in this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo view more info about each command type: `{{- prefix }}help <command>`",

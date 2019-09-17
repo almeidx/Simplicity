@@ -36,6 +36,6 @@
     "minutes": "{{ minutes }} minutes",
     "seconds": "{{ seconds }} seconds",
     "and": " and ",
-    "cooldown": "Wait {{ time }} for use command again",
-    "waitLittleTime": "a little"
+    "cooldown": "Wait {{ time }} to use the command again",
+    "waitLittleTime": "a little bit"
 }
