@@ -5,7 +5,6 @@ module.exports = {
   // discord
   SimplicityClient: require('./structures/discord/SimplicityClient'),
   SimplicityEmbed: require('./structures/discord/SimplicityEmbed'),
-  Loggers: require('./structures/Loggers'),
   Loader: require('./structures/Loader'),
   SimplicityListener: require('./structures/discord/SimplicityListener'),
   Parameter: require('./structures/Parameter'),
@@ -13,6 +12,7 @@ module.exports = {
   Command: require('./structures/command/Command'),
   CommandContext: require('./structures/command/CommandContext'),
   CommandError: require('./structures/command/CommandError'),
+  CommandUtils: require('./structures/command/CommandUtils'),
   // Utils
   Constants: require('./utils/Constants'),
   Utils: require('./utils/Utils'),
@@ -21,8 +21,7 @@ module.exports = {
   TextUtils: require('./utils/TextUtils'),
   PermissionsUtils: require('./utils/PermissionsUtils'),
   MessageUtils: require('./utils/MessageUtils'),
-  // Collector
-  MessageCollectorUtils: require('./utils/collector/MessageCollectorUtils'),
+  Logger: require('./utils/Logger'),
   // Database
   Database: require('./database/Database'),
   // Parameters

@@ -13,9 +13,9 @@ class UserInfo extends Command {
       aliases: ['ui', 'user', 'userinformation', 'infouser', 'informationuser'],
       category: 'util',
       requirements: {
-        clientPermissions: ['EMBED_LINKS']
-      }
-  });
+        clientPermissions: ['EMBED_LINKS'],
+      },
+    });
   }
 
   // eslint-disable-next-line complexity

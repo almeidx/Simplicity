@@ -109,9 +109,10 @@ class SimplicityEmbed extends MessageEmbed {
     return super.setDescription(TextUtils.parse(description, this.setupOptions(options)));
   }
 
-  setTitle(title, options) {
+  setTitle(title, options, canTrans = true) {
     this.dataFixedT.title = { title, options };
-    return super.setTitle(TextUtils.parse(title, this.setupOptions(options)));
+    const result = !canTrans ? title : TextUtils.parse(title, this.setupOptions(options));
+    return super.setTitle(result);
   }
 
   addField(name = '', value = '', inline = null, options = {}, valueOptions = {}) {

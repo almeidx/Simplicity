@@ -32,6 +32,9 @@
       "incorrectResponse": "The response you provided was invalid"
     },
     "success": "Success",
+    "usage": "How to use",
+    "aliases": "Aliases",
+    "examples": "Examples",
 
     "minutes": "{{ minutes }} minutes",
     "seconds": "{{ seconds }} seconds",

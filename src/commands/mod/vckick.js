@@ -18,8 +18,8 @@ class VoiceKick extends Command {
       requirements: {
         argsRequired: true,
         permissions: ['KICK_MEMBERS'],
-        clientPermissions: ['MOVE_MEMBERS'] 
-      }
+        clientPermissions: ['MOVE_MEMBERS'],
+      },
     });
   }
 

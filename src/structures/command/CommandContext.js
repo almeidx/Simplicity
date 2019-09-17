@@ -4,7 +4,7 @@ const Constants = require('../../utils/Constants');
 const SimplicityEmbed = require('../discord/SimplicityEmbed');
 const TextUtils = require('../../utils/TextUtils');
 const { MessageAttachment } = require('discord.js');
-
+const i18next = require('i18next');
 const getCustomEmoji = (id) => Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[id];
 const getDefaultEmoji = (name) => Constants.EMOJIS && Constants.EMOJIS[name];
 
@@ -23,13 +23,13 @@ class CommandContext {
 
     this.prefix = options.prefix;
     this.command = options.command;
-    this.botLanguages = Object.keys(options.message.client.i18next.store.data);
+    this.botLanguages = Object.keys(i18next.store.data);
     this.language = this.botLanguages.includes(options.language) ?
       options.language :
       this.message.language || process.env.DEFAULT_LANG;
     this.query = options.query;
     this.args = options.args;
-    this.t = options.message.client.i18next.getFixedT(this.language);
+    this.t = i18next.getFixedT(this.language);
 
     this.executeMessage = this._executeMessage.bind(this);
     this.emoji = this._emoji.bind(this);
@@ -38,7 +38,7 @@ class CommandContext {
     this.sendMessage = options.message.channel.send;
     this.message.language = this.language;
 
-    this.canEmbed = this.guild ? this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS') : true
+    this.canEmbed = this.guild ? this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS') : true;
   }
 
   _emoji(name = 'QUESTION', options) {

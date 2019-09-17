@@ -1,6 +1,7 @@
 'use strict';
 
-const { CommandContext, SimplicityListener, Utils: { escapeRegExp } } = require('../../');
+const { Logger, CommandContext, SimplicityListener, Utils: { escapeRegExp } } = require('../../');
+const i18next = require('i18next');
 
 class MessageListener extends SimplicityListener {
   constructor(client) {
@@ -24,7 +25,7 @@ class MessageListener extends SimplicityListener {
     usedPrefix = usedPrefix && usedPrefix.length && usedPrefix[0];
     const MentionRegex = new RegExp(`^(<@!?${client.user.id}>)`);
     const mentioned = MentionRegex.test(content);
-    const helpPrefix = client.i18next.getFixedT(language)('common:prefix', { prefix });
+    const helpPrefix = i18next.getFixedT(language)('common:prefix', { prefix });
 
     if (mentioned && !usedPrefix) return message.reply(helpPrefix);
 
@@ -39,7 +40,7 @@ class MessageListener extends SimplicityListener {
         const totalLength = usedPrefix.length + commandName.length;
         const params = { args, command, language, message, prefix, query: args.join(' '), totalLength };
         command._run(new CommandContext(params)).catch(console.error);
-        client.logger.commandUsage('Command', `${guild.name} #${channel.name} @${author.tag} ${content}`);
+        Logger.logCommand({ guild: guild.name, channel: channel.name, author: author.tag, content });
       }
     }
   }

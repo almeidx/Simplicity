@@ -14,7 +14,7 @@ class ServerInfo extends Command {
     super(client, {
       name: 'serverinfo',
       aliases: ['si', 'server', 'svinfo', 'sv', 'guild', 'serverinformation', 'svinformation'],
-      category: 'guild'
+      category: 'guild',
     });
   }
 
