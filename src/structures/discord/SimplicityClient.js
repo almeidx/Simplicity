@@ -2,13 +2,10 @@
 
 const { Client, Collection } = require('discord.js');
 const Loaders = require('../../loaders');
-const Loggers = require('../Loggers');
 
 class SimplicityClient extends Client {
   constructor(options) {
     super(options);
-    this.logger = Loggers;
-
     this.loadFiles().catch(console.error);
   }
 

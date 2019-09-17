@@ -1,6 +1,6 @@
 'use strict';
 
-const { SimplicityEmbed, SimplicityListener } = require('../..');
+const { Logger, SimplicityEmbed, SimplicityListener } = require('../..');
 
 class ReadyListener extends SimplicityListener {
   constructor(client) {
@@ -9,7 +9,7 @@ class ReadyListener extends SimplicityListener {
 
   on(client) {
     const message = `Logged on ${client.guilds.size} guilds and ${client.users.size} users`;
-    client.logger.success('Ready', message);
+    Logger.log(`[Ready] ${message}`);
 
     this.sendPrivateMessage('bot_log',
       new SimplicityEmbed({ author: client.user })
