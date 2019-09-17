@@ -24,7 +24,7 @@ class Language extends Command {
 
     if (language === lang) throw new CommandError('commands:language.alreadySet', { lang });
 
-    const data = await client.database.guilds.edit(guild.id, { lang }).catch(() => null);
+    const data = await client.database.guilds.edit(guild.id, { lang });
     if (!data) throw new CommandError('commands:language.failed');
 
     const embed = new SimplicityEmbed({ author, t })

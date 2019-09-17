@@ -25,8 +25,7 @@ class Clear extends Command {
     await message.delete().catch(() => null);
 
     const res = await channel.messages.fetch({ limit });
-    const deleted = await channel.bulkDelete(res).catch(console.error);
-    if (!deleted) throw new CommandError('commands:clear.error');
+    await channel.bulkDelete(res);
 
     const amount = res.size;
     embed.setDescription('commands:clear.deleted', { amount, author });

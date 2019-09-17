@@ -34,7 +34,7 @@ class AddEmoji extends Command {
     const image = await MessageUtils.getImage(message, totalLength) || await MessageUtils.fetchImage(channel);
     if (!image) throw new CommandError('commands:addemoji:noNameLink', { onUsage: true });
 
-    const emoji = await guild.emojis.create(image, name).catch(() => null);
+    const emoji = await guild.emojis.create(image, name);
     if (!emoji) throw new CommandError('commands:addemoji.error');
 
     const embed = new SimplicityEmbed({ author, t })

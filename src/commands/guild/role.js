@@ -44,17 +44,13 @@ class Role extends Command {
 
     if (!member.roles.has(role.id)) {
       const reason = t('commands:role.reasonAdd', { author: author.tag, user: member.user.tag });
-      member.roles.add(role.id, { reason }).catch(() => {
-        throw new CommandError('commands:role.failedAdd');
-      });
+      member.roles.add(role.id, { reason });
       embed
         .setDescription('commands:role.added', { role, author, member });
       return send(embed);
     } else {
       const reason = t('commands:role.reasonRemove', { author: author.tag, user: member.user.tag });
-      member.roles.remove(role.id, { reason }).catch(() => {
-        throw new CommandError('commands:role.failedRemove');
-      });
+      member.roles.remove(role.id, { reason });
       embed
         .setDescription('commands:role.removed', { role: role.name || role.toString(), author, member });
       return send(embed);
