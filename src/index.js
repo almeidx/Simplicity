@@ -22,8 +22,6 @@ module.exports = {
   PermissionsUtils: require('./utils/PermissionsUtils'),
   MessageUtils: require('./utils/MessageUtils'),
   Logger: require('./utils/Logger'),
-  // Collector
-  MessageCollectorUtils: require('./utils/collector/MessageCollectorUtils'),
   // Database
   Database: require('./database/Database'),
   // Parameters
