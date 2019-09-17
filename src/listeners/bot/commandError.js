@@ -13,7 +13,7 @@ class CommandErrorListener extends SimplicityListener {
     if (!(error instanceof CommandError)) {
       console.error(error);
       const errorTranslation = error.code && getTranslation(`errors:${error.code}`);
-      const errorMessage = errorTranslation || t('errors:errorCommand');
+      const errorMessage = errorTranslation || t('api_errors:errorCommand');
       this.sendErrorCommandMessage(errorMessage, false, { send, canEmbed, author, t, command });
 
       const embed = new SimplicityEmbed(author, { type: 'error' })
