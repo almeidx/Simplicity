@@ -10,15 +10,16 @@ class FileUtils {
     const filesObject = {};
     return Promise.all(files.map(async (file) => {
       const fullPath = path.resolve(dirPath, file);
-      if (file.match(/\.(js|json)$/)) try {
-        const required = require(fullPath);
-        if (success) success(required, file.replace(/.js|.json/g, ''), dirPath.split(/\\|\//g).pop());
-        filesObject[file] = required;
-        return required;
-      } catch (e) {
-        error(e);
-      }
-      else if (recursive) {
+      if (file.match(/\.(js|json)$/)) {
+        try {
+          const required = require(fullPath);
+          if (success) success(required, file.replace(/.js|.json/g, ''), dirPath.split(/\\|\//g).pop());
+          filesObject[file] = required;
+          return required;
+        } catch (e) {
+          error(e);
+        }
+      } else if (recursive) {
         const isDirectory = await FileUtils.stat(fullPath).then((f) => f.isDirectory());
         if (isDirectory) return FileUtils.requireDirectory(fullPath, success, error);
       }

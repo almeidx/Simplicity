@@ -61,6 +61,12 @@ class Utils {
     else if (Array.isArray(i)) return i.length === 0;
     else return false;
   }
+
+  static getDevs() {
+    let IDs = process.env.DEVS_IDS;
+    if (IDs && IDs.includes(',')) IDs = IDs.split(',');
+    return IDs;
+  }
 }
 
 module.exports = Utils;

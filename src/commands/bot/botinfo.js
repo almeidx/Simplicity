@@ -1,32 +1,32 @@
 'use strict';
 
-const { Command, SimplicityEmbed, Utils: { convertDateLang } } = require('../../');
+const { Command, Constants, SimplicityEmbed, Utils: { convertDateLang, getDevs } } = require('../../');
+const { BOT_DEFAULT_PERMISSIONS } = Constants;
 const { version } = require('discord.js');
 
 class BotInfo extends Command {
   constructor(client) {
     super(client, {
-      aliases: ['bi'],
+      aliases: ['bi', 'botinformation', 'infobot', 'informationbot', 'stats', 'statistics'],
       category: 'bot',
+      cooldown: 10000,
       requirements: {
         clientPermissions: ['EMBED_LINKS'],
       },
     });
   }
 
-  async run({ author, client, emoji, guild, message, prefix, send, t }) {
+  async run({ author, client, emoji, guild, prefix, send, t }) {
     const uptime = convertDateLang(t, client.uptime);
     const RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
+    const inviteLink = await client.generateInvite(BOT_DEFAULT_PERMISSIONS);
+    const ping = Math.ceil(guild ? guild.shard.ping : client.ws.ping);
 
-    const inviteLink = await client.generateInvite(
-      ['SEND_MESSAGES', 'READ_MESSAGES_HISTORY', 'ADD_REACTIONS', 'USE_EXTERNAL_EMOJIS']
-    );
-    const ownersId = process.env.DEVS_IDS && process.env.DEVS_IDS.split(',');
-    const owners = ownersId &&
-      ownersId.filter((id) => client.users.has(id)).map((id) => client.users.get(id).tag).join(', ');
+    let devs = getDevs();
+    if (devs) devs = devs.filter((id) => client.users.has(id)).map((id) => client.users.get(id).tag).join(', ');
 
-    const embed = new SimplicityEmbed({ author, emoji, guild, t })
-      .addField('» $$commands:botinfo.ping', 'commands:botinfo.gettingLatency', true)
+    const embed = new SimplicityEmbed({ author, emoji, t })
+      .addField('» $$commands:botinfo.ping', 'commands:botinfo.ping', true, {}, { ping })
       .addField('» $$commands:botinfo.users', client.users.size, true)
       .addField('» $$commands:botinfo.guilds', client.guilds.size, true)
       .addField('» $$commands:botinfo.prefix', prefix, true)
@@ -36,15 +36,10 @@ class BotInfo extends Command {
       .addField('» $$commands:botinfo.commands', client.commands.size, true)
       .addField('» $$commands:botinfo.links', `#bot_tag [$$commands:botinfo.inviteBot ](${inviteLink})`, true);
 
-    if (owners) embed.addField('» $$commands:botinfo.developers', owners);
+    if (devs) embed.addField('» $$commands:botinfo.developers', devs);
 
     embed.addField('» $$commands:botinfo.uptime', uptime);
-    const msg = await send(embed);
-    const newEmbed = embed;
-    newEmbed.fields[0].value = t('commands:botinfo.latency', {
-      latency: Math.ceil(msg.createdTimestamp - message.createdTimestamp),
-    });
-    msg.edit(newEmbed);
+    return send(embed);
   }
 }
 

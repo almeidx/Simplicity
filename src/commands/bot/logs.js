@@ -16,6 +16,7 @@ class Logs extends Command {
   constructor(client) {
     super(client, {
       name: 'logs',
+      cooldown: 60000,
       aliases: ['log', 'logger', 'loggers', 'modlog', 'modlogs', 'eventlog', 'logevent'],
       category: 'bot',
       requirements: {

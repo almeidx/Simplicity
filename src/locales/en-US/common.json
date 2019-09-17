@@ -34,5 +34,11 @@
     "success": "Success",
     "usage": "How to use",
     "aliases": "Aliases",
-    "examples": "Examples" 
+    "examples": "Examples",
+
+    "minutes": "{{ minutes }} minutes",
+    "seconds": "{{ seconds }} seconds",
+    "and": " and ",
+    "cooldown": "Wait {{ time }} to use the command again",
+    "waitLittleTime": "a little bit"
 }

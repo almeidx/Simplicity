@@ -13,7 +13,7 @@ class Database {
       const model = mongoose.model(x, schema);
       database[x] = new Collection(model);
     }
-    await mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true });
+    await mongoose.connect(process.env.MLAB_URL, { useUnifiedTopology: true, useNewUrlParser: true });
     return database;
   }
 }
