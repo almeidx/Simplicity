@@ -39,6 +39,10 @@ class CommandContext {
     this.message.language = this.language;
 
     this.canEmbed = this.guild ? this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS') : true;
+
+    // database
+    this.database = options.message.client.database;
+    this.guildData = options.guildData;
   }
 
   _emoji(name = 'QUESTION', options) {

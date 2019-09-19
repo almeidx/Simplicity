@@ -1,6 +1,6 @@
 'use strict';
 
-const { Command, SimplicityEmbed } = require('../..');
+const { Command } = require('../..');
 
 class Prefix extends Command {
   constructor(client) {
@@ -14,8 +14,13 @@ class Prefix extends Command {
     });
   }
 
-  async run({}) {
-    
+  async run({ mentions, channel: _channel, guildData, database, guild, t, send }) {
+    const channel = mentions.channels.first() || _channel;
+    const id = guildData.starboard === channel.id ? null : channel.id;
+    await database.guilds.edit(guild.id, { starboard: id });
+
+    const message = t('commands:starboard.message', { enabled: !!id, channel: channel.toString() });
+    await send(message);
   }
 }
 
