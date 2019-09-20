@@ -1,12 +1,11 @@
 'use strict';
 
-const { Command } = require('../..');
+const { Command, Parameters: { ChannelParameter } } = require('../..');
 
 class Starboard extends Command {
   constructor(client) {
     super(client, {
       name: 'starboard',
-      aliases: ['testestarboard'],
       category: 'bot',
       cooldown: 60000,
       requirements: {
@@ -15,14 +14,19 @@ class Starboard extends Command {
     });
   }
 
-  async run({ mentions, channel: _channel, guildData, database, guild, t, send }) {
-    const channel = mentions.channels.first() || _channel;
-    await database.guilds.edit(guild.id, { starboard: channel.id });
+  async run({ query, guild, channel: _channel, guildData, database, t, send }) {
+    const channel = await ChannelParameter.parse(query, {}, { guild }) || _channel;
+    const channelId = channel.id === guildData.starboard ? null : channel.id;
+    await database.guilds.edit(guild.id, { starboard: channelId });
 
-    let message;
-    if (guildData.starboard && guildData.starboard !== channel.id) message = t('commands:starboard.channelChanged', { channel: channel.toString() });
-    else if (guildData.starboard === channel.id) message = t('commands:starboard.disabled', { channel: channel.toString() });
-    else message = t('commands:starboard.disabled', { channel: channel.toString() });
+    let message = t('commands:starboard.enabled', { channel: channel.toString() });
+
+    if (guildData.starboard && guildData.starboard !== channelId) {
+      message = t('commands:starboard.channelChanged', { channel: channel.toString() });
+    } else if (!channelId) {
+      message = t('commands:starboard.disabled', { channel: channel.toString() });
+    }
+
     await send(message);
   }
 }

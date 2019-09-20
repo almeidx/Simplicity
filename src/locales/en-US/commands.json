@@ -278,8 +278,8 @@
         "edited": "You have successfully set the {{ type }} channel to: {{- channel }}"
     },
     "starboard": {
-        "enabled": "The starboard was enabled in {{ channel }}",
-        "disabled": "The starboard was disabled in {{ channel }}",
-        "channelChanged": "The starboard channel was changed for {{ channel}}"
+        "enabled": "The starboard has been enabled in {{ channel }}",
+        "disabled": "The starboard has been disabled in {{ channel }}",
+        "channelChanged": "The starboard channel has been changed to {{ channel}}"
     }
 }

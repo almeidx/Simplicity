@@ -2,6 +2,7 @@
 
 const { SimplicityListener } = require('../..');
 const StarboardHandler = require('../../utils/StarboardHandler');
+
 class MessageReactionAddListener extends SimplicityListener {
   constructor(client) {
     super(client);

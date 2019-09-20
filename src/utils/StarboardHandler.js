@@ -35,18 +35,18 @@ async function StarboardHandler(client, reaction, user) {
     const language = (guildData && guildData.lang) || process.env.DEFAULT_LANG;
     const t = i18next.getFixedT(language);
 
-    const image = message.attachments.size > 0 ? message.attachments.array()[0].url : '';
+    const image = message.attachments.size > 0 ? message.attachments.first().url : null;
 
-    const embed = new SimplicityEmbed(message.author)
+    const embed = new SimplicityEmbed({ author: message.author, t })
       .setTitle(`${STARBOARD} ${reactionsSize}`)
-      .addField(t('common:starboardJumpToMessage'), `[${t(`common:clickHere`)}](${message.url})`)
+      .addField('$$common:starboardJumpToMessage', `[ $$common:clickHere ](${message.url})`)
       .setFooter(message.id)
       .setColor('YELLOW');
 
-    if (message.cleanContent.length) embed.addField(t('common:message'), message.cleanContent);
+    if (message.cleanContent.length) embed.addField('$$common:message', message.cleanContent);
     if (image) embed.setImage(image);
 
-    if (found) found.edit('a');
+    if (found) found.edit({ embed });
     else channel.send(embed);
   }
 }
