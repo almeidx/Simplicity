@@ -11,6 +11,7 @@ class Starboard extends Command {
       requirements: {
         requireDatabase: true,
         permissions: ['MANAGE_GUILD'] },
+        guildOnly: true,
     });
   }
 
