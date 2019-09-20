@@ -13,9 +13,6 @@ const CLIENT_OPTIONS = {
       type: 'WATCHING',
     },
   },
-  ws: {
-    large_threshold: 1000,
-  },
 };
 
 const client = new SimplicityClient(CLIENT_OPTIONS);
