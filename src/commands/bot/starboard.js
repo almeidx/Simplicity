@@ -22,7 +22,7 @@ class Starboard extends Command {
 
     let message = t('commands:starboard.enabled', { channel: channel.toString() });
 
-    if (guildData.starboard && guildData.starboard !== channelId) {
+    if (channelId && guildData.starboard && guildData.starboard !== channelId) {
       message = t('commands:starboard.channelChanged', { channel: channel.toString() });
     } else if (!channelId) {
       message = t('commands:starboard.disabled', { channel: channel.toString() });
