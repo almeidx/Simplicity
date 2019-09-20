@@ -276,5 +276,9 @@
         "UserUpdate": "User Updates",
         "VoiceChannelLogs": "Voice Channel Logs",
         "edited": "You have successfully set the {{ type }} channel to: {{- channel }}"
+    },
+    "starboard": {
+        "enabled": "The starboard was enabled in {{ channel }}",
+        "disabled": "The starboard was disabled in {{ channel }}"
     }
 }

@@ -2,7 +2,7 @@
 
 const { Command } = require('../..');
 
-class Prefix extends Command {
+class Starboard extends Command {
   constructor(client) {
     super(client, {
       name: 'starboard',
@@ -19,9 +19,11 @@ class Prefix extends Command {
     const id = guildData.starboard === channel.id ? null : channel.id;
     await database.guilds.edit(guild.id, { starboard: id });
 
-    const message = t('commands:starboard.message', { enabled: !!id, channel: channel.toString() });
+    let message;
+    if (id) message = t('commands:starboard.enabled', { channel: channel.toString() });
+    else message = t('commands:starboard.disabled', { channel: channel.toString() });
     await send(message);
   }
 }
 
-module.exports = Prefix;
+module.exports = Starboard;
