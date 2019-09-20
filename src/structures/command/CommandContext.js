@@ -13,13 +13,13 @@ class CommandContext {
     this.totalLength = options.totalLength;
 
     this.message = options.message;
-    this.mentions = options.message.mentions;
-    this.member = options.message.member;
-    this.guild = options.message.guild;
-    this.author = options.message.author;
-    this.channel = options.message.channel;
-    this.client = options.message.client;
-    this.voiceChannel = options.message.member.voiceChannel;
+    this.mentions = this.message.mentions;
+    this.member = this.message.member;
+    this.guild = this.message.guild;
+    this.author = this.message.author;
+    this.channel = this.message.channel;
+    this.client = this.message.client;
+    this.voiceChannel = this.message.member.voiceChannel;
 
     this.prefix = options.prefix;
     this.command = options.command;
@@ -41,7 +41,7 @@ class CommandContext {
     this.canEmbed = this.guild ? this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS') : true;
 
     // database
-    this.database = options.message.client.database;
+    this.database = this.client.database;
     this.guildData = options.guildData;
   }
 
