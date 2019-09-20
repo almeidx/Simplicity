@@ -6,6 +6,7 @@ class Starboard extends Command {
   constructor(client) {
     super(client, {
       name: 'starboard',
+      aliases: ['testestarboard'],
       category: 'bot',
       cooldown: 60000,
       requirements: {

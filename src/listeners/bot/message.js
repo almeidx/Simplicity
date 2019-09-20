@@ -20,7 +20,7 @@ class MessageListener extends SimplicityListener {
 
     const usernameFixed = escapeRegExp(client.user.username);
     // eslint-disable-next-line no-useless-escape
-    const PrefixRegex = new RegExp(`^(<@!?${client.user.id}>|${fixedPrefix}|${usernameFixed})(\s+)?`, 'i');
+    const PrefixRegex = new RegExp(`^(<@!?${client.user.id}>|${fixedPrefix}|${usernameFixed})(\\s+)?`, 'i');
     let usedPrefix = content.match(PrefixRegex);
     usedPrefix = usedPrefix && usedPrefix.length && usedPrefix[0];
     const MentionRegex = new RegExp(`^(<@!?${client.user.id}>)`);
