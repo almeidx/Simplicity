@@ -6,7 +6,7 @@ const Loaders = require('../../loaders');
 class SimplicityClient extends Client {
   constructor(options) {
     super(options);
-    this.loadFiles().catch(console.error);
+    this.loadFiles();
   }
 
   async loadFiles() {
