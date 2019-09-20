@@ -17,11 +17,11 @@ class Starboard extends Command {
 
   async run({ mentions, channel: _channel, guildData, database, guild, t, send }) {
     const channel = mentions.channels.first() || _channel;
-    const id = guildData.starboard === channel.id ? null : channel.id;
-    await database.guilds.edit(guild.id, { starboard: id });
+    await database.guilds.edit(guild.id, { starboard: channel.id });
 
     let message;
-    if (id) message = t('commands:starboard.enabled', { channel: channel.toString() });
+    if (guildData.starboard && guildData.starboard !== channel.id) message = t('commands:starboard.channelChanged', { channel: channel.toString() });
+    else if (guildData.starboard === channel.id) message = t('commands:starboard.disabled', { channel: channel.toString() });
     else message = t('commands:starboard.disabled', { channel: channel.toString() });
     await send(message);
   }

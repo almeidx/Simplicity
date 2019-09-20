@@ -279,6 +279,7 @@
     },
     "starboard": {
         "enabled": "The starboard was enabled in {{ channel }}",
-        "disabled": "The starboard was disabled in {{ channel }}"
+        "disabled": "The starboard was disabled in {{ channel }}",
+        "channelChanged": "The starboard channel was changed for {{ channel}}"
     }
 }
