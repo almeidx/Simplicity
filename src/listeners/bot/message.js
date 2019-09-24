@@ -26,10 +26,11 @@ class MessageListener extends SimplicityListener {
     const MentionRegex = new RegExp(`^(<@!?${client.user.id}>)`);
     const mentioned = MentionRegex.test(content);
 
-    const t = i18next.getFixedT(language)
+    const commandsDisabled = guildData && guildData.disableChannels.includes(channel.id);
+    const t = i18next.getFixedT(language);
 
     if (mentioned && !usedPrefix) {
-      if (guildData && guildData.disableChannels.includes(channel.id)) return author.send(t('common:commandsBlocked'));
+      if (commandsDisabled) return author.send(t('common:commandsBlocked'));
       return message.reply(t('common:prefix', { prefix }));
     }
 
@@ -38,9 +39,9 @@ class MessageListener extends SimplicityListener {
       const commandName = args.shift().toLowerCase();
       const command = client.commands.fetch(commandName);
 
-      if (guildData && command && command.name !== 'disable' && guildData.disableChannels.includes(channel.id)) return;
+      if (command && command.name !== 'disable' && commandsDisabled) return author.send(t('common:commandsBlocked'));
       if (mentioned && !command) {
-        if (guildData && guildData.disableChannels.includes(channel.id)) return author.send(t('common:commandsBlocked'));;
+        if (commandsDisabled) return author.send(t('common:commandsBlocked'));
         return message.reply(t('common:prefix', { prefix }));
       }
 
