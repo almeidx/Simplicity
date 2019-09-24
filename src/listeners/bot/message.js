@@ -26,7 +26,7 @@ class MessageListener extends SimplicityListener {
     const MentionRegex = new RegExp(`^(<@!?${client.user.id}>)`);
     const mentioned = MentionRegex.test(content);
 
-    const commandsDisabled = guildData && guildData.disableChannels.includes(channel.id);
+    const commandsDisabled = guildData && guildData.disableChannels && guildData.disableChannels.includes(channel.id);
     const t = i18next.getFixedT(language);
 
     if (mentioned && !usedPrefix) {
