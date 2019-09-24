@@ -41,9 +41,8 @@ class Logger {
     const warn = setColor('FgYellow', '[Command]');
     const g = setColor('FgBlue', guild);
     const c = setColor('FgCyan', `#${channel}`);
-    const u = setColor('FgWhite', `@${author}`);
-    const m = setColor('FgYellow', content);
-    return console.warn(`${Logger._timestamp} ${warn} ${g} ${c} ${u} ${m}`);
+    const u = setColor('FgGreen', `@${author}`);
+    return console.warn(`${Logger._timestamp} ${warn} ${g} ${c} ${u} ${content}`);
   }
 }
 
