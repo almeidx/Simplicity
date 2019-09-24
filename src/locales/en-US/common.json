@@ -1,0 +1,48 @@
+{
+    "date": {
+        "days": "days",
+        "hours": "hours",
+        "minutes": "minutes",
+        "seconds": "seconds"
+    },
+    "footer": "Executed by:",
+    "status": {
+        "online": "Online",
+        "idle": "Idle",
+        "dnd": "Do not Disturb",
+        "offline": "Offline"
+    },
+    "activityType": {
+        "PLAYING": "Playing",
+        "STREAMING": "Streaming",
+        "LISTENING": "Listening to",
+        "WATCHING": "Watching"
+    },
+    "bot": "Bot",
+    "bots": "Bots",
+    "prefix": "My prefix on this server is: `{{- prefix }}`",
+    "commandsBlocked": "My commands have been disabled on that channel!",
+    "loading": "Loading...",
+    "question": "Type **{{- confirm }}** to continue. Else, type **{{- cancel }}**",
+    "commandTimedout": "The command has been cancelled due to inactivity",
+    "cancelled": "Cancelled",
+    "messageCollector": {
+      "time": "The command has been cancelled due to inactivity",
+      "cancel": "Cancelled",
+      "limit": "The {{ amount }} responses you provided were invalid",
+      "incorrectResponse": "The response you provided was invalid"
+    },
+    "success": "Success",
+    "usage": "How to use",
+    "aliases": "Aliases",
+    "examples": "Examples",
+
+    "minutes": "{{ minutes }} minutes",
+    "seconds": "{{ seconds }} seconds",
+    "and": " and ",
+    "cooldown": "Wait {{ time }} to use the command again",
+    "waitLittleTime": "a little bit",
+    "starboardJumpToMessage": "Jump to message",
+    "clickHere": "Click here",
+    "message": "Message"
+}

@@ -1,0 +1,26 @@
+{
+    "botinfo": {
+        "title": "Informações do Bot",
+        "guildAndUsers": "Guilds | Usuários",
+        "channelAndEmojis": "Canais | Emojis",
+        "uptime": "Uptime",
+        "commands": "Comandos",
+        "pings": "Ultimos Pings",
+        "os": "Sistema Operacional"
+    },
+    "help": {
+        "about": "",
+        "categories": "Categorias",
+        "aliases": "Aliases",
+        "usage": "Uso",
+        "commandHelp": "ta troll fdp?",
+        "commandUndefined": "Este comando não existe ou está desativado!"
+    },
+    "prefix": {
+        "multiCharacters": "O meu novo prefixo não pode ter mais de 15 caracteres!",
+        "done": "Pronto!",
+        "sucess": "O meu prefixo neste servidor foi alterado para: `{{- prefix }}`",
+        "oops": "Oops!",
+        "failed": "Infelizmente, deu algo de errado enquanto eu estava tentando trocar o prefixo do servidor!\nPor favor, tente mais tarde."
+    }
+}

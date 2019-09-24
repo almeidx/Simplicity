@@ -1,0 +1,30 @@
+{
+  "bot": {
+    "name": "Bot",
+    "description": "This category has commands related to the bot."
+  },
+  "config": {
+    "name": "Configuration",
+    "description": "This category has commands related to the server configuration."
+  },
+  "dev": {
+    "name": "Developers",
+    "description": "This category has developer-only commands."
+  },
+  "general": {
+    "name": "General",
+    "description": "This category has general commands."
+  },
+  "mod": { 
+    "name": "Moderation",
+    "description": "This category has Moderator commands."
+  },
+  "util": {
+    "name": "Utility",
+    "description": "This category has commands util commands."
+  },
+  "guild": {
+    "name": "Server",
+    "description": "This category has commands related to the guild."
+  }
+}

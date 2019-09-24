@@ -1,29 +1,38 @@
-require('dotenv').config()
-const { Client, Collection } = require('discord.js')
-const client = new Client()
-const fs = require('fs')
-client.commands = new Collection()
+'use strict';
 
-fs.readdirSync('./commands').forEach((file) => {
-  if (file.endsWith('.js')) {
-    try {
-      const command = require(`./commands/${file}`)
-      client.commands.set(file.replace('.js', ''), command)
-    } catch (error) {
-      console.log(`There was an error with command ${file}\n`, error)
-    }
-  }
-})
+const { SimplicityClient } = require('./src');
+require('dotenv').config();
 
-fs.readdirSync('./listeners').forEach((file) => {
-  if (file.endsWith('.js')) {
-    try {
-      const Listener = require('./listeners' + '/' + file)
-      client.on(file.replace(/.js/g, ''), Listener)
-    } catch (error) {
-      console.error(`There was an error with the event ${file}\n`, error)
-    }
-  }
-})
+const CLIENT_OPTIONS = {
+  fetchAllMembers: true,
+  disableEveryone: true,
+  disabledEvents: ['TYPING_START'],
+  partials: ['MESSAGE', 'CHANNEL'],
+  presence: {
+    activity: {
+      name: '@Simplicity help',
+      type: 'WATCHING',
+    },
+  },
+};
 
-client.login(process.env.BOT_TOKEN)
+const client = new SimplicityClient(CLIENT_OPTIONS);
+client.login().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
+
+client
+  .on('shardError', (error, shardID) => console.error(`Shard ${shardID} Error:`, error))
+  .on('invalidated', () => {
+    console.error('The client\'s session is now invalidated.');
+    process.exit(1);
+  });
+
+process
+  .on('unhandledRejection', (error) => console.error('Uncaught Promise Error:', error))
+  .on('uncaughtException', (error) => {
+    const msg = error.stack.replace(new RegExp(`${__dirname}/`, 'g'), './');
+    console.error('Uncaught Exception:', msg);
+    process.exit(1);
+  });
