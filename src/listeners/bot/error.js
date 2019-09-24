@@ -7,7 +7,7 @@ class ErrorListener extends SimplicityListener {
     super(client);
   }
 
-  on(client, error) {
+  on(_, error) {
     Logger.error(`[Error]\n${error.stack}`);
 
     this.sendPrivateMessage('channel_log_error',

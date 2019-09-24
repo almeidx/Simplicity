@@ -7,6 +7,7 @@ const CLIENT_OPTIONS = {
   fetchAllMembers: true,
   disableEveryone: true,
   disabledEvents: ['TYPING_START'],
+  partials: ['MESSAGE', 'CHANNEL'],
   presence: {
     activity: {
       name: '@Simplicity help',
@@ -24,7 +25,7 @@ client.login().catch((error) => {
 client
   .on('shardError', (error, shardID) => console.error(`Shard ${shardID} Error:`, error))
   .on('invalidated', () => {
-    console.log('The client\'s session is now invalidated.');
+    console.error('The client\'s session is now invalidated.');
     process.exit(1);
   });
 

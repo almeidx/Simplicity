@@ -40,5 +40,8 @@
     "seconds": "{{ seconds }} seconds",
     "and": " and ",
     "cooldown": "Wait {{ time }} to use the command again",
-    "waitLittleTime": "a little bit"
+    "waitLittleTime": "a little bit",
+    "starboardJumpToMessage": "Jump to message",
+    "clickHere": "Click here",
+    "message": "Message"
 }

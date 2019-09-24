@@ -44,6 +44,7 @@ module.exports = {
     DESKTOP: '💻',
     ROLES: '📜',
     PHOTO: '🖼',
+    STARBOARD: '⭐',
   },
   COLORS: {
     MESSAGE_DELETE: '36393f',
