@@ -41,10 +41,6 @@
         "description": "This command shows the server icon.",
         "text": "Click [here]({{- guildIconURL }}) to download the icon!"
     },
-    "uptime": {
-        "description": "This command shows the time I've been up for.",
-        "onlineFor": "I have been online for: **{{- duration }}**"
-    },
     "ping": {
         "description": "This command shows the latency of the bot.",
         "loading": "Loading...",
@@ -117,41 +113,8 @@
         "authorRoles": "{{- user }}'s Roles",
         "joinPosition": "Join Position"
     },
-    "ban": {
-        "description": "This command lets you ban members of your server.",
-        "usage": "<member> [reason]",
-        "success": "Member Banned",
-        "userBanned": "{{- member }} has been banned from the server",
-        "bannedBy": "Banned by",
-        "reason": "Reason",
-        "noReason": "No reason provided.",
-        "action": "ban",
-        "banCanceled": "user ban successfully canceled",
-        "days": "messages deleted in the last {{- days }} days",
-        "alreadyBannedReason": "It seems that {{- user }} is already banned from this guild for **{{- reason }}**!",
-        "alreadyBannedNoReason": "It seems that {{- user }} is already banned from this guild!"
-    },
-    "kick": {
-        "description": "This command lets you kick members of your server.",
-        "usage": "<mention/id> [reason]",
-        "success": "Member Kicked",
-        "userKicked": "{{- user }} has been kicked from the server",
-        "kickedBy": "Kicked by",
-        "reason": "Reason",
-        "action": "kick"
-    },
     "avatar": {
         "message": "{{- user.username }}'s Avatar"
-    },
-    "unban": {
-        "description": "This command lets you unban members of your server.",
-        "usage": "[id] <reason>",
-        "success": "Member Unbanned",
-        "userUnbanned": "{{- tag }} has been unbanned from the server!`",
-        "reason": "Reason",
-        "noUser": "I was unable to find a user with that ID!",
-        "badID": "You have provided a wrong ID!",
-        "noReason": "'No reason provided.'"
     },
     "vckick": {
         "description": "This command lets you kick members of voice channels.",
@@ -185,12 +148,6 @@
         "noDisableChannel": "No channels disabled.",
         "moduleOff": "This module is disabled"
     },
-    "ascii": {
-        "description": "This command translates normal text into ascii format.",
-        "usage": "<text>",
-        "queryTooBig": "Please, use a text that is lower than {{- amount }} characters.",
-        "error": "There was an error while trying to display the result"
-    },
     "emoji": {
         "description": "This command sends the emoji image but bigger.",
         "usage": "<emoji>",
@@ -214,12 +171,6 @@
         "done": "Done!",
         "invalidLang": "The language you provided is invalid.\n**Valid languages:** {{- botLanguages}}",
         "alreadySet": "My language is already set to **{{- lang }}**"
-    },
-    "exec": {
-        "description": "This command allows my developers to run bash code",
-        "usage": "<code>",
-        "error": "An error occurred",
-        "result": "Result"
     },
     "roleinfo": {
         "description": "Shows information about a role",
@@ -302,5 +253,13 @@
         "multiChannels": "Commands have been disabled in {{ newChannels }} and enabled in {{ removedChannels }}.\nTo view all the disabled channels, run `{{ prefix }}config`",
         "channelDisable_plural": "Commands have been disabled in {{ channels }}.",
         "channelEnabled_plural": "Commands have been enabled in {{ channels }}."
+    },
+    "autrole": {
+        "description": "Sets the role that is given to members upon joining.",
+        "usage": "[role]",
+        "requireRole": "You need to provide a role.",
+        "disabled": "The AutoRole has been disabled",
+        "enabled": "The AutoRole has been set to {{ role }}",
+        "changed": "The AutoRole has been changed to {{ role }}"
     }
 }
