@@ -254,12 +254,13 @@
         "channelDisable_plural": "Commands have been disabled in {{ channels }}.",
         "channelEnabled_plural": "Commands have been enabled in {{ channels }}."
     },
-    "autrole": {
+    "autorole": {
         "description": "Sets the role that is given to members upon joining.",
         "usage": "[role]",
         "requireRole": "You need to provide a role.",
         "disabled": "The AutoRole has been disabled",
-        "enabled": "The AutoRole has been set to {{ role }}",
-        "changed": "The AutoRole has been changed to {{ role }}"
+        "isCurrentRole": "The AutoRole is already set to {{ role }}",
+        "enabled": "The AutoRole has been set to `{{ role }}`",
+        "changed": "The AutoRole has been changed to `{{ role }}`"
     }
 }

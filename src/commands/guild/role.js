@@ -1,7 +1,6 @@
 'use strict';
 
-const { Command, CommandError, Parameters, SimplicityEmbed } = require('../..');
-const { MemberParameter, RoleParameter } = Parameters;
+const { Command, Parameters: { MemberParameter, RoleParameter }, SimplicityEmbed } = require('../../');
 
 const ParameterOptions = {
   checkIncludes: false,
