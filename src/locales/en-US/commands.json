@@ -168,6 +168,7 @@
         "prefix": "Prefix",
         "language": "Language",
         "starboard": "Starboard",
+        "disableChannels": "Disable channels",
         "languageKeys": [
             "lang",
             "language",
@@ -180,7 +181,9 @@
         "failed": "Failed to edit the information into the database",
         "langChanged": "The server language has been changed to **{{- value }}**",
         "prefixChanged": "The server prefix has been changed to **{{- value }}**",
-        "invalidLanguage": "The language you provided isn't valid"
+        "invalidLanguage": "The language you provided isn't valid",
+        "noDisableChannel": "No channels disabled.",
+        "moduleOff": "Module off"
     },
     "ascii": {
         "description": "This command translates normal text into ascii format.",
@@ -288,5 +291,16 @@
         "enabled": "The starboard has been enabled in {{ channel }}",
         "disabled": "The starboard has been disabled in {{ channel }}",
         "channelChanged": "The starboard channel has been changed to {{ channel}}"
+    },
+    "disable": {
+        "description": "Disable commands run in channels",
+        "usage": "<channel, channel, ...>",
+        "currentDisable": "Commands have been disabled in the current channel",
+        "currentEnabled": "Commands have been enabled in the current channel",
+        "channelDisable": "Commands have been disabled in {{ channel }}",
+        "channelEnabled": "Commands have been enabled in {{ channel }}",
+        "multiChannels": "Commands have been disabled in {{ newChannels }} and enabled in {{ removedChannels }}.\nTo view all the disabled channels, run `{{ prefix }}config`",
+        "channelDisable_plural": "Commands have been disabled in {{ channels }}.",
+        "channelEnabled_plural": "Commands have been enabled in {{ channels }}."
     }
 }

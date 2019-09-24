@@ -1,4 +1,4 @@
-{
+{   
     "requireDatabase": "A connection to the database was not established which means I am not able to run this command.",
     "errorCommand": "An error occurred while executing the command, try again later",
     "denied": "Denied!",

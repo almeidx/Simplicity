@@ -25,22 +25,24 @@ class MessageListener extends SimplicityListener {
     usedPrefix = usedPrefix && usedPrefix.length && usedPrefix[0];
     const MentionRegex = new RegExp(`^(<@!?${client.user.id}>)`);
     const mentioned = MentionRegex.test(content);
-    const helpPrefix = i18next.getFixedT(language)('common:prefix', { prefix });
 
-    if (mentioned && !usedPrefix ) {
-      if (guildData && guildData.disableChannels.includes(channel.id)) {
-        const warnPrefix = i18next.getFixedT(language)('common:prefixAndDisableChannel', { prefix });
-        return message.reply(warnPrefix)
-      }
-      return message.reply(helpPrefix);
+    const t = i18next.getFixedT(language)
+
+    if (mentioned && !usedPrefix) {
+      if (guildData && guildData.disableChannels.includes(channel.id)) return author.send(t('common:commandsBlocked'));
+      return message.reply(t('common:prefix', { prefix }));
     }
 
     if (usedPrefix) {
       const args = content.slice(usedPrefix.length).trim().split(/ +/g);
       const commandName = args.shift().toLowerCase();
       const command = client.commands.fetch(commandName);
+
       if (guildData && command && command.name !== 'disable' && guildData.disableChannels.includes(channel.id)) return;
-      if (mentioned && !command) return message.reply(helpPrefix);
+      if (mentioned && !command) {
+        if (guildData && guildData.disableChannels.includes(channel.id)) return author.send(t('common:commandsBlocked'));;
+        return message.reply(t('common:prefix', { prefix }));
+      }
 
       if (command && !command.running.has(channel.id, author.id)) {
         const totalLength = usedPrefix.length + commandName.length;
