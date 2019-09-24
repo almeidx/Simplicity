@@ -27,13 +27,19 @@ class MessageListener extends SimplicityListener {
     const mentioned = MentionRegex.test(content);
     const helpPrefix = i18next.getFixedT(language)('common:prefix', { prefix });
 
-    if (mentioned && !usedPrefix) return message.reply(helpPrefix);
+    if (mentioned && !usedPrefix ) {
+      if (guildData && guildData.disableChannels.includes(channel.id)) {
+        const warnPrefix = i18next.getFixedT(language)('common:prefixAndDisableChannel', { prefix });
+        return message.reply(warnPrefix)
+      }
+      return message.reply(helpPrefix);
+    }
 
     if (usedPrefix) {
       const args = content.slice(usedPrefix.length).trim().split(/ +/g);
       const commandName = args.shift().toLowerCase();
       const command = client.commands.fetch(commandName);
-
+      if (guildData && command && command.name !== 'disable' && guildData.disableChannels.includes(channel.id)) return;
       if (mentioned && !command) return message.reply(helpPrefix);
 
       if (command && !command.running.has(channel.id, author.id)) {
