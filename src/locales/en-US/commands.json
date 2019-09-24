@@ -183,7 +183,7 @@
         "prefixChanged": "The server prefix has been changed to **{{- value }}**",
         "invalidLanguage": "The language you provided isn't valid",
         "noDisableChannel": "No channels disabled.",
-        "moduleOff": "Module off"
+        "moduleOff": "This module is disabled"
     },
     "ascii": {
         "description": "This command translates normal text into ascii format.",

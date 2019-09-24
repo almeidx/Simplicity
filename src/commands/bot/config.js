@@ -3,7 +3,7 @@
 const { Command, SimplicityEmbed } = require('../..');
 const PrefixCommand = require('./prefix');
 const LanguageCommand = require('./language');
-const StarboardCommand = require('./starboard');
+const StarboardCommand = require('../guild/starboard');
 const DisableCommand = require('../guild/disable');
 
 const aliasesPrefix = ['p', 'setp', 'setprefix'];
