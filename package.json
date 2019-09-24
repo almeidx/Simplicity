@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node index.js",
     "nodemon": "nodemon --inspect --watch src --watch .env --watch index.js --watch node_modules index.js",
-    "eslint": "eslint . --fix"
+    "lint": "eslint src *.js",
+    "lint:fix": "eslint --fix src"
   },
   "license": "ISC",
   "dependencies": {
