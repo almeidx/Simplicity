@@ -20,7 +20,7 @@ class MessageListener extends SimplicityListener {
 
     const usernameFixed = escapeRegExp(client.user.username);
     // eslint-disable-next-line no-useless-escape
-    const PrefixRegex = new RegExp(`^(<@!?${client.user.id}>|${fixedPrefix}|${usernameFixed})(\s+)?`, 'i');
+    const PrefixRegex = new RegExp(`^(<@!?${client.user.id}>|${fixedPrefix}|${usernameFixed})(\\s+)?`, 'i');
     let usedPrefix = content.match(PrefixRegex);
     usedPrefix = usedPrefix && usedPrefix.length && usedPrefix[0];
     const MentionRegex = new RegExp(`^(<@!?${client.user.id}>)`);
@@ -38,7 +38,7 @@ class MessageListener extends SimplicityListener {
 
       if (command && !command.running.has(channel.id, author.id)) {
         const totalLength = usedPrefix.length + commandName.length;
-        const params = { args, command, language, message, prefix, query: args.join(' '), totalLength };
+        const params = { args, guildData, command, language, message, prefix, query: args.join(' '), totalLength };
         command._run(new CommandContext(params)).catch(console.error);
         Logger.logCommand({ guild: guild.name, channel: channel.name, author: author.tag, content });
       }

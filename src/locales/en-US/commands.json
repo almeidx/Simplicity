@@ -167,6 +167,7 @@
         "channel": "Logging Channel",
         "prefix": "Prefix",
         "language": "Language",
+        "starboard": "Starboard",
         "languageKeys": [
             "lang",
             "language",
@@ -276,5 +277,16 @@
         "UserUpdate": "User Updates",
         "VoiceChannelLogs": "Voice Channel Logs",
         "edited": "You have successfully set the {{ type }} channel to: {{- channel }}"
+    },
+    "config-starboard": {
+        "description": "$t(starboard.description)",
+        "usage": "$t(starboard.usage)"
+    },
+    "starboard": {
+        "description": "This command sets the starboard channel",
+        "usage": "<channel>",
+        "enabled": "The starboard has been enabled in {{ channel }}",
+        "disabled": "The starboard has been disabled in {{ channel }}",
+        "channelChanged": "The starboard channel has been changed to {{ channel}}"
     }
 }
