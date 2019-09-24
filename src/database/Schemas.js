@@ -5,6 +5,7 @@ module.exports = {
     _id: { type: String, required: true },
     lang: { type: String },
     prefix: { type: String },
+    disableChannels: { type: Array },
     logs: {
       GuildMemberAdd: { type: String, default: null },
       GuildMemberRemove: { type: String, default: null },
