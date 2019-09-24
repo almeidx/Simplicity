@@ -6,6 +6,7 @@ module.exports = {
     lang: { type: String },
     prefix: { type: String },
     disableChannels: { type: Array },
+    autorole: { type: String },
     starboard: { type: String },
     logs: {
       GuildMemberAdd: { type: String, default: null },

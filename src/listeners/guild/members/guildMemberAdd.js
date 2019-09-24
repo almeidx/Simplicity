@@ -8,8 +8,17 @@ class GuildMemberAdd extends SimplicityListener {
     super(client);
   }
 
-  on(_, member) {
+  async on(client, member) {
     const guild = member.guild;
+    try {
+      const guildData = client.database && await client.database.guilds.get(guild.id);
+      const autorole = guildData && guild.roles.get(guildData.autorole);
+
+      if (autorole) member.roles.add(autorole);
+    } catch (error) {
+      console.error(error);
+    }
+
     const user = member.user;
     const date = moment(user.createdAt);
 
