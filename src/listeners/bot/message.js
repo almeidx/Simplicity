@@ -10,7 +10,7 @@ class MessageListener extends SimplicityListener {
 
   // eslint-disable-next-line complexity
   async on(client, message) {
-    const { author, channel, content, guild } = message;
+    const { author, channel, content, guild, cleanContent } = message;
     if (author.bot || (guild && !channel.permissionsFor(client.user).has('SEND_MESSAGES'))) return;
 
     const guildData = client.database && await client.database.guilds.get(message.guild.id);
@@ -40,7 +40,7 @@ class MessageListener extends SimplicityListener {
         const totalLength = usedPrefix.length + commandName.length;
         const params = { args, guildData, command, language, message, prefix, query: args.join(' '), totalLength };
         command._run(new CommandContext(params)).catch(console.error);
-        Logger.logCommand({ guild: guild.name, channel: channel.name, author: author.tag, content });
+        Logger.logCommand({ guild: guild.name, channel: channel.name, author: author.tag, content: cleanContent });
       }
     }
   }
