@@ -16,8 +16,8 @@ class Starboard extends Command {
     });
   }
 
-  async run({ query, guild, channel: _channel, guildData, database, t, send }) {
-    const channel = await ChannelParameter.parse(query, {}, { guild }) || _channel;
+  async run({ query, guild, channel: currentChannel, guildData, database, t, send }) {
+    const channel = !query ? currentChannel : await ChannelParameter.parse(query, { required: true }, { guild });
     const channelId = channel.id === guildData.starboard ? null : channel.id;
     await database.guilds.edit(guild.id, { starboard: channelId });
 

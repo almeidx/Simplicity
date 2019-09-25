@@ -10,7 +10,7 @@ const ParameterOptions = {
   errors: {
     maxLength: 'commands:addemoji:nameTooBig',
     minLength: 'commands:addemoji:nameTooShort',
-    regex: 'commands:addemoji:nameInvalid',
+    regex: 'commands:addemoji:invalidName',
   },
 };
 

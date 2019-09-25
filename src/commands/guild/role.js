@@ -4,7 +4,7 @@ const { Command, Parameters: { MemberParameter, RoleParameter }, SimplicityEmbed
 
 const ParameterOptions = {
   checkIncludes: false,
-  required: false,
+  required: true,
   canBeGuildOwner: true,
   canBeAuthor: true,
   errors: {

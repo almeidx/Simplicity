@@ -49,7 +49,7 @@ class UserInfo extends Command {
     const joined = member && moment(member.joinedAt);
 
     const highestRole = member && member.roles.highest.id !== guild.id && member.roles.highest;
-    const roles = member && member.roles.sort((a, b) => b.position - a.position).map((r) => r).slice(0, -1);
+    const roles = member && member.roles.array().sort((a, b) => b.position - a.position).map((r) => r).slice(0, -1);
     const rolesClean = roles && roles.map((r) => r.name || r.toString());
     const activity = presence && presence.activity;
     const activityType = activity && activity.type && activity.name;

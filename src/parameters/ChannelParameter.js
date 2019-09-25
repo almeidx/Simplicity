@@ -32,9 +32,9 @@ class ChannelParameter extends Parameter {
 
     // If (!exceptions.canBeHidden && !hiddenChannel)
     // throw new CommandError(exceptions.errors.canBeHidden, { onUsage: true })
-    if (!exceptions.canBeHiddenBot && !hiddenChannelBot) throw new CommandError(
-      exceptions.errors.canBeHiddenBot, { onUsage: true }
-    );
+    if (!exceptions.canBeHiddenBot && !hiddenChannelBot) {
+      throw new CommandError(exceptions.errors.canBeHiddenBot, { onUsage: true });
+    }
 
     return true; // Role
   }

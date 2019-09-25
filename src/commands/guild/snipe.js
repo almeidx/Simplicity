@@ -25,7 +25,9 @@ class SnipeCommand extends Command {
     const channel = !query ? currentChannel : await ChannelParameter.parse(query, {}, { guild });
     const msg = client._deleteMessages.get(channel.id);
 
-    if (!msg) throw new CommandError('commands:snipe.notFound');
+    if (!msg || (msg && !msg.author && msg.content && !msg.attachments.size && !msg.embeds.length)) {
+      throw new CommandError('commands:snipe.notFound');
+    }
 
     const embed = new SimplicityEmbed(msg.author)
       .setDescription(msg.content)
