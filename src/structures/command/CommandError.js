@@ -6,6 +6,7 @@ class CommandError extends Error {
     this.options = options;
     this.onUsage = !!options.onUsage;
     this.fields = [];
+    this.notEmbed = !!options.notEmbed;
   }
 
   addField(name, value, inline = false, options = {}, valueOptions = {}) {

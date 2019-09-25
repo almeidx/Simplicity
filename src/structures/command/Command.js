@@ -3,6 +3,7 @@
 const CommandRequirements = require('./CommandRequirements');
 const CommandCooldown = require('./CommandCooldown');
 const CommandError = require('./CommandError');
+const { verifyDev } = require('../../utils/PermissionsUtils');
 
 class Command {
   constructor(client, options = {}) {
@@ -31,8 +32,9 @@ class Command {
 
   async _run(ctx) {
     let inCooldown = true;
+    const isDev = verifyDev(ctx.author.id, ctx.client);
     try {
-      if (this.usersCooldown) {
+      if (!isDev && this.usersCooldown) {
         const cooldown = await this.runCooldown(ctx.author.id, ctx.t);
         if (cooldown === 'continue') inCooldown = false;
         if (cooldown === 'ratelimit') return;
@@ -50,7 +52,7 @@ class Command {
     } catch (error) {
       this.client.emit('commandError', error, ctx);
     } finally {
-      if (this.usersCooldown && !inCooldown) this.usersCooldown.add(ctx.author.id);
+      if (!isDev && this.usersCooldown && !inCooldown) this.usersCooldown.add(ctx.author.id);
     }
   }
 
@@ -58,7 +60,7 @@ class Command {
     const isCooldown = this.usersCooldown.isCooldown(userID);
     if (isCooldown === 'continue') return 'continue';
     else if (isCooldown === 'ratelimit') return 'ratelimit';
-    else throw new CommandError(this.usersCooldown.toMessage(isCooldown, t));
+    else throw new CommandError(this.usersCooldown.toMessage(isCooldown, t), { notEmbed: true });
   }
 
   getSubCommand(name) {
