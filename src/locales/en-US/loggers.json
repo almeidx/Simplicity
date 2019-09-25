@@ -1,4 +1,6 @@
 {
+    "memberJoin": "Member Join",
+    "memberLeave": "Member Leave",
     "joinVoiceChannel": "{{- user }} has joined the voice channel: {{- channel }}",
     "leaveVoiceChannel": "{{- user }} has left the voice channel: {{- channel }}",
     "hasChangedVoiceChannel": "{{- user }} has moved from the voice channel {{- oldChannel }} to {{- newChannel }}",

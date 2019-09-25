@@ -1,34 +1,85 @@
 'use strict';
 
-const { Command, CommandError, Parameters, SimplicityEmbed } = require('../..');
+const { Command, CommandError, Parameters, SimplicityEmbed, Utils } = require('../..');
+const { checkTick } = Utils;
 const { ChannelParameter } = Parameters;
 
 const Aliases = {
-  GuildMemberAdd: ['welcome', 'join', 'joined', 'welcoming'],
-  GuildMemberLeave: ['leave', 'left'],
-  MessageUpdate: ['message', 'messageUpdates', 'messageLogs', 'messages'],
+  memberJoin: ['join', 'joined'],
+  memberLeave: ['leave', 'left'],
+  MessageUpdate: ['message', 'messageedit', 'messagelogs', 'messages', 'messagedits', 'messageedits'],
   UserUpdate: ['userUpdates', 'user', 'userChanges', 'users'],
   VoiceChannelLogs: ['vc', 'voice'],
 };
-const Condition = 'set';
 
+const logs = ['memberJoin', 'memberLeave'];
 class Logs extends Command {
   constructor(client) {
     super(client, {
       name: 'logs',
-      cooldown: 60000,
+      cooldown: 3000,
       aliases: ['log', 'logger', 'loggers', 'modlog', 'modlogs', 'eventlog', 'logevent'],
       category: 'bot',
       requirements: {
-        ownerOnly: true,
         requireDatabase: true,
         permissions: ['MANAGE_GUILD'],
       },
+      subcommands: [
+        new SetChannelSubCommand(client),
+      ],
     });
   }
 
-  async run({ args, author, client, emoji, guild, query, send, t }) {
-    const checkChannel = (c) => guild.channels.get(c) ? c : '#TICK_NO';
+  run({ guildData, author, t, emoji, send }) {
+    if (!guildData.logs.channelID) throw new CommandError('commands:logs.noChannel');
+
+    const embed = new SimplicityEmbed({ author, t, emoji });
+
+    for (const logName of logs) {
+      embed.addField(`$$loggers:${logName}`, `${checkTick(guildData.logs[logName])}`, true);
+    }
+
+    send(embed);
+  }
+}
+
+class SetChannelSubCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'setchannel',
+      subcommand: true,
+      aliases: ['channel', 'set', 'schannel', 'c'],
+      requirements: {
+        requireDatabase: true,
+        argRequired: true,
+      },
+      argRequireResponse: 'commands:logs-setchannel.channel',
+    });
+  }
+
+  async run({ query, guildData, database, guild, message, t }) {
+    const dblogs = guildData.logs;
+    if (!query) {
+      if (!dblogs.channelID) throw new CommandError('commands:logs-setchannel.noChannel');
+      dblogs.channelID = null;
+      await database.guilds.edit(guild.id, { logs: dblogs });
+      return message.reply(t('commands:logs-setchannel.disable'));
+    }
+
+    const channel = await ChannelParameter.parse(query, { required: true }, { guild });
+
+    if (channel.id === dblogs.channelID) throw new CommandError('commands:logs-setchannel.alreadyChannel');
+
+    dblogs.channelID = channel.id;
+    await database.guilds.edit(guild.id, { logs: dblogs });
+    return message.reply(t('commands:logs-setchannel.success'));
+  }
+}
+
+module.exports = Logs;
+
+/**
+ *     const checkChannel = (c) => guild.channels.get(c) ? c : '#TICK_NO';
     const embed = new SimplicityEmbed({ author, emoji, t });
     const { logs } = await client.database.guilds.get(guild.id);
     const logTypes = Object.keys(logs);
@@ -52,7 +103,4 @@ class Logs extends Command {
       embed.setDescription('commands:logs.edited', { type, channel });
       return send(embed);
     } else return send('What? Where??');
-  }
-}
-
-module.exports = Logs;
+ */

@@ -13,7 +13,7 @@ class Command {
 
   setup(options) {
     if (!options.name) throw new Error(`${this.constructor.name} doesn't have name`);
-    if (!options.category) throw new Error(`${this.constructor.name} doesn't have category`);
+    if (!options.category && !options.subcommand) throw new Error(`${this.constructor.name} doesn't have category`);
 
 
     this.name = options.name;

@@ -223,14 +223,14 @@
     },
     "logs": {
         "description": "This command allows you to set the logs in your server",
-        "usage": "[type] [on/off]",
-        "GuildMemberAdd": "Member Join",
-        "GuildMemberRemove": "Member Leave",
-        "GuildUpdates": "Guild Updates",
-        "MessageUpdate": "Message Updates",
-        "UserUpdate": "User Updates",
-        "VoiceChannelLogs": "Voice Channel Logs",
-        "edited": "You have successfully set the {{ type }} channel to: {{- channel }}"
+        "usage": "[type] [on/off]"
+    },
+    "logs-setchannel": {
+        "description": "",
+        "success": "You have successfully set the channel to: {{- channel }}",
+        "alreadyChannel": "This channel already is current channel.",
+        "disable": "",
+        "noChannel": ""
     },
     "config-starboard": {
         "description": "$t(starboard.description)",

@@ -20,7 +20,8 @@ class Eval extends Command {
   }
 
   async run(ctx) {
-    const { args, author, botLanguages, channel, client, command, emoji, guild, language, member, message, prefix,
+    // eslint-disable-next-line max-len
+    const { args, author, guildData, botLanguages, channel, client, command, emoji, guild, language, member, message, prefix,
       query, send, t } = ctx;
     const embed = new SimplicityEmbed({ author });
     const text = query.replace(/^```(js|javascript ?\n)?|```$/gi, '');
