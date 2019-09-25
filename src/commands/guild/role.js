@@ -21,9 +21,7 @@ class Role extends Command {
       requirements: {
         argsRequired: true,
       },
-      responses: {
-        argsRequired: 'commands:role.noArgs',
-      },
+      argsRequiredResponse: 'commands:role.noArgs',
     });
   }
 

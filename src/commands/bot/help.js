@@ -5,6 +5,7 @@ const { Command, CommandError, CommandUtils, PermissionsUtils, SimplicityEmbed }
 class Help extends Command {
   constructor(client) {
     super(client, {
+      name: 'help',
       aliases: ['h', 'commands', 'cmd', 'cmds', 'howtouse'],
       category: 'bot',
     });

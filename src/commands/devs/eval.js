@@ -9,6 +9,7 @@ const value = (s) => code(s, 'js').replace(token, () => '*'.repeat(token.length)
 class Eval extends Command {
   constructor(client) {
     super(client, {
+      name: 'eval',
       aliases: ['compile', 'ev', 'evaluate'],
       category: 'dev',
       requirements: {

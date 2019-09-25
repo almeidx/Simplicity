@@ -8,14 +8,13 @@ class RoleInfo extends Command {
   constructor(client) {
     super(client, {
       name: 'roleinfo',
+      category: 'guild',
       aliases: ['ri', 'roleinformation'],
       requirements: {
         argsRequired: true,
         guildOnly: true,
       },
-      responses: {
-        argsRequired: 'commands:roleinfo.noArgs',
-      },
+      argsRequiredResponse: 'commands:roleinfo.noArgs',
     });
   }
 

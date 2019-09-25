@@ -11,9 +11,7 @@ class Say extends Command {
       requirements: {
         argsRequired: true,
       },
-      responses: {
-        argsRequired: 'commands:say.error',
-      },
+      argsRequiredResponse: 'commands:say.error',
     });
   }
 

@@ -15,9 +15,7 @@ class Emoji extends Command {
       requirements: {
         argsRequired: true,
       },
-      responses: {
-        argsRequired: 'commands:emoji.noArgs',
-      },
+      argsRequiredResponse: 'commands:emoji.noArgs',
     });
   }
 

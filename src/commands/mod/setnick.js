@@ -24,6 +24,7 @@ class SetNick extends Command {
   constructor(client) {
     super(client, {
       name: 'setnick',
+      category: 'mod',
       aliases: ['nick', 'nickname', 'setnickname'],
       requirements: {
         permissions: ['MANAGE_NICKNAMES'],

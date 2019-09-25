@@ -13,6 +13,7 @@ const MemberParameterOptions = {
 class VoiceKick extends Command {
   constructor(client) {
     super(client, {
+      name: 'vckick',
       aliases: ['voicekick', 'vkick', 'kickvoice', 'kickvc'],
       category: 'mod',
       requirements: {
