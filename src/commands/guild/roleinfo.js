@@ -18,13 +18,14 @@ class RoleInfo extends Command {
     });
   }
 
-  async run({ author, client, emoji, guild, query, send, t }) {
+  async run({ author, client, emoji, guild, query, send, t, language }) {
     const role = await RoleParameter.parse(query, {
       errors: { missingError: 'errors:invalidRole' },
       required: true,
     }, { client, guild });
     if (!role || role.id === guild.id) throw new CommandError('errors:invalidRole');
 
+    moment.locale(language);
     const totalRoles = guild.roles.filter((r) => r.id !== guild.id).size;
 
     const embed = new SimplicityEmbed({ author, emoji, t })

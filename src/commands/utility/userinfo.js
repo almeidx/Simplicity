@@ -19,7 +19,7 @@ class UserInfo extends Command {
   }
 
   // eslint-disable-next-line complexity
-  async run({ author, client, channel, emoji, guild, query, send, t }) {
+  async run({ author, client, channel, emoji, guild, query, send, t, language }) {
     const canShowMemberInfo = (query && client.users.has(query)) || true;
     const user = !query ?
       author :
@@ -27,6 +27,9 @@ class UserInfo extends Command {
         errors: { missingError: 'errors:invalidUser' },
         required: true,
       }, { client, guild });
+
+    moment.locale(language);
+
     const member = canShowMemberInfo && guild && guild.member(user);
 
     const presence = canShowMemberInfo && user.presence;

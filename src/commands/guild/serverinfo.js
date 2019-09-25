@@ -18,10 +18,13 @@ class ServerInfo extends Command {
     });
   }
 
-  async run({ author, channel, client, emoji, guild: currentGuild, query, send, t }) {
+  async run({ author, channel, client, emoji, guild: currentGuild, query, send, t, language }) {
     const guild = await GuildParameter.search(query, { client, guild: currentGuild }, GuildParameterOptions);
 
     if (guild.memberCount !== guild.members.size || guild.large) await guild.members.fetch();
+
+    moment.locale(language);
+
     const totalMembers = guild.memberCount;
     const onlineMembers = guild.members.filter((m) => m.user.presence.status !== 'offline').size;
     const offlineMembers = guild.members.filter((m) => m.user.presence.status === 'offline').size;
