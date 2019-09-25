@@ -6,6 +6,7 @@ const Loaders = require('../../loaders');
 class SimplicityClient extends Client {
   constructor(options) {
     super(options);
+    this._deleteMessages = new Map();
     this.loadFiles();
   }
 
