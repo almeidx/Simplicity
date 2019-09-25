@@ -13,7 +13,11 @@ class SnipeCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'snipe',
-      category: 'util',
+      category: 'guild',
+      cooldown: 3000,
+      requirements: {
+        guildOnly: true,
+      },
     });
   }
 
@@ -25,7 +29,7 @@ class SnipeCommand extends Command {
 
     const embed = new SimplicityEmbed(msg.author)
       .setDescription(msg.content)
-      .setFooter(channel.name)
+      .setFooter(`#${channel.name}`)
       .setTimestamp(msg.timestamp);
 
     let attachments = msg.attachments.array();

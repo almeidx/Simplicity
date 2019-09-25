@@ -264,9 +264,9 @@
         "changed": "The AutoRole has been changed to `{{ role }}`"
     },
     "snipe": {
-        "description": "Returns the latest deleted message from the specified channel.",
+        "description": "Returns the last deleted message from the specified channel.",
         "usage": "<channel>",
         "files": "Files",
-        "notFound": "I could not find"
+        "notFound": "I was not able to find any snipes for the specified channel."
     }
 }
