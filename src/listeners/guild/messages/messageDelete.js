@@ -8,8 +8,6 @@ class MessageDelete extends SimplicityListener {
   }
 
   async on(client, message) {
-    if (message.partial) await message.fetch();
-
     // add message deleted for snipe command
     client._deleteMessages.set(message.channel.id, message);
 
