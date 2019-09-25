@@ -8,6 +8,9 @@ class MessageDelete extends SimplicityListener {
   }
 
   async on(client, message) {
+    // add message deleted for snipe command
+    client._deleteMessages.set(message.channel.id, message);
+
     const user = message.author || client.user;
 
     const embed = new SimplicityEmbed(this.getFixedT(message.guild.id))
