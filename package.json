@@ -5,8 +5,8 @@
   "description": "Discord Bot",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "nodemon": "nodemon --inspect --watch src --watch .env --watch index.js --watch node_modules index.js",
+    "start": "node .",
+    "nodemon": "nodemon --inspect --watch *.js --watch .env --watch *.json index.js",
     "lint": "eslint src *.js",
     "lint:fix": "eslint --fix src"
   },
@@ -23,7 +23,8 @@
   },
   "devDependencies": {
     "eslint": "^6.4.0",
-    "eslint-plugin-promise": "^4.2.1"
+    "eslint-plugin-promise": "^4.2.1",
+    "nodemon": "^1.19.3"
   },
   "repository": {
     "type": "git",
