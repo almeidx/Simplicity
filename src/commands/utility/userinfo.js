@@ -19,7 +19,7 @@ class UserInfo extends Command {
   }
 
   // eslint-disable-next-line complexity
-  async run({ author, client, channel, emoji, guild, query, send, t }) {
+  async run({ author, client, channel, emoji, guild, query, send, t, language }) {
     const canShowMemberInfo = (query && client.users.has(query)) || true;
     const user = !query ?
       author :
@@ -27,6 +27,9 @@ class UserInfo extends Command {
         errors: { missingError: 'errors:invalidUser' },
         required: true,
       }, { client, guild });
+
+    moment.locale(language);
+
     const member = canShowMemberInfo && guild && guild.member(user);
 
     const presence = canShowMemberInfo && user.presence;
@@ -46,7 +49,7 @@ class UserInfo extends Command {
     const joined = member && moment(member.joinedAt);
 
     const highestRole = member && member.roles.highest.id !== guild.id && member.roles.highest;
-    const roles = member && member.roles.sort((a, b) => b.position - a.position).map((r) => r).slice(0, -1);
+    const roles = member && member.roles.array().sort((a, b) => b.position - a.position).map((r) => r).slice(0, -1);
     const rolesClean = roles && roles.map((r) => r.name || r.toString());
     const activity = presence && presence.activity;
     const activityType = activity && activity.type && activity.name;

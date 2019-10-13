@@ -262,5 +262,11 @@
         "isCurrentRole": "The AutoRole is already set to {{ role }}",
         "enabled": "The AutoRole has been set to `{{ role }}`",
         "changed": "The AutoRole has been changed to `{{ role }}`"
+    },
+    "snipe": {
+        "description": "Returns the last deleted message from the specified channel.",
+        "usage": "<channel>",
+        "files": "Files",
+        "notFound": "I was not able to find any snipes for the specified channel."
     }
 }

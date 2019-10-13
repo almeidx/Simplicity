@@ -4,7 +4,7 @@ const { Command, Parameters: { MemberParameter, RoleParameter }, SimplicityEmbed
 
 const ParameterOptions = {
   checkIncludes: false,
-  required: false,
+  required: true,
   canBeGuildOwner: true,
   canBeAuthor: true,
   errors: {
@@ -21,9 +21,7 @@ class Role extends Command {
       requirements: {
         argsRequired: true,
       },
-      responses: {
-        argsRequired: 'commands:role.noArgs',
-      },
+      argsRequiredResponse: 'commands:role.noArgs',
     });
   }
 

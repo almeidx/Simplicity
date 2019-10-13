@@ -45,7 +45,7 @@ class MessageListener extends SimplicityListener {
         return message.reply(t('common:prefix', { prefix }));
       }
 
-      if (command && !command.running.has(channel.id, author.id)) {
+      if (command) {
         const totalLength = usedPrefix.length + commandName.length;
         const params = { args, guildData, command, language, message, prefix, query: args.join(' '), totalLength };
         command._run(new CommandContext(params)).catch(console.error);

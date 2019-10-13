@@ -1,13 +1,9 @@
 'use strict';
 
-const { Command, Parameters, SimplicityEmbed, Utils } = require('../..');
-const { GuildParameter } = Parameters;
+const { Command, SimplicityEmbed, Utils } = require('../..');
 const { getServerIconURL } = Utils;
 const moment = require('moment');
-const GuildParameterOptions = {
-  required: true,
-  checkIncludes: true,
-};
+
 
 class ServerInfo extends Command {
   constructor(client) {
@@ -18,10 +14,11 @@ class ServerInfo extends Command {
     });
   }
 
-  async run({ author, channel, client, emoji, guild: currentGuild, query, send, t }) {
-    const guild = await GuildParameter.search(query, { client, guild: currentGuild }, GuildParameterOptions);
-
+  async run({ author, channel, emoji, guild, send, t, language }) {
     if (guild.memberCount !== guild.members.size || guild.large) await guild.members.fetch();
+
+    moment.locale(language);
+
     const totalMembers = guild.memberCount;
     const onlineMembers = guild.members.filter((m) => m.user.presence.status !== 'offline').size;
     const offlineMembers = guild.members.filter((m) => m.user.presence.status === 'offline').size;

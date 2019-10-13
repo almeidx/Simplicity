@@ -5,6 +5,7 @@ const { Command } = require('../../');
 class Ping extends Command {
   constructor(client) {
     super(client, {
+      name: 'ping',
       aliases: ['pong'],
       category: 'bot',
     });

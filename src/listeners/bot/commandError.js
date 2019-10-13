@@ -28,6 +28,7 @@ class CommandErrorListener extends SimplicityListener {
 
       this.sendPrivateMessage('CHANNEL_LOG_ERROR', embed);
     } else {
+      if (error.notEmbed) canEmbed = false;
       const args = { author, command, canEmbed, t, prefix, send };
       this.sendErrorCommandMessage(t(error.message, error.options), error.onUsage, args);
     }

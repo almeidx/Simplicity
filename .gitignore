@@ -6,3 +6,6 @@ node_modules/
 
 # JetBrains IDE directory
 .idea/
+
+# Arguments folder
+src/structures/command/arguments/

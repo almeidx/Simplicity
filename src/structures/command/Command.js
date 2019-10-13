@@ -1,9 +1,9 @@
 'use strict';
 
-const Requirements = require('./Requirements');
-const RunStore = require('./stores/RunStore');
+const CommandRequirements = require('./CommandRequirements');
 const CommandCooldown = require('./CommandCooldown');
 const CommandError = require('./CommandError');
+const { verifyDev } = require('../../utils/PermissionsUtils');
 
 class Command {
   constructor(client, options = {}) {
@@ -12,36 +12,47 @@ class Command {
   }
 
   setup(options) {
-    this.name = options.name || 'none';
-    this.category = options.category || 'none';
+    if (!options.name) throw new Error(`${this.constructor.name} doesn't have name`);
+    if (!options.category) throw new Error(`${this.constructor.name} doesn't have category`);
+
+
+    this.name = options.name;
+    this.category = options.category;
     this.aliases = options.aliases || [];
     this.requirements = options.requirements;
-    this.responses = options.responses || {};
+    this.argRequireResponse = options.argRequiredResponse;
     this.subcommands = options.subcommands || [];
     this.cooldown = options.cooldown || process.env.COMMAND_COOLDOWN || 10000;
-    this.running = new RunStore();
-    this.usersCooldown = new CommandCooldown(this.cooldown);
+    this.usersCooldown = this.cooldown > 0 ? new CommandCooldown(this.cooldown) : null;
   }
 
-  // eslint-disable-next-line no-empty-function
-  async run() {}
+  run() {
+    throw new Error(`${this.constructor.name} doesn't have a run() method.`);
+  }
 
-  async _run(context) {
+  async _run(ctx) {
     let inCooldown = true;
+    const isDev = verifyDev(ctx.author.id, ctx.client);
     try {
-      const cooldown = await this.runCooldown(context.author.id, context.t);
-      if (cooldown === 'continue') inCooldown = false;
-      if (cooldown === 'ratelimit') return;
+      if (!isDev && this.usersCooldown) {
+        const cooldown = await this.runCooldown(ctx.author.id, ctx.t);
+        if (cooldown === 'continue') inCooldown = false;
+        if (cooldown === 'ratelimit') return;
+      }
 
-      const subcommand = context.args[0] && this.getSubCommand(context.args[0].toLowerCase());
-      if (subcommand) return await this.runSubCommand(subcommand, context);
+      const [subcmd] = ctx.args;
+      const subcommand = subcmd && this.getSubCommand(subcmd.toLowerCase());
+      if (subcommand) return await this.runSubCommand(subcommand, ctx);
 
-      await this.runRequirements(context);
-      await this.run(context);
+      if (this.requirements) {
+        await CommandRequirements.handle(ctx, this.requirements, this.argRequireResponse);
+      }
+
+      await this.run(ctx);
     } catch (error) {
-      this.client.emit('commandError', error, context);
+      this.client.emit('commandError', error, ctx);
     } finally {
-      if (this.cooldown > 0 && !inCooldown) this.usersCooldown.add(context.author.id);
+      if (!isDev && this.usersCooldown && !inCooldown) this.usersCooldown.add(ctx.author.id);
     }
   }
 
@@ -49,13 +60,7 @@ class Command {
     const isCooldown = this.usersCooldown.isCooldown(userID);
     if (isCooldown === 'continue') return 'continue';
     else if (isCooldown === 'ratelimit') return 'ratelimit';
-    else throw new CommandError(this.usersCooldown.toMessage(isCooldown, t));
-  }
-
-
-  async runRequirements(ctx) {
-    const requirements = new Requirements(this.requirements, this.responses);
-    await requirements.handle(ctx);
+    else throw new CommandError(this.usersCooldown.toMessage(isCooldown, t), { notEmbed: true });
   }
 
   getSubCommand(name) {
