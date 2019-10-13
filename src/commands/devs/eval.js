@@ -19,20 +19,20 @@ class Eval extends Command {
   }
 
   async run(ctx) {
-    const { args, author, botLanguages, channel, client, command, emoji, guild, language, member, message, prefix,
-      query, send, t } = ctx;
+    const { args, author, botLanguages, channel, client, command, database, emoji, guild, language, member, message,
+      prefix, query, send, t } = ctx;
     const embed = new SimplicityEmbed({ author });
     const text = query.replace(/^```(js|javascript ?\n)?|```$/gi, '');
 
     try {
-      const evald = eval(text);
-      const toEval = inspect(evald, { depth: 0, showHidden: true });
+      const evald = await Promise.resolve(eval(text));
+      const fixed = inspect(evald, { depth: 0, showHidden: true });
+
       embed
-        .setDescription(value(toEval))
+        .setDescription(value(fixed))
         .setColor('GREEN');
 
-      if (!toEval || !evald) embed.setColor('RED');
-      if (toEval) console.warn(['COMMAND', 'EVAL-RESULT'], toEval);
+      if (!fixed || !evald) embed.setColor('RED');
     } catch (error) {
       embed
         .setDescription(value(error))
