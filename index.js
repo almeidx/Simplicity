@@ -1,6 +1,8 @@
 'use strict';
 
 const { SimplicityClient } = require('./src');
+const server = require('./src/api/server');
+
 require('dotenv').config();
 
 const CLIENT_OPTIONS = {
@@ -17,10 +19,15 @@ const CLIENT_OPTIONS = {
 };
 
 const client = new SimplicityClient(CLIENT_OPTIONS);
-client.login().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+client.login(process.env.DISCORD_TOKEN)
+  .then(() => {
+    server(client);
+    console.log('bot está online!');
+  })
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
 
 client
   .on('shardError', (error, shardID) => console.error(`Shard ${shardID} Error:`, error))
