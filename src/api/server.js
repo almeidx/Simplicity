@@ -17,7 +17,8 @@ function start(client) {
     ram: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
   }));
 
-  app.listen(process.env.PORT || 3000, () => console.log(`Online na porta ${5000}`));
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => console.log(`Online na porta ${port}`));
 }
 
 module.exports = start;
