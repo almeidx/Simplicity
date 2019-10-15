@@ -2,7 +2,7 @@
 node_modules/
 
 # dotenv environment variables file
-#.env
+.env
 
 # JetBrains IDE directory
 .idea/
