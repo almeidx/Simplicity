@@ -5,8 +5,8 @@
   "description": "Discord Bot",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "nodemon": "nodemon index.js --inspect --watch *.js --watch .env",
+    "dev": "nodemon src/bot.ts",
+    "build": "sucrase ./src -d ./dist --transforms typescript, imports",
     "lint": "eslint src *.js",
     "lint:fix": "eslint --fix src"
   },
@@ -23,9 +23,17 @@
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/node": "^12.11.1",
+    "@typescript-eslint/eslint-plugin": "^2.4.0",
+    "@typescript-eslint/parser": "^2.4.0",
     "eslint": "^6.4.0",
     "eslint-plugin-promise": "^4.2.1",
-    "nodemon": "^1.19.3"
+    "nodemon": "^1.19.3",
+    "prettier": "^1.18.2",
+    "sucrase": "^3.10.1",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4"
   },
   "repository": {
     "type": "git",

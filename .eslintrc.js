@@ -1,10 +1,25 @@
-{
-  "env": { "es6": true, "node": true },
-  "extends": "eslint:recommended",
-  "parserOptions": { "ecmaVersion": 2018 },
-  "plugins": ["promise"],
-  "rules": {
-    "accessor-pairs": "warn",
+module.exports = {
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "accessor-pairs": "warn",
     "array-bracket-spacing": "error",
     "array-callback-return": "error",
     "arrow-body-style": "error",
@@ -99,7 +114,6 @@
     "prefer-rest-params": "error",
     "prefer-spread": "error",
     "prefer-template": "error",
-    "promise/catch-or-return": "error",
     "quote-props": ["error", "as-needed"],
     "quotes": ["error", "single", { "allowTemplateLiterals": true,  "avoidEscape": true }],
     "require-await": "warn",
@@ -119,5 +133,5 @@
     "wrap-iife": "error",
     "yield-star-spacing": "error",
     "yoda": "error"
-  }
-}
+    }
+};

@@ -1,0 +1,7 @@
+{
+    "watch": ["src"],
+    "ext": ".ts",
+    "exeMap": {
+        "ts": "sucrase-node src/bot.ts --downlevelIteration"
+    }
+}

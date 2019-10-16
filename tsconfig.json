@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+      "alwaysStrict": true,
+      "esModuleInterop": true,
+      "inlineSourceMap": true,
+      "inlineSources": true,
+      "jsx": "preserve",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "newLine": "LF",
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      "removeComments": true,
+      "resolveJsonModule": true,
+      "target": "esnext",
+      "baseUrl": ".",
+      "rootDir": "src",
+      "outDir": "dist"
+    },
+    "include": [
+      "src/**/*"
+    ],
+    "exclude": [
+      "dist/**/*",
+      "test/**/*"
+    ]
+  }
