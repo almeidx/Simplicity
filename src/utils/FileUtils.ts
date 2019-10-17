@@ -1,9 +1,7 @@
 import { resolve } from 'path';
 import { readdirSync, lstatSync } from 'fs';
-import SimplicityClient from '../bot/SimplicityClient';
 
-type module = (client: SimplicityClient) => any
-type callback = (error: Error | null, module: module, filename?: string) => void;
+type callback = (error: Error | null, module: any, filename?: string) => void;
 
 export function requireDirectory(
   dirPath: string,

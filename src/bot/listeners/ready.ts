@@ -1,7 +1,6 @@
-import SimplicityClient from '../SimplicityClient';
+import SimplicityClient from '../client/SimplicityClient';
 
-function onReady<SimplicityClient>(): void {
+export const name = 'ready';
+export function handle<SimplicityClient>(): void {
   console.log(`My name is ${this.user.username}!`);
 }
-
-export default (client: SimplicityClient) => client.on('ready', onReady);
