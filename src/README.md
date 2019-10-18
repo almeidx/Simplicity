@@ -6,7 +6,7 @@
 [x] - Inicializadores
   [x] - listeners
   [] - commands
-  [] - i18n
+  [x] - i18n
   [] - database
 
 # Eventos
@@ -29,7 +29,7 @@
   [] - prefix
   [] - setPrefix
   [] - command
-  [] - botLanguages
+  [x] - botLanguages
   [] - language
   [] - setLanguage
   [] - query

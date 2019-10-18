@@ -18,6 +18,10 @@ export default Structures.extend('Message', (DiscordMessage) => {
       }
       return this.channel.send(content, options);
     }
+
+    get botLanguages() {
+      return this.client.languages;
+    }
   }
 
   return SimplicityMessage;
@@ -25,6 +29,7 @@ export default Structures.extend('Message', (DiscordMessage) => {
 
 declare module 'discord.js' {
   interface Message {
+    client: SimplicityClient;
     send(content: contentType, options?: optionsType): Promise<Message | any>;
   }
 }
