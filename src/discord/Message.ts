@@ -25,6 +25,6 @@ export default Structures.extend('Message', (DiscordMessage) => {
 
 declare module 'discord.js' {
   interface Message {
-  send(content: contentType, options?: optionsType): Promise<Message | any>;
+    send(content: contentType, options?: optionsType): Promise<Message | any>;
   }
 }

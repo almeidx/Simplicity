@@ -8,10 +8,12 @@ import '../../discord/Message';
 export default class SimplicityClient extends Client {
   public readonly commandMessages: Map<string, string>
 
+  public readonly languages: string[]
+
   public constructor(options = {}) {
     super(options);
     this.commandMessages = new Map();
-
+    this.languages = [];
     this.on('message', handleMessage);
     this.on('messageUpdate', (_, msg) => handleMessage.bind(this)(msg));
   }

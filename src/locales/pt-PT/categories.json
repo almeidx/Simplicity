@@ -1,0 +1,30 @@
+{
+  "bot": {
+    "name": "Bot",
+    "description": ""
+  },
+  "config": {
+    "name": "Configuração",
+    "description": ""
+  },
+  "dev": {
+    "name": "Desenvolvedores",
+    "description": ""
+  },
+  "general": {
+    "name": "Geral",
+    "description": ""
+  },
+  "mod": { 
+    "name": "Moderação",
+    "description": ""
+  },
+  "util": {
+    "name": "Utilidade",
+    "description": ""
+  },
+  "guild": {
+    "name": "Servidor",
+    "descriptions:": ""
+  }
+}
