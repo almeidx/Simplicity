@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import { Message } from 'discord.js';
 
+// @link https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 const reset = '\x1b[0m';
 const bold = '\x1b[1m';
 const italic = '\x1b[3m';
