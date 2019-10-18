@@ -13,7 +13,7 @@ export async function handle(client: SimplicityClient) {
     .init({
       ns: ['categories', 'commands', 'errors', 'permissions', 'common', 'loggers', 'api_errors'],
       preload: readdirSync(localesPath),
-      fallbackLng: 'en-US',
+      fallbackLng: client.defaultLanguage,
       defaultNS: 'commands',
       backend: {
         loadPath: `${path}/{{lng}}/{{ns}}.json`,

@@ -10,10 +10,15 @@ export default class SimplicityClient extends Client {
 
   public readonly languages: string[]
 
+  public defaultLanguage: string
+
   public constructor(options = {}) {
     super(options);
+
     this.commandMessages = new Map();
     this.languages = [];
+    this.defaultLanguage = 'en-US';
+
     this.on('message', handleMessage);
     this.on('messageUpdate', (_, msg) => handleMessage.bind(this)(msg));
   }
