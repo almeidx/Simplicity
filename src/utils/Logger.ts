@@ -5,7 +5,6 @@ import { Message } from 'discord.js';
 // @link https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 const reset = '\x1b[0m';
 const bold = '\x1b[1m';
-const italic = '\x1b[3m';
 const fgBlack = '\x1b[30m';
 function setColor(fgCode: number | number[], title: string = '', text: any = '') {
   let bgCode: number;
@@ -20,7 +19,10 @@ function setColor(fgCode: number | number[], title: string = '', text: any = '')
   const background = `\x1b[${bgCode}m`;
   const timestamp = `${background}${fgBlack}${new Date().toLocaleString()}`;
 
-  return `${timestamp + reset} ${foreground + bold + title + reset} ${foreground + italic + text + reset}`;
+  return `${timestamp + reset} ${foreground
+    + bold
+    + title
+    + reset} ${foreground + text + reset}`;
 }
 
 export function error(message: string, text?: any) {
