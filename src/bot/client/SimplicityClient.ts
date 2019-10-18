@@ -1,5 +1,7 @@
+/* eslint-disable class-methods-use-this */
 import { Client } from 'discord.js';
 import { requireDirectory } from '../../utils/FileUtils';
+import * as Logger from '../../utils/Logger';
 
 export default class SimplicityClient extends Client {
   async login(token:string = process.env.DISCORD_TOKEN) {
@@ -7,22 +9,22 @@ export default class SimplicityClient extends Client {
     return super.login(token);
   }
 
-  loadInitializers(): any {
-    requireDirectory('src/bot/client/initializers', (err, init) => {
+  public loadInitializers(): any {
+    requireDirectory('src/bot/client/initializers', (err, init, filename) => {
       if (err) {
-        console.log(err);
+        this.logger.error(`Não foi possivel importar o arquivo: ${filename}`, err);
         process.exit(1);
       }
       try {
         init.handle(this);
       } catch (error) {
-        console.error(error);
+        this.logger.error(`Não foi possivel iniciar o modulo: ${filename}`, error);
         if (init.required) process.exit(1);
       }
     });
   }
 
-  private timestamp() {
-    return this;
+  public get logger() {
+    return Logger;
   }
 }

@@ -12,7 +12,7 @@ export const required = true;
 export function handle(client: SimplicityClient) {
   requireDirectory('src/bot/listeners', (error, Event, filename) => {
     if (error) {
-      console.error(`Não foi possivel carregar o evento ${filename}\n${error}`);
+      return client.logger.error(`Não foi possivel carregar o evento: ${filename}`, error);
     }
 
     const { name, handle: eventHandle } = Event;

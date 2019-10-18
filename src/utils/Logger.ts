@@ -1,44 +1,45 @@
-
-const colors = {
-  FgRed: '\x1b[31m',
-  FgGreen: '\x1b[32m',
-  FgYellow: '\x1b[33m',
-  FgBlue: '\x1b[34m',
-  FgMagenta: '\x1b[35m',
-  FgCyan: '\x1b[36m',
-  FgWhite: '\x1b[37m',
-};
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-console */
+import { Message } from 'discord.js';
 
 const reset = '\x1b[0m';
-const setColor = (c, text) => `${colors[c] + text + reset}`;
+const bold = '\x1b[1m';
+const italic = '\x1b[3m';
+const fgBlack = '\x1b[30m';
+function setColor(fgCode: number | number[], title: string = '', text: any = '') {
+  let bgCode: number;
+  if (typeof fgCode !== 'number') {
+    const [a, b] = fgCode;
+    fgCode = a;
+    bgCode = b;
+  } else {
+    bgCode = fgCode + 10;
+  }
+  const foreground = `\x1b[${fgCode}m`;
+  const background = `\x1b[${bgCode}m`;
+  const timestamp = `${background}${fgBlack}${new Date().toLocaleString()}`;
 
-
-function timestamp() {
-  return setColor('FgMagenta', moment().format('DD/MM/YYYY HH:mm:ss'));
+  return `${timestamp + reset} ${foreground + bold + title + reset} ${foreground + italic + text + reset}`;
 }
 
-function _log(color, type = 'log', text) {
-  return console[type](`${timestamp} ${setColor(color, text)}`);
+export function error(message: string, text?: any) {
+  return console.error(setColor(31, message, text));
 }
 
-function log(text) {
-  return _log('FgGreen', 'log', text);
+export function log(title: string, text?: any) {
+  return console.log(setColor(32, title, text));
 }
 
-function error(text) {
-  return _log('FgRed', 'error', text);
+export function warn(title: string, text?: any) {
+  return console.warn(setColor(33, title, text));
 }
 
-function warn(text) {
-  return _log('FgYellow', 'warn', text);
+export function info(title: string, text?: any) {
+  return console.info(setColor([37, 47], title, text));
 }
 
-function logCommand({
-  guild, channel, author, content,
-}) {
-  const warn = setColor('FgYellow', '[Command]');
-  const g = setColor('FgBlue', guild);
-  const c = setColor('FgCyan', `#${channel}`);
-  const u = setColor('FgGreen', `@${author}`);
-  return console.warn(`${_timestamp} ${warn} ${g} ${c} ${u} ${content}`);
+export function command(message: Message) {
+  const { guild, author, cleanContent } = message;
+  const msg = `${guild.name}(${guild.id}) @${author.tag}(${author.id})`;
+  return console.info(setColor([36, 46], msg, cleanContent));
 }
