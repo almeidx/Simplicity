@@ -2,8 +2,20 @@
 import { Client } from 'discord.js';
 import { requireDirectory } from '../../utils/FileUtils';
 import * as Logger from '../../utils/Logger';
+import handleMessage from './handleMessage';
+import '../../discord/Message';
 
 export default class SimplicityClient extends Client {
+  public readonly commandMessages: Map<string, string>
+
+  public constructor(options = {}) {
+    super(options);
+    this.commandMessages = new Map();
+
+    this.on('message', handleMessage);
+    this.on('messageUpdate', (_, msg) => handleMessage.bind(this)(msg));
+  }
+
   async login(token:string = process.env.DISCORD_TOKEN) {
     this.loadInitializers();
     return super.login(token);

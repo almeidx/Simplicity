@@ -7,8 +7,8 @@
 [x] - suporte pra eventos
 
 # Eventos
-[] - Ready
-  [] - setar status
+[x] - Ready
+  [x] - setar status
   [x] - exibir estatisticas no terminal
 
 # Utils
