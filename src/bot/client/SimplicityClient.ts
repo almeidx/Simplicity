@@ -21,4 +21,8 @@ export default class SimplicityClient extends Client {
       }
     });
   }
+
+  private timestamp() {
+    return this;
+  }
 }
