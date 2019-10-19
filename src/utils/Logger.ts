@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 import { Message } from 'discord.js';
 

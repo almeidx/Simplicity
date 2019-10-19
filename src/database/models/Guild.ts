@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import GuildInterface from './GuildInterface';
+import { GuildDocument } from './GuildInterface';
 
 const GuildScherma = new Schema({
   guildId: { type: String, require: true },
@@ -46,4 +46,4 @@ const GuildScherma = new Schema({
   },
 });
 
-export default model<GuildInterface>('Guild', GuildScherma);
+export default model<GuildDocument>('Guild', GuildScherma);

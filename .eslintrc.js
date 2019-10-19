@@ -25,6 +25,7 @@ module.exports = {
     "import/prefer-default-export": "off",
     "no-useless-return": "off",
     "consistent-return": "off",
-    "no-extra-semi": "off"
+    "no-extra-semi": "off",
+    "no-param-reassign": "off"
   },
 };

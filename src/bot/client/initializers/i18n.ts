@@ -24,6 +24,6 @@ export async function handle(client: SimplicityClient) {
       if (i18n.options.preload) {
         i18n.options.preload.forEach((lng) => client.languages.push(lng));
       }
-      client.logger.log('Todas linguas disponiveis: ', client.languages.join(', '));
+      client.logger.log('Todas linguas disponiveis:', client.languages.join(', '));
     });
 }

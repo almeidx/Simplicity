@@ -1,9 +1,11 @@
 /* eslint-disable class-methods-use-this */
 import { Client } from 'discord.js';
 import { requireDirectory } from '../../utils/FileUtils';
+
 import * as Logger from '../../utils/Logger';
 import handleMessage from './handleMessage';
-import '../../discord/Message';
+
+import '../../discord';
 
 export default class SimplicityClient extends Client {
   public readonly commandMessages: Map<string, string>
@@ -11,6 +13,8 @@ export default class SimplicityClient extends Client {
   public readonly languages: string[]
 
   public defaultLanguage: string
+
+  public databaseConnection: boolean
 
   public constructor(options = {}) {
     super(options);
