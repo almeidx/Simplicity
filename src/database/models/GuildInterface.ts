@@ -43,4 +43,4 @@ export default interface GuildInterface extends Document {
       channelId?: string,
       message?: string,
   }
-};;
+};
