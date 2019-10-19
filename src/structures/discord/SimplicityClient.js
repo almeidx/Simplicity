@@ -7,7 +7,6 @@ class SimplicityClient extends Client {
   constructor(options) {
     super(options);
     this._deleteMessages = new Map();
-    this.loadFiles();
   }
 
   async loadFiles() {
@@ -17,13 +16,19 @@ class SimplicityClient extends Client {
       try {
         // eslint-disable-next-line no-await-in-loop
         result = await loader.load();
+        console.log(`${loader.constructor.name} carregou sem problemas!`);
       } catch (err) {
-        console.error(err);
+        console.error('ops', err);
         result = false;
       } finally {
         if (!result && loader.required) process.exit(1);
       }
     }
+  }
+
+  login(token) {
+    this.loadFiles();
+    return super.login(token);
   }
 
   get categories() {
