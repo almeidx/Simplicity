@@ -14,16 +14,15 @@ export default async function handleMessage<SimplicityClient>(message: MessageTy
   const prefix = prefixGuild || process.env.PREFIX;
 
   if (message.content.startsWith(prefix)) {
-    const args = message.content.slice(prefix.length).split(' ');
-    const commandName = args.shift();
+    message.prefix = prefix;
 
     let responseId;
-    if (commandName === 'test') {
+    if (message.commandName === 'test') {
       responseId = await message.send('kk');
     }
 
-    if (commandName === 'setprefix') {
-      const [p] = args;
+    if (message.commandName === 'setprefix') {
+      const [p] = message.args;
       if (!p) {
         responseId = await message.send('digite um prefix');
       } else {

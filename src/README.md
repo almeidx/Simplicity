@@ -7,7 +7,7 @@
   [x] - listeners
   [] - commands
   [x] - i18n
-  [] - database
+  [x] - database
 
 # Eventos
 [x] - Ready
@@ -25,22 +25,19 @@
 # Discord Structures
 [x] - Message
   [x] - send
-  [ ] - voiceChannel
-  [] - prefix
-  [] - setPrefix
+  [x] - voiceChannel
+  [x] - prefix
   [] - command
   [x] - botLanguages
-  [] - language
-  [] - setLanguage
-  [] - query
-  [] - args
+  [x] - language
+  [x] - query
+  [x] - args
   [] - emojis
   [] - canEmbed
   [] - database
 
-[] - Guild
-  [] - data
-  [] - setData
+[x] - Guild
+  [x] - data
 
 # Emoji
 [] - id
