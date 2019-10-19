@@ -6,11 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
-<<<<<<< HEAD
-    "nodemon": "nodemon --inspect --watch *.js --watch .env --watch *.json index.js",
-=======
     "nodemon": "nodemon index.js --inspect --watch *.js --watch .env",
->>>>>>> aecedd36286894b3d504bf6edf8c2cc96c8555e4
     "lint": "eslint src *.js",
     "lint:fix": "eslint --fix src"
   },
