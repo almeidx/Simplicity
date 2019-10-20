@@ -14,18 +14,17 @@ export default async function handleMessage<SimplicityClient>(message: MessageTy
   if (message.content.startsWith(message.guildPrefix)) {
     message.prefix = message.guildPrefix;
 
-    let responseId;
     if (message.commandName === 'test') {
-      responseId = await message.send('kk');
+      await message.send('kk');
     }
 
     if (message.commandName === 'setprefix') {
       const [p] = message.args;
       if (!p) {
-        responseId = await message.send('digite um prefix');
+        await message.send('digite um prefix');
       } else {
         await message.guild.data.update({ prefix: p });
-        responseId = await message.send(`prefix definido como: ${p}`);
+        await message.send(`prefix definido como: ${p}`);
       }
     }
   }
