@@ -6,26 +6,21 @@ function validMessage({ author, channel, client }: MessageType) {
   return author.bot || (channel instanceof TextChannel && !channel.permissionsFor(client.user).has('SEND_MESSAGES'));
 }
 
-export default async function handleMessage<SimplicityClient>(message: MessageType): Promise<void> {
+export default async function handleMessage(
+  this: SimplicityClient, message: MessageType,
+): Promise<void> {
+  if (message.partial) message.fetch();
   if (validMessage(message)) return;
 
-  await message.guild.data.get();
+  if (this.databaseConnection) await message.guild.data.get();
 
   if (message.content.startsWith(message.guildPrefix)) {
     message.prefix = message.guildPrefix;
 
-    if (message.commandName === 'test') {
-      await message.send('kk');
-    }
+    const firstArg = message.args.shift();
+    const x = firstArg && firstArg.toLowerCase().toString();
+    const command = this.commands.find((cmd) => cmd.name === x || cmd.aliases.includes(x));
 
-    if (message.commandName === 'setprefix') {
-      const [p] = message.args;
-      if (!p) {
-        await message.send('digite um prefix');
-      } else {
-        await message.guild.data.update({ prefix: p });
-        await message.send(`prefix definido como: ${p}`);
-      }
-    }
+    if (command) command.exec(message);
   }
 }

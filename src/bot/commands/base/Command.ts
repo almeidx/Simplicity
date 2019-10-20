@@ -1,15 +1,15 @@
-/* eslint-disable class-methods-use-this */
 /* eslint-disable max-len */
 /* eslint-disable lines-between-class-members */
-import { Message, TextChannel } from 'discord.js';
+import { Message, PartialMessage, TextChannel } from 'discord.js';
 import SimplicityClient from '../../client/SimplicityClient';
 import { CommandOptions, CommandRequirements, ParamsOptions } from './interface';
 
 import { isDeveloper, notHavePermissions } from './utils/Utils';
 import { CommandBaseError } from './utils/CommndError';
 
+type MessageType = Message | PartialMessage
+
 export default class Command {
-    client: SimplicityClient;
     name: string;
     category: string;
     aliases: string[];
@@ -19,10 +19,8 @@ export default class Command {
     params: ParamsOptions[];
 
     constructor(
-      client: SimplicityClient, options: CommandOptions,
-      requirements: CommandRequirements, params: ParamsOptions[],
+      options: CommandOptions, requirements?: CommandRequirements, params?: ParamsOptions[],
     ) {
-      this.client = client;
       this.name = options.name;
       this.category = options.category;
       this.aliases = options.aliases || [];
@@ -32,11 +30,11 @@ export default class Command {
       this.params = params || [];
     }
 
-    run(message: Message, ...params: any): any {
+    run(message: MessageType, ...params: any): any {
       throw new Error(`${this.constructor.name} doesn't have a run() method.`);
     }
 
-    async exec(message: Message) {
+    async exec(message: MessageType) {
       /*
       try {
         await this.handleCooldown(message);
@@ -50,12 +48,6 @@ export default class Command {
         return error;
       }
       */
-
-      try {
-        await this.handleRequirements(message);
-      } catch (error) {
-        return error;
-      }
       /*
       let params = [];
       try {
@@ -66,17 +58,16 @@ export default class Command {
       */
 
       try {
+        await this.handleRequirements(message);
         await this.run(message, []);
       } catch (error) {
-        return error;
+        message.client.emit('commandError', this, error);
       }
     }
 
-    handleCooldown(message: Message): any {}
+    handleCooldown(message: MessageType): any {}
 
-    handleSubCommand(message: Message): any {}
-
-    handleRequirements(message: Message): any {
+    handleRequirements(message: MessageType): any {
       const {
         ownerOnly, requireDatabase, guildOnly, userPermissions, clientPermissions,
       } = this.requirements;
@@ -106,5 +97,5 @@ export default class Command {
       }
     }
 
-    handleArguments(message: Message): any {}
+    handleArguments(message: MessageType): any {}
 }

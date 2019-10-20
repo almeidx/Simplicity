@@ -4,7 +4,6 @@ import {
 } from 'discord.js';
 import SimplicityClient from 'src/bot/client/SimplicityClient';
 import i18n from 'i18next';
-import i18next from 'i18next';
 
 type contentType = StringResolvable | APIMessage
 type optionsType = MessageEditOptions | MessageOptions
@@ -17,9 +16,7 @@ export default Structures.extend('Message', (DiscordMessage) => {
 
     private _prefix: string
 
-    private _commandName: string
-
-    private _t: i18next.TFunction
+    private _t: i18n.TFunction
 
     async send(content: contentType, options: optionsType) {
       const msgId = this.client.commandMessages.get(this.id);
@@ -71,11 +68,6 @@ export default Structures.extend('Message', (DiscordMessage) => {
       return MentionRegex.test(this.content);
     }
 
-    get commandName() {
-      if (this._commandName) return this._commandName;
-      return this.args.shift();
-    }
-
     get _() {
       if (this._t) return this._t;
       this._t = i18n.getFixedT(this.language);
@@ -97,7 +89,6 @@ declare module 'discord.js' {
     guildPrefix: string;
     mentioned: boolean;
     args: string[];
-    commandName: string;
     _: i18n.TFunction;
     send(content: contentType, options?: optionsType): Promise<Message | any>;
   }
