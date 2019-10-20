@@ -23,7 +23,9 @@ export default Structures.extend('Message', (DiscordMessage) => {
       if (message) {
         return message.edit(content, options);
       }
-      return this.channel.send(content, options);
+      const res = await this.channel.send(content, options);
+      this.client.commandMessages.set(this.id, res.id);
+      return res;
     }
 
     get botLanguages() {

@@ -9,12 +9,10 @@ function validMessage({ author, channel, client }: MessageType) {
 export default async function handleMessage<SimplicityClient>(message: MessageType): Promise<void> {
   if (validMessage(message)) return;
 
-  const guildData = message.guild.data && await message.guild.data.get();
-  const prefixGuild = guildData && guildData.prefix;
-  const prefix = prefixGuild || process.env.PREFIX;
+  await message.guild.data.get();
 
-  if (message.content.startsWith(prefix)) {
-    message.prefix = prefix;
+  if (message.content.startsWith(message.guildPrefix)) {
+    message.prefix = message.guildPrefix;
 
     let responseId;
     if (message.commandName === 'test') {
@@ -30,7 +28,5 @@ export default async function handleMessage<SimplicityClient>(message: MessageTy
         responseId = await message.send(`prefix definido como: ${p}`);
       }
     }
-
-    this.commandMessages.set(message.id, responseId);
   }
 }
