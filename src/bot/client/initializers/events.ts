@@ -1,13 +1,6 @@
 import { requireDirectory } from '../../../utils/FileUtils';
 import SimplicityClient from '../SimplicityClient';
 
-interface Listener {
-    emitter: 'on' | 'once',
-    client: SimplicityClient,
-    name: string,
-    handle(...args: any): any,
-}
-
 export const required = true;
 export function handle(client: SimplicityClient) {
   requireDirectory('src/bot/events', (error, Event, filename) => {
