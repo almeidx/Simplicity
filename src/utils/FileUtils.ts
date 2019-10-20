@@ -28,9 +28,9 @@ export function requireDirectory(
     if (!ignore && typeof callback !== 'function') fn = (() => {});
     try {
       const result = await import(fullPath);
-      fn(null, result.default ? result.default : result);
+      fn(null, result.default ? result.default : result, filename);
     } catch (error) {
-      fn(error, null);
+      fn(error, null, filename);
     }
   });
 }
