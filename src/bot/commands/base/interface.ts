@@ -10,10 +10,13 @@ export interface CommandOptions {
 }
 
 export interface CommandRequirements {
-    ownerOnly?: false,
-    requireDatabase?: false,
-    permissions?: PermissionString[],
+    guildOnly?: boolean,
+    ownerOnly?: boolean,
+    requireDatabase?: boolean,
+    userPermissions?: PermissionString[],
     clientPermissions?: PermissionString[],
 }
 
 export interface ParamsOptions {}
+
+export type errorBases = 'cooldown' | 'arguments' | 'requirements';
