@@ -23,6 +23,9 @@ export interface CommandRequirements {
     readonly clientPermissions?: PermissionString[],
 }
 
-export interface Command extends CommandOptions, CommandRequirements {
-    run(message: Message): any
+export type parameterTypes = 'boolean'
+export interface ParameterOptions {
+  type: parameterTypes,
+  error?: string,
+  flags?: string[]
 }

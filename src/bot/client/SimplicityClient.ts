@@ -5,28 +5,20 @@ import * as Logger from '../../utils/Logger';
 import handleMessage from './handleMessage';
 
 import Command from '../commands/base/Command';
+import ArgumentBase from '../commands/base/arguments/base';
 
 import '../../discord';
 
 export default class SimplicityClient extends Client {
-  public readonly commands: Command[];
-
-  public readonly commandMessages: Map<string, string>
-
-  public readonly languages: string[]
-
-  public defaultLanguage: string
-
+  public readonly commands: Command[] = []
+  public readonly arguments: ArgumentBase[] = []
+  public readonly languages: string[] = []
+  public readonly commandMessages: Map<string, string> = new Map()
+  public readonly defaultLanguage: string = 'en-US';
   public databaseConnection: boolean
 
   public constructor(options = {}) {
     super(options);
-
-    this.commands = [];
-    this.commandMessages = new Map();
-    this.languages = [];
-    this.defaultLanguage = 'en-US';
-
     this.on('message', handleMessage);
     this.on('messageUpdate', (_, msg) => handleMessage.bind(this)(msg));
   }
