@@ -9,18 +9,25 @@ function validMessage({ author, channel, client }: MessageType) {
 export default async function handleMessage(
   this: SimplicityClient, message: MessageType,
 ): Promise<void> {
-  if (message.partial) message.fetch();
   if (validMessage(message)) return;
+
+  if (message.partial) {
+    await message.fetch();
+  }
 
   if (this.databaseConnection) await message.guild.data.get();
 
   if (message.content.startsWith(message.guildPrefix)) {
     message.prefix = message.guildPrefix;
+    message.args = message.content.slice(message.prefix.length).split(' ');
 
-    const firstArg = message.args.shift();
+    const firstArg = message.args.join(' ');
     const x = firstArg && firstArg.toLowerCase().toString();
     const command = this.commands.find((cmd) => cmd.name === x || cmd.aliases.includes(x));
 
-    if (command) command.exec(message);
+    if (command) {
+      message.command = command;
+      command.exec(message);
+    }
   }
 }

@@ -10,10 +10,6 @@ export default Structures.extend('Guild', (DiscordGuild) => {
   class SimplicityGuild extends DiscordGuild {
     public readonly client: SimplicityClient
 
-    public prefix: string
-
-    public language: string
-
     constructor(client: SimplicityClient, data: object) {
       super(client, data);
       this.prefix = process.env.prefix;
