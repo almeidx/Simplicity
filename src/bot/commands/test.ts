@@ -6,6 +6,13 @@ export default class TestCommand extends Command {
     super({
       name: 'test',
       category: 'devolepers',
+    },
+    {
+      guildOnly: true,
+      clientPermissions: ['ADD_REACTIONS'],
+      userPermissions: ['ADMINISTRATOR'],
+      requireDatabase: true,
+      ownerOnly: true,
     });
   }
 

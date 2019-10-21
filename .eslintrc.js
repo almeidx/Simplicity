@@ -27,6 +27,7 @@ module.exports = {
     "consistent-return": "off",
     "no-extra-semi": "off",
     "no-param-reassign": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "lines-between-class-members": "off",
   },
 };
