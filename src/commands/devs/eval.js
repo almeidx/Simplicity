@@ -43,7 +43,7 @@ class Eval extends Command {
       const msg = await send(embed);
       const permissions = channel.permissionsFor(guild.me);
 
-      if (permissions.has('ADD_REACTION') && permissions.has('MANAGE_MESSAGES')) {
+      if (permissions.has('ADD_REACTIONS') && permissions.has('MANAGE_MESSAGES')) {
         await msg.react(emoji('CANCEL', { id: true }));
 
         const filter = (r, u) => r.me && message.author.id === u.id;
