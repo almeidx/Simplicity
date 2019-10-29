@@ -40,8 +40,10 @@ class UserInfo extends Command {
     if (PermissionsUtils.verifyDev(user.id, client)) titles.push('#developer');
     if (guild && guild.ownerID === user.id) titles.push('#crown');
     if (user.bot) titles.push('#bot');
-    if (Array.isArray(status)) status.forEach((s) => titles.push(`#${s}`));
-    else titles.push(`#${status}`);
+    if (status) {
+      if (Array.isArray(status)) status.forEach((s) => titles.push(`#${s}`));
+      else titles.push(`#${status}`);
+    }
 
     const joinPosition = getJoinPosition(user.id, guild);
     const nickname = member && member.nickname;

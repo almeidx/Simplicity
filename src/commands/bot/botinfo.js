@@ -19,7 +19,7 @@ class BotInfo extends Command {
 
   async run({ author, client, emoji, guild, prefix, send, t }) {
     const uptime = convertDateLang(t, client.uptime);
-    const RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
+    const ram = (process.memoryUsage().heapUsed / 1048576).toFixed(2);
     const inviteLink = await client.generateInvite(BOT_DEFAULT_PERMISSIONS);
     const ping = Math.ceil(guild ? guild.shard.ping : client.ws.ping);
 
@@ -27,11 +27,11 @@ class BotInfo extends Command {
     if (devs) devs = devs.filter((id) => client.users.has(id)).map((id) => client.users.get(id).tag).join(', ');
 
     const embed = new SimplicityEmbed({ author, emoji, t })
-      .addField('» $$commands:botinfo.ping', 'commands:botinfo.ping', true, {}, { ping })
+      .addField('» $$commands:botinfo.ping', `${ping}ms`, true)
       .addField('» $$commands:botinfo.users', client.users.size, true)
       .addField('» $$commands:botinfo.guilds', client.guilds.size, true)
       .addField('» $$commands:botinfo.prefix', prefix, true)
-      .addField('» $$commands:botinfo.ramUsage', `${RAM}mb`, true)
+      .addField('» $$commands:botinfo.ramUsage', `${ram}mb`, true)
       .addField('» $$commands:botinfo.discordjs', version, true)
       .addField('» $$commands:botinfo.nodejs', process.versions.node, true)
       .addField('» $$commands:botinfo.commands', client.commands.size, true)
