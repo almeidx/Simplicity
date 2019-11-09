@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "@root/*": ["src/*"],
+      "@database/*": ["src/database/*"],
+      "@commands/*": ["src/commands/*"],
+      "@structures/*": ["src/structures/*"],
+      "@utils/*": ["src/utils/*"],
+      "@parameters/*": ["src/parameters/*"],
+      "@loaders/*": ["src/loaders/*"],
+      "@discord/*": ["src/structures/discord/*"],
+      "@command/*": ["src/structures/command/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

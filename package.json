@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
-    "nodemon": "nodemon src/app.js --inspect --watch *.js --watch .env",
+    "dev": "nodemon src/app.js --inspect --watch *.js --watch .env",
     "lint": "eslint src *.js",
     "lint:fix": "eslint --fix src"
   },
@@ -44,5 +44,18 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Almeeida/Simplicity.git"
+  },
+  "_moduleAliases": {
+    "@root": "src",
+    "@database": "src/database",
+    "@commands": "src/commands",
+    "@structures": "src/structures",
+    "@utils": "src/utils",
+    "@parameters": "src/parameters",
+    "@loaders": "src/loaders",
+    "@command": "src/structures/command",
+    "@discord": "src/structures/discord",
+    "@locales": "src/locales", 
+    "@listeners": "src/listeners"
   }
 }
