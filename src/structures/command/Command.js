@@ -1,20 +1,22 @@
 'use strict';
 
 const CommandRequirements = require('./CommandRequirements');
+const CommandParameters = require('./parameters/CommandParameters');
+
 const CommandCooldown = require('./CommandCooldown');
 const CommandError = require('./CommandError');
 const { PermissionUtils: { verifyDev } } = require('@utils');
 
 class Command {
-  constructor(client, options = {}) {
+  constructor(client, options = {}, parameters = []) {
     this.client = client;
+    this.parameters = parameters;
     this.setup(options);
   }
 
   setup(options) {
     if (!options.name) throw new Error(`${this.constructor.name} doesn't have name`);
     if (!options.category) throw new Error(`${this.constructor.name} doesn't have category`);
-
 
     this.name = options.name;
     this.category = options.category;
@@ -30,7 +32,7 @@ class Command {
     throw new Error(`${this.constructor.name} doesn't have a run() method.`);
   }
 
-  async _run(ctx) {
+  async _run(ctx, args) {
     let inCooldown = true;
     const isDev = verifyDev(ctx.author.id, ctx.client);
     try {
@@ -48,7 +50,11 @@ class Command {
         await CommandRequirements.handle(ctx, this.requirements, this.argRequireResponse);
       }
 
-      await this.run(ctx);
+      if (this.parameters) {
+        args = await CommandParameters.handle(ctx, this.parameters, args);
+      }
+
+      await this.run(ctx, ...args);
     } catch (error) {
       this.client.emit('commandError', error, ctx);
     } finally {
