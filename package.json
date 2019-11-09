@@ -5,8 +5,8 @@
   "description": "Discord Bot",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "nodemon": "nodemon index.js --inspect --watch *.js --watch .env",
+    "start": "node src/app.js",
+    "nodemon": "nodemon src/app.js --inspect --watch *.js --watch .env",
     "lint": "eslint src *.js",
     "lint:fix": "eslint --fix src"
   },
