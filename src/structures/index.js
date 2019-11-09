@@ -2,6 +2,7 @@
 
 module.exports = {
   Command: require('./command/Command'),
+  CommandContext: require('./command/CommandContext'),
   CommandError: require('./command/CommandError'),
   Loader: require('./Loader'),
   Parameters: require('../parameters'),

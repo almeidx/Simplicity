@@ -1,11 +1,9 @@
 'use strict';
 
-const { Constants, TextUtils } = require('@utils');
-const SimplicityEmbed = require('@discord/SimplicityEmbed');
-const { MessageAttachment } = require('discord.js');
+const { EMOJIS, EMOJIS_CUSTOM } = require('@utils/Constants');
 const i18next = require('i18next');
-const getCustomEmoji = (id) => Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[id];
-const getDefaultEmoji = (name) => Constants.EMOJIS && Constants.EMOJIS[name];
+const getCustomEmoji = (id) => EMOJIS_CUSTOM && EMOJIS_CUSTOM[id];
+const getDefaultEmoji = (name) => EMOJIS && EMOJIS[name];
 
 class CommandContext {
   constructor(options) {
@@ -30,11 +28,8 @@ class CommandContext {
     this.args = options.args;
     this.t = i18next.getFixedT(this.language);
 
-    this.executeMessage = this._executeMessage.bind(this);
     this.emoji = this._emoji.bind(this);
-    this.send = this._send.bind(this);
-    this.edit = this._edit.bind(this);
-    this.sendMessage = options.message.channel.send;
+    this.send = this.channel.send.bind(this.channel);
     this.message.language = this.language;
 
     this.canEmbed = this.guild ? this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS') : true;
@@ -56,34 +51,6 @@ class CommandContext {
       if (emoji) return id ? emoji.id : emoji.toString();
     }
     return normal || false;
-  }
-
-  _send(embed) {
-    return this.executeMessage(embed);
-  }
-
-  _edit(msg, embed) {
-    return this.executeMessage(embed, msg);
-  }
-
-  _executeMessage(embed, msg) {
-    if (embed instanceof SimplicityEmbed) {
-      const permissions = this.channel.permissionsFor(this.guild.me);
-      const embedPermission = permissions.has('EMBED_LINKS');
-      if (!embed.text && !embedPermission) throw Error(`${this.command.name}: Has no embed.text`);
-      else if (embed.text && !embedPermission) {
-        if (permissions.has('ATTACH_FILES')) embed.optionsText.attachments = embed.textImages.map((url, i) =>
-          new MessageAttachment(url, `image${i}.png`)
-        );
-
-        const text = TextUtils.parse(TextUtils.parseImage(embed.text, embed.textImages, permissions), {
-          t: this.t,
-          emoji: this.emoji,
-          embed });
-        return msg ? msg.edit(text, embed.optionsText) : this.channel.send(text, embed.optionsText);
-      }
-    }
-    return msg ? msg.edit(embed) : this.channel.send(embed);
   }
 }
 
