@@ -5,21 +5,10 @@
   "description": "Discord Bot",
   "main": "index.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js --inspect --watch *.js --watch .env",
+    "start": "NODE_ENV=production node src/app.js",
+    "dev": "NODE_ENV=development nodemon src/app.js --inspect --watch *.js --watch .env",
     "lint": "eslint src *.js",
     "lint:fix": "eslint --fix src"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ]
   },
   "license": "ISC",
   "dependencies": {
@@ -44,6 +33,17 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Almeeida/Simplicity.git"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "_moduleAliases": {
     "@root": "src",
