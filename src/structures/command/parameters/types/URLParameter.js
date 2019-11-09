@@ -4,7 +4,7 @@ const Parameter = require('./Parameter.js');
 const CommandError = require('../../CommandError.js');
 const { URL } = require('url');
 
-module.exports = class URLParameter extends Parameter {
+class URLParameter extends Parameter {
   static parse(arg, { t }) {
     if (!arg) return;
 
@@ -14,4 +14,6 @@ module.exports = class URLParameter extends Parameter {
       throw new CommandError(t('errors:invalidURL'));
     }
   }
-};
+}
+
+module.exports = URLParameter;

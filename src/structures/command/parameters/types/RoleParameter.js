@@ -5,7 +5,7 @@ const CommandError = require('../../CommandError.js');
 
 const MENTION_ROLE_REGEX = /^(?:<@&?)?([0-9]{16,18})(?:>)?$/;
 
-module.exports = class RoleParameter extends Parameter {
+class RoleParameter extends Parameter {
   static parse(arg, { t, guild }) {
     if (!arg) return;
 
@@ -16,4 +16,6 @@ module.exports = class RoleParameter extends Parameter {
     if (!role) throw new CommandError(t('errors:invalidRole'));
     return role;
   }
-};
+}
+
+module.exports = RoleParameter;

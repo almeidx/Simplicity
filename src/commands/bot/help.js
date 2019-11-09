@@ -10,13 +10,18 @@ class Help extends Command {
       name: 'help',
       aliases: ['h', 'commands', 'cmd', 'cmds', 'howtouse'],
       category: 'bot',
-    });
+    }, [
+      {
+        type: 'string',
+        required: false,
+      },
+    ]);
   }
 
-  async run({ author, client, prefix, query, send, t }) {
+  async run({ author, client, prefix, send, t }, cmdName) {
     const categories = client.categories;
 
-    if (!query) {
+    if (!cmdName) {
       const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
         .setAuthor(client.user)
         .setDescription('commands:help.about', { prefix, name: client.user.username });
@@ -27,7 +32,7 @@ class Help extends Command {
       return send(embed);
     }
 
-    const command = client.commands.fetch(query.toLowerCase());
+    const command = client.commands.fetch(cmdName.toLowerCase());
     if (!command) throw new CommandError('commands:help.commandUndefined');
 
     const embed = await getHelp({ client, command, prefix, t });

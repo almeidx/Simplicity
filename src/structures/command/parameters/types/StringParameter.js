@@ -4,7 +4,7 @@ const Parameter = require('./Parameter.js');
 const { Message } = require('discord.js');
 const CommandError = require('../../CommandError.js');
 
-module.exports = class StringParameter extends Parameter {
+class StringParameter extends Parameter {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
@@ -30,4 +30,6 @@ module.exports = class StringParameter extends Parameter {
 
     return arg;
   }
-};
+}
+
+module.exports = StringParameter;

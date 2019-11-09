@@ -4,7 +4,7 @@ const Parameter = require('./Parameter');
 const CommandError = require('../../CommandError');
 const ms = require('ms');
 
-module.exports = class TimeParamenter extends Parameter {
+class TimeParameter extends Parameter {
   static parse(arg, { t }) {
     if (!arg) return;
 
@@ -12,4 +12,6 @@ module.exports = class TimeParamenter extends Parameter {
     if (!result) throw new CommandError(t('errors:invalidTime'));
     return result;
   }
-};
+}
+
+module.exports = TimeParameter;

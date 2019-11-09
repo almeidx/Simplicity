@@ -7,7 +7,7 @@ const { verifyDev } = require('@utils/PermissionUtils.js');
 const MENTION_REGEX = /^(?:<@!?)?([0-9]{16,18})(?:>)?$/;
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
 
-module.exports = class UserParameter extends Parameter {
+class UserParameter extends Parameter {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
@@ -44,4 +44,6 @@ module.exports = class UserParameter extends Parameter {
 
     return user;
   }
-};
+}
+
+module.exports = UserParameter;
