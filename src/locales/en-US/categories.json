@@ -26,5 +26,9 @@
   "guild": {
     "name": "Server",
     "description": "This category has commands related to the guild."
+  },
+  "module": {
+    "name": "Modules",
+    "description": "This category has commands related to the guild."
   }
 }

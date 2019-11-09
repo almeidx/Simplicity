@@ -10,7 +10,7 @@ class Config extends Command {
   constructor(client) {
     super(client, {
       name: 'config',
-      category: 'bot',
+      category: 'module',
       cooldown: 60000,
       aliases: ['configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration'],
       requirements: {

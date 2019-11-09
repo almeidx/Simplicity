@@ -7,7 +7,7 @@ class Prefix extends Command {
   constructor(client) {
     super(client, {
       name: 'prefix',
-      category: 'bot',
+      category: 'module',
       cooldown: 60000,
       aliases: ['setprefix', 'p', 'setp', 'prefixset'],
       requirements: {

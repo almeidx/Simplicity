@@ -19,7 +19,6 @@ class CommandLoader extends Loader {
   async load() {
     await requireDirectory('src/commands', this.loadSuccess.bind(this), (x, ...args) => console.error(x.stack, args));
     this.client.commands = this.commands;
-    console.log(this.commands.mapValues((x) => x.name));
     return true;
   }
 

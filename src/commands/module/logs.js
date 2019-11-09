@@ -18,7 +18,7 @@ class Logs extends Command {
       name: 'logs',
       cooldown: 60000,
       aliases: ['log', 'logger', 'loggers', 'modlog', 'modlogs', 'eventlog', 'logevent'],
-      category: 'bot',
+      category: 'module',
       requirements: {
         ownerOnly: true,
         requireDatabase: true,

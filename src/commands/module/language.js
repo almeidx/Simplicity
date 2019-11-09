@@ -6,7 +6,7 @@ class Language extends Command {
   constructor(client) {
     super(client, {
       aliases: ['lang', 'l', 'botlanguage'],
-      category: 'bot',
+      category: 'module',
       name: 'language',
       cooldown: 60000,
       requirements: {

@@ -7,7 +7,7 @@ class Starboard extends Command {
   constructor(client) {
     super(client, {
       name: 'starboard',
-      category: 'guild',
+      category: 'module',
       cooldown: 30000,
       requirements: {
         requireDatabase: true,

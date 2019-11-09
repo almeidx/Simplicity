@@ -9,7 +9,7 @@ class Disable extends Command {
     super(client, {
       name: 'disable',
       aliases: ['disablecommands', 'disablecommand', 'disablecmd', 'cmddisable', 'cmddisable'],
-      category: 'guild',
+      category: 'module',
       userPermissions: ['MANAGE_GUILD'],
       requireDatabase: true,
     });
