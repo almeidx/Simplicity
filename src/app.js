@@ -1,8 +1,6 @@
 'use strict';
 
-const { SimplicityClient } = require('./');
-const server = require('./api/server');
-
+const { SimplicityClient } = require('@src');
 require('dotenv').config();
 
 const CLIENT_OPTIONS = {
@@ -19,10 +17,9 @@ const CLIENT_OPTIONS = {
 };
 
 const client = new SimplicityClient(CLIENT_OPTIONS);
-client.login(process.env.DISCORD_TOKEN)
+client.login()
   .then(() => {
-    server(client);
-    console.log('bot está online!');
+    console.log('Bot is ready.');
   })
   .catch((error) => {
     console.error(error);
