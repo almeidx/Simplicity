@@ -4,7 +4,6 @@ const SimplicityEmbed = require('@discord/SimplicityEmbed');
 const Command = require('@command/Command');
 const { convertDateLang, getDevs } = require('@utils/Utils');
 const { BOT_DEFAULT_PERMISSIONS } = require('@utils/Constants');
-
 const { version } = require('discord.js');
 
 class BotInfo extends Command {

@@ -10,7 +10,7 @@ class FileUtils {
     const filesObject = {};
     return Promise.all(files.map(async (file) => {
       const fullPath = path.resolve(dirPath, file);
-      if (file.match(/\.(js|json)$/)) {
+      if (/\.(js|json)$/.test(file)) {
         try {
           const required = require(fullPath);
           if (success) success(required, file.replace(/.js|.json/g, ''), dirPath.split(/\\|\//g).pop());
