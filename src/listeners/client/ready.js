@@ -1,6 +1,7 @@
 'use strict';
 
-const { Logger, SimplicityEmbed, SimplicityListener } = require('../..');
+const { SimplicityEmbed, SimplicityListener } = require('@structures');
+const Logger = require('@utils/Logger');
 
 class ReadyListener extends SimplicityListener {
   constructor(client) {

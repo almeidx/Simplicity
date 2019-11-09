@@ -1,17 +1,18 @@
 'use strict';
 
-const { SimplicityEmbed, SimplicityListener, Utils: { getServerIconURL } } = require('../../');
+const { SimplicityEmbed, SimplicityListener } = require('@structures');
+const { getServerIconURL } = require('@utils/Utils');
 
-class GuildCreateListener extends SimplicityListener {
+class GuildDeleteListener extends SimplicityListener {
   constructor(client) {
     super(client);
   }
 
   async on(client, guild) {
-    if (client.database) await client.database.guilds.create(guild.id);
+    if (client.database) await client.database.guilds.remove(guild.id);
     const owner = guild.owner;
 
-    this.sendMessage('guild_join',
+    this.sendMessage('guild_leave',
       new SimplicityEmbed({ author: owner.user })
         .addField('Guild Name', guild.name, true)
         .addField('Guild ID', guild.id, true)
@@ -20,4 +21,4 @@ class GuildCreateListener extends SimplicityListener {
   }
 }
 
-module.exports = GuildCreateListener;
+module.exports = GuildDeleteListener;

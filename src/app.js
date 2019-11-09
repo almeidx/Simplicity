@@ -1,31 +1,13 @@
 'use strict';
 
-const { SimplicityClient } = require('@src');
+require('module-alias/register');
 require('dotenv').config();
 
-const CLIENT_OPTIONS = {
-  fetchAllMembers: true,
-  disableEveryone: true,
-  disabledEvents: ['TYPING_START'],
-  partials: ['MESSAGE', 'CHANNEL'],
-  presence: {
-    activity: {
-      name: '@Simplicity help',
-      type: 'WATCHING',
-    },
-  },
-};
-
+const SimplicityClient = require('@discord/SimplicityClient');
+const { CLIENT_OPTIONS } = require('@utils/Constants');
 const client = new SimplicityClient(CLIENT_OPTIONS);
-client.login()
-  .then(() => {
-    console.log('Bot is ready.');
-  })
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
 
+client.login();
 client
   .on('shardError', (error, shardID) => console.error(`Shard ${shardID} Error:`, error))
   .on('invalidated', () => {

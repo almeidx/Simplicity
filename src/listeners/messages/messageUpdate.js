@@ -1,6 +1,8 @@
 'use strict';
 
-const { Constants, SimplicityEmbed, SimplicityListener, Utils: { cleanString } } = require('../../../index');
+const { SimplicityEmbed, SimplicityListener } = require('@structures');
+const { COLORS } = require('@utils/Constants');
+const { cleanString } = require('@utils/Utils');
 
 class MessageUpdate extends SimplicityListener {
   constructor(client) {
@@ -24,7 +26,7 @@ class MessageUpdate extends SimplicityListener {
     if (oldContent !== newContent) {
       embed
         .setDescription('loggers:messageEdited', { url, user, channel: msgChannel })
-        .setColor(Constants.COLORS.MESSAGE_EDIT);
+        .setColor(COLORS.MESSAGE_EDIT);
       if (oldContent) embed.addField('loggers:before', cleanString(oldContent) || 'loggers:messageError', true);
       if (newContent) embed.addField('loggers:after', cleanString(newContent) || 'loggers:messageError', true);
       return this.sendLogMessage(oldMessage.guild.id, 'MessageUpdate', embed).catch(() => null);
@@ -35,14 +37,14 @@ class MessageUpdate extends SimplicityListener {
       if (!oldMessage.pinned && newMessage.pinned) {
         embed
           .setDescription('loggers:messagePinned', { url, user, channel: msgChannel })
-          .setColor(Constants.COLORS.MESSAGE_PIN);
+          .setColor(COLORS.MESSAGE_PIN);
         return this.sendLogMessage(oldMessage.guild.id, 'MessageUpdate', embed).catch(() => null);
       } else
       // MESSAGE UNPINNED
       if (oldMessage.pinned && !newMessage.pinned) {
         embed
           .setDescription('loggers:messageUnpinned', { url, user, channel: msgChannel })
-          .setColor(Constants.COLORS.MESSAGE_UNPIN);
+          .setColor(COLORS.MESSAGE_UNPIN);
         return this.sendLogMessage(oldMessage.guild.id, 'MessageUpdate', embed).catch(() => null);
       }
     }

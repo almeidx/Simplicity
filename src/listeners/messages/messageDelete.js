@@ -1,6 +1,8 @@
 'use strict';
 
-const { Constants, SimplicityEmbed, SimplicityListener, Utils: { cleanString } } = require('../../../index');
+const { SimplicityEmbed, SimplicityListener } = require('@structures');
+const { COLORS } = require('@utils/Constants');
+const { cleanString } = require('@utils/Utils');
 
 class MessageDelete extends SimplicityListener {
   constructor(client) {
@@ -18,7 +20,7 @@ class MessageDelete extends SimplicityListener {
       .setAuthor(user.tag, user.displayAvatarURL())
       .setFooter(`ID: ${user.id}`, user.displayAvatarURL())
       .setDescription('loggers:messageDeleted', { user, channel: message.channel })
-      .setColor(Constants.COLORS.MESSAGE_DELETE);
+      .setColor(COLORS.MESSAGE_DELETE);
 
     if (message.content) embed.addField(
       'loggers:content', cleanString(message.content, 0, 1024) || 'loggers:messageError'

@@ -1,6 +1,7 @@
 'use strict';
 
-const { SimplicityEmbed, SimplicityListener, CommandError } = require('../..');
+const { CommandError, SimplicityEmbed, SimplicityListener } = require('@structures');
+
 const i18next = require('i18next');
 const getTranslation = (dirct, t) => i18next.exists(dirct) && t(dirct);
 
