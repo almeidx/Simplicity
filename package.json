@@ -7,7 +7,7 @@
   "scripts": {
     "start": "NODE_ENV=production node src/app.js",
     "dev": "NODE_ENV=development nodemon src/app.js --inspect --watch *.js --watch .env",
-    "lint": "eslint src *.js",
+    "lint": "eslint src",
     "lint:fix": "eslint --fix src"
   },
   "license": "ISC",
