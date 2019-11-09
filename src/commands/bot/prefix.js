@@ -1,7 +1,7 @@
 'use strict';
 
-const { Command, SimplicityEmbed, CommandError, Parameters } = require('../..');
-const { StringParameter } = Parameters;
+const { Command, SimplicityEmbed, CommandError } = require('@structures');
+const { StringParameter } = require('@parameters');
 
 class Prefix extends Command {
   constructor(client) {

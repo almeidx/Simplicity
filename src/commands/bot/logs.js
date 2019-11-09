@@ -1,7 +1,7 @@
 'use strict';
 
-const { Command, CommandError, Parameters, SimplicityEmbed } = require('../..');
-const { ChannelParameter } = Parameters;
+const { Command, CommandError, SimplicityEmbed } = require('@structures');
+const { ChannelParameter } = require('@parameters');
 
 const Aliases = {
   GuildMemberAdd: ['welcome', 'join', 'joined', 'welcoming'],

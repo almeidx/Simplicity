@@ -1,6 +1,6 @@
 'use strict';
 
-const { Command } = require('../../');
+const { Command } = require('@structures');
 
 class Say extends Command {
   constructor(client) {

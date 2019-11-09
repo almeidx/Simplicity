@@ -1,6 +1,8 @@
 'use strict';
 
-const { Command, CommandError, Parameters: { ChannelParameter }, Utils: { isEmpty } } = require('../../');
+const { Command, CommandError } = require('@structures');
+const { isEmpty } = require('@utils/Utils');
+const { ChannelParameter } = require('@parameters');
 
 class Disable extends Command {
   constructor(client) {

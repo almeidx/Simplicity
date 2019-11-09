@@ -1,6 +1,7 @@
 'use strict';
 
-const { Command, CommandError, CommandUtils, PermissionsUtils, SimplicityEmbed } = require('../../');
+const { Command, CommandError, CommandUtils, SimplicityEmbed } = require('@structures');
+const { PermissionsUtils } = require('@utils');
 
 class Help extends Command {
   constructor(client) {

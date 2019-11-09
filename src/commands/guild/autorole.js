@@ -1,6 +1,7 @@
 'use strict';
 
-const { Command, CommandError, Parameters: { RoleParameter } } = require('../../');
+const { Command, CommandError } = require('@structures');
+const { RoleParameter } = require('@parameters');
 
 class AutoRole extends Command {
   constructor(client) {

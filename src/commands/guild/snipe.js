@@ -1,6 +1,7 @@
 'use strict';
 
-const { Command, SimplicityEmbed, CommandError, Parameters: { ChannelParameter } } = require('../../');
+const { Command, SimplicityEmbed, CommandError } = require('@structures');
+const { ChannelParameter } = require('@parameters');
 
 const AllowedImageFormats = [
   'webp',

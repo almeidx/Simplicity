@@ -1,6 +1,7 @@
 'use strict';
 
-const { Command, Parameters: { ChannelParameter } } = require('../../');
+const { Command } = require('@structures');
+const { ChannelParameter } = require('@parameters');
 
 class Starboard extends Command {
   constructor(client) {

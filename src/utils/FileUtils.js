@@ -17,7 +17,7 @@ class FileUtils {
           filesObject[file] = required;
           return required;
         } catch (e) {
-          error(e);
+          error(e, file, dirPath);
         }
       } else if (recursive) {
         const isDirectory = await FileUtils.stat(fullPath).then((f) => f.isDirectory());

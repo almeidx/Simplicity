@@ -1,7 +1,7 @@
 'use strict';
 
-const Database = require('../database/Database');
-const Loader = require('../structures/Loader');
+const Database = require('@database/Database');
+const Loader = require('@structures/Loader');
 
 class DatabaseLoader extends Loader {
   constructor(client) {

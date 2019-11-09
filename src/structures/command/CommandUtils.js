@@ -1,11 +1,10 @@
 'use strict';
 
-const SimplicityEmbed = require('../discord/SimplicityEmbed');
-const { fixText, isEmpty } = require('../../utils/Utils');
+const SimplicityEmbed = require('@discord/SimplicityEmbed');
+const { fixText, isEmpty } = require('@utils/Utils');
 const CommandError = require('./CommandError');
 const i18next = require('i18next');
 const getTranslation = (dirct, t, options = {}) => i18next.exists(dirct) && t(dirct, options);
-
 
 /**
  * @class CommandUtils

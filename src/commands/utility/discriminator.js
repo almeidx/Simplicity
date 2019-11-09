@@ -1,6 +1,7 @@
 'use strict';
 
-const { Command, CommandError, SimplicityEmbed, Utils: { getServerIconURL } } = require('../../');
+const { Command, CommandError, SimplicityEmbed } = require('@structures');
+const { getServerIconURL } = require('@utils/Utils');
 
 class Discriminator extends Command {
   constructor(client) {

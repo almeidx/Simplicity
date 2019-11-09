@@ -1,7 +1,7 @@
 'use strict';
 
-const Parameter = require('../structures/Parameter');
-const CommandError = require('../structures/command/CommandError');
+const CommandError = require('@command/CommandError');
+const Parameter = require('@structures/Parameter');
 
 class StringParameter extends Parameter {
   static parseOptions(options) {

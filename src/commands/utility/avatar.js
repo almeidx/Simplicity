@@ -1,7 +1,8 @@
 'use strict';
 
-const { Command, SimplicityEmbed, CommandError, Parameters: { UserParameter } } = require('../../');
+const { Command, CommandError, SimplicityEmbed } = require('@structures');
 const { MessageAttachment } = require('discord.js');
+const { UserParameter } = require('@parameters');
 
 class Avatar extends Command {
   constructor(client) {

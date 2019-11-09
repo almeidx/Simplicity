@@ -1,16 +1,10 @@
 'use strict';
 
-const { Command, SimplicityEmbed } = require('../..');
+const { Command, SimplicityEmbed } = require('@structures');
 const PrefixCommand = require('./prefix');
 const LanguageCommand = require('./language');
 const StarboardCommand = require('../guild/starboard');
 const DisableCommand = require('../guild/disable');
-
-const aliasesPrefix = ['p', 'setp', 'setprefix'];
-const aliasesLanguage = ['l', 'lang', 'setlang', 'setlanguage', 'setl'];
-const aliasesStarboard = ['star', 's', 'setstarboard'];
-const aliasesDisable = ['disablecommands', 'disable-command', 'disablecmd', 'cmddisable', 'cmddisable'];
-
 
 class Config extends Command {
   constructor(client) {
@@ -25,12 +19,12 @@ class Config extends Command {
         guildOnly: true,
       },
       subcommands: [
-        new PrefixCommand(client, { aliases: aliasesPrefix }),
-        new LanguageCommand(client, { aliases: aliasesLanguage }),
-        new StarboardCommand(client, { aliases: aliasesStarboard }),
+        new PrefixCommand(client, { aliases: ['p', 'setp', 'setprefix'] }),
+        new LanguageCommand(client, { aliases: ['l', 'lang', 'setlang', 'setlanguage', 'setl'] }),
+        new StarboardCommand(client, { aliases: ['star', 's', 'setstarboard'] }),
         new DisableCommand(client, {
           name: 'disablecommand',
-          aliases: aliasesDisable,
+          aliases: ['disablecommands', 'disable-command', 'disablecmd', 'cmddisable', 'cmddisable'],
         }),
       ],
     });

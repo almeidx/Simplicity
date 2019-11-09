@@ -1,7 +1,7 @@
 'use strict';
 
 const { Client, Collection } = require('discord.js');
-const Loaders = require('../../loaders');
+const Loaders = require('@loaders');
 
 class SimplicityClient extends Client {
   constructor(options) {

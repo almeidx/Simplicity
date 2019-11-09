@@ -1,7 +1,7 @@
 'use strict';
 
 const UserParameter = require('./UserParameter');
-const CommandError = require('../structures/command/CommandError');
+const CommandError = require('@command/CommandError');
 
 class MemberParameter extends UserParameter {
   static parseOptions(options) {

@@ -1,6 +1,5 @@
 'use strict';
 
-
 class CommandCooldown extends Map {
   constructor(cooldown, ratelimitCooldown) {
     super();

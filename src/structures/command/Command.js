@@ -3,7 +3,7 @@
 const CommandRequirements = require('./CommandRequirements');
 const CommandCooldown = require('./CommandCooldown');
 const CommandError = require('./CommandError');
-const { verifyDev } = require('../../utils/PermissionsUtils');
+const { PermissionUtils: { verifyDev } } = require('@utils');
 
 class Command {
   constructor(client, options = {}) {

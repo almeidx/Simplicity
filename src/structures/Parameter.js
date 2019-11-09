@@ -1,6 +1,6 @@
 'use strict';
 
-const CommandError = require('../structures/command/CommandError');
+const CommandError = require('@command/CommandError');
 
 class Argument {
   static async parse(query, options = {}, dependencies = {}) {

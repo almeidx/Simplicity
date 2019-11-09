@@ -1,6 +1,6 @@
 'use strict';
 
-const { Command, CommandError, SimplicityEmbed } = require('../..');
+const { Command, CommandError, SimplicityEmbed } = require('@structures');
 
 class Language extends Command {
   constructor(client) {

@@ -1,9 +1,10 @@
 'use strict';
 
-const { Command, SimplicityEmbed, Constants, Parameters, PermissionsUtils, Utils } = require('../../');
-const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = Constants;
-const { getJoinPosition } = Utils;
-const { UserParameter } = Parameters;
+const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = require('@utils/Constants');
+const { Command, SimplicityEmbed } = require('@structures');
+const { getJoinPosition } = require('@utils/Utils');
+const { UserParameter } = require('@parameters');
+const { PermissionsUtils } = require('@utils');
 const moment = require('moment');
 
 class UserInfo extends Command {

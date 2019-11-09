@@ -1,7 +1,7 @@
 'use strict';
 
-const { requireDirectory } = require('../utils/FileUtils');
-const Loader = require('../structures/Loader');
+const { requireDirectory } = require('@utils/FileUtils');
+const Loader = require('@structures/Loader');
 
 class ListenerLoader extends Loader {
   constructor(client) {

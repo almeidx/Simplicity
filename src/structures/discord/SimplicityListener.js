@@ -1,7 +1,6 @@
 'use strict';
 
-/* eslint-disable no-unused-expressions */
-const LogUtils = require('../../utils/LogUtils');
+const LogUtils = require('@utils/LogUtils');
 const SimplicityEmbed = require('./SimplicityEmbed');
 const i18next = require('i18next');
 
@@ -41,13 +40,13 @@ class SimplicityListener {
   }
 
   async sendGlobalMessage(log, content) {
-    const guilds = this.client.guilds.filter(async (guild) => {
-      !!await this.getLogOptions(guild.id, log);
-    });
-    if (guilds) for (const g of guilds) {
-      // eslint-disable-next-line no-await-in-loop
-      const channelData = await this.getLogOptions(g.id, log);
-      LogUtils.send(channelData.channel, content).catch(() => null);
+    const guilds = this.client.guilds.filter(async (guild) => !!await this.getLogOptions(guild.id, log));
+    if (guilds) {
+      for (const g of guilds) {
+        // eslint-disable-next-line no-await-in-loop
+        const channelData = await this.getLogOptions(g.id, log);
+        LogUtils.send(channelData.channel, content).catch(() => null);
+      }
     }
   }
 

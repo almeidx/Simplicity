@@ -1,10 +1,10 @@
 'use strict';
 
+const { Command, CommandError, SimplicityEmbed } = require('@structures');
+const { UserParameter, RoleParameter } = require('@parameters');
+const { getServerIconURL, checkTick } = require('@utils/Utils');
+const { MANAGER_PERMISSIONS } = require('@utils/Constants');
 const { User } = require('discord.js');
-const { Command, CommandError, Constants, Parameters, SimplicityEmbed, Utils } = require('../../');
-const { UserParameter, RoleParameter } = Parameters;
-const { getServerIconURL, checkTick } = Utils;
-const { MANAGER_PERMISSIONS } = Constants;
 
 const ParameterOptions = {
   checkStartsWith: false,

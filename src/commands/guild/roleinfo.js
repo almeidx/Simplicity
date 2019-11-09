@@ -1,7 +1,8 @@
 'use strict';
 
-const { Command, CommandError, Parameters: { RoleParameter }, SimplicityEmbed, Utils } = require('../..');
-const { getServerIconURL, checkTick } = Utils;
+const { Command, CommandError, SimplicityEmbed } = require('@structures');
+const { getServerIconURL, checkTick } = require('@utils/Utils');
+const { RoleParameter } = require('@parameters');
 const moment = require('moment');
 
 class RoleInfo extends Command {

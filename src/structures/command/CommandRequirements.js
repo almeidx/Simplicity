@@ -1,7 +1,7 @@
 'use strict';
 
 const CommandError = require('./CommandError');
-const { verifyDev } = require('../../utils/PermissionsUtils');
+const { verifyDev } = require('@utils/PermissionUtils');
 
 const ERROR_RESPONSES = {
   requireDatabase: 'errors:requireDatabase',

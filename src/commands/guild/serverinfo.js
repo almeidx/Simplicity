@@ -1,9 +1,8 @@
 'use strict';
 
-const { Command, SimplicityEmbed, Utils } = require('../..');
-const { getServerIconURL } = Utils;
+const { Command, SimplicityEmbed } = require('@structures');
+const { getServerIconURL } = require('@utils/Utils');
 const moment = require('moment');
-
 
 class ServerInfo extends Command {
   constructor(client) {

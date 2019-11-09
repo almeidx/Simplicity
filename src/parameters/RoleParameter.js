@@ -1,7 +1,7 @@
 'use strict';
 
-const CommandError = require('../structures/command/CommandError');
-const Parameter = require('../structures/Parameter');
+const CommandError = require('@command/CommandError');
+const Parameter = require('@structures/Parameter');
 
 const MENTION_REGEX = /^(?:<@&?)?([0-9]{16,18})(?:>)?$/;
 

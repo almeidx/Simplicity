@@ -1,8 +1,7 @@
 'use strict';
 
-const Constants = require('../../utils/Constants');
-const SimplicityEmbed = require('../discord/SimplicityEmbed');
-const TextUtils = require('../../utils/TextUtils');
+const { Constants, TextUtils } = require('@utils');
+const SimplicityEmbed = require('@discord/SimplicityEmbed');
 const { MessageAttachment } = require('discord.js');
 const i18next = require('i18next');
 const getCustomEmoji = (id) => Constants.EMOJIS_CUSTOM && Constants.EMOJIS_CUSTOM[id];

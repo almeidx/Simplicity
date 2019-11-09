@@ -1,7 +1,7 @@
 'use strict';
 
-const { requireDirectory } = require('../utils/FileUtils');
-const Loader = require('../structures/Loader');
+const { requireDirectory } = require('@utils/FileUtils');
+const { Loader } = require('@structures');
 const { Collection } = require('discord.js');
 
 class CommandStore extends Collection {
@@ -17,7 +17,9 @@ class CommandLoader extends Loader {
   }
 
   async load() {
-    await requireDirectory('src/commands', this.loadSuccess.bind(this), console.error);
+    await requireDirectory('src/commands', this.loadSuccess.bind(this), (x, ...args) => {
+      console.error(x.stack, args);
+    });
     this.client.commands = this.commands;
     return true;
   }

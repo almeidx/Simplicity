@@ -1,6 +1,6 @@
 'use strict';
 
-const { Command } = require('../../');
+const { Command } = require('@structures');
 
 class Ping extends Command {
   constructor(client) {

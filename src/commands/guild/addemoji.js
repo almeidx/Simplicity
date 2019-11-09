@@ -1,6 +1,8 @@
 'use strict';
 
-const { SimplicityEmbed, Command, MessageUtils, CommandError, Parameters: { StringParameter } } = require('../..');
+const { SimplicityEmbed, Command, CommandError } = require('@structures');
+const { StringParameter } = require('@parameters');
+const { MessageUtils } = require('@utils');
 
 const ParameterOptions = {
   defaultString: 'emoji',

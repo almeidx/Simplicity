@@ -1,7 +1,7 @@
 'use strict';
 
-const { Command, CommandError, Parameters, SimplicityEmbed } = require('../../');
-const { MemberParameter, StringParameter } = Parameters;
+const { Command, CommandError, SimplicityEmbed } = require('@structures');
+const { MemberParameter, StringParameter } = require('@parameters/');
 
 const MemberParameterOptions = {
   checkIncludes: false,

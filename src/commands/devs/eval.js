@@ -1,16 +1,17 @@
 'use strict';
 
 /* eslint-disable no-unused-vars */
-const { Command, CommandError, SimplicityEmbed, Utils: { code } } = require('../../');
+const { Command, CommandError, SimplicityEmbed } = require('@structures');
+const { code } = require('@utils/Utils');
 const { inspect } = require('util');
 const token = process.env.DISCORD_TOKEN;
-const value = (s) => code(s, 'js').replace(token, () => '*'.repeat(token.length));
+const value = (s) => code(s, 'js').replace(new RegExp(token, 'g'), () => '*'.repeat(token.length));
 
 class Eval extends Command {
   constructor(client) {
     super(client, {
       name: 'eval',
-      aliases: ['compile', 'ev', 'evaluate'],
+      aliases: ['compile', 'ev', 'evaluate', 'exec', 'execute'],
       category: 'dev',
       requirements: {
         ownerOnly: true,
