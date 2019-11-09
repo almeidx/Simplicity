@@ -3,8 +3,8 @@
 const { Command, SimplicityEmbed } = require('@structures');
 const PrefixCommand = require('./prefix');
 const LanguageCommand = require('./language');
-const StarboardCommand = require('../guild/starboard');
-const DisableCommand = require('../guild/disable');
+const StarboardCommand = require('./starboard');
+const DisableCommand = require('./disable');
 
 class Config extends Command {
   constructor(client) {
