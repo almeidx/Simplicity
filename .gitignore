@@ -9,3 +9,6 @@ node_modules/
 
 # Arguments folder
 src/structures/command/arguments/
+
+# loggers
+yarn-error.log
