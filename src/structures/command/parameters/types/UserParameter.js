@@ -15,6 +15,7 @@ class UserParameter extends Parameter {
       acceptUser: defVal(options, 'acceptUser', true),
       acceptDeveloper: defVal(options, 'acceptDeveloper', true),
       acceptSelf: !!options.acceptSelf,
+      fetchGlobal: !!options.fetchGlobal,
       errors: {
         invalidUser: 'errors:invalidUser',
         acceptSelf: 'errors:sameUser',
@@ -26,7 +27,7 @@ class UserParameter extends Parameter {
     };
   }
 
-  static parse(arg, { t, client, author, guild }) {
+  static async parse(arg, { t, client, author, guild }) {
     if (!arg) return;
 
     const regexResult = MENTION_REGEX.exec(arg);
@@ -35,7 +36,12 @@ class UserParameter extends Parameter {
       m.user.username.toLowerCase().includes(arg.toLowerCase()) ||
       m.displayName.toLowerCase().includes(arg.toLowerCase()));
 
-    const user = client.users.get(id) || (!!findMember && findMember.user);
+    let user = client.users.get(id) || (!!findMember && findMember.user);
+    if (!user && this.fetchGlobal) {
+      user = await client.users.fetch(id).catch(() => null);
+      user.isPartial = true;
+    }
+
     if (!user) throw new CommandError(t(this.errors.invalidUser));
     if (!this.acceptSelf && user.id === author.id) throw new CommandError(t(this.errors.acceptSelf));
     if (!this.acceptBot && user.bot) throw new CommandError(t(this.errors.acceptBot));
