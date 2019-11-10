@@ -60,7 +60,7 @@ module.exports = class CommandParameters {
           const parsedFlag = await this.parseParameter(context, flag, flagValue, missingErr);
           flagsObject[flag.name] = parsedFlag;
         }
-        context.setFlags(flagsObject);
+        context.flags = flagsObject;
       }
     }
   }

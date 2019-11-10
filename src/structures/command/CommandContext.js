@@ -37,6 +37,7 @@ class CommandContext {
     // database
     this.database = this.client.database;
     this.guildData = options.guildData;
+    this.flags = {};
   }
 
   _emoji(name = 'QUESTION', options) {
