@@ -9,7 +9,6 @@ class Clear extends Command {
       aliases: ['purge', 'prune', 'clean'],
       category: 'mod',
       requirements: {
-        argsRequired: true,
         permissions: ['MANAGE_MESSAGES'],
         clientPermissions: ['MANAGE_MESSAGES'],
       },
@@ -19,6 +18,7 @@ class Clear extends Command {
         required: true,
         min: 2,
         max: 100,
+        missingError: 'commands:clear.invalidValue',
       },
       ...new Array(10).fill({
         type: 'user',
@@ -62,7 +62,7 @@ class Clear extends Command {
     });
 
     try {
-      await channel.bulkDelete(filtered);
+      await channel.bulkDelete(filtered, true);
       const msg = await send(t('commands:clear.deleted', { amount: filtered.length, author: author.tag }));
       msg.delete({ timeout: 5000 });
     } catch (error) {
