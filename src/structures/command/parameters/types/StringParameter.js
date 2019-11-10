@@ -11,6 +11,7 @@ class StringParameter extends Parameter {
       clean: !!options.clean,
       maxLength: Number(options.maxLength) || 0,
       truncate: !!options.truncate,
+      errorRegex: options.regex,
     };
   }
 
@@ -28,6 +29,7 @@ class StringParameter extends Parameter {
       arg = arg.substring(0, this.maxLength);
     }
 
+    if (this.errorRegex && this.errorRegex.test(arg)) throw new CommandError(this.errors.regex);
     return arg;
   }
 }
