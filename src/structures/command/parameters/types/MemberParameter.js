@@ -6,7 +6,7 @@ class MemberParameter extends UserParameter {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
-      fetchUser: false,
+      fetchGlobal: false,
     };
   }
 
