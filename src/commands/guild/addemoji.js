@@ -1,20 +1,6 @@
 'use strict';
 
 const { SimplicityEmbed, Command, CommandError } = require('@structures');
-const { StringParameter } = require('@parameters');
-const { MessageUtils } = require('@utils');
-
-const ParameterOptions = {
-  defaultString: 'emoji',
-  maxLength: 32,
-  minLength: 2,
-  regex: /[^a-z0-9_]/gi,
-  errors: {
-    maxLength: 'commands:addemoji:nameTooBig',
-    minLength: 'commands:addemoji:nameTooShort',
-    regex: 'commands:addemoji:invalidName',
-  },
-};
 
 class AddEmoji extends Command {
   constructor(client) {
@@ -23,19 +9,36 @@ class AddEmoji extends Command {
       aliases: ['createmoji', 'createemoji'],
       category: 'guild',
       requirements: {
-        argsRequired: true,
         guildOnly: true,
         permissions: ['MANAGE_EMOJIS'],
         clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS'],
       },
-    });
+    }, [
+      {
+        type: 'string',
+        maxLength: 32,
+        minLength: 2,
+        errorRegex: /[^a-z0-9_]/gi,
+        required: true,
+        missingError: '',
+        errors: {
+          maxLength: 'commands:addemoji:nameTooBig',
+          minLength: 'commands:addemoji:nameTooShort',
+          regex: 'commands:addemoji:invalidName',
+        },
+      },
+      {
+        type: 'image',
+        url: true,
+        required: true,
+        authorAvatar: false,
+        attachment: true,
+        lastMessages: { limit: 25 },
+      },
+    ]);
   }
 
-  async run({ args, author, channel, message, send, totalLength, t, guild }) {
-    const name = await StringParameter.parse(args[0], ParameterOptions);
-    const image = await MessageUtils.getImage(message, totalLength) || await MessageUtils.fetchImage(channel);
-    if (!image) throw new CommandError('commands:addemoji:noNameLink', { onUsage: true });
-
+  async run({ author, send, t, guild }, name, image) {
     const emoji = await guild.emojis.create(image, name);
     if (!emoji) throw new CommandError('commands:addemoji.error');
 
