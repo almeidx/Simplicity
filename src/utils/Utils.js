@@ -20,16 +20,6 @@ class Utils {
     else return `https://guild-default-icon.herokuapp.com/${guild.nameAcronym}`;
   }
 
-  static getJoinPosition(id, guild) {
-    if (!guild.member(id)) return;
-
-    const array = guild.members.array();
-    array.sort((a, b) => a.joinedAt - b.joinedAt);
-
-    const result = array.map((m, i) => ({ index: i, id: m.user.id })).find((m) => m.id === id);
-    return (result && result.index) || null;
-  }
-
   static cleanString(str, minLength = 0, maxLength = 1024) {
     str = String(str);
     return str.slice(minLength, maxLength - 3) + (str.length > maxLength - 3 ? '...' : '');

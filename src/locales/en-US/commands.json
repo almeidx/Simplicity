@@ -97,6 +97,11 @@
     "userinfo": {
         "description": "This command shows info about the user.",
         "usage": "<id/mention>",
+        "partial": "I cannot get those types of information from that user.",
+        "cannotPartial": "I cannot get more information from that user.",
+        "notListeningToSpotify": "That user isn't listening to spotify",
+        "notInGuild": "That user is not a member of this guild.",
+        "tag": "Tag",
         "username": "Username",
         "nickname": "Nickname",
         "id": "ID",
