@@ -1,6 +1,6 @@
 'use strict';
 
-const { Command, CommandError, SimplicityEmbed } = require('@structures');
+const { Command } = require('@structures');
 
 class Clear extends Command {
   constructor(client) {
@@ -13,25 +13,61 @@ class Clear extends Command {
         permissions: ['MANAGE_MESSAGES'],
         clientPermissions: ['MANAGE_MESSAGES'],
       },
-    });
+    }, [
+      {
+        type: 'number',
+        required: true,
+        min: 2,
+        max: 100,
+      },
+      ...new Array(10).fill({
+        type: 'user',
+        required: false,
+        fetchGlobal: false,
+        acceptSelf: true,
+        acceptBot: true,
+      }),
+      [
+        {
+          name: 'bot',
+          aliases: ['b'],
+          type: 'booleanFlag',
+        },
+        {
+          name: 'role',
+          aliases: ['r'],
+          type: 'role',
+        },
+        {
+          name: 'uppercase',
+          aliases: ['upper', 'highcase'],
+          type: 'booleanFlag',
+        },
+      ],
+    ]);
   }
 
-  async run({ author, channel, message, send, t, query }) {
-    const embed = new SimplicityEmbed({ author, t });
-    const limit = Number(query);
-
-    if (!limit || limit < 2 || limit > 100) throw new CommandError('commands:clear.invalidValue');
-
-    await message.delete().catch(() => null);
-
+  async run({ author, channel, client, flags, message, send, t }, limit, ...users) {
+    message.delete();
+    const { uppercase, bot, role } = flags;
     const res = await channel.messages.fetch({ limit });
-    await channel.bulkDelete(res);
 
-    const amount = res.size;
-    embed.setDescription('commands:clear.deleted', { amount, author });
+    const filtered = res.array().filter((msg) => {
+      const members = users.filter((u) => u);
+      if (members.length && members.every((user) => msg.author.id !== user.id)) return false;
+      else if (uppercase && msg.content.toUpperCase() !== msg.content) return false;
+      else if (bot && !msg.author.bot) return false;
+      else if (role && !msg.member.roles.has(role.id)) return false;
+      else return true;
+    });
 
-    const msg = await send(embed);
-    msg.delete({ timeout: 5000 });
+    try {
+      await channel.bulkDelete(filtered);
+      const msg = await send(t('commands:clear.deleted', { amount: filtered.length, author: author.tag }));
+      msg.delete({ timeout: 5000 });
+    } catch (error) {
+      client.logger.error(error);
+    }
   }
 }
 
