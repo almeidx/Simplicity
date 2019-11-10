@@ -27,5 +27,8 @@
     "hiddenChannel": "You don't have permission to see that channel!",
     "hiddenChannelBot": "I don't have permission to see that channel!",
     "invalidChannel": "The channel you provided was invalid.",
-    "unavailableGuild": "The guild you entered is currently unavailable."
+    "unavailableGuild": "The guild you entered is currently unavailable.",
+    "invalidNumber": "The number you provided was invalid.",
+    "needBiggerNumber": "The number you provided was too small.",
+    "needSmalllerNumber": "The number you provided was too big."
 }
