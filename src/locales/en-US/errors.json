@@ -30,5 +30,7 @@
     "unavailableGuild": "The guild you entered is currently unavailable.",
     "invalidNumber": "The number you provided was invalid.",
     "needBiggerNumber": "The number you provided was too small.",
-    "needSmalllerNumber": "The number you provided was too big."
+    "needSmalllerNumber": "The number you provided was too big.",
+    "clientHasHigh": "I cannot do that on the {{ role }} role since it's higher than my highest role.",
+    "authorHasHigh": "You cannot do that on the {{ role }} role since it's higher than your highest role"
 }

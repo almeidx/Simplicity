@@ -217,14 +217,18 @@
     },
     "role": {
         "description": "This command allows you to add and remove roles from users",
-        "usage": "<user> <role>",
+        "usage": " <add|remove> <user> <role>",
         "noArgs": "You need to provide a user and a role",
         "reasonAdd:": "{{- author }} Added the role to {{- user }}",
         "reasonRemove": "{{- author }} Removed the role from {{- user }}",
         "failedAdd": "There was an error when trying to add the role to the user",
         "failedRemove": "There was an error when trying to remove the role from the user",
-        "added": "{{- author }} has added the {{- role }} role to {{- member }}",
-        "removed": "{{- author }} has removed the {{- role }} role from {{- member }}"
+        "added": "{{- author }} has added the {{- roles }} role to {{- member }}",
+        "added_plural": "{{- author }} has added the {{- roles }} roles to {{- member }}",
+        "removed": "{{- author }} has removed the {{- roles }} role from {{- member }}",
+        "removed_plural": "{{- author }} has removed the {{- roles }} roles from {{- member }}",
+        "alreadyHasRole": "{{- member }} has already the {{ role }} role added",
+        "hasNotRole": "{{- member }} has not the {{ role }} role for remove"
     },
     "logs": {
         "description": "This command allows you to set the logs in your server",

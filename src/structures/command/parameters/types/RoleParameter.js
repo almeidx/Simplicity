@@ -6,15 +6,30 @@ const CommandError = require('@command/CommandError');
 const MENTION_ROLE_REGEX = /^(?:<@&?)?([0-9]{16,18})(?:>)?$/;
 
 class RoleParameter extends Parameter {
-  static parse(arg, { t, guild }) {
+  static parseOptions(options) {
+    return {
+      ...super.parseOptions(options),
+      clientHasHigh: !!options.clientHasHigh,
+      authorHasHigh: !!options.authorHasHigh,
+    };
+  }
+
+  static parse(arg, { t, guild, member }) {
     if (!arg) return;
 
     const regexResult = MENTION_ROLE_REGEX.exec(arg);
     const id = regexResult && regexResult[1];
 
-    let role = guild.roles.get(id) || guild.roles.find((r) => r.name.toLowerCase() === arg.toLowerCase()) ||
+    const role = guild.roles.get(id) || guild.roles.find((r) => r.name.toLowerCase() === arg.toLowerCase()) ||
       guild.roles.find((r) => r.name.toLowerCase().includes(arg.toLowerCase()));
+
     if (!role && !this.moreParams) throw new CommandError(t('errors:invalidRole'));
+    if (this.clientHasHigh && role && role.position > guild.me.roles.highest.position) {
+      throw new CommandError(t('errors:clientHasHigh', { role: role.toSring() }));
+    }
+    if (this.authorHasHigh && role && role.position > member.roles.highest.position) {
+      throw new CommandError(t('errors:authorHasHigh', { role: role.toSring() }));
+    }
     return role;
   }
 }
