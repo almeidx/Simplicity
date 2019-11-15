@@ -1,8 +1,7 @@
 'use strict';
 
-const { Command, CommandError, SimplicityEmbed } = require('@structures');
+const { Command, SimplicityEmbed } = require('@structures');
 const { getServerIconURL, checkTick } = require('@utils/Utils');
-const { RoleParameter } = require('@parameters');
 const moment = require('moment');
 
 class RoleInfo extends Command {
@@ -12,20 +11,18 @@ class RoleInfo extends Command {
       category: 'guild',
       aliases: ['ri', 'roleinformation'],
       requirements: {
-        argsRequired: true,
         guildOnly: true,
       },
-      argsRequiredResponse: 'commands:roleinfo.noArgs',
-    });
+    }, [
+      {
+        type: 'role',
+        required: true,
+        missingError: 'commands:roleinfo.noArgs',
+      },
+    ]);
   }
 
-  async run({ author, client, emoji, guild, query, send, t, language }) {
-    const role = await RoleParameter.parse(query, {
-      errors: { missingError: 'errors:invalidRole' },
-      required: true,
-    }, { client, guild });
-    if (!role || role.id === guild.id) throw new CommandError('errors:invalidRole');
-
+  run({ author, emoji, guild, send, t, language }, role) {
     moment.locale(language);
     const totalRoles = guild.roles.filter((r) => r.id !== guild.id).size;
 
