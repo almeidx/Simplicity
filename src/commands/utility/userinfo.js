@@ -51,7 +51,7 @@ class UserInfo extends Command {
       if (!member) {
         throw new CommandError('commands:userinfo.notInGuild');
       }
-      return channel.send(this.rolesEmbed(member.roles.array(), user, author, t));
+      return channel.send(this.rolesEmbed(member.roles.filter((r) => r.id !== guild.id), user, author, t));
     } else {
       const content = user.isPartial ? t('commands:userinfo.cannotPartial') : '';
       return channel.send(content, this.userInfoEmbed(user, author, t, emoji, guild));
