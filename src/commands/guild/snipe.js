@@ -1,8 +1,6 @@
 'use strict';
 
 const { Command, SimplicityEmbed, CommandError } = require('@structures');
-const { ChannelParameter } = require('@parameters');
-
 const AllowedImageFormats = [
   'webp',
   'png',
@@ -19,11 +17,18 @@ class SnipeCommand extends Command {
       requirements: {
         guildOnly: true,
       },
-    });
+    }, [
+      {
+        type: 'channel',
+        required: false,
+        acceptText: true,
+        canBeHiddenUser: false,
+        canBeHiddenBot: false,
+      },
+    ]);
   }
 
-  async run({ query, channel: currentChannel, guild, client, t, send }) {
-    const channel = !query ? currentChannel : await ChannelParameter.parse(query, {}, { guild });
+  async run({ channel: currentChannel, client, t, send }, channel = currentChannel) {
     const msg = client._deleteMessages.get(channel.id);
 
     if (!msg || (msg && !msg.author && msg.content && !msg.attachments.size && !msg.embeds.length)) {

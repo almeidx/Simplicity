@@ -23,10 +23,12 @@ class ChannelParameter extends Parameter {
       acceptCategory: defVal(options, 'acceptCategory', false),
       acceptNews: defVal(options, 'acceptNews', false),
       acceptStore: defVal(options, 'acceptStore', false),
+      canBeHiddenUser: defVal(options, 'canBeHiddenUser', false),
+      canBeHiddenBot: defVal(options, 'canBeHiddenBot', false),
     };
   }
 
-  static parse(arg, { t, client, guild }) {
+  static parse(arg, { t, client, guild, member }) {
     const check = (option, type) => {
       if (!option && channel.type === type) throw new CommandError(t('errors:invalidChannelType', { type }));
     };
@@ -48,6 +50,17 @@ class ChannelParameter extends Parameter {
     check(this.acceptCategory, 'category');
     check(this.acceptNews, 'news');
     check(this.acceptStore, 'store');
+
+
+    const hiddenChannel = channel.permissionsFor(member).has('READ_MESSAGES');
+    if (!this.canBeHiddenUser && !hiddenChannel) {
+      throw new CommandError('errors:hiddenChannel', { onUsage: false });
+    }
+
+    const hiddenChannelBot = channel.permissionsFor(guild.me).has('READ_MESSAGES');
+    if (!this.canBeHiddenBot && !hiddenChannelBot) {
+      throw new CommandError('errors:hiddenChannelBot', { onUsage: false });
+    }
 
     return channel;
   }
