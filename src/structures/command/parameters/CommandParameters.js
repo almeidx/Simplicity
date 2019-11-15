@@ -108,12 +108,10 @@ class CommandParameters {
   }
 
   static async parseParameter(context, param, arg, missingErr) {
-    console.log('parseParameter', param, param.types);
     let parsedArg;
     for (const parameter of param.types) {
       // eslint-disable-next-line no-await-in-loop
       const result = await parameter._parse(arg, param, context);
-      console.log('x', result, arg, param);
       if (result) {
         parsedArg = result;
         break;
