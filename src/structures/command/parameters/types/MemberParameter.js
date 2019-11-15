@@ -10,11 +10,12 @@ class MemberParameter extends UserParameter {
     };
   }
 
-  static parse(arg, context) {
+  static async parse(arg, context) {
     if (!arg) return;
 
     const { guild } = context;
-    const user = super.parse(arg, context);
+    const user = await super.parse(arg, context);
+    if (!user) return;
     return guild.member(user);
   }
 }

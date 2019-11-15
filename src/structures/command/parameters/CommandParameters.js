@@ -7,17 +7,25 @@ const ParameterTypes = require('./types');
 
 const isNull = (n) => n === null || n === undefined;
 const funcOrString = (f, sf, ...args) => typeof f === 'function' ? f(...args) : sf ? sf(f) : f;
-const normalizeParam = (p) => {
-  const type = ParameterTypes[p.type] || p.type;
-  if (!type || !(type.prototype instanceof Parameter)) throw new TypeError('Invalid parameter type');
-  return { ...type.parseOptions(p), type };
+const normalizeParam = (options) => {
+  const types = options.type.split('|');
+  const parameters = [];
+  for (const i in types) {
+    const entry = types[i];
+    const type = ParameterTypes[entry] || entry;
+    if (!type || !(type.prototype instanceof Parameter)) throw new TypeError('Invalid parameter type');
+    options = { ...type.parseOptions(i), ...options };
+    parameters.push(type);
+  }
+  const result = { ...options, types: parameters, moreParams: parameters.length > 1 };
+  return result;
 };
 
 /**
  * @constructor
  * @param {Command} command
  */
-module.exports = class CommandParameters {
+class CommandParameters {
   static parseOptions(params = []) {
     const length = params.length;
     const hasFlags = Array.isArray(params[length - 1]);
@@ -100,7 +108,19 @@ module.exports = class CommandParameters {
   }
 
   static async parseParameter(context, param, arg, missingErr) {
-    const parsedArg = await param.type._parse(arg, param, context);
+    console.log('parseParameter', param, param.types);
+    let parsedArg;
+    for (const parameter of param.types) {
+      // eslint-disable-next-line no-await-in-loop
+      const result = await parameter._parse(arg, param, context);
+      console.log('x', result, arg, param);
+      if (result) {
+        parsedArg = result;
+        break;
+      }
+    }
+
+
     if (isNull(parsedArg) && param.required) {
       throw new CommandError(missingErr, param.showUsage);
     }
@@ -117,4 +137,6 @@ module.exports = class CommandParameters {
 
     return parsedArg;
   }
-};
+}
+
+module.exports = CommandParameters;

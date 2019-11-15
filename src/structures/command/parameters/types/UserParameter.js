@@ -1,8 +1,8 @@
 'use strict';
 
-const Parameter = require('./Parameter.js');
-const CommandError = require('../../CommandError.js');
-const { verifyDev } = require('@utils/PermissionUtils.js');
+const Parameter = require('./Parameter');
+const CommandError = require('@command/CommandError');
+const { verifyDev } = require('@utils/PermissionUtils');
 
 const MENTION_REGEX = /^(?:<@!?)?([0-9]{16,18})(?:>)?$/;
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
@@ -42,7 +42,7 @@ class UserParameter extends Parameter {
       user.isPartial = true;
     }
 
-    if (!user) throw new CommandError(t(this.errors.invalidUser));
+    if (!user && !this.moreParams) throw new CommandError(t(this.errors.invalidUser));
     if (!this.acceptSelf && user.id === author.id) throw new CommandError(t(this.errors.acceptSelf));
     if (!this.acceptBot && user.bot) throw new CommandError(t(this.errors.acceptBot));
     if (!this.acceptUser && !user.bot) throw new CommandError(t(this.errors.acceptUser));
