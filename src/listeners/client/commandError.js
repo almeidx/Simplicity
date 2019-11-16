@@ -10,9 +10,9 @@ class CommandErrorListener extends SimplicityListener {
     super(client);
   }
 
-  on(_, error, { t, author, prefix, channel, guild, message, canEmbed, send, command }) {
+  on(client, error, { t, author, prefix, channel, guild, message, canEmbed, send, command }) {
     if (!(error instanceof CommandError)) {
-      console.error(error);
+      client.logger.error(error);
       const errorTranslation = error.code && getTranslation(`api_errors:${error.code}`, t);
       const errorMessage = errorTranslation || t('errors:errorCommand');
       this.sendErrorCommandMessage(errorMessage, false, { send, canEmbed, author, t, command });
