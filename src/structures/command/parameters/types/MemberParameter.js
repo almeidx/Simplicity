@@ -1,22 +1,36 @@
 'use strict';
 
-const UserParameter = require('./UserParameter.js');
+const CommandError = require('@command/CommandError');
+const UserParameter = require('./UserParameter');
 
 class MemberParameter extends UserParameter {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
       fetchGlobal: false,
+      clientHasHigh: !!options.clientHasHigh,
+      authorHasHigh: !!options.authorHasHigh,
     };
   }
 
   static async parse(arg, context) {
     if (!arg) return;
 
-    const { guild } = context;
+    const { author, guild, member: guildMember } = context;
     const user = await super.parse(arg, context);
     if (!user) return;
-    return guild.member(user);
+
+    const member = guild.member(user);
+
+    const highestPosition = member.roles.highest.position;
+    const notIsAuthor = author.id !== user.id;
+    if (this.authorHasHigh && notIsAuthor && highestPosition >= guildMember.roles.highest.position) {
+      throw new CommandError('errors:authorLowerRole');
+    } else if (this.clientHasHigh && notIsAuthor && highestPosition >= guild.me.roles.highest.position) {
+      throw new CommandError('errors:clientLowerRole');
+    }
+
+    return member;
   }
 }
 
