@@ -8,18 +8,21 @@ class Say extends Command {
       name: 'say',
       aliases: ['send'],
       category: 'util',
-      requirements: {
-        argsRequired: true,
+    }, [
+      {
+        type: 'string',
+        required: true,
+        missingError: 'commands:say.error',
       },
-      argsRequiredResponse: 'commands:say.error',
-    });
+    ]);
   }
 
-  async run({ channel, client, message, member, query, send }) {
-    const checkPerms = (u, p) => channel.permissionsFor(u).has(p);
-    if (checkPerms(client.user, 'MANAGE_MESSAGES') && checkPerms(member, 'ADMINISTRATOR')) await message.delete();
+  async run({ channel, guild, message, member }, text) {
+    if (channel.permissionsFor(member).has('MANAGE_MESSAGES') &&
+    channel.permissionsFor(guild.me).has('MANAGE_MESSAGES')
+    ) await message.delete();
 
-    return send(query);
+    return channel.send(text);
   }
 }
 
