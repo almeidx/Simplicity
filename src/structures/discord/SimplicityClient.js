@@ -1,11 +1,13 @@
 'use strict';
 
 const { Client, Collection } = require('discord.js');
+const { Logger } = require('@utils');
 const Loaders = require('@loaders');
 
 class SimplicityClient extends Client {
   constructor(options) {
     super(options);
+    this.logger = Logger;
     this._deleteMessages = new Map();
   }
 
