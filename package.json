@@ -8,7 +8,8 @@
     "start": "NODE_ENV=production node src/app.js",
     "dev": "NODE_ENV=development nodemon src/app.js --inspect --watch *.js --watch .env",
     "lint": "eslint src",
-    "lint:fix": "eslint --fix src"
+    "lint:fix": "eslint --fix src",
+    "test": "jest"
   },
   "license": "ISC",
   "dependencies": {
@@ -28,6 +29,7 @@
   "devDependencies": {
     "eslint": "^6.4.0",
     "eslint-plugin-promise": "^4.2.1",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.3"
   },
   "repository": {
@@ -55,7 +57,7 @@
     "@loaders": "src/loaders",
     "@command": "src/structures/command",
     "@discord": "src/structures/discord",
-    "@locales": "src/locales", 
+    "@locales": "src/locales",
     "@listeners": "src/listeners"
   }
 }
