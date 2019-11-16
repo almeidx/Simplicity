@@ -7,7 +7,7 @@ class ServerIcon extends Command {
   constructor(client) {
     super(client, {
       name: 'servericon',
-      aliases: ['svicon, sicon'],
+      aliases: ['svicon, sicon', 'guildicon', 'gicon', 'icon'],
       category: 'guild',
     });
   }
