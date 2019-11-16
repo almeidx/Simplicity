@@ -8,7 +8,7 @@ class SimplicityClient extends Client {
   constructor(options) {
     super(options);
     this.logger = Logger;
-    this._deleteMessages = new Map();
+    this.deletedMessages = new Map();
   }
 
   async loadFiles() {

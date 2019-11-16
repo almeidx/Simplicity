@@ -29,7 +29,7 @@ class SnipeCommand extends Command {
   }
 
   async run({ channel: currentChannel, client, t, send }, channel = currentChannel) {
-    const msg = client._deleteMessages.get(channel.id);
+    const msg = client.deletedMessages.get(channel.id);
 
     if (!msg || (msg && !msg.author && msg.content && !msg.attachments.size && !msg.embeds.length)) {
       throw new CommandError('commands:snipe.notFound');
