@@ -199,15 +199,15 @@
     },
     "setnick": {
         "description": "This command allows you to change the nickname of somebody",
-        "usage": "[member] <name>",
+        "usage": "<member> <name>",
         "nameTooBig": "The name you provided is too long! (Max: 32 characters)",
         "reason": "Requested by: {{- author }}",
         "failed": "There was an error when I tried to change the user's nickname",
-        "success": "{{- user }}'s nickname has been changed to **{{- name }}**",
+        "success": "{{- member }}'s nickname has been changed to **{{- nickname }}**",
         "action": "rename",
-        "removedNickname":  "{{- user }}'s nickname has been reset",
-        "alreadySet": "{{- user }}'s nickname is already set to **{{- name }}**!",
-        "alreadyReset": "{{- user }} doesn't have a nickname already"
+        "removedNickname":  "{{- member }}'s nickname has been reset",
+        "alreadySet": "{{- member }}'s nickname is already set to **{{- nickname }}**!",
+        "alreadyReset": "{{- member }} doesn't have a nickname already"
     },
     "discriminator": {
         "description": "This command allows you to see the members that have the same discriminator as the one provided",

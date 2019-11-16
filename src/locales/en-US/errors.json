@@ -32,5 +32,7 @@
     "needBiggerNumber": "The number you provided was too small.",
     "needSmalllerNumber": "The number you provided was too big.",
     "clientHasHigh": "I cannot do that on the {{ role }} role since it's higher than my highest role.",
-    "authorHasHigh": "You cannot do that on the {{ role }} role since it's higher than your highest role"
+    "authorHasHigh": "You cannot do that on the {{ role }} role since it's higher than your highest role",
+    "clientLowerRole": "I cannot do that since they have a higher role than me.",
+    "authorLowerRole": "You cannot do that since they have a higher role than you."
 }
