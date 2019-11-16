@@ -1,3 +1,12 @@
 {
-    "editor.rulers": [120]
+  "editor.rulers": [
+    120
+  ],
+  "files.trimTrailingWhitespace": true,
+  "eslint.lintTask.enable": true,
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "eslint.autoFixOnSave": true,
+  "eslint.packageManager": "yarn"
 }
