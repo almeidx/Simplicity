@@ -19,6 +19,7 @@ class UserInfo extends Command {
         type: 'user',
         fetchGlobal: true,
         acceptSelf: true,
+        acceptBot: true,
         missingError: 'errors:invalidUser',
         required: false,
       },
@@ -120,33 +121,26 @@ class UserInfo extends Command {
     const { tag, id } = user;
     const member = guild.member(user);
     const presence = !user.isPartial && user.presence;
-
     const custom = this.getTitles(user, user.client, guild);
     const status = presence && this.getClientStatus(presence);
     const titles = [...custom, ...status].join(' ');
-
     const highestRole = member && member.roles.highest.id !== guild.id && member.roles.highest;
-
     const activity = presence && presence.activity;
     const activityType = activity && activity.type && activity.name;
+    const joinPosition = this.getJoinPosition(user.id, guild);
+    const created = moment(user.createdAt);
+    const joined = member && moment(member.joinedAt);
 
     const rolesClean = member && member.roles && member.roles
       .filter((r) => r.id !== guild.id)
       .map((r) => r.name || r.toString());
-
-    const joinPosition = this.getJoinPosition(user.id, guild);
-
-    const created = moment(user.createdAt);
-    const joined = member && moment(member.joinedAt);
 
     const embed = new SimplicityEmbed({ author, emoji, t }, { autoAuthor: false })
       .setAuthor(titles, user.displayAvatarURL())
       .setThumbnail(user)
       .addField('» $$commands:userinfo.username', tag, true);
 
-    if (member && member.nickname) {
-      embed.addField('» $$commands:userinfo.nickname', member.nickname, true);
-    }
+    if (member && member.nickname) embed.addField('» $$commands:userinfo.nickname', member.nickname, true);
 
     embed.addField('» $$commands:userinfo.id', id, true);
 
@@ -160,28 +154,18 @@ class UserInfo extends Command {
       embed.addField('» $$commands:userinfo.highestRole', roleString, true);
     }
 
-    if (activityType) {
-      embed.addField(`» $$common:activityType.${activity.type}`, activity.name, true);
-    }
-
+    if (activityType) embed.addField(`» $$common:activityType.${activity.type}`, activity.name, true);
     if (rolesClean && rolesClean.length && rolesClean.length <= 5) {
       embed.addField('» $$commands:userinfo.roles', rolesClean.join(', '), true);
     }
 
-    if (joinPosition) {
-      embed.addField('» $$commands:userinfo.joinPosition', joinPosition, true);
-    }
-
+    if (joinPosition) embed.addField('» $$commands:userinfo.joinPosition', joinPosition, true);
     embed.addField('» $$commands:userinfo.createdAt', `${created.format('LL')} (${created.fromNow()})`);
-
-    if (joined) {
-      embed.addField('» $$commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`);
-    }
+    if (joined) embed.addField('» $$commands:userinfo.joinedAt', `${joined.format('LL')} (${joined.fromNow()})`);
 
     const memberPermissions = member && member.permissions &&
       member.permissions.toArray().filter((p) => !NORMAL_PERMISSIONS.includes(p));
     let resultAdministrator, resultAllPermissions, resultPermissions;
-
     if (memberPermissions) {
       resultAdministrator = memberPermissions.includes(ADMINISTRATOR_PERMISSION) &&
         t(`permissions:${ADMINISTRATOR_PERMISSION}`);
@@ -189,10 +173,7 @@ class UserInfo extends Command {
       resultPermissions = resultAdministrator || (resultAllPermissions &&
         resultAllPermissions.map((p) => t(`permissions:${p}`)).join(', '));
     }
-
-    if (resultPermissions) {
-      embed.addField('» $$commands:userinfo.permissions', resultPermissions);
-    }
+    if (resultPermissions) embed.addField('» $$commands:userinfo.permissions', resultPermissions);
 
     return embed;
   }
