@@ -1,8 +1,8 @@
 'use strict';
 
 const Parameter = require('./Parameter.js');
-const { Message } = require('discord.js');
 const CommandError = require('../../CommandError.js');
+const { Util } = require('discord.js');
 
 class StringParameter extends Parameter {
   static parseOptions(options = {}) {
@@ -16,13 +16,10 @@ class StringParameter extends Parameter {
   }
 
   static parse(arg, { t, message }) {
-    arg = arg ? typeof arg === 'string' ? arg : String(arg) : undefined;
+    arg = arg ? typeof arg === 'string' ? arg : String(arg) : null;
     if (!arg) return;
 
-    if (this.clean) {
-      message.content = arg;
-      arg = Message.cleanContent.call(message);
-    }
+    if (this.clean) arg = Util.cleanContent(arg, message);
 
     if (this.maxLength > 0 && arg.length > this.maxLength) {
       if (!this.truncate) throw new CommandError(t('errors:needSmallerString', { number: this.maxLength }));
