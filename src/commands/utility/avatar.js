@@ -1,8 +1,6 @@
 'use strict';
 
-const { Command, CommandError, SimplicityEmbed } = require('@structures');
-const { MessageAttachment } = require('discord.js');
-const { UserParameter } = require('@parameters');
+const { Command, SimplicityEmbed } = require('@structures');
 
 class Avatar extends Command {
   constructor(client) {
@@ -10,30 +8,40 @@ class Avatar extends Command {
       name: 'avatar',
       aliases: ['av'],
       category: 'util',
-    });
+    }, [
+      {
+        type: 'user',
+        required: false,
+        acceptBot: true,
+        acceptSelf: true,
+        fetchGlobal: true,
+      },
+      [
+        {
+          name: 'size',
+          type: 'number',
+          whitelist: Array.from({ length: 8 }, (e, i) => 2 ** (i + 4)),
+          missingError: 'errors:invalidImageSize',
+        },
+        {
+          name: 'format',
+          type: 'string',
+          whitelist: ['png', 'jpg', 'webp', 'gif'],
+          missingError: 'errors:invalidImageFormat',
+        },
+      ],
+    ]);
   }
 
-  async run({ author, send, guild, channel, client, query, emoji, t }) {
-    const user = !query ? author : await UserParameter.search(query, { client, guild }) || author;
-    const avatarURL = user.displayAvatarURL({ size: 2048 });
+  run({ author, flags, t, channel }, user = author) {
+    const { size = 2048, format } = flags;
+    const avatarUrl = user.displayAvatarURL({ size, format });
 
-    const clientPermissions = channel.permissionsFor(guild.me);
+    const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
+      .setAuthor(user)
+      .setImage(avatarUrl);
 
-    if (!guild || clientPermissions.has('EMBED_LINKS')) {
-      const embed = new SimplicityEmbed({ author })
-        .setAuthor(user)
-        .setImage(avatarURL);
-
-      return send(embed);
-    }
-
-    if (!guild || clientPermissions.has('ATTACH_FILES')) {
-      const content = `${emoji('PHOTO')} **${t('commands:avatar.message', { user })}**`;
-      return send({ content, files: [new MessageAttachment(avatarURL, 'avatar.png')] });
-    }
-
-    const permissions = ['EMBED_LINKS', 'ATTACH_FILES'].map((p) => t(`permissions:${p}`)).join(', ');
-    throw new CommandError('errors:clientMissingPermission', { permissions });
+    return channel.send(embed);
   }
 }
 

@@ -18,10 +18,7 @@ class Say extends Command {
   }
 
   async run({ channel, guild, message, member }, text) {
-    if (channel.permissionsFor(member).has('MANAGE_MESSAGES') &&
-    channel.permissionsFor(guild.me).has('MANAGE_MESSAGES')
-    ) await message.delete();
-
+    if ([member, guild.me].every((m) => channel.permissionsFor(m).has('MANAGE_MESSAGES'))) await message.delete();
     return channel.send(text);
   }
 }
