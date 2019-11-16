@@ -9,7 +9,7 @@
       "@commands/*": ["src/commands/*"],
       "@structures/*": ["src/structures/*"],
       "@utils/*": ["src/utils/*"],
-      "@parameters/*": ["src/parameters/*"],
+      "@parameters/*": ["src/structures/command/parameters/types/*"],
       "@loaders/*": ["src/loaders/*"],
       "@discord/*": ["src/structures/discord/*"],
       "@command/*": ["src/structures/command/*"]

@@ -51,7 +51,7 @@
     "@commands": "src/commands",
     "@structures": "src/structures",
     "@utils": "src/utils",
-    "@parameters": "src/parameters",
+    "@parameters": "src/structures/command/parameters/types",
     "@loaders": "src/loaders",
     "@command": "src/structures/command",
     "@discord": "src/structures/discord",
