@@ -88,7 +88,7 @@ class UserInfo extends Command {
     const role = roles && roles.find((r) => r.color);
     return new SimplicityEmbed({ author, t })
       .setAuthor('» $$commands:userinfo.authorRoles', user.displayAvatarURL(), '', { user: user.username })
-      .setDescription(roles.join('\n'))
+      .setDescription(roles.map((r) => r).sort((a, b) => b.position - a.position).join('\n'))
       .setColor(role ? role.color : process.env.COLOR);
   }
 

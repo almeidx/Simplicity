@@ -39,7 +39,7 @@ class UserParameter extends Parameter {
     let user = client.users.get(id) || (!!findMember && findMember.user);
     if (!user && this.fetchGlobal) {
       user = await client.users.fetch(id).catch(() => null);
-      user.isPartial = true;
+      if (user) user.isPartial = true;
     }
 
     if (!user && !this.moreParams) throw new CommandError(t(this.errors.invalidUser));
