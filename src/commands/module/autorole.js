@@ -1,7 +1,8 @@
 'use strict';
 
-const { Command, CommandError } = require('@structures');
-const { RoleParameter } = require('@parameters');
+const { Command } = require('@structures');
+// const { RoleParameter } = require('@parameters');
+const { Role } = require('discord.js');
 
 class AutoRole extends Command {
   constructor(client) {
@@ -15,30 +16,48 @@ class AutoRole extends Command {
         requireDatabase: true,
         guildOnly: true,
       },
-    });
+    }, [
+      {
+        type: 'role|string',
+        require: true,
+        whitelist(arg) {
+          if (typeof arg === 'string') return ['--disable'];
+          else return [];
+        },
+        clientHasHigh: true,
+        authorHasHigh: true,
+      },
+    ]);
   }
 
-  async run({ channel, database, guild, guildData, query, t }) {
-    let role = null, msg;
-    if (!query && !guildData.autrole) {
-      throw new CommandError('commands:autorole.requireRole', { onUsage: true });
-    } else if (!query && guildData.autrole) {
-      msg = t('commands:autorole.disabled');
-    } else {
-      const { name, id } = await RoleParameter.parse(query, {}, { guild });
-      if (guildData.autorole === id) throw new CommandError('commands.autorole.isCurrentRole');
+  async run({ channel, guildData, author, t }, role) {
+    if (role instanceof Role) {
+      const oldRoleId = guildData.autoroleId;
+      await guildData.setAutoRole(role.id, author.id);
+      if (!oldRoleId) channel.send(t('commands:autorole.enabled', { role: role.name }));
+      channel.send(t('commands:autor.changed', { role: role.name }));
+    } // else {}
 
-      if (!guildData.autrole) msg = t('commands:autorole.enabled', { role: name });
-      else msg = t('commands:autor.changed', { role: name });
+    // let msg;
+    // if (!query && !guildData.autrole) {
+    //   throw new CommandError('commands:autorole.requireRole', { onUsage: true });
+    // } else if (!query && guildData.autrole) {
+    //   msg = t('commands:autorole.disabled');
+    // } else {
+    //   const { name, id } = await RoleParameter.parse(query, {}, { guild });
+    //   if (guildData.autorole === id) throw new CommandError('commands.autorole.isCurrentRole');
 
-      role = id;
-    }
+    //   if (!guildData.autrole) msg = t('commands:autorole.enabled', { role: name });
+    //   else msg = t('commands:autor.changed', { role: name });
 
-    await database.guilds.edit(guild.id, {
-      autorole: role,
-    });
+    //   role = id;
+    // }
 
-    await channel.send(msg);
+    // await database.guilds.edit(guild.id, {
+    //   autorole: role,
+    // });
+
+    // await channel.send(msg);
   }
 }
 

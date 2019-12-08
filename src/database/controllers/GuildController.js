@@ -1,6 +1,7 @@
 'use strict';
 
 const Guild = require('../models/Guild');
+const GuildStructure = require('../structure/Guild');
 
 class GuildController {
   constructor() {
@@ -14,7 +15,7 @@ class GuildController {
     let guild = await Guild.findOne({ id: guildId });
     if (!guild) guild = await Guild.create({ id: guildId });
 
-    this._guilds.set(guildId, guildId);
+    this._guilds.set(guildId, new GuildStructure(guild));
 
     return guild;
   }
