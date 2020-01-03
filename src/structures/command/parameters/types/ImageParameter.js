@@ -142,7 +142,7 @@ class ImageParameter extends Parameter {
                 e.image.url :
                 this.lastMessages.embedThumbnail && e.thumbnail ?
                   e.thumbnail.url :
-                  null
+                  null,
             ).find((e) => e);
             if (url) {
               parseState.argIndex--;

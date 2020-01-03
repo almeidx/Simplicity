@@ -29,7 +29,7 @@ class UserParameter extends Parameter {
   static verifyExceptions(user, exceptions = {}, { author }) {
     exceptions = this.setupOptions(exceptions);
     if (!exceptions.canBeAuthor && user.id === author.id) throw new CommandError(
-      exceptions.errors.canBeAuthor, { onUsage: true }
+      exceptions.errors.canBeAuthor, { onUsage: true },
     );
     if (!exceptions.canBeBot && user.bot) throw new CommandError(exceptions.errors.canBeBot, { onUsage: true });
     if (!exceptions.canBeUser && !user.bot) throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true });

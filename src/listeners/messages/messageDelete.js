@@ -23,7 +23,7 @@ class MessageDelete extends SimplicityListener {
       .setColor(COLORS.MESSAGE_DELETE);
 
     if (message.content) embed.addField(
-      'loggers:content', cleanString(message.content, 0, 1024) || 'loggers:messageError'
+      'loggers:content', cleanString(message.content, 0, 1024) || 'loggers:messageError',
     );
 
     if (message.guild.me.permissions.has('VIEW_AUDIT_LOG')) {
@@ -36,7 +36,7 @@ class MessageDelete extends SimplicityListener {
         if (channelCondition && userCondition && entry.createdTimestamp > Date.now() - 5000) {
           const executor = entry.executor;
           if (executor) embed.setDescription(
-            'loggers:messageDeletedExecutor', { user, channel: message.channel, executor }
+            'loggers:messageDeletedExecutor', { user, channel: message.channel, executor },
           );
         }
       }

@@ -24,7 +24,7 @@ async function StarboardHandler(client, reaction, user) {
       msg.author.id === client.user.id &&
       msg.embeds.length &&
       msg.embeds[0].footer &&
-      msg.embeds[0].footer.text === message.id
+      msg.embeds[0].footer.text === message.id,
     );
     // delete message if users reaction = 0
     if (reactionsSize < 3) {

@@ -11,9 +11,7 @@ class UserInfo extends Command {
       name: 'userInfo',
       aliases: ['ui', 'user', 'userinformation', 'infouser', 'informationuser'],
       category: 'util',
-      requirements: {
-        clientPermissions: ['EMBED_LINKS'],
-      },
+      requirements: { clientPermissions: ['EMBED_LINKS'] },
     }, [
       {
         type: 'user',
@@ -41,17 +39,14 @@ class UserInfo extends Command {
   run({ author, channel, flags, guild, language, t, emoji }, user = author) {
     moment.locale(language);
     if (flags.spotify) {
-      if (user.isPartial) {
-        throw new CommandError('commands:userinfo.partial');
-      } else if (!this.isListeningToSpotify(user.presence)) {
+      if (user.isPartial) throw new CommandError('commands:userinfo.partial');
+      else if (!this.isListeningToSpotify(user.presence)) {
         throw new CommandError('commands:userinfo.notListeningToSpotify');
       }
       return channel.send(this.spotifyEmbed(author, user, t));
     } else if (flags.roles) {
       const member = guild.member(user);
-      if (!member) {
-        throw new CommandError('commands:userinfo.notInGuild');
-      }
+      if (!member) throw new CommandError('commands:userinfo.notInGuild');
       return channel.send(this.rolesEmbed(member.roles.filter((r) => r.id !== guild.id), user, author, t));
     } else {
       const content = user.isPartial ? t('commands:userinfo.cannotPartial') : '';
@@ -122,7 +117,7 @@ class UserInfo extends Command {
     const member = guild.member(user);
     const presence = !user.isPartial && user.presence;
     const custom = this.getTitles(user, user.client, guild);
-    const status = presence && this.getClientStatus(presence);
+    const status = (presence && this.getClientStatus(presence)) || [];
     const titles = [...custom, ...status].join(' ');
     const highestRole = member && member.roles.highest.id !== guild.id && member.roles.highest;
     const activity = presence && presence.activity;

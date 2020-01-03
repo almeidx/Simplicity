@@ -33,7 +33,7 @@ class RoleParameter extends Parameter {
     const lowerRole = guild.me.roles.highest.position > role.position;
 
     if (!exceptions.canBeBotRole && !role.editable && higherRole) throw new CommandError(
-      exceptions.errors.canBeBotRole, { onUsage: true }
+      exceptions.errors.canBeBotRole, { onUsage: true },
     );
     if (!exceptions.canBeHigher && higherRole) throw new CommandError(exceptions.errors.canBeHigher, { onUsage: true });
     if (!exceptions.canBeLower && lowerRole) throw new CommandError(exceptions.errors.canBeLower, { onUsage: true });

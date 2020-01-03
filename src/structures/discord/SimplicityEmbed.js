@@ -121,7 +121,7 @@ class SimplicityEmbed extends MessageEmbed {
       .addField(
         TextUtils.parse(name, this.setupOptions(options)),
         TextUtils.parse(value, this.setupOptions(valueOptions)),
-        inline
+        inline,
       );
   }
 

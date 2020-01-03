@@ -9,6 +9,7 @@ class AddEmoji extends Command {
       aliases: ['createmoji', 'createemoji'],
       category: 'guild',
       requirements: {
+        argsRequired: true,
         guildOnly: true,
         permissions: ['MANAGE_EMOJIS'],
         clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS'],
@@ -20,7 +21,7 @@ class AddEmoji extends Command {
         minLength: 2,
         errorRegex: /[^a-z0-9_]/gi,
         required: true,
-        missingError: '',
+        missingError: 'errors:addemoji.missingName',
         errors: {
           maxLength: 'commands:addemoji:nameTooBig',
           minLength: 'commands:addemoji:nameTooShort',

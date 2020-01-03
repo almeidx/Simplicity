@@ -49,7 +49,7 @@ class ServerInfo extends Command {
     else embed.addField('» $$commands:serverinfo.totalRoles', totalRoles, true);
 
     if (boostTier && boosters) embed.addField(
-      '» $$commands:serverinfo.boostTier', 'commands:serverinfo.tier', true, {}, { boostTier }
+      '» $$commands:serverinfo.boostTier', 'commands:serverinfo.tier', true, {}, { boostTier },
     );
 
     embed
