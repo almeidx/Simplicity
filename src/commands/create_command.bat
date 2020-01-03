@@ -9,7 +9,7 @@ cls
 
 echo 'use strict';> %category%\%file%.js
 echo.>> %category%\%file%.js
-echo const { Command } = require('../../');>> %category%\%file%.js
+echo const { Command } = require('@structures');>> %category%\%file%.js
 echo.>> %category%\%file%.js
 echo class %classname% extends Command {>> %category%\%file%.js
 echo   constructor(client) {>> %category%\%file%.js
