@@ -4,7 +4,7 @@ require('module-alias/register');
 require('dotenv').config();
 
 const SimplicityClient = require('@discord/SimplicityClient');
-const { CLIENT_OPTIONS } = require('@utils/Constants');
+const {CLIENT_OPTIONS} = require('@utils/Constants');
 const client = new SimplicityClient(CLIENT_OPTIONS);
 
 client.login();

@@ -1,19 +1,26 @@
 {
   "name": "simplicity",
   "version": "1.0.0",
-  "author": "Almeida#0001 & Tsugami#2619",
-  "description": "Discord Bot",
-  "main": "src/app.js",
+  "author": "Simplicity Team",
+  "contributors": [
+    "Almeida <almeida@dbm-network.org> (https://almeeida.github.io)",
+    "Tsugami"
+  ],
+  "description": "Multiporpose Discord bot.",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node .",
-    "dev": "nodemon . --inspect --watch *.js --watch .env",
-    "lint": "eslint src",
-    "lint:fix": "eslint --fix src"
+    "start": "cross-env NODE_ENV=production node .",
+    "dev": "cross-env NODE_ENV=development nodemon . --watch src --watch .env",
+    "lint": "eslint . --fix",
+    "commit": "git-cz"
   },
   "license": "ISC",
   "dependencies": {
-    "discord.js": "git+https://github.com/discordjs/discord.js.git#master",
+    "bufferutil": "^4.0.1",
+    "cross-env": "^7.0.0",
+    "discord.js": "github:discordjs/discord.js",
     "dotenv": "^7.0.0",
+    "erlpack": "^0.1.3",
     "express": "^4.17.1",
     "i18next": "^15.0.9",
     "i18next-node-fs-backend": "^2.1.3",
@@ -21,18 +28,23 @@
     "moment": "^2.23.0",
     "moment-duration-format": "^2.3.2",
     "mongoose": "^5.7.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "source-map": "^0.7.3",
+    "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
+    "@types/node": "^13.7.4",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "3.1.0",
     "eslint": "^6.4.0",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-config-google": "^0.14.0",
     "husky": "^3.1.0",
     "lint-staged": "^9.4.3",
     "nodemon": "^1.19.3"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Almeeida/Simplicity.git"
+    "url": "https://github.com/Almeeida/Simplicity.git"
   },
   "husky": {
     "hooks": {
@@ -40,10 +52,14 @@
     }
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "_moduleAliases": {
-    "@root": "src",
+    "@root": ".",
+    "@src": "src",
     "@database": "src/database",
     "@commands": "src/commands",
     "@structures": "src/structures",
@@ -54,5 +70,10 @@
     "@discord": "src/structures/discord",
     "@locales": "src/locales",
     "@listeners": "src/listeners"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

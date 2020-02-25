@@ -4,7 +4,8 @@
     "allowSyntheticDefaultImports": false,
     "baseUrl": "./",
     "paths": {
-      "@root/*": ["src/*"],
+      "@root/*": ["."],
+      "@src/*": ["src"],
       "@database/*": ["src/database/*"],
       "@commands/*": ["src/commands/*"],
       "@structures/*": ["src/structures/*"],

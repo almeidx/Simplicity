@@ -1,14 +1,13 @@
-# Dependency directory
+# Dependency files/directories
 node_modules/
+yarn.lock
+
+# IDE configuration directories
+.vscode/
+.idea/
 
 # dotenv environment variables file
 .env
 
-# JetBrains IDE directory
-.idea/
-
-# Arguments folder
-src/structures/command/arguments/
-
-# loggers
+# Log files
 yarn-error.log
