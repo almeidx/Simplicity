@@ -1,10 +1,10 @@
 'use strict';
 
-class LogUtils {
+class LogUtil {
   static async getChannel(client, guild, logName) {
     const guildData = client.database && await client.database.guilds.get(guild.id);
     const logData = guildData && guildData.logs && guildData.logs[logName];
-    return logData && logData.channelID && guild.channels.get(logData.channelID);
+    return logData && logData.channelID && guild.channels.cache.get(logData.channelID);
   }
 
   static async send(channel, ...body) {
@@ -29,4 +29,4 @@ class LogUtils {
   }
 }
 
-module.exports = LogUtils;
+module.exports = LogUtil;

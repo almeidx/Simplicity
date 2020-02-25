@@ -97,7 +97,7 @@ class CommandParameters {
 
       // eslint-disable-next-line no-await-in-loop
       const parsedArg = await this.parseParameter(
-        context, param, arg, funcOrString(param.missingError, context.t, context)
+        context, param, arg, funcOrString(param.missingError, context.t, context),
       );
       parsedArgs.push(parsedArg);
       parseState.argIndex++;

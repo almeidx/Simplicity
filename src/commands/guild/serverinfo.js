@@ -1,7 +1,7 @@
 'use strict';
 
 const { Command, SimplicityEmbed } = require('@structures');
-const { getServerIconURL } = require('@utils/Utils');
+const { getServerIconURL } = require('@util/Util');
 const moment = require('moment');
 
 class ServerInfo extends Command {
@@ -22,16 +22,16 @@ class ServerInfo extends Command {
     const onlineMembers = guild.members.filter((m) => m.user.presence.status !== 'offline').size;
     const offlineMembers = guild.members.filter((m) => m.user.presence.status === 'offline').size;
 
-    const totalChannels = guild.channels.filter((c) => c.type === 'text' || c.type === 'voice').size;
-    const textChannels = guild.channels.filter((c) => c.type === 'text').size;
-    const voiceChannels = guild.channels.filter((c) => c.type === 'voice').size;
+    const totalChannels = guild.channels.cache.filter((c) => c.type === 'text' || c.type === 'voice').size;
+    const textChannels = guild.channels.cache.filter((c) => c.type === 'text').size;
+    const voiceChannels = guild.channels.cache.filter((c) => c.type === 'voice').size;
 
-    const totalRoles = guild.roles && guild.roles.filter((r) => r.id !== guild.id).size;
-    const roles = guild.roles && guild.roles.sort((a, b) => b.position - a.position).map((r) => r).slice(0, -1);
+    const totalRoles = guild.roles && guild.roles.cache.filter((r) => r.id !== guild.id).size;
+    const roles = guild.roles && guild.roles.cache.sort((a, b) => b.position - a.position).map((r) => r).slice(0, -1);
     const rolesClean = roles && roles.map((r) => r.name || r.toString());
 
     const guildIconURL = getServerIconURL(guild);
-    const emojis = guild.emojis && guild.emojis.size;
+    const emojis = guild.emojis && guild.emojis.cache.size;
     const owner = (guild.owner && guild.owner.user.tag) || t('commands:serverinfo.unknown');
     const date = moment(guild.createdAt);
 
@@ -48,9 +48,11 @@ class ServerInfo extends Command {
     if (roles.length <= 5) embed.addField('» $$commands:serverinfo.roles', rolesClean.join(', '), true, { totalRoles });
     else embed.addField('» $$commands:serverinfo.totalRoles', totalRoles, true);
 
-    if (boostTier && boosters) embed.addField(
-      '» $$commands:serverinfo.boostTier', 'commands:serverinfo.tier', true, {}, { boostTier }
-    );
+    if (boostTier && boosters) {
+      embed.addField(
+        '» $$commands:serverinfo.boostTier', 'commands:serverinfo.tier', true, {}, { boostTier },
+      );
+    }
 
     embed
       .addField('» $$commands:serverinfo.members', 'commands:serverinfo.onlineOffline', true, { totalMembers }, {

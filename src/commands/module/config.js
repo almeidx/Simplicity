@@ -31,9 +31,9 @@ class Config extends Command {
   }
 
   run({ guild, guildData, author, language, prefix, send, t }) {
-    const channel = guild.channels.find((c) => c.id === guildData.starboard);
+    const channel = guild.channels.cache.find((c) => c.id === guildData.starboard);
     const disableChannels = guildData.disableChannels
-      .map((id) => guild.channels.get(id))
+      .map((id) => guild.channels.cache.get(id))
       .filter((ch) => ch)
       .map((ch) => ch.toString());
 

@@ -45,10 +45,10 @@ class ChannelParameter extends Parameter {
     query = query.toLowerCase();
     const regexResult = MENTION_REGEX.exec(query);
     const id = regexResult && regexResult[1];
-    const getID = id && guild.channels && guild.channels.get(id);
-    const findName = guild.channels.find((r) => r.name.toLowerCase() === query);
-    const findStartName = options.checkStartsWith && guild.channels.find((r) => r.name.toLowerCase().startsWith(query));
-    const findEndsName = options.checkEndsWith && guild.channels.find((r) => r.name.toLowerCase().endsWith(query));
+    const getID = id && guild.channels && guild.channels.cache.get(id);
+    const findName = guild.channels.cache.find((r) => r.name.toLowerCase() === query);
+    const findStartName = options.checkStartsWith && guild.channels.cache.find((r) => r.name.toLowerCase().startsWith(query));
+    const findEndsName = options.checkEndsWith && guild.channels.cache.find((r) => r.name.toLowerCase().endsWith(query));
 
     return getID || findName || findStartName || findEndsName || null;
   }

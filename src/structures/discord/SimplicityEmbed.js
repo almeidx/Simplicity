@@ -2,8 +2,8 @@
 
 const { Guild, GuildMember, Message, MessageEmbed, User } = require('discord.js');
 const CommandContext = require('@command/CommandContext');
-const TextUtils = require('@utils/TextUtils');
-const { getServerIconURL } = require('@utils/Utils');
+const TextUtil = require('@util/TextUtil');
+const { getServerIconURL } = require('@util/Util');
 
 const types = { normal: process.env.COLOR, error: 'RED', warn: 0xfdfd96 };
 
@@ -43,9 +43,11 @@ class SimplicityEmbed extends MessageEmbed {
     if (embedResolvable instanceof User) embedResolvable = { author: embedResolvable };
     if (embedResolvable instanceof GuildMember) embedResolvable = { author: embedResolvable.user };
 
-    if (typeof embedResolvable === 'function' && embedResolvable.name === 'fixedT') embedResolvable = {
-      t: embedResolvable,
-    };
+    if (typeof embedResolvable === 'function' && embedResolvable.name === 'fixedT') {
+      embedResolvable = {
+        t: embedResolvable,
+      };
+    }
 
     if (embedResolvable instanceof Message) {
       const context = new CommandContext({ message: embedResolvable });
@@ -88,7 +90,7 @@ class SimplicityEmbed extends MessageEmbed {
     if (authorIcon) iconURL = authorIcon;
 
     this.dataFixedT.author = { name, iconURL, url, options };
-    return super.setAuthor(TextUtils.parse(name, this.setupOptions(options)), iconURL, url);
+    return super.setAuthor(TextUtil.parse(name, this.setupOptions(options)), iconURL, url);
   }
 
   setFooter(text = '', iconURL = null, options = {}) {
@@ -101,28 +103,28 @@ class SimplicityEmbed extends MessageEmbed {
     if (footerIcon) iconURL = footerIcon;
 
     this.dataFixedT.footer = { text, iconURL, options };
-    return super.setFooter(TextUtils.parse(text, this.setupOptions(options)), iconURL);
+    return super.setFooter(TextUtil.parse(text, this.setupOptions(options)), iconURL);
   }
 
   setDescription(description, options = {}) {
     this.dataFixedT.description = { description, options };
-    return super.setDescription(TextUtils.parse(description, this.setupOptions(options)));
+    return super.setDescription(TextUtil.parse(description, this.setupOptions(options)));
   }
 
   setTitle(title, options, canTrans = true) {
     this.dataFixedT.title = { title, options };
-    const result = !canTrans ? title : TextUtils.parse(title, this.setupOptions(options));
+    const result = !canTrans ? title : TextUtil.parse(title, this.setupOptions(options));
     return super.setTitle(result);
   }
 
   addField(name = '', value = '', inline = null, options = {}, valueOptions = {}) {
     this.fieldsFixedT.push({ name, value, inline, options, valueOptions });
     return super
-      .addField(
-        TextUtils.parse(name, this.setupOptions(options)),
-        TextUtils.parse(value, this.setupOptions(valueOptions)),
-        inline
-      );
+      .addFields({
+        name: TextUtil.parse(name, this.setupOptions(options)),
+        value: TextUtil.parse(value, this.setupOptions(valueOptions)),
+        inline,
+      });
   }
 
   setThumbnail(url) {
@@ -139,8 +141,8 @@ class SimplicityEmbed extends MessageEmbed {
     options = this.setupOptions(options);
     this._text = { text, options };
     this.text = Array.isArray(text) ?
-      text.map((t) => TextUtils.parse(t, options)).join('\n') :
-      TextUtils.parse(text, options);
+      text.map((t) => TextUtil.parse(t, options)).join('\n') :
+      TextUtil.parse(text, options);
     this.optionsText = optionsText;
     if (images) {
       if (Array.isArray(images)) this.textImages = images;

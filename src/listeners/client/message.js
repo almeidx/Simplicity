@@ -1,8 +1,8 @@
 'use strict';
 
 const { CommandContext, SimplicityListener } = require('@structures');
-const { escapeRegExp } = require('@utils/Utils');
-const Logger = require('@utils/Logger');
+const { escapeRegExp } = require('@util/Util');
+const Logger = require('@util/Logger');
 const i18next = require('i18next');
 
 class MessageListener extends SimplicityListener {

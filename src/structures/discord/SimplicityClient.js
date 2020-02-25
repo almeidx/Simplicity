@@ -1,7 +1,7 @@
 'use strict';
 
 const { Client, Collection } = require('discord.js');
-const { Logger } = require('@utils');
+const { Logger } = require('@util');
 const Loaders = require('@loaders');
 
 class SimplicityClient extends Client {

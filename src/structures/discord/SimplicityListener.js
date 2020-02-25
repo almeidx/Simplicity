@@ -1,6 +1,6 @@
 'use strict';
 
-const LogUtils = require('@utils/LogUtils');
+const LogUtil = require('@util/LogUtil');
 const SimplicityEmbed = require('./SimplicityEmbed');
 const i18next = require('i18next');
 
@@ -14,13 +14,13 @@ class SimplicityListener {
   on() {}
 
   getLogOptions(guildID, id) {
-    const guild = this.client && guildID && this.client.guilds.get(guildID);
-    return guild && LogUtils.getChannel(this.client, guild, id);
+    const guild = this.client && guildID && this.client.guilds.cache.get(guildID);
+    return guild && LogUtil.getChannel(this.client, guild, id);
   }
 
   async getFixedT(guildID) {
-    const guild = this.client && guildID && this.client.guilds.get(guildID);
-    const guildData = guild && this.database && await this.database.guilds.get(guildID);
+    const guild = this.client && guildID && this.client.guilds.cache.get(guildID);
+    const guildData = guild && this.database && await this.database.guilds.cache.get(guildID);
     const language = (guildData && guildData.language) || 'en-US';
     return i18next.getFixedT(language);
   }
@@ -35,24 +35,24 @@ class SimplicityListener {
     const channelData = await this.getLogOptions(guildID, log);
     if (channelData) {
       if (content instanceof SimplicityEmbed) content.setTranslator(channelData.t);
-      LogUtils.send(channelData.channel, content).catch(() => null);
+      LogUtil.send(channelData.channel, content).catch(() => null);
     }
   }
 
   async sendGlobalMessage(log, content) {
-    const guilds = this.client.guilds.filter(async (guild) => !!await this.getLogOptions(guild.id, log));
+    const guilds = this.client.guilds.cache.filter(async (guild) => !!await this.getLogOptions(guild.id, log));
     if (guilds) {
       for (const g of guilds) {
         // eslint-disable-next-line no-await-in-loop
         const channelData = await this.getLogOptions(g.id, log);
-        LogUtils.send(channelData.channel, content).catch(() => null);
+        LogUtil.send(channelData.channel, content).catch(() => null);
       }
     }
   }
 
   sendPrivateMessage(envName, content) {
     const id = envName && process.env[envName.toUpperCase()];
-    const channel = this.client && id && this.client.channels.get(id);
+    const channel = this.client && id && this.client.channels.cache.get(id);
     if (channel) return channel.send(content);
     else return false;
   }

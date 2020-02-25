@@ -1,8 +1,8 @@
 'use strict';
 
-const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = require('@utils/Constants');
+const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = require('@util/Constants');
 const { Command, SimplicityEmbed, CommandError } = require('@structures');
-const { PermissionUtils } = require('@utils');
+const { PermissionUtil } = require('@util');
 const moment = require('moment');
 
 class UserInfo extends Command {
@@ -94,7 +94,7 @@ class UserInfo extends Command {
 
   getTitles(user, client, guild) {
     const titles = [user.tag];
-    if (PermissionUtils.verifyDev(user.id, client)) titles.push('#developer');
+    if (PermissionUtil.verifyDev(user.id, client)) titles.push('#developer');
     if (guild && guild.ownerID === user.id) titles.push('#crown');
     if (user.bot) titles.push('#bot');
     return titles;
@@ -165,7 +165,7 @@ class UserInfo extends Command {
 
     const memberPermissions = member && member.permissions &&
       member.permissions.toArray().filter((p) => !NORMAL_PERMISSIONS.includes(p));
-    let resultAdministrator, resultAllPermissions, resultPermissions;
+    let resultAdministrator; let resultAllPermissions; let resultPermissions;
     if (memberPermissions) {
       resultAdministrator = memberPermissions.includes(ADMINISTRATOR_PERMISSION) &&
         t(`permissions:${ADMINISTRATOR_PERMISSION}`);

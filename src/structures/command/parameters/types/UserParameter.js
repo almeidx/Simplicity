@@ -2,7 +2,7 @@
 
 const Parameter = require('./Parameter');
 const CommandError = require('@command/CommandError');
-const { verifyDev } = require('@utils/PermissionUtils');
+const { verifyDev } = require('@util/PermissionUtil');
 
 const MENTION_REGEX = /^(?:<@!?)?([0-9]{16,18})(?:>)?$/;
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
@@ -36,7 +36,7 @@ class UserParameter extends Parameter {
       m.user.username.toLowerCase().includes(arg.toLowerCase()) ||
       m.displayName.toLowerCase().includes(arg.toLowerCase()));
 
-    let user = client.users.get(id) || (!!findMember && findMember.user);
+    let user = client.users.cache.get(id) || (!!findMember && findMember.user);
     if (!user && this.fetchGlobal) {
       user = await client.users.fetch(id).catch(() => null);
       if (user) user.isPartial = true;

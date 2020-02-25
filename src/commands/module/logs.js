@@ -28,7 +28,7 @@ class Logs extends Command {
   }
 
   async run({ args, author, client, emoji, guild, query, send, t }) {
-    const checkChannel = (c) => guild.channels.get(c) ? c : '#TICK_NO';
+    const checkChannel = (c) => guild.channels.cache.get(c) ? c : '#TICK_NO';
     const embed = new SimplicityEmbed({ author, emoji, t });
     const { logs } = await client.database.guilds.get(guild.id);
     const logTypes = Object.keys(logs);

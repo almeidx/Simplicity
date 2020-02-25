@@ -2,14 +2,14 @@
 
 module.exports = {
   Constants: require('./Constants'),
-  FileUtils: require('./FileUtils'),
+  FileUtil: require('./FileUtil'),
   GuildIconGenerator: require('./Canvas/GuildIconGenerator'),
   Logger: require('./Logger'),
-  LogUtils: require('./LogUtils'),
-  MessageUtils: require('./MessageUtils'),
-  PermissionUtils: require('./PermissionUtils'),
+  LogUtil: require('./LogUtil'),
+  MessageUtil: require('./MessageUtil'),
+  PermissionUtil: require('./PermissionUtil'),
   RegexEmotes: require('./RegexEmotes'),
   StarboardHandler: require('./StarboardHandler'),
-  TextUtils: require('./TextUtils'),
-  Utils: require('./Utils'),
+  TextUtil: require('./TextUtil'),
+  Util: require('./Util'),
 };

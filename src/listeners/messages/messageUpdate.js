@@ -1,8 +1,8 @@
 'use strict';
 
 const { SimplicityEmbed, SimplicityListener } = require('@structures');
-const { COLORS } = require('@utils/Constants');
-const { cleanString } = require('@utils/Utils');
+const { COLORS } = require('@util/Constants');
+const { cleanString } = require('@util/Util');
 
 class MessageUpdate extends SimplicityListener {
   constructor(client) {

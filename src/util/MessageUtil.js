@@ -14,7 +14,7 @@ function checkRequestURL(url) {
   return fetch(url).then((r) => r.status !== 404).catch(() => null);
 }
 
-class MessageUtils {
+class MessageUtil {
   static getContentUrl(message, sliceCount = 0) {
     const query = typeof message === 'string' ? message : message.content ? message.content.slice(sliceCount) : null;
     const resultRegex = query && REGEX_URL.exec(query);
@@ -42,4 +42,4 @@ class MessageUtils {
   }
 }
 
-module.exports = MessageUtils;
+module.exports = MessageUtil;

@@ -1,7 +1,7 @@
 'use strict';
 
 const { Command, CommandError } = require('@structures');
-const { isEmpty } = require('@utils/Utils');
+const { isEmpty } = require('@util/Util');
 const { ChannelParameter } = require('@parameters');
 
 class Disable extends Command {
@@ -40,7 +40,7 @@ class Disable extends Command {
 
       if (isEmpty(channelsParsed) && !isEmpty(args)) throw new CommandError('commands:disable.notFound');
 
-      let newChannels = [], removedChannels = [];
+      const newChannels = []; const removedChannels = [];
 
       for (const c of channelsParsed) {
         const result = this.checkChannelAndEdit(disableChannels, c.id);

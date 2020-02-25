@@ -28,9 +28,11 @@ class UserParameter extends Parameter {
 
   static verifyExceptions(user, exceptions = {}, { author }) {
     exceptions = this.setupOptions(exceptions);
-    if (!exceptions.canBeAuthor && user.id === author.id) throw new CommandError(
-      exceptions.errors.canBeAuthor, { onUsage: true }
-    );
+    if (!exceptions.canBeAuthor && user.id === author.id) {
+      throw new CommandError(
+        exceptions.errors.canBeAuthor, { onUsage: true },
+      );
+    }
     if (!exceptions.canBeBot && user.bot) throw new CommandError(exceptions.errors.canBeBot, { onUsage: true });
     if (!exceptions.canBeUser && !user.bot) throw new CommandError(exceptions.errors.canBeAuthor, { onUsage: true });
 
@@ -49,37 +51,37 @@ class UserParameter extends Parameter {
       if (guild) {
         if (u) {
           if (m) {
-            return guild.members.find((mem) => mem.user[p].toLowerCase()[m](query)) &&
-              guild.members.find((mem) => mem.user[p].toLowerCase()[m](query)).user;
+            return guild.members.cache.find((mem) => mem.user[p].toLowerCase()[m](query)) &&
+              guild.members.cache.find((mem) => mem.user[p].toLowerCase()[m](query)).user;
           }
-          return guild.members.find((mem) => mem.user[p].toLowerCase() === query) &&
-            guild.members.find((mem) => mem.user[p].toLowerCase() === query).user;
+          return guild.members.cache.find((mem) => mem.user[p].toLowerCase() === query) &&
+            guild.members.cache.find((mem) => mem.user[p].toLowerCase() === query).user;
         } else {
           if (m) {
-            return guild.members.find((mem) => mem[p].toLowerCase()[m](query)) &&
-              guild.members.find((mem) => mem[p].toLowerCase()[m](query)).user;
+            return guild.members.cache.find((mem) => mem[p].toLowerCase()[m](query)) &&
+              guild.members.cache.find((mem) => mem[p].toLowerCase()[m](query)).user;
           }
-          return guild.members.find((mem) => mem[p].toLowerCase() === query) &&
-            guild.members.find((mem) => mem[p].toLowerCase() === query).user;
+          return guild.members.cache.find((mem) => mem[p].toLowerCase() === query) &&
+            guild.members.cache.find((mem) => mem[p].toLowerCase() === query).user;
         }
       }
     };
 
-    let getID,
-      findTag,
-      findUsername,
-      findUsernameStarts,
-      findUsernameEnds,
-      findUsernameIncludes,
-      findDisplay,
-      findDisplayStarts,
-      findDisplayEnds,
-      findDisplayIncludes;
+    let getID;
+    let findTag;
+    let findUsername;
+    let findUsernameStarts;
+    let findUsernameEnds;
+    let findUsernameIncludes;
+    let findDisplay;
+    let findDisplayStarts;
+    let findDisplayEnds;
+    let findDisplayIncludes;
 
     if (client) {
-      getID = id && (client.users.get(id) || (options.checkGlobally && await client.users.fetch(id).catch(() => null)));
+      getID = id && (client.users.cache.get(id) || (options.checkGlobally && await client.users.fetch(id).catch(() => null)));
 
-      findTag = client.users.find((m) => m.tag.toLowerCase() === query);
+      findTag = client.users.cache.find((m) => m.tag.toLowerCase() === query);
     }
 
     if (guild) {

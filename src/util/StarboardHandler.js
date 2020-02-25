@@ -13,7 +13,7 @@ async function StarboardHandler(client, reaction, user) {
 
   const guildData = client.database && await client.database.guilds.get(message.guild.id);
   const channelId = guildData && guildData.starboard;
-  const channel = channelId && message.channel.guild.channels.get(channelId);
+  const channel = channelId && message.channel.guild.channels.cache.get(channelId);
 
   if (channel) {
     const reactionsSize = users.filter((u) => u.id !== message.author.id).size;
@@ -24,7 +24,7 @@ async function StarboardHandler(client, reaction, user) {
       msg.author.id === client.user.id &&
       msg.embeds.length &&
       msg.embeds[0].footer &&
-      msg.embeds[0].footer.text === message.id
+      msg.embeds[0].footer.text === message.id,
     );
     // delete message if users reaction = 0
     if (reactionsSize < 3) {

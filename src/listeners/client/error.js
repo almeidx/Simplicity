@@ -1,7 +1,7 @@
 'use strict';
 
 const { Logger, SimplicityEmbed, SimplicityListener } = require('@structures');
-const { cleanString } = require('@utils/Utils');
+const { cleanString } = require('@util/Util');
 
 class ErrorListener extends SimplicityListener {
   constructor(client) {

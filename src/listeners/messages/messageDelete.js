@@ -1,8 +1,8 @@
 'use strict';
 
 const { SimplicityEmbed, SimplicityListener } = require('@structures');
-const { COLORS } = require('@utils/Constants');
-const { cleanString } = require('@utils/Utils');
+const { COLORS } = require('@util/Constants');
+const { cleanString } = require('@util/Util');
 
 class MessageDelete extends SimplicityListener {
   constructor(client) {
@@ -22,9 +22,11 @@ class MessageDelete extends SimplicityListener {
       .setDescription('loggers:messageDeleted', { user, channel: message.channel })
       .setColor(COLORS.MESSAGE_DELETE);
 
-    if (message.content) embed.addField(
-      'loggers:content', cleanString(message.content, 0, 1024) || 'loggers:messageError'
-    );
+    if (message.content) {
+      embed.addField(
+        'loggers:content', cleanString(message.content, 0, 1024) || 'loggers:messageError',
+      );
+    }
 
     if (message.guild.me.permissions.has('VIEW_AUDIT_LOG')) {
       const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' })
@@ -35,9 +37,11 @@ class MessageDelete extends SimplicityListener {
 
         if (channelCondition && userCondition && entry.createdTimestamp > Date.now() - 5000) {
           const executor = entry.executor;
-          if (executor) embed.setDescription(
-            'loggers:messageDeletedExecutor', { user, channel: message.channel, executor }
-          );
+          if (executor) {
+            embed.setDescription(
+              'loggers:messageDeletedExecutor', { user, channel: message.channel, executor },
+            );
+          }
         }
       }
     }

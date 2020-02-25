@@ -1,15 +1,15 @@
 'use strict';
 
 const SimplicityEmbed = require('@discord/SimplicityEmbed');
-const { fixText, isEmpty } = require('@utils/Utils');
+const { fixText, isEmpty } = require('@util/Util');
 const CommandError = require('./CommandError');
 const i18next = require('i18next');
 const getTranslation = (dirct, t, options = {}) => i18next.exists(dirct) && t(dirct, options);
 
 /**
- * @class CommandUtils
+ * @class CommandUtil
  */
-class CommandUtils {
+class CommandUtil {
   static getUsage({ command, prefix, t }, full = true) {
     const usage = getTranslation(`commands:${command.name}.usage`, t);
     if (!full || !prefix) return usage;
@@ -29,7 +29,7 @@ class CommandUtils {
       .setTitle(fixText(command.name), {}, false);
 
     // Add arguments
-    const usage = CommandUtils.getUsage({ command, prefix, t });
+    const usage = CommandUtil.getUsage({ command, prefix, t });
     if (usage) embed.addField('common:usage', usage, true);
 
     // Add aliases
@@ -57,4 +57,4 @@ class CommandUtils {
   }
 }
 
-module.exports = CommandUtils;
+module.exports = CommandUtil;

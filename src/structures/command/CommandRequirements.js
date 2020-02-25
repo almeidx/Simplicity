@@ -1,7 +1,7 @@
 'use strict';
 
 const CommandError = require('./CommandError');
-const { verifyDev } = require('@utils/PermissionUtils');
+const { verifyDev } = require('@util/PermissionUtil');
 
 const ERROR_RESPONSES = {
   requireDatabase: 'errors:requireDatabase',
@@ -35,21 +35,25 @@ class CommandRequirements {
 
     if (channel.type === 'text') {
       const clientPerms = options.clientPermissions.filter((p) =>
-        !channel.permissionsFor(guild.me).has(p)).map((p) => t(`permissions:${p}`)
+        !channel.permissionsFor(guild.me).has(p)).map((p) => t(`permissions:${p}`),
       );
-      if (clientPerms.length !== 0) throw new CommandError(t(ERROR_RESPONSES.clientPermissions, {
-        permissions: clientPerms.join(', '),
-        count: clientPerms.length,
-        onUsage: true }));
+      if (clientPerms.length !== 0) {
+        throw new CommandError(t(ERROR_RESPONSES.clientPermissions, {
+          permissions: clientPerms.join(', '),
+          count: clientPerms.length,
+          onUsage: true }));
+      }
 
       const memberPerms = options.permissions.filter((p) =>
-        !channel.permissionsFor(author.id).has(p)).map((p) => t(`permissions:${p}`)
+        !channel.permissionsFor(author.id).has(p)).map((p) => t(`permissions:${p}`),
       );
-      if (memberPerms.length !== 0) throw new CommandError(t(ERROR_RESPONSES.userMissingPermission, {
-        permissions: memberPerms.join(', '),
-        count: memberPerms.length,
-        onUsage: true,
-      }));
+      if (memberPerms.length !== 0) {
+        throw new CommandError(t(ERROR_RESPONSES.userMissingPermission, {
+          permissions: memberPerms.join(', '),
+          count: memberPerms.length,
+          onUsage: true,
+        }));
+      }
     }
 
     if (options.argsRequired && args.length === 0) {

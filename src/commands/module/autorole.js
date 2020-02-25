@@ -19,7 +19,7 @@ class AutoRole extends Command {
   }
 
   async run({ channel, database, guild, guildData, query, t }) {
-    let role = null, msg;
+    let role = null; let msg;
     if (!query && !guildData.autrole) {
       throw new CommandError('commands:autorole.requireRole', { onUsage: true });
     } else if (!query && guildData.autrole) {

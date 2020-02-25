@@ -1,8 +1,8 @@
 'use strict';
 
 const { Command, SimplicityEmbed } = require('@structures');
-const { getServerIconURL, checkTick } = require('@utils/Utils');
-const { MANAGER_PERMISSIONS } = require('@utils/Constants');
+const { getServerIconURL, checkTick } = require('@util/Util');
+const { MANAGER_PERMISSIONS } = require('@util/Constants');
 const { GuildMember } = require('discord.js');
 
 class Permissions extends Command {

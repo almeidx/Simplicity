@@ -1,7 +1,7 @@
 'use strict';
 
 const { Command, SimplicityEmbed } = require('@structures');
-const { getServerIconURL, checkTick } = require('@utils/Utils');
+const { getServerIconURL, checkTick } = require('@util/Util');
 const moment = require('moment');
 
 class RoleInfo extends Command {

@@ -2,7 +2,7 @@
 
 const i18next = require('i18next');
 
-class TextUtils {
+class TextUtil {
   static parse(text = '', options = {}) {
     if (typeof text !== 'string') return text;
 
@@ -11,13 +11,15 @@ class TextUtils {
     if (emoji) text = text.replace(/(?:#)\w+/g, (e) => emoji(e.slice(1).toUpperCase()) || e);
 
     // Add text embed in @...
-    if (embed) text = text.replace(/(?:@)\S+/g, (k) => {
-      const [key, v1, v2] = k.slice(1).split('.');
-      const result = key && embed[key];
-      const result1 = v1 && result && result[v1];
-      const result2 = v2 && result1 && result1[v2];
-      return result2 || result1 || result || k;
-    });
+    if (embed) {
+      text = text.replace(/(?:@)\S+/g, (k) => {
+        const [key, v1, v2] = k.slice(1).split('.');
+        const result = key && embed[key];
+        const result1 = v1 && result && result[v1];
+        const result2 = v2 && result1 && result1[v2];
+        return result2 || result1 || result || k;
+      });
+    }
 
     // Add translation in $"..."
     if (t) {
@@ -43,4 +45,4 @@ class TextUtils {
   }
 }
 
-module.exports = TextUtils;
+module.exports = TextUtil;

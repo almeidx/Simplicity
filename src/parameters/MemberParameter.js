@@ -34,9 +34,11 @@ class MemberParameter extends UserParameter {
     if ((!options.userRoleHighest && member.roles.highest.position >= memberAuthor.roles.highest.position) &&
       !userOwner && canBeAuthor) throw new CommandError(options.errors.userRoleHighest, { commandName });
     if (options.botRoleHighest && !userOwner &&
-      guild.me.roles.highest.position <= member.roles.highest.position) throw new CommandError(
-      options.errors.botRoleHighest, { commandName }
-    );
+      guild.me.roles.highest.position <= member.roles.highest.position) {
+      throw new CommandError(
+        options.errors.botRoleHighest, { commandName },
+      );
+    }
 
     return member;
   }

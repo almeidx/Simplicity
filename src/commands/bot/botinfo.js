@@ -2,8 +2,8 @@
 
 const SimplicityEmbed = require('@discord/SimplicityEmbed');
 const Command = require('@command/Command');
-const { convertDateLang, getDevs } = require('@utils/Utils');
-const { BOT_DEFAULT_PERMISSIONS } = require('@utils/Constants');
+const { convertDateLang, getDevs } = require('@util/Util');
+const { BOT_DEFAULT_PERMISSIONS } = require('@util/Constants');
 const { version } = require('discord.js');
 
 class BotInfo extends Command {
@@ -26,12 +26,14 @@ class BotInfo extends Command {
     const ping = Math.ceil(guild ? guild.shard.ping : client.ws.ping);
 
     let devs = getDevs();
-    if (devs) devs = devs.filter((id) => client.users.has(id)).map((id) => client.users.get(id).tag).join(', ');
+    if (devs) {
+      devs = devs.filter((id) => client.users.cache.has(id)).map((id) => client.users.cache.get(id).tag).join(', ');
+    }
 
     const embed = new SimplicityEmbed({ author, emoji, t })
       .addField('» $$commands:botinfo.ping', `${ping}ms`, true)
-      .addField('» $$commands:botinfo.users', client.users.size, true)
-      .addField('» $$commands:botinfo.guilds', client.guilds.size, true)
+      .addField('» $$commands:botinfo.users', client.users.cache.size, true)
+      .addField('» $$commands:botinfo.guilds', client.guilds.cache.size, true)
       .addField('» $$commands:botinfo.prefix', prefix, true)
       .addField('» $$commands:botinfo.ramUsage', `${ram}mb`, true)
       .addField('» $$commands:botinfo.discordjs', version, true)

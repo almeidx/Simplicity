@@ -63,7 +63,7 @@
     "@database": "src/database",
     "@commands": "src/commands",
     "@structures": "src/structures",
-    "@utils": "src/utils",
+    "@util": "src/util",
     "@parameters": "src/structures/command/parameters/types",
     "@loaders": "src/loaders",
     "@command": "src/structures/command",

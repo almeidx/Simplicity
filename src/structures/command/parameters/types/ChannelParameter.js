@@ -7,7 +7,7 @@ const MENTION_REGEX = /(<#)?([0-9]{16,18})>?$/;
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
 
 const searchOn = (local, id, arg) =>
-  local.channels.get(id) || local.channels.find((c) => c.name.toLowerCase().includes(arg.toLowerCase()))
+  local.channels.cache.get(id) || local.channels.cache.find((c) => c.name.toLowerCase().includes(arg.toLowerCase()))
 ;
 
 class ChannelParameter extends Parameter {

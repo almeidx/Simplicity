@@ -1,6 +1,6 @@
 'use strict';
 
-const { EMOJIS, EMOJIS_CUSTOM } = require('@utils/Constants');
+const { EMOJIS, EMOJIS_CUSTOM } = require('@util/Constants');
 const i18next = require('i18next');
 const getCustomEmoji = (id) => EMOJIS_CUSTOM && EMOJIS_CUSTOM[id];
 const getDefaultEmoji = (name) => EMOJIS && EMOJIS[name];
@@ -48,7 +48,7 @@ class CommandContext {
     const normal = getDefaultEmoji(name) || (other && getDefaultEmoji(other));
 
     if (this.guild && this.channel.permissionsFor(this.guild.me).has('USE_EXTERNAL_EMOJIS') && custom) {
-      const emoji = this.client.emojis.get(custom);
+      const emoji = this.client.emojis.cache.get(custom);
       if (emoji) return id ? emoji.id : emoji.toString();
     }
     return normal || false;

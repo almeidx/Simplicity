@@ -2,7 +2,7 @@
 
 /* eslint-disable no-unused-vars */
 const { Command, CommandError, SimplicityEmbed } = require('@structures');
-const { code } = require('@utils/Utils');
+const { code } = require('@util/Util');
 const { inspect } = require('util');
 const token = process.env.DISCORD_TOKEN;
 const value = (s) => code(s, 'js').replace(new RegExp(token, 'g'), () => '*'.repeat(token.length));

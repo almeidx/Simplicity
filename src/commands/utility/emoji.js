@@ -2,7 +2,7 @@
 
 const { Command, CommandError } = require('@structures');
 const { MessageAttachment } = require('discord.js');
-const { RegexEmojis } = require('@utils');
+const { RegexEmojis } = require('@util');
 const fetch = require('node-fetch');
 
 const ANIMATED_EMOJI_REGEX = /^<a:/;

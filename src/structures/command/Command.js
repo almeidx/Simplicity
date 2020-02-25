@@ -5,7 +5,7 @@ const CommandParameters = require('./parameters/CommandParameters');
 
 const CommandCooldown = require('./CommandCooldown');
 const CommandError = require('./CommandError');
-const { PermissionUtils: { verifyDev } } = require('@utils');
+const { PermissionUtil: { verifyDev } } = require('@util');
 
 class Command {
   constructor(client, options = {}, parameters = []) {
