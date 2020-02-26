@@ -2,7 +2,24 @@
 
 const i18next = require('i18next');
 
+/**
+ * Contains various text related utility methods.
+ * @class TextUtil
+ */
 class TextUtil {
+  /**
+   * Creates an instance of TextUtil.
+   */
+  constructor() {
+    throw new Error(`The ${this.constructor.name} class may not be instantiated.`);
+  }
+
+  /**
+   * Resolves emotes, text and translations on strings.
+   * @param {string} [text=''] The text to be resolved.
+   * @param {*} [options={}] The options.
+   * @return {string} The resolved string.
+   */
   static parse(text = '', options = {}) {
     if (typeof text !== 'string') return text;
 
@@ -29,11 +46,25 @@ class TextUtil {
     return text;
   }
 
+  /**
+   * Resolves a translation.
+   * @param {*} t The i18next object.
+   * @param {string} [key=''] The key of said translation.
+   * @param {*} [options={}] The options.
+   * @return {string} The finalized translation.
+   */
   static t(t, key = '', options = {}) {
     if (!i18next.exists(key) || !t) return key;
     else if (t) return t(key, options);
   }
 
+  /**
+   * Parses an image from a string.
+   * @param {*} text The text.
+   * @param {*} imageURL The image url.
+   * @param {*} permissions The permissions of the client.
+   * @return {string} The image url.
+   */
   static parseImage(text, imageURL, permissions) {
     const arrCount = [];
     if (!imageURL) return text;

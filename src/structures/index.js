@@ -5,7 +5,7 @@ module.exports = {
   CommandContext: require('./command/CommandContext'),
   CommandError: require('./command/CommandError'),
   Loader: require('./Loader'),
-  Parameters: require('../parameters'),
+  Parameters: require('./command/parameters/types/'),
   SimplicityClient: require('./discord/SimplicityClient'),
   SimplicityEmbed: require('./discord/SimplicityEmbed'),
   SimplicityListener: require('./discord/SimplicityListener'),

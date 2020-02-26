@@ -4,7 +4,26 @@ const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 
+/**
+ * Contains various file utility methods.
+ * @class FileUtil
+ */
 class FileUtil {
+  /**
+   * Creates an instance of FileUtil.
+   */
+  constructor() {
+    throw new Error(`The ${this.constructor.name} class may not be instantiated`);
+  }
+
+  /**
+   * Requires a directory and it's sub folders.
+   * @param {string} dirPath The path of the directory.
+   * @param {Function} success Callback when the require is successful.
+   * @param {Function} error Callback when the require isn't successful.
+   * @param {boolean} [recursive=true] Whether to require the main directory sub folders.
+   * @return {Promise<{}>} Promise with an array with every file in the directories.
+   */
   static async requireDirectory(dirPath, success, error, recursive = true) {
     const files = await FileUtil.readdir(dirPath);
     const filesObject = {};
