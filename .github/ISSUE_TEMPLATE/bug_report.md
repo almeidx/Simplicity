@@ -1,9 +1,9 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Report incorrect or unexpected behavior of the bot.
 title: ''
-labels: on hold
-assignees: Tsugami, Almeeida
+labels: 's: unverified, type: bug'
+assignees: ''
 
 ---
 
