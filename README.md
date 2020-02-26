@@ -1,19 +1,21 @@
 <p align="center"><img src="src/assets/simplicity-text.png" alt="Simplicity"></p>
-<a title="Code Style" href="https://google.github.io/styleguide/jsguide.html" target="_blank">
-  <img src="https://img.shields.io/badge/code%20style-google-brightgreen.svg?style=flat-square" alt="Google">
-</a>
-<a title="Dependencies" href="https://david-dm.org/Almeeida/Simplicity/" target="_blank">
-  <img src="https://david-dm.org/Almeeida/Simplicity/status.svg?style=flat-square" alt="Dependencies">
-</a>
-<a title="Library" target="_blank" href="https://discord.js.org/#/">
-  <img src="https://img.shields.io/badge/library-discord.js-blue.svg?style=flat-square" alt="discord.js">
-</a>
-<a title="Code Quality" href="https://www.codacy.com/app/Almeeida/Simplicity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Almeeida/Simplicity&amp;utm_campaign=Badge_Grade" target="_blank">
-  <img src="https://img.shields.io/codacy/grade/4f29cb30be614ad3a5af1fa381efa9f7.svg?style=flat-square" alt="Code Quality" />
-</a>
-<a title="License" href="https://github.com/Almeeida/Simplicity/blob/master/LICENSE" target="_blank">
-  <img src="https://img.shields.io/github/license/SwitchbladeBot/switchblade.svg?style=flat-square" alt="License"/>
-</a>
+<p align="center">
+  <a title="Code Style" href="https://google.github.io/styleguide/jsguide.html" target="_blank">
+    <img src="https://img.shields.io/badge/code%20style-google-brightgreen.svg?style=flat-square" alt="Google">
+  </a>
+  <a title="Dependencies" href="https://david-dm.org/Almeeida/Simplicity/" target="_blank">
+    <img src="https://david-dm.org/Almeeida/Simplicity/status.svg?style=flat-square" alt="Dependencies">
+  </a>
+  <a title="Library" target="_blank" href="https://discord.js.org/#/">
+    <img src="https://img.shields.io/badge/library-discord.js-blue.svg?style=flat-square" alt="discord.js">
+  </a>
+  <a title="Code Quality" href="https://www.codacy.com/app/Almeeida/Simplicity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Almeeida/Simplicity&amp;utm_campaign=Badge_Grade" target="_blank">
+    <img src="https://img.shields.io/codacy/grade/4f29cb30be614ad3a5af1fa381efa9f7.svg?style=flat-square" alt="Code Quality" />
+  </a>
+  <a title="License" href="https://github.com/Almeeida/Simplicity/blob/master/LICENSE" target="_blank">
+    <img src="https://img.shields.io/github/license/SwitchbladeBot/switchblade.svg?style=flat-square" alt="License"/>
+  </a>
+</p>
 
 ** **
 
@@ -93,5 +95,5 @@ This information will be relevant to users who are unfamiliar with standard Git 
   <a href="https://discordapp.com/users/385132696135008259"><code>Almeida#0001</code></a><span> - </span>
 
   <img src="https://cdn.discordapp.com/avatars/281561868844269569/b8a57d782ffc7be52a6a695d19874782.webp?size=20" style="vertical-align:bottom;">
-  <a href="https://discordapp.com/users/281561868844269569"><code>Tsugami#2619</code></a><span> - </span>
+  <a href="https://discordapp.com/users/281561868844269569"><code>Tsugami#2619</code></a>
 </div>
