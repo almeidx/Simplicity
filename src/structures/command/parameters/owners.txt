@@ -1,2 +1,0 @@
-https://github.com/SwitchbladeBot/switchblade
-https://github.com/SwitchbladeBot/switchblade/tree/dev/src/structures/command/parameters
