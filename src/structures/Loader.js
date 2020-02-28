@@ -1,13 +1,26 @@
 'use strict';
 
+/**
+ * The main Loader class.
+ * @class Loader
+ */
 class Loader {
-  constructor(client, required) {
+  /**
+   * Creates an instance of Loader.
+   * @param {Client} client The Client of the listener.
+   * @param {boolean} [required=true] Whether the loader is required for the Client to function properly.
+   */
+  constructor(client, required = true) {
     this.client = client;
     this.required = !!required;
   }
 
+  /**
+   * Loads the listener.
+   * @return {void}
+   */
   load() {
-    throw new Error(`${this.constructor.name} does not have a load() method.`);
+    throw new Error(`${this.constructor.name} doesn't have a load() method.`);
   }
 }
 

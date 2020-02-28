@@ -2,7 +2,7 @@
 
 const { Command, CommandError, SimplicityEmbed } = require('@structures');
 const { verifyDev } = require('@util/PermissionUtil');
-const { getHelp } = require('@command/CommandUtil');
+const { getHelp } = require('@util/CommandUtil');
 
 class Help extends Command {
   constructor(client) {

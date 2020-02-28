@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+  CommandUtil: require('./CommandUtil'),
   Constants: require('./Constants'),
   EmojiRegex: require('./EmojiRegex'),
   FileUtil: require('./FileUtil'),

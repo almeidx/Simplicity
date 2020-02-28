@@ -4,13 +4,26 @@ const { Client, Collection } = require('discord.js');
 const { Logger } = require('@util');
 const Loaders = require('@loaders');
 
+/**
+ * Main Client class.
+ * @class SimplicityClient
+ * @extends {Client}
+ */
 class SimplicityClient extends Client {
+  /**
+   * Creates an instance of SimplicityClient.
+   * @param {Object} [options={}] The options for the Client.
+   */
   constructor(options) {
     super(options);
     this.logger = Logger;
     this.deletedMessages = new Map();
   }
 
+  /**
+   * Loads all the loader files.
+   * @return {void}
+   */
   async loadFiles() {
     for (const Loader of Object.values(Loaders)) {
       const loader = new Loader(this);
@@ -28,11 +41,21 @@ class SimplicityClient extends Client {
     }
   }
 
+  /**
+   * Login the Client.
+   * @param {string} token The API Token.
+   * @return {Promise<string>} The Client after being logged in.
+   */
   login(token) {
     this.loadFiles();
     return super.login(token);
   }
 
+  /**
+   * Getter for the command categories of the Client.
+   * @return {Collection<category, CommandStore>} A Collection with every category + its respective commands.
+   * @readonly
+   */
   get categories() {
     return this.commands.reduce((o, command) => {
       if (!o.has(command.category)) o.set(command.category, new Collection());
