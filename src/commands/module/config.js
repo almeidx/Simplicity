@@ -1,41 +1,41 @@
 'use strict';
 
 const { Command, SimplicityEmbed } = require('@structures');
-const PrefixCommand = require('./prefix');
-const LanguageCommand = require('./language');
-const StarboardCommand = require('./starboard');
 const DisableCommand = require('./disable');
+const LanguageCommand = require('./language');
+const PrefixCommand = require('./prefix');
+const StarboardCommand = require('./starboard');
 
 class Config extends Command {
   constructor(client) {
     super(client, {
-      name: 'config',
+      aliases: ['configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration'],
       category: 'module',
       cooldown: 60000,
-      aliases: ['configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration'],
+      name: 'config',
       requirements: {
+        guildOnly: true,
         permissions: ['MANAGE_GUILD'],
         requireDatabase: true,
-        guildOnly: true,
       },
       subcommands: [
         new PrefixCommand(client, { aliases: ['p', 'setp', 'setprefix'] }),
         new LanguageCommand(client, { aliases: ['l', 'lang', 'setlang', 'setlanguage', 'setl'] }),
         new StarboardCommand(client, { aliases: ['star', 's', 'setstarboard'] }),
         new DisableCommand(client, {
-          name: 'disablecommand',
           aliases: ['disablecommands', 'disable-command', 'disablecmd', 'cmddisable', 'cmddisable'],
+          name: 'disablecommand',
         }),
       ],
     });
   }
 
   run({ guild, guildData, author, language, prefix, send, t }) {
-    const channel = guild.channels.cache.find((c) => c.id === guildData.starboard);
+    const channel = guild.channels.cache.find(c => c.id === guildData.starboard);
     const disableChannels = guildData.disableChannels
-      .map((id) => guild.channels.cache.get(id))
-      .filter((ch) => ch)
-      .map((ch) => ch.toString());
+      .map(id => guild.channels.cache.get(id))
+      .filter(ch => ch)
+      .map(ch => ch.toString());
 
     const text = disableChannels.length ? disableChannels.join(', ') : '$$commands:config.noDisableChannel';
 

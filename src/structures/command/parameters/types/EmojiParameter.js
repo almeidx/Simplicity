@@ -1,7 +1,7 @@
 'use strict';
 
-const Parameter = require('./Parameter.js');
 const CommandError = require('../../CommandError.js');
+const Parameter = require('./Parameter.js');
 
 const EMOJI_REGEX = /^<(a)?:(\w+):(\d{16,18})>$/;
 
@@ -23,7 +23,7 @@ class EmojiParameter extends Parameter {
       return emoji;
     }
 
-    const emoji = (this.sameGuildOnly ? guild : client).emojis.cache.find((e) => e.name === arg);
+    const emoji = (this.sameGuildOnly ? guild : client).emojis.cache.find(e => e.name === arg);
     if (!emoji) throw new CommandError(t('errors:invalidEmoji'), this.showUsage);
     return emoji;
   }

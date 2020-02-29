@@ -1,29 +1,28 @@
 'use strict';
 
-const { Command, SimplicityEmbed, CommandError } = require('@structures');
 const { StringParameter } = require('@parameters');
+const { Command, SimplicityEmbed, CommandError } = require('@structures');
 
 class Prefix extends Command {
   constructor(client) {
     super(client, {
-      name: 'prefix',
+      aliases: ['setprefix', 'p', 'setp', 'prefixset'],
       category: 'module',
       cooldown: 60000,
-      aliases: ['setprefix', 'p', 'setp', 'prefixset'],
+      name: 'prefix',
       requirements: {
         argsRequired: true,
+        permissions: ['MANAGE_GUILD'],
         requireDatabase: true,
-        permissions: ['MANAGE_GUILD'] },
+      },
     });
   }
 
   async run({ author, client, guild, prefix: currentPrefix, query, send, t }) {
     const prefix = await StringParameter.parse(query, {
+      errors: { maxLength: 'commands:prefix.multiCharacters' },
       maxLength: 15,
       minLength: 1,
-      errors: {
-        maxLength: 'commands:prefix.multiCharacters',
-      },
     });
 
     if (currentPrefix === prefix) throw new CommandError('commands:prefix.alreadySet', { prefix });

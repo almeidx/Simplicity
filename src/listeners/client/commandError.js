@@ -15,7 +15,7 @@ class CommandErrorListener extends SimplicityListener {
       client.logger.error(error);
       const errorTranslation = error.code && getTranslation(`api_errors:${error.code}`, t);
       const errorMessage = errorTranslation || t('errors:errorCommand');
-      this.sendErrorCommandMessage(errorMessage, false, { send, canEmbed, author, t, command });
+      this.sendErrorCommandMessage(errorMessage, false, { author, canEmbed, command, send, t });
 
       const embed = new SimplicityEmbed(author, { type: 'error' })
         .setDescription(`
@@ -30,7 +30,7 @@ class CommandErrorListener extends SimplicityListener {
       this.sendPrivateMessage('CHANNEL_LOG_ERROR', embed);
     } else {
       if (error.notEmbed) canEmbed = false;
-      const args = { author, command, canEmbed, t, prefix, send };
+      const args = { author, canEmbed, command, prefix, send, t };
       this.sendErrorCommandMessage(t(error.message, error.options), error.onUsage, args);
     }
   }
@@ -45,7 +45,7 @@ class CommandErrorListener extends SimplicityListener {
       return send(errorMessage);
     }
 
-    const embed = new SimplicityEmbed(this.client.user, { type: 'error', autoFooter: false, t })
+    const embed = new SimplicityEmbed(this.client.user, { autoFooter: false, t, type: 'error' })
       .setDescription(errorMessage)
       .setFooter(author);
 

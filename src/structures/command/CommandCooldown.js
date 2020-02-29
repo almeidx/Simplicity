@@ -49,7 +49,7 @@ class CommandCooldown extends Map {
   }
 
   add(userID) {
-    return this.set(userID, { timestamp: Date.now(), ratelimit: 0, ratelimitTimestamp: null });
+    return this.set(userID, { ratelimit: 0, ratelimitTimestamp: null, timestamp: Date.now() });
   }
 }
 

@@ -1,28 +1,41 @@
 'use strict';
 
 /* eslint-disable no-unused-vars */
+const { inspect } = require('util');
 const { Command, CommandError, SimplicityEmbed } = require('@structures');
 const { code } = require('@util/Util');
-const { inspect } = require('util');
 const token = process.env.DISCORD_TOKEN;
-const value = (s) => code(s, 'js').replace(new RegExp(token, 'g'), () => '*'.repeat(token.length));
+const value = s => code(s, 'js').replace(new RegExp(token, 'g'), () => '*'.repeat(token.length));
 
 class Eval extends Command {
   constructor(client) {
     super(client, {
-      name: 'eval',
       aliases: ['compile', 'ev', 'evaluate', 'exec', 'execute'],
       category: 'dev',
-      requirements: {
-        ownerOnly: true,
-        argsRequired: true,
-      },
+      name: 'eval',
+      requirements: { argsRequired: true, ownerOnly: true },
     });
   }
 
   async run(ctx) {
-    const { args, author, botLanguages, channel, client, command, database, emoji, guild, language, member, message,
-      prefix, query, send, t } = ctx;
+    const {
+      args,
+      author,
+      botLanguages,
+      command,
+      client,
+      channel,
+      database,
+      emoji,
+      guild,
+      language,
+      member,
+      message,
+      prefix,
+      query,
+      send,
+      t,
+    } = ctx;
     const embed = new SimplicityEmbed({ author });
     const text = query.replace(/^```(js|javascript ?\n)?|```$/gi, '');
 
@@ -48,7 +61,7 @@ class Eval extends Command {
         await msg.react(emoji('CANCEL', { id: true }));
 
         const filter = (r, u) => r.me && message.author.id === u.id;
-        const collector = await msg.createReactionCollector(filter, { max: 1, errors: ['time'], time: 30000 });
+        const collector = await msg.createReactionCollector(filter, { errors: ['time'], max: 1, time: 30000 });
 
         collector.on('collect', async () => {
           if (msg) await msg.delete().catch(() => null);

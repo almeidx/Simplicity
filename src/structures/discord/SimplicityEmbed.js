@@ -1,16 +1,16 @@
 'use strict';
 
-const { Guild, GuildMember, Message, MessageEmbed, User } = require('discord.js');
 const CommandContext = require('@command/CommandContext');
 const TextUtil = require('@util/TextUtil');
 const { getServerIconURL } = require('@util/Util');
+const { Guild, GuildMember, Message, MessageEmbed, User } = require('discord.js');
 
-const types = { normal: process.env.COLOR, error: 'RED', warn: 0xfdfd96 };
+const types = { error: 'RED', normal: process.env.COLOR, warn: 0xfdfd96 };
 
 /**
  * Resolves a name.
  * @param {Guild|GuildMember|User} resolvable The resolvable to be resolved.
- * @return {string|void} The resolved name.
+ * @returns {string|void} The resolved name.
  * @private
  */
 function checkName(resolvable) {
@@ -22,7 +22,7 @@ function checkName(resolvable) {
 /**
  * Resolves an icon.
  * @param {Guild|GuildMember|User} resolvable The resolvable to be resolved.
- * @return {string|void} The resolved image url.
+ * @returns {string|void} The resolved image url.
  * @private
  */
 function checkIcon(resolvable) {
@@ -59,13 +59,13 @@ class SimplicityEmbed extends MessageEmbed {
    * Private method that resolves the embed's options.
    * @param {Object} embedResolvable The embed resolvable.
    * @param {Object} options The embed's options.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    * @private
    */
   _setupEmbed(embedResolvable, options) {
     this.options = Object.assign({
-      autoFooter: true,
       autoAuthor: true,
+      autoFooter: true,
       autoTimestamp: true,
       type: 'normal',
     }, options);
@@ -74,9 +74,7 @@ class SimplicityEmbed extends MessageEmbed {
     if (embedResolvable instanceof GuildMember) embedResolvable = { author: embedResolvable.user };
 
     if (typeof embedResolvable === 'function' && embedResolvable.name === 'fixedT') {
-      embedResolvable = {
-        t: embedResolvable,
-      };
+      embedResolvable = { t: embedResolvable };
     }
 
     if (embedResolvable instanceof Message) {
@@ -87,7 +85,7 @@ class SimplicityEmbed extends MessageEmbed {
       };
     }
 
-    embedResolvable = Object.assign({ author: null, t: null, emoji: null }, embedResolvable);
+    embedResolvable = Object.assign({ author: null, emoji: null, t: null }, embedResolvable);
 
     this.t = embedResolvable.t;
     this.emoji = embedResolvable.emoji;
@@ -107,16 +105,16 @@ class SimplicityEmbed extends MessageEmbed {
   /**
    * Resolves the options.
    * @param {Object} options The options.
-   * @return {Object} The finalized options.
+   * @returns {Object} The finalized options.
    * @private
    */
   _setupOptions(options) {
-    return { t: this.t, emoji: this.emoji, options };
+    return { emoji: this.emoji, options, t: this.t };
   }
 
   /**
    * Sets the color of the embed to red.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   setError() {
     return this.setColor('RED');
@@ -125,7 +123,7 @@ class SimplicityEmbed extends MessageEmbed {
   /**
    * Sets the SimplicityEmbed's color.
    * @param {string} color The color to set.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   setColor(color) {
     return super.setColor(color);
@@ -137,7 +135,7 @@ class SimplicityEmbed extends MessageEmbed {
    * @param {Guild|GuildMember|User|string} [iconURL=null] The resolvable to resolve the icon from.
    * @param {GuildMember|User|string} [url=null] The resolvable to resolve the url from.
    * @param {Object} [options={}] The options for the author.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   setAuthor(name = '???', iconURL = null, url = null, options = {}) {
     const authorName = checkName(name);
@@ -148,7 +146,7 @@ class SimplicityEmbed extends MessageEmbed {
     if (authorNameIcon && !iconURL) iconURL = authorNameIcon;
     if (authorIcon) iconURL = authorIcon;
 
-    this.dataFixedT.author = { name, iconURL, url, options };
+    this.dataFixedT.author = { iconURL, name, options, url };
     return super.setAuthor(TextUtil.parse(name, this._setupOptions(options)), iconURL, url);
   }
 
@@ -157,7 +155,7 @@ class SimplicityEmbed extends MessageEmbed {
    * @param {Guild|GuildMember|User|string} [text='???'] The text of the footer.
    * @param {Guild|GuildMember|User|string} [iconURL=null] The resolvable to resolve the icon from.
    * @param {Object} [options={}] The options for the footer.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   setFooter(text = '???', iconURL = null, options = {}) {
     const footerTextName = checkName(text);
@@ -168,7 +166,7 @@ class SimplicityEmbed extends MessageEmbed {
     if (footerTextIcon && !iconURL) iconURL = footerTextIcon;
     if (footerIcon) iconURL = footerIcon;
 
-    this.dataFixedT.footer = { text, iconURL, options };
+    this.dataFixedT.footer = { iconURL, options, text };
     return super.setFooter(TextUtil.parse(text, this._setupOptions(options)), iconURL);
   }
 
@@ -176,7 +174,7 @@ class SimplicityEmbed extends MessageEmbed {
    * Set the SimplicityEmbed's description.
    * @param {string} [description='???'] The embed's description.
    * @param {Object} [options={}] The options for the descripton.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   setDescription(description = '???', options = {}) {
     this.dataFixedT.description = { description, options };
@@ -188,10 +186,10 @@ class SimplicityEmbed extends MessageEmbed {
    * @param {string} [title='???'] The embed's title.
    * @param {Object} [options={}] The options for the title.
    * @param {boolean} [canTrans=true] If the title can be translated.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   setTitle(title = '???', options = {}, canTrans = true) {
-    this.dataFixedT.title = { title, options };
+    this.dataFixedT.title = { options, title };
     const result = !canTrans ? title : TextUtil.parse(title, this._setupOptions(options));
     return super.setTitle(result);
   }
@@ -203,22 +201,22 @@ class SimplicityEmbed extends MessageEmbed {
    * @param {boolean} [inline=false] Whether the field should be inline.
    * @param {Object} [options={}] The options for the field name.
    * @param {Object} [valueOptions={}] The options for the field value.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   addField(name = '???', value = '???', inline = null, options = {}, valueOptions = {}) {
-    this.fieldsFixedT.push({ name, value, inline, options, valueOptions });
+    this.fieldsFixedT.push({ inline, name, options, value, valueOptions });
     return this
       .addFields({
+        inline,
         name: TextUtil.parse(name, this._setupOptions(options)),
         value: TextUtil.parse(value, this._setupOptions(valueOptions)),
-        inline,
       });
   }
 
   /**
    * Adds multiple fields to the embed.
    * @param {...EmbedField} fields The fields that will be added.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   addFields(...fields) {
     return super.addFields(fields);
@@ -227,7 +225,7 @@ class SimplicityEmbed extends MessageEmbed {
   /**
    * Set the SimplicityEmbed's thumbnail.
    * @param {Guild|GuildMember|User|string} url The url to the image.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   setThumbnail(url) {
     const thumbnail = checkIcon(url) || url;
@@ -237,7 +235,7 @@ class SimplicityEmbed extends MessageEmbed {
   /**
    * Set the SimplicityEmbed's image.
    * @param {GuildMember|User|string} url The url to the image.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   setImage(url) {
     const image = checkIcon(url) || url;
@@ -250,13 +248,13 @@ class SimplicityEmbed extends MessageEmbed {
    * @param {Object} [optionsText={}] The options for the text.
    * @param {Object} [options={}] The options for the text.
    * @param {string} [images=null] The image URL for the embed.
-   * @return {SimplicityEmbed} The embed.
+   * @returns {SimplicityEmbed} The embed.
    */
   setText(text = '???', optionsText = {}, options = {}, images = null) {
     options = this._setupOptions(options);
-    this._text = { text, options };
+    this._text = { options, text };
     this.text = Array.isArray(text) ?
-      text.map((t) => TextUtil.parse(t, options)).join('\n') :
+      text.map(t => TextUtil.parse(t, options)).join('\n') :
       TextUtil.parse(text, options);
     this.optionsText = optionsText;
     if (images) {

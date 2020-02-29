@@ -7,19 +7,19 @@ class Language extends Command {
     super(client, {
       aliases: ['lang', 'l', 'botlanguage'],
       category: 'module',
-      name: 'language',
       cooldown: 60000,
+      name: 'language',
       requirements: {
         argsRequired: true,
-        requireDatabase: true,
         permissions: ['MANAGE_GUILD'],
+        requireDatabase: true,
       },
     });
   }
 
   async run({ author, botLanguages, client, guild, language, query, send, t }) {
-    const lang = botLanguages.find((i) => i.toLowerCase() === query.toLowerCase());
-    const bl = botLanguages.map((i) => `\`${i}\``).join(', ');
+    const lang = botLanguages.find(i => i.toLowerCase() === query.toLowerCase());
+    const bl = botLanguages.map(i => `\`${i}\``).join(', ');
     if (!lang) throw new CommandError('commands:language.invalidLang', { botLanguages: bl });
 
     if (language === lang) throw new CommandError('commands:language.alreadySet', { lang });

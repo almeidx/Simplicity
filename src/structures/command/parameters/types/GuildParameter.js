@@ -1,7 +1,7 @@
 'use strict';
 
-const Parameter = require('./Parameter.js');
 const CommandError = require('../../CommandError.js');
+const Parameter = require('./Parameter.js');
 
 class GuildParameter extends Parameter {
   static parse(arg, { t, client }) {

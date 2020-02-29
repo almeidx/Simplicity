@@ -1,8 +1,8 @@
 'use strict';
 
-const { Client, Collection } = require('discord.js');
-const { Logger } = require('@util');
 const Loaders = require('@loaders');
+const { Logger } = require('@util');
+const { Client, Collection } = require('discord.js');
 
 /**
  * Main Client class.
@@ -22,7 +22,7 @@ class SimplicityClient extends Client {
 
   /**
    * Loads all the loader files.
-   * @return {void}
+   * @returns {void}
    */
   async loadFiles() {
     for (const Loader of Object.values(Loaders)) {
@@ -44,7 +44,7 @@ class SimplicityClient extends Client {
   /**
    * Login the Client.
    * @param {string} token The API Token.
-   * @return {Promise<string>} The Client after being logged in.
+   * @returns {Promise<string>} The Client after being logged in.
    */
   login(token) {
     this.loadFiles();
@@ -53,7 +53,7 @@ class SimplicityClient extends Client {
 
   /**
    * Getter for the command categories of the Client.
-   * @return {Collection<category, CommandStore>} A Collection with every category + its respective commands.
+   * @returns {Collection<category, CommandStore>} A Collection with every category + its respective commands.
    * @readonly
    */
   get categories() {

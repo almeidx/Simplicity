@@ -1,17 +1,17 @@
 'use strict';
 
-const Parameter = require('./Parameter.js');
-const CommandError = require('../../CommandError.js');
 const { Util } = require('discord.js');
+const CommandError = require('../../CommandError.js');
+const Parameter = require('./Parameter.js');
 
 class StringParameter extends Parameter {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
       clean: !!options.clean,
+      errorRegex: options.regex,
       maxLength: Number(options.maxLength) || 0,
       truncate: !!options.truncate,
-      errorRegex: options.regex,
     };
   }
 

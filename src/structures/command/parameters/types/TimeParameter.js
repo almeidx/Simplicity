@@ -1,8 +1,8 @@
 'use strict';
 
-const Parameter = require('./Parameter');
-const CommandError = require('../../CommandError');
 const ms = require('ms');
+const CommandError = require('../../CommandError');
+const Parameter = require('./Parameter');
 
 class TimeParameter extends Parameter {
   static parse(arg, { t }) {

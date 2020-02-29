@@ -16,8 +16,8 @@ client
   });
 
 process
-  .on('unhandledRejection', (error) => console.error('Uncaught Promise Error:', error))
-  .on('uncaughtException', (error) => {
+  .on('unhandledRejection', error => console.error('Uncaught Promise Error:', error))
+  .on('uncaughtException', error => {
     const msg = error.stack.replace(new RegExp(`${__dirname}/`, 'g'), './');
     console.error('Uncaught Exception:', msg);
     process.exit(1);

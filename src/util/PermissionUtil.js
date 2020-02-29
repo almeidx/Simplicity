@@ -16,7 +16,7 @@ class PermissionsUtil {
    * Checks if a user ID is a developer.
    * @param {string} userID The user's ID.
    * @param {Client} client The Client.
-   * @return {boolean} If the user is a developer.
+   * @returns {boolean} If the user is a developer.
    */
   static verifyDev(userID, client) {
     const guildClient = client.guilds.cache.get(process.env.SERVER_ID);

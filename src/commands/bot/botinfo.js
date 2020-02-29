@@ -1,21 +1,19 @@
 'use strict';
 
-const SimplicityEmbed = require('@discord/SimplicityEmbed');
 const Command = require('@command/Command');
-const { convertDateLang, getDevs } = require('@util/Util');
+const SimplicityEmbed = require('@discord/SimplicityEmbed');
 const { BOT_DEFAULT_PERMISSIONS } = require('@util/Constants');
+const { convertDateLang, getDevs } = require('@util/Util');
 const { version } = require('discord.js');
 
 class BotInfo extends Command {
   constructor(client) {
     super(client, {
-      name: 'botinfo',
       aliases: ['bi', 'botinformation', 'infobot', 'informationbot', 'stats', 'statistics'],
       category: 'bot',
       cooldown: 10000,
-      requirements: {
-        clientPermissions: ['EMBED_LINKS'],
-      },
+      name: 'botinfo',
+      requirements: { clientPermissions: ['EMBED_LINKS'] },
     });
   }
 
@@ -27,7 +25,7 @@ class BotInfo extends Command {
 
     let devs = getDevs();
     if (devs) {
-      devs = devs.filter((id) => client.users.cache.has(id)).map((id) => client.users.cache.get(id).tag).join(', ');
+      devs = devs.filter(id => client.users.cache.has(id)).map(id => client.users.cache.get(id).tag).join(', ');
     }
 
     const embed = new SimplicityEmbed({ author, emoji, t })

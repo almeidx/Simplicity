@@ -1,7 +1,7 @@
 'use strict';
 
-const { REGEX: { REGEX } } = require('./Constants');
 const moment = require('moment');
+const { REGEX: { REGEX } } = require('./Constants');
 require('moment-duration-format');
 
 /**
@@ -20,7 +20,7 @@ class Util {
    * Converts a date into it's appropriate language.
    * @param {I18next} t The i18next language instance.
    * @param {time} time The time.
-   * @return {string} The formatted time.
+   * @returns {string} The formatted time.
    */
   static convertDateLang(t, time) {
     return moment.duration(time).format(`D[ ${t('common:date.days')}], H[ ${t('common:date.hours')}],\n ` +
@@ -30,7 +30,7 @@ class Util {
   /**
    * Returns an url containing an image with the corresponding hex background.
    * @param {string} hex The hex value.
-   * @return {string} The image url.
+   * @returns {string} The image url.
    */
   static getImageHex(hex) {
     return `http://www.colourlovers.com/img/${hex}/200/200/Sminted.png`;
@@ -39,7 +39,7 @@ class Util {
   /**
    * Resolves a guild icon url.
    * @param {Guild} guild The guild.
-   * @return {string} The icon url.
+   * @returns {string} The icon url.
    */
   static getServerIconURL(guild) {
     if (guild.iconURL()) return guild.iconURL({ size: 2048 });
@@ -51,7 +51,7 @@ class Util {
    * @param {string} str The string to be sliced.
    * @param {number} [minLength=0] The minimum length of the string.
    * @param {number} [maxLength=1024] The maximum length of the string.
-   * @return {string} The sliced string.
+   * @returns {string} The sliced string.
    */
   static cleanString(str, minLength = 0, maxLength = 1024) {
     str = String(str);
@@ -64,7 +64,7 @@ class Util {
    * @param {string} lang The language of the code block.
    * @param {number} [minLength=0] The minimum length of the string.
    * @param {number} [maxLength=1024] The maximum length of the string.
-   * @return {string} The string in a code block.
+   * @returns {string} The string in a code block.
    */
   static code(str, lang, minLength = 0, maxLength = 1024) {
     str = String(str);
@@ -74,7 +74,7 @@ class Util {
   /**
    * Resolves the boolean value of something and returns a tick name according to the value.
    * @param {*} condition The condition to be checked.
-   * @return {string} The corresponding tick.
+   * @returns {string} The corresponding tick.
    */
   static checkTick(condition) {
     return condition ? '#TICK_YES' : '#TICK_NO';
@@ -83,7 +83,7 @@ class Util {
   /**
    * Makes the text proper cased. Uppercase at beginning of the sentence and lowercase thereafter.
    * @param {string} text The text to be made proper cased.
-   * @return {string} The proper cased text.
+   * @returns {string} The proper cased text.
    */
   static fixText(text) {
     if (typeof text !== 'string') return '???';
@@ -93,7 +93,7 @@ class Util {
   /**
    * Escapes special RegExp characters.
    * @param {string} str String with potential special RegExp characters to escape.
-   * @return {string} The escaped string.
+   * @returns {string} The escaped string.
    */
   static escapeRegExp(str) {
     return str.replace(REGEX, '\\$&');
@@ -102,7 +102,7 @@ class Util {
   /**
    * Checks if something is empty as in if their size/length is 0.
    * @param {*} val The value to be checked if empty.
-   * @return {boolean} Whether it is empty or not.
+   * @returns {boolean} Whether it is empty or not.
    */
   static isEmpty(val) {
     if ([false, null, undefined].includes(val)) return true;
@@ -132,7 +132,7 @@ class Util {
 
   /**
    * Resolves the Developer IDs
-   * @return {Array<string>} An array containing the developer's IDs.
+   * @returns {Array<string>} An array containing the developer's IDs.
    */
   static getDevs() {
     return process.env.DEVS_IDS.split(',');

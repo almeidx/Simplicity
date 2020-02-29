@@ -1,13 +1,12 @@
 'use strict';
 
 const CommandError = require('../CommandError.js');
+const ParameterTypes = require('./types');
 const Parameter = require('./types/Parameter.js');
 
-const ParameterTypes = require('./types');
-
-const isNull = (n) => n === null || n === undefined;
+const isNull = n => n === null || n === undefined;
 const funcOrString = (f, sf, ...args) => typeof f === 'function' ? f(...args) : sf ? sf(f) : f;
-const normalizeParam = (options) => {
+const normalizeParam = options => {
   const types = options.type.split('|');
   const parameters = [];
   for (const i in types) {
@@ -17,14 +16,10 @@ const normalizeParam = (options) => {
     options = { ...type.parseOptions(i), ...options };
     parameters.push(type);
   }
-  const result = { ...options, types: parameters, moreParams: parameters.length > 1 };
+  const result = { ...options, moreParams: parameters.length > 1, types: parameters };
   return result;
 };
 
-/**
- * @constructor
- * @param {Command} command
- */
 class CommandParameters {
   static parseOptions(params = []) {
     const length = params.length;
@@ -37,6 +32,7 @@ class CommandParameters {
 
   /**
    * @param {CommandContext} context The command context
+   * @param {Object} options The options for the parameter.
    * @param {Array<string>} args Array of the command args
    */
   static async handle(context, options, args) {
@@ -47,19 +43,20 @@ class CommandParameters {
 
   /**
    * @param {CommandContext} context The command context
+   * @param {Object} opts The options for the parameter.
    * @param {Array<string>} args Array of the command args
    */
   static async handleFlags(context, opts, args) {
     if (opts.flags) {
-      const flagIndex = args.findIndex((a) => a.startsWith('--'));
+      const flagIndex = args.findIndex(a => a.startsWith('--'));
       if (flagIndex > -1) {
         const [, ...allFlags] = args.splice(flagIndex).join(' ').split('--');
         const flagsObject = {};
 
-        const flagsParsed = allFlags.map((s) => s.trim().split(/[ \t]+/));
+        const flagsParsed = allFlags.map(s => s.trim().split(/[ \t]+/));
         for (let i = 0; i < flagsParsed.length; i++) {
           const [name, ...flagArgs] = flagsParsed[i];
-          const flag = opts.flags.find((f) => f.name === name || (f.aliases && f.aliases.includes(name)));
+          const flag = opts.flags.find(f => f.name === name || (f.aliases && f.aliases.includes(name)));
           if (!flag) return;
 
           const flagValue = flagArgs.join(' ');
@@ -75,6 +72,8 @@ class CommandParameters {
 
   /**
    * @param {CommandContext} context The command context
+   * @param {Object} opts The options for the parameter.
+   * @param {Array<string>} args Array of the command args
    */
   static async handleArguments(context, opts, args) {
     const parsedArgs = [];
@@ -117,7 +116,6 @@ class CommandParameters {
         break;
       }
     }
-
 
     if (isNull(parsedArg) && param.required) {
       throw new CommandError(missingErr, param.showUsage);

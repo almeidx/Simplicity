@@ -1,19 +1,19 @@
 'use strict';
 
 const { Command, CommandError, SimplicityEmbed } = require('@structures');
-const { verifyDev } = require('@util/PermissionUtil');
 const { getHelp } = require('@util/CommandUtil');
+const { verifyDev } = require('@util/PermissionUtil');
 
 class Help extends Command {
   constructor(client) {
     super(client, {
-      name: 'help',
       aliases: ['h', 'commands', 'cmd', 'cmds', 'howtouse'],
       category: 'bot',
+      name: 'help',
     }, [
       {
-        type: 'string',
         required: false,
+        type: 'string',
       },
     ]);
   }
@@ -24,10 +24,10 @@ class Help extends Command {
     if (!cmdName) {
       const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
         .setAuthor(client.user)
-        .setDescription('commands:help.about', { prefix, name: client.user.username });
+        .setDescription('commands:help.about', { name: client.user.username, prefix });
       categories.each((cmds, i) => {
         if (i === 'dev' && !verifyDev(author.id, client)) return;
-        return embed.addField(`categories:${i}.name`, cmds.keyArray().map((c) => `\`${c}\``).join(', '));
+        return embed.addField(`categories:${i}.name`, cmds.keyArray().map(c => `\`${c}\``).join(', '));
       });
       return send(embed);
     }

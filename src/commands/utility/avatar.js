@@ -5,29 +5,29 @@ const { Command, SimplicityEmbed } = require('@structures');
 class Avatar extends Command {
   constructor(client) {
     super(client, {
-      name: 'avatar',
       aliases: ['av'],
       category: 'util',
+      name: 'avatar',
     }, [
       {
-        type: 'user',
-        required: false,
         acceptBot: true,
         acceptSelf: true,
         fetchGlobal: true,
+        required: false,
+        type: 'user',
       },
       [
         {
+          missingError: 'errors:invalidImageSize',
           name: 'size',
           type: 'number',
           whitelist: Array.from({ length: 8 }, (e, i) => 2 ** (i + 4)),
-          missingError: 'errors:invalidImageSize',
         },
         {
+          missingError: 'errors:invalidImageFormat',
           name: 'format',
           type: 'string',
           whitelist: ['png', 'jpg', 'webp', 'gif'],
-          missingError: 'errors:invalidImageFormat',
         },
       ],
     ]);
@@ -35,7 +35,7 @@ class Avatar extends Command {
 
   run({ author, flags, t, channel }, user = author) {
     const { size = 2048, format } = flags;
-    const avatarUrl = user.displayAvatarURL({ size, format });
+    const avatarUrl = user.displayAvatarURL({ dynamic: true, format, size });
 
     const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
       .setAuthor(user)

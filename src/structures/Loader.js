@@ -17,7 +17,7 @@ class Loader {
 
   /**
    * Loads the listener.
-   * @return {void}
+   * @returns {void}
    */
   load() {
     throw new Error(`${this.constructor.name} doesn't have a load() method.`);

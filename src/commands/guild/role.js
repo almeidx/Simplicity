@@ -8,31 +8,31 @@ const removeAliases = ['remove', 'removerole', 'r', 'take', 'takerole'];
 class Role extends Command {
   constructor(client) {
     super(client, {
-      name: 'role',
-      category: 'guild',
       aliases: ['r'],
+      category: 'guild',
+      name: 'role',
     }, [
       {
-        type: 'string',
-        required: true,
-        whitelist: [...addAliases, ...removeAliases],
         missingError: 'commands:role.noArgs',
-      },
-      {
-        type: 'member',
-        required: false,
-      },
-      {
-        type: 'role',
         required: true,
-        clientHasHigh: true,
+        type: 'string',
+        whitelist: [...addAliases, ...removeAliases],
+      },
+      {
+        required: false,
+        type: 'member',
+      },
+      {
         authorHasHigh: true,
+        clientHasHigh: true,
+        required: true,
+        type: 'role',
       },
       ...new Array(9).fill({
-        type: 'role',
-        required: false,
-        clientHasHigh: true,
         authorHasHigh: true,
+        clientHasHigh: true,
+        required: false,
+        type: 'role',
       }),
     ]);
   }
@@ -40,12 +40,12 @@ class Role extends Command {
   async run({ author, member: guildMember, t, channel }, option, member = guildMember, ...Xroles) {
     option = addAliases.includes(option.toLowerCase()) ? 'add' : 'remove';
 
-    const roles = Xroles.filter((role) => role);
+    const roles = Xroles.filter(role => role);
 
     for (const role of roles) {
       if (option === 'add') {
         if (member.roles.has(role.id)) {
-          throw new CommandError('commands:role.alreadyHasRole', { role: role.toString(), member: member.toString() });
+          throw new CommandError('commands:role.alreadyHasRole', { member: member.toString(), role: role.toString() });
         }
 
         try {
@@ -59,7 +59,7 @@ class Role extends Command {
 
       if (option === 'remove') {
         if (!member.roles.has(role.id)) {
-          throw new CommandError('commands:role.hasNotRole', { role: role.toString(), member: member.toString() });
+          throw new CommandError('commands:role.hasNotRole', { member: member.toString(), role: role.toString() });
         }
 
         try {
@@ -73,9 +73,9 @@ class Role extends Command {
     }
 
     const embed = new SimplicityEmbed({ author, t });
-    const strRoles = roles.map((role) => role.toString() || role.name);
+    const strRoles = roles.map(role => role.toString() || role.name);
     const msg = option === 'add' ? 'commands:role.added' : 'commands:role.removed';
-    embed.setDescription(msg, { roles: strRoles.join(', '), count: roles.length, author, member });
+    embed.setDescription(msg, { author, count: roles.length, member, roles: strRoles.join(', ') });
 
     return channel.send(embed);
   }

@@ -1,26 +1,24 @@
 'use strict';
 
 const { Command, SimplicityEmbed } = require('@structures');
-const { getServerIconURL, checkTick } = require('@util/Util');
 const { MANAGER_PERMISSIONS } = require('@util/Constants');
+const { getServerIconURL, checkTick } = require('@util/Util');
 const { GuildMember } = require('discord.js');
 
 class Permissions extends Command {
   constructor(client) {
     super(client, {
-      name: 'permissions',
       aliases: ['perms', 'perm', 'permission'],
       category: 'guild',
-      requirements: {
-        guildOnly: true,
-      },
+      name: 'permissions',
+      requirements: { guildOnly: true },
     }, [
       {
-        type: 'member|role',
-        acceptSelf: true,
         acceptBot: true,
-        required: false,
+        acceptSelf: true,
         missingError: 'commands:permissions.error',
+        required: false,
+        type: 'member|role',
       },
     ]);
   }
@@ -44,8 +42,8 @@ class Permissions extends Command {
   }
 
   resolveColor(embed, emoji) {
-    const yResult = embed.fields.filter((f) => f.value === emoji('TICK_YES')).length;
-    const nResult = embed.fields.filter((f) => f.value === emoji('TICK_NO')).length;
+    const yResult = embed.fields.filter(f => f.value === emoji('TICK_YES')).length;
+    const nResult = embed.fields.filter(f => f.value === emoji('TICK_NO')).length;
     if (Math.abs(yResult / embed.fields.length * 100).toFixed(2) >= 70) {
       return 'GREEN';
     } else if (Math.abs(nResult / embed.fields.length * 100).toFixed(2) >= 70) {

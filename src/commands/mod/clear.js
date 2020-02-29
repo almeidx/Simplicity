@@ -5,42 +5,42 @@ const { Command } = require('@structures');
 class Clear extends Command {
   constructor(client) {
     super(client, {
-      name: 'clear',
       aliases: ['purge', 'prune', 'clean'],
       category: 'mod',
+      name: 'clear',
       requirements: {
-        permissions: ['MANAGE_MESSAGES'],
         clientPermissions: ['MANAGE_MESSAGES'],
+        permissions: ['MANAGE_MESSAGES'],
       },
     }, [
       {
-        type: 'number',
-        required: true,
-        min: 2,
         max: 100,
+        min: 2,
         missingError: 'commands:clear.invalidValue',
+        required: true,
+        type: 'number',
       },
       ...new Array(10).fill({
-        type: 'user',
-        required: false,
-        fetchGlobal: false,
-        acceptSelf: true,
         acceptBot: true,
+        acceptSelf: true,
+        fetchGlobal: false,
+        required: false,
+        type: 'user',
       }),
       [
         {
-          name: 'bot',
           aliases: ['b'],
+          name: 'bot',
           type: 'booleanFlag',
         },
         {
-          name: 'role',
           aliases: ['r'],
+          name: 'role',
           type: 'role',
         },
         {
-          name: 'uppercase',
           aliases: ['upper', 'highcase'],
+          name: 'uppercase',
           type: 'booleanFlag',
         },
       ],
@@ -52,9 +52,9 @@ class Clear extends Command {
     const { uppercase, bot, role } = flags;
     const res = await channel.messages.fetch({ limit });
 
-    const filtered = res.array().filter((msg) => {
-      const members = users.filter((u) => u);
-      if (members.length && members.every((user) => msg.author.id !== user.id)) return false;
+    const filtered = res.array().filter(msg => {
+      const members = users.filter(u => u);
+      if (members.length && members.every(user => msg.author.id !== user.id)) return false;
       else if (uppercase && msg.content.toUpperCase() !== msg.content) return false;
       else if (bot && !msg.author.bot) return false;
       else if (role && !msg.member.roles.has(role.id)) return false;

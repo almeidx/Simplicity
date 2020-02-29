@@ -7,24 +7,22 @@ const moment = require('moment');
 class RoleInfo extends Command {
   constructor(client) {
     super(client, {
-      name: 'roleinfo',
-      category: 'guild',
       aliases: ['ri', 'roleinformation'],
-      requirements: {
-        guildOnly: true,
-      },
+      category: 'guild',
+      name: 'roleinfo',
+      requirements: { guildOnly: true },
     }, [
       {
-        type: 'role',
-        required: true,
         missingError: 'commands:roleinfo.noArgs',
+        required: true,
+        type: 'role',
       },
     ]);
   }
 
   run({ author, emoji, guild, send, t, language }, role) {
     moment.locale(language);
-    const totalRoles = guild.roles.filter((r) => r.id !== guild.id).size;
+    const totalRoles = guild.roles.filter(r => r.id !== guild.id).size;
 
     const embed = new SimplicityEmbed({ author, emoji, t })
       .setThumbnail(getServerIconURL(guild))

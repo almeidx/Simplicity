@@ -10,7 +10,7 @@ class CommandError extends Error {
   }
 
   addField(name, value, inline = false, options = {}, valueOptions = {}) {
-    this.fields.push({ name, value, inline, options, valueOptions });
+    this.fields.push({ inline, name, options, value, valueOptions });
     return this;
   }
 }

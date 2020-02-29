@@ -1,27 +1,27 @@
 'use strict';
 
-const CommandError = require('./CommandError');
 const { verifyDev } = require('@util/PermissionUtil');
+const CommandError = require('./CommandError');
 
 const ERROR_RESPONSES = {
-  requireDatabase: 'errors:requireDatabase',
+  argsRequired: 'errors:missingParameters',
+  clientPermissions: 'errors:clientMissingPermission',
   guildOnly: 'errors:guildOnly',
   ownerOnly: 'errors:developerOnly',
-  clientPermissions: 'errors:clientMissingPermission',
+  requireDatabase: 'errors:requireDatabase',
   userMissingPermission: 'errors:userMissingPermission',
-  argsRequired: 'errors:missingParameters',
 };
 
 class CommandRequirements {
   static parseOptions(options) {
     return Object.assign({
       argsRequired: false,
+      clientPermissions: [],
+      guildOnly: true,
       nsfwChannelOnly: false,
       ownerOnly: false,
-      guildOnly: true,
-      requireDatabase: false,
       permissions: [],
-      clientPermissions: [],
+      requireDatabase: false,
     }, options);
   }
 
@@ -34,24 +34,25 @@ class CommandRequirements {
     if (options.guildOnly && !guild) throw new CommandError(ERROR_RESPONSES.guildOnly);
 
     if (channel.type === 'text') {
-      const clientPerms = options.clientPermissions.filter((p) =>
-        !channel.permissionsFor(guild.me).has(p)).map((p) => t(`permissions:${p}`),
+      const clientPerms = options.clientPermissions.filter(p =>
+        !channel.permissionsFor(guild.me).has(p)).map(p => t(`permissions:${p}`),
       );
       if (clientPerms.length !== 0) {
         throw new CommandError(t(ERROR_RESPONSES.clientPermissions, {
-          permissions: clientPerms.join(', '),
           count: clientPerms.length,
-          onUsage: true }));
+          onUsage: true,
+          permissions: clientPerms.join(', '),
+        }));
       }
 
-      const memberPerms = options.permissions.filter((p) =>
-        !channel.permissionsFor(author.id).has(p)).map((p) => t(`permissions:${p}`),
+      const memberPerms = options.permissions.filter(p =>
+        !channel.permissionsFor(author.id).has(p)).map(p => t(`permissions:${p}`),
       );
       if (memberPerms.length !== 0) {
         throw new CommandError(t(ERROR_RESPONSES.userMissingPermission, {
-          permissions: memberPerms.join(', '),
           count: memberPerms.length,
           onUsage: true,
+          permissions: memberPerms.join(', '),
         }));
       }
     }

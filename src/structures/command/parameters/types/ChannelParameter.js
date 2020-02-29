@@ -1,38 +1,33 @@
 'use strict';
 
-const Parameter = require('./Parameter');
 const CommandError = require('../../CommandError');
+const Parameter = require('./Parameter');
 
 const MENTION_REGEX = /(<#)?([0-9]{16,18})>?$/;
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
 
 const searchOn = (local, id, arg) =>
-  local.channels.cache.get(id) || local.channels.cache.find((c) => c.name.toLowerCase().includes(arg.toLowerCase()))
+  local.channels.cache.get(id) || local.channels.cache.find(c => c.name.toLowerCase().includes(arg.toLowerCase()))
 ;
 
 class ChannelParameter extends Parameter {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
+      acceptCategory: defVal(options, 'acceptCategory', false),
       acceptDM: defVal(options, 'acceptDM', false),
       acceptGroup: defVal(options, 'acceptGroup', false),
-
-      onlySameGuild: defVal(options, 'onlySameGuild', true),
-      acceptText: defVal(options, 'acceptText', false),
-      acceptVoice: defVal(options, 'acceptVoice', false),
-      acceptCategory: defVal(options, 'acceptCategory', false),
       acceptNews: defVal(options, 'acceptNews', false),
       acceptStore: defVal(options, 'acceptStore', false),
-      canBeHiddenUser: defVal(options, 'canBeHiddenUser', false),
+      acceptText: defVal(options, 'acceptText', false),
+      acceptVoice: defVal(options, 'acceptVoice', false),
       canBeHiddenBot: defVal(options, 'canBeHiddenBot', false),
+      canBeHiddenUser: defVal(options, 'canBeHiddenUser', false),
+      onlySameGuild: defVal(options, 'onlySameGuild', true),
     };
   }
 
   static parse(arg, { t, client, guild, member }) {
-    const check = (option, type) => {
-      if (!option && channel.type === type) throw new CommandError(t('errors:invalidChannelType', { type }));
-    };
-
     if (!arg) return;
 
     const regexResult = MENTION_REGEX.exec(arg);
@@ -40,6 +35,10 @@ class ChannelParameter extends Parameter {
 
     let channel = searchOn(guild, id, arg);
     if (!this.onlySameGuild) channel = channel || searchOn(client, id, arg);
+
+    const check = (option, type) => {
+      if (!option && channel.type === type) throw new CommandError(t('errors:invalidChannelType', { type }));
+    };
 
     if (!channel) throw new CommandError(t('errors:invalidChannel'));
 
@@ -50,7 +49,6 @@ class ChannelParameter extends Parameter {
     check(this.acceptCategory, 'category');
     check(this.acceptNews, 'news');
     check(this.acceptStore, 'store');
-
 
     const hiddenChannel = channel.permissionsFor(member).has('READ_MESSAGES');
     if (!this.canBeHiddenUser && !hiddenChannel) {

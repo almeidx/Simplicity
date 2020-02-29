@@ -1,15 +1,14 @@
 'use strict';
 
 /* eslint-disable max-depth */
+const { URL } = require('url');
+const AbortController = require('abort-controller');
+const fetch = require('node-fetch');
+const CommandError = require('../../CommandError.js');
 const Parameter = require('./Parameter.js');
 const UserParameter = require('./UserParameter.js');
-const CommandError = require('../../CommandError.js');
 
-const { URL } = require('url');
-const fetch = require('node-fetch');
-const AbortController = require('abort-controller');
-
-const isValidURL = (q) => {
+const isValidURL = q => {
   try {
     const url = new URL(q);
     return url;
@@ -20,7 +19,7 @@ const isValidURL = (q) => {
 
 const MAX_SIZE = 20000000;
 const SUPPORTED_TYPES = ['image/jpeg', 'image/png', 'image/svg+xml'];
-const imageResponseCheck = (res) =>
+const imageResponseCheck = res =>
   res.ok && SUPPORTED_TYPES.includes(res.headers.get('content-type')) &&
   res.headers.has('content-length') && Number(res.headers.get('content-length')) <= MAX_SIZE;
 
@@ -28,7 +27,7 @@ const imageRequest = (url, client, timeout = 3000) => {
   const controller = new AbortController();
   const abortTimeout = client.setTimeout(() => controller.abort(), timeout);
   return fetch(url, { signal: controller.signal })
-    .then((res) => imageResponseCheck(res) ? res.buffer() : Promise.reject(res))
+    .then(res => imageResponseCheck(res) ? res.buffer() : Promise.reject(res))
     .finally(() => client.clearTimeout(abortTimeout));
 };
 
@@ -39,21 +38,21 @@ class ImageParameter extends Parameter {
     const user = defVal(options, 'user', true);
     return {
       ...super.parseOptions(options),
-      user,
-      url: defVal(options, 'url', false),
       attachment: defVal(options, 'attachment', true),
-      link: defVal(options, 'link', true),
-      userOptions: user ? UserParameter.parseOptions(options.userOptions) : null,
       authorAvatar: defVal(options, 'authorAvatar', true),
       lastMessages: {
         accept: true,
-        limit: 10,
         attachment: true,
         embed: true,
         embedImage: true,
         embedThumbnail: true,
+        limit: 10,
         ...options.lastMessages || {},
       },
+      link: defVal(options, 'link', true),
+      url: defVal(options, 'url', false),
+      user,
+      userOptions: user ? UserParameter.parseOptions(options.userOptions) : null,
     };
   }
 
@@ -137,13 +136,13 @@ class ImageParameter extends Parameter {
           }
 
           if (this.lastMessages.embed && msg.embeds.length) {
-            const url = msg.embeds.map((e) =>
+            const url = msg.embeds.map(e =>
               this.lastMessages.embedImage && e.image ?
                 e.image.url :
                 this.lastMessages.embedThumbnail && e.thumbnail ?
                   e.thumbnail.url :
                   null,
-            ).find((e) => e);
+            ).find(e => e);
             if (url) {
               parseState.argIndex--;
               try {

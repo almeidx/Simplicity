@@ -1,8 +1,8 @@
 'use strict';
 
-const Parameter = require('./Parameter');
 const CommandError = require('@command/CommandError');
 const { verifyDev } = require('@util/PermissionUtil');
+const Parameter = require('./Parameter');
 
 const MENTION_REGEX = /^(?:<@!?)?([0-9]{16,18})(?:>)?$/;
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
@@ -12,18 +12,18 @@ class UserParameter extends Parameter {
     return {
       ...super.parseOptions(options),
       acceptBot: !!options.acceptBot,
-      acceptUser: defVal(options, 'acceptUser', true),
       acceptDeveloper: defVal(options, 'acceptDeveloper', true),
       acceptSelf: !!options.acceptSelf,
-      fetchGlobal: !!options.fetchGlobal,
+      acceptUser: defVal(options, 'acceptUser', true),
       errors: {
-        invalidUser: 'errors:invalidUser',
-        acceptSelf: 'errors:sameUser',
         acceptBot: 'errors:invalidUserBot',
-        acceptUser: 'errors:invalidUserNotBot',
         acceptDeveloper: 'errors:userCantBeDeveloper',
+        acceptSelf: 'errors:sameUser',
+        acceptUser: 'errors:invalidUserNotBot',
+        invalidUser: 'errors:invalidUser',
         ...options.errors || {},
       },
+      fetchGlobal: !!options.fetchGlobal,
     };
   }
 
@@ -32,7 +32,7 @@ class UserParameter extends Parameter {
 
     const regexResult = MENTION_REGEX.exec(arg);
     const id = regexResult && regexResult[1];
-    const findMember = guild.members.find((m) =>
+    const findMember = guild.members.find(m =>
       m.user.username.toLowerCase().includes(arg.toLowerCase()) ||
       m.displayName.toLowerCase().includes(arg.toLowerCase()));
 

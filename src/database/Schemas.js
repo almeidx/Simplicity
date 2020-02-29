@@ -2,19 +2,19 @@
 
 module.exports = {
   guilds: {
-    _id: { type: String, required: true },
-    lang: { type: String },
-    prefix: { type: String },
+    _id: { required: true, type: String },
+    autorole: { default: false, type: String },
     disableChannels: { type: Array },
-    autorole: { type: String },
-    starboard: { type: String },
+    lang: { default: process.env.DEFAULT_LANG, type: String },
     logs: {
-      GuildMemberAdd: { type: String, default: null },
-      GuildMemberRemove: { type: String, default: null },
-      GuildUpdates: { type: String, default: null },
-      MessageUpdate: { type: String, default: null },
-      UserUpdate: { type: String, default: null },
-      VoiceChannelLogs: { type: String, default: null },
+      GuildMemberAdd: { default: null, type: String },
+      GuildMemberRemove: { default: null, type: String },
+      GuildUpdates: { default: null, type: String },
+      MessageUpdate: { default: null, type: String },
+      UserUpdate: { default: null, type: String },
+      VoiceChannelLogs: { default: null, type: String },
     },
+    prefix: { default: process.env.PREFIX, type: String },
+    starboard: { default: null, type: String },
   },
 };

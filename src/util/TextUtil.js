@@ -18,18 +18,18 @@ class TextUtil {
    * Resolves emotes, text and translations on strings.
    * @param {string} [text=''] The text to be resolved.
    * @param {*} [options={}] The options.
-   * @return {string} The resolved string.
+   * @returns {string} The resolved string.
    */
   static parse(text = '', options = {}) {
     if (typeof text !== 'string') return text;
 
-    const { emoji, t, embed } = Object.assign({ emoji: null, t: null, embed: null, options: {} }, options);
+    const { emoji, t, embed } = Object.assign({ embed: null, emoji: null, options: {}, t: null }, options);
     // Add Emojis in #...
-    if (emoji) text = text.replace(/(?:#)\w+/g, (e) => emoji(e.slice(1).toUpperCase()) || e);
+    if (emoji) text = text.replace(/(?:#)\w+/g, e => emoji(e.slice(1).toUpperCase()) || e);
 
     // Add text embed in @...
     if (embed) {
-      text = text.replace(/(?:@)\S+/g, (k) => {
+      text = text.replace(/(?:@)\S+/g, k => {
         const [key, v1, v2] = k.slice(1).split('.');
         const result = key && embed[key];
         const result1 = v1 && result && result[v1];
@@ -40,7 +40,7 @@ class TextUtil {
 
     // Add translation in $"..."
     if (t) {
-      text = text.replace(/(?:\$\$)(\S+)/g, (s) => this.t(t, s.slice(2), options.options));
+      text = text.replace(/(?:\$\$)(\S+)/g, s => this.t(t, s.slice(2), options.options));
       return this.t(t, text, options.options);
     }
     return text;
@@ -51,7 +51,7 @@ class TextUtil {
    * @param {*} t The i18next object.
    * @param {string} [key=''] The key of said translation.
    * @param {*} [options={}] The options.
-   * @return {string} The finalized translation.
+   * @returns {string} The finalized translation.
    */
   static t(t, key = '', options = {}) {
     if (!i18next.exists(key) || !t) return key;
@@ -63,7 +63,7 @@ class TextUtil {
    * @param {*} text The text.
    * @param {*} imageURL The image url.
    * @param {*} permissions The permissions of the client.
-   * @return {string} The image url.
+   * @returns {string} The image url.
    */
   static parseImage(text, imageURL, permissions) {
     const arrCount = [];

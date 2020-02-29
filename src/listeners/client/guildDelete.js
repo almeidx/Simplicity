@@ -16,7 +16,7 @@ class GuildDeleteListener extends SimplicityListener {
       new SimplicityEmbed({ author: owner.user })
         .addField('Guild Name', guild.name, true)
         .addField('Guild ID', guild.id, true)
-        .addField('Members | Channels | Emojis', `${guild.memberCount} | ${guild.channels.cache.size} | ${guild.emojis.cache.size}`)
+        .addField('Member Count', guild.memberCount)
         .setThumbnail(getServerIconURL(guild)));
   }
 }

@@ -10,7 +10,7 @@ class MessageDelete extends SimplicityListener {
   }
 
   async on(client, message) {
-    // add deleted message for snipe command
+    // Add deleted message for snipe command
     client.deletedMessages.set(message.channel.id, message);
 
     const user = message.author || client.user;
@@ -19,7 +19,7 @@ class MessageDelete extends SimplicityListener {
       .setTimestamp()
       .setAuthor(user.tag, user.displayAvatarURL())
       .setFooter(`ID: ${user.id}`, user.displayAvatarURL())
-      .setDescription('loggers:messageDeleted', { user, channel: message.channel })
+      .setDescription('loggers:messageDeleted', { channel: message.channel, user })
       .setColor(COLORS.MESSAGE_DELETE);
 
     if (message.content) {
@@ -30,7 +30,7 @@ class MessageDelete extends SimplicityListener {
 
     if (message.guild.me.permissions.has('VIEW_AUDIT_LOG')) {
       const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' })
-        .then((audit) => audit.entries.first());
+        .then(audit => audit.entries.first());
       if (entry) {
         const channelCondition = entry.extra && entry.extra.channel.id === message.channel.id;
         const userCondition = entry.target && entry.target.id === user.id;
@@ -39,7 +39,7 @@ class MessageDelete extends SimplicityListener {
           const executor = entry.executor;
           if (executor) {
             embed.setDescription(
-              'loggers:messageDeletedExecutor', { user, channel: message.channel, executor },
+              'loggers:messageDeletedExecutor', { channel: message.channel, executor, user },
             );
           }
         }

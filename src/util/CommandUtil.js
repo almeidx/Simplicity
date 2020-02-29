@@ -1,8 +1,8 @@
 'use strict';
 
+const CommandError = require('@command/CommandError');
 const SimplicityEmbed = require('@discord/SimplicityEmbed');
 const { fixText, isEmpty } = require('@util/Util');
-const CommandError = require('./CommandError');
 const i18next = require('i18next');
 const getTranslation = (dirct, t, options = {}) => i18next.exists(dirct) && t(dirct, options);
 
@@ -15,7 +15,7 @@ class CommandUtil {
    * Gets the usage of a specific command.
    * @param {*} options The options for the usage.
    * @param {boolean} [full=true] Wether to return the prefix, command and usage at once.
-   * @return {string} The usage.
+   * @returns {string} The usage.
    */
   static getUsage({ command, prefix, t }, full = true) {
     const usage = getTranslation(`commands:${command.name}.usage`, t);
@@ -26,7 +26,7 @@ class CommandUtil {
   /**
    * Returns all the info required on the help command.
    * @param {Object} options The options for the help command.
-   * @return {SimplicityEmbed}
+   * @returns {SimplicityEmbed}
    */
   static getHelp({ client, command, prefix, t }) {
     command = typeof command === 'string' ? client.commands.fetch(command) : command;
@@ -42,18 +42,18 @@ class CommandUtil {
 
     // Add aliases
     if (!isEmpty(command.aliases)) {
-      embed.addField('common:aliases', command.aliases.map((a) => `\`${a}\``).join(' '), true);
+      embed.addField('common:aliases', command.aliases.map(a => `\`${a}\``).join(' '), true);
     }
 
     // Add examples
     const examples = getTranslation(`commands:${command.name}.examples`, t, { returnObjects: true });
     if (examples.lenght) {
-      const examplesFixed = examples.map((e) => `${prefix}${command.name} ${e}`).join('\n');
+      const examplesFixed = examples.map(e => `${prefix}${command.name} ${e}`).join('\n');
       embed.addField('common:examples', examplesFixed, true);
     }
 
     // Add subcommands
-    const subcommands = command.subcommands && command.subcommands.map((sub) => {
+    const subcommands = command.subcommands && command.subcommands.map(sub => {
       const commandName = `\`${prefix + command.name} ${sub.name}\` `;
       return `${commandName} ${t(`commands:${command.name}-${sub.name}.description`)}`;
     });

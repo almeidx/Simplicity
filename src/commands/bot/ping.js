@@ -5,9 +5,9 @@ const { Command } = require('@structures');
 class Ping extends Command {
   constructor(client) {
     super(client, {
-      name: 'ping',
       aliases: ['pong'],
       category: 'bot',
+      name: 'ping',
     });
   }
 

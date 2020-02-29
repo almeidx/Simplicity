@@ -1,17 +1,17 @@
 'use strict';
 
+const { ChannelParameter } = require('@parameters');
 const { Command, CommandError } = require('@structures');
 const { isEmpty } = require('@util/Util');
-const { ChannelParameter } = require('@parameters');
 
 class Disable extends Command {
   constructor(client) {
     super(client, {
-      name: 'disable',
       aliases: ['disablecommands', 'disablecommand', 'disablecmd', 'cmddisable', 'cmddisable'],
       category: 'module',
-      userPermissions: ['MANAGE_GUILD'],
+      name: 'disable',
       requireDatabase: true,
+      userPermissions: ['MANAGE_GUILD'],
     });
   }
 
@@ -20,23 +20,23 @@ class Disable extends Command {
     const disableChannels = guildData.disableChannels || [];
     let msg;
 
-    // current channel
+    // Current channel
     if (!query) {
       const disable = this.checkChannelAndEdit(disableChannels, channel.id);
       msg = t(`commands:disable.${disable ? 'currentDisable' : 'currentEnabled'}`);
     }
 
-    // one argument
+    // One argument
     if (args.length === 1) {
       const argChannel = await ChannelParameter.parse(args[0], {}, { guild });
       const disable = this.checkChannelAndEdit(disableChannels, argChannel.id);
       msg = t(`commands:disable.${disable ? 'channelDisable' : 'channelEnabled'}`, { channel: argChannel.toString() });
     }
 
-    // multi arguments
+    // Multi arguments
     if (args.length > 1) {
-      const channels = await Promise.all(args.map((str) => ChannelParameter.search(str, { guild })));
-      const channelsParsed = channels.filter((e) => e);
+      const channels = await Promise.all(args.map(str => ChannelParameter.search(str, { guild })));
+      const channelsParsed = channels.filter(e => e);
 
       if (isEmpty(channelsParsed) && !isEmpty(args)) throw new CommandError('commands:disable.notFound');
 
@@ -49,7 +49,7 @@ class Disable extends Command {
       }
 
       if (newChannels.length && removedChannels.length) {
-        msg = t('commands:disable.multiChannels', { prefix, removedChannels, newChannels });
+        msg = t('commands:disable.multiChannels', { newChannels, prefix, removedChannels });
       } else if (newChannels.length > 1 && removedChannels.length === 0) {
         msg = t('commands:disable.channelDisable', { channels: newChannels, count: newChannels.length });
       } else if (newChannels.length === 1 && removedChannels.length === 0) {
@@ -61,9 +61,7 @@ class Disable extends Command {
       }
     }
 
-    await database.guilds.edit(guild.id, {
-      disableChannels,
-    });
+    await database.guilds.edit(guild.id, { disableChannels });
     channel.send(msg);
   }
 

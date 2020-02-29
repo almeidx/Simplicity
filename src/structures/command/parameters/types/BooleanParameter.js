@@ -1,14 +1,14 @@
 'use strict';
 
-const Parameter = require('./Parameter.js');
 const CommandError = require('../../CommandError.js');
+const Parameter = require('./Parameter.js');
 
 class BooleanParameter extends Parameter {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
-      trueValues: options.trueValues || ['true', 'yes', 'on'],
       falseValues: options.falseValues || ['false', 'no', 'off'],
+      trueValues: options.trueValues || ['true', 'yes', 'on'],
     };
   }
 

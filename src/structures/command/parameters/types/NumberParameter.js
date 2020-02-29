@@ -1,18 +1,18 @@
 'use strict';
 
-const Parameter = require('./Parameter.js');
 const CommandError = require('../../CommandError.js');
+const Parameter = require('./Parameter.js');
 
-const isNull = (n) => n === null || n === undefined || isNaN(n);
+const isNull = n => n === null || n === undefined || isNaN(n);
 
 class NumberParameter extends Parameter {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
-      min: Number(options.min),
-      max: Number(options.max),
-      forceMin: !!options.forceMin,
       forceMax: !!options.forceMax,
+      forceMin: !!options.forceMin,
+      max: Number(options.max),
+      min: Number(options.min),
     };
   }
 

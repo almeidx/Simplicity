@@ -2,8 +2,8 @@
 
 const { EMOJIS, EMOJIS_CUSTOM } = require('@util/Constants');
 const i18next = require('i18next');
-const getCustomEmoji = (id) => EMOJIS_CUSTOM && EMOJIS_CUSTOM[id];
-const getDefaultEmoji = (name) => EMOJIS && EMOJIS[name];
+const getCustomEmoji = id => EMOJIS_CUSTOM && EMOJIS_CUSTOM[id];
+const getDefaultEmoji = name => EMOJIS && EMOJIS[name];
 
 class CommandContext {
   constructor(options) {
@@ -34,13 +34,13 @@ class CommandContext {
 
     this.canEmbed = this.guild ? this.channel.permissionsFor(this.guild.me).has('EMBED_LINKS') : true;
 
-    // database
+    // Database
     this.database = this.client.database;
     this.guildData = options.guildData;
     this.flags = {};
   }
 
-  _emoji(name = 'QUESTION', options) {
+  _emoji(name = 'QUESTION', options = {}) {
     const { id, other } = Object.assign({ id: false, other: null }, options);
     name = name.toUpperCase();
 

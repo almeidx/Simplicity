@@ -1,25 +1,25 @@
 'use strict';
 
-const { Command, CommandError } = require('@structures');
 const { RoleParameter } = require('@parameters');
+const { Command, CommandError } = require('@structures');
 
 class AutoRole extends Command {
   constructor(client) {
     super(client, {
-      name: 'autorole',
       aliases: ['roleauto', 'joinrole'],
       category: 'module',
       cooldown: 30000,
+      name: 'autorole',
       requirements: {
-        userPermissions: ['MANAGE_GUILD'],
-        requireDatabase: true,
         guildOnly: true,
+        requireDatabase: true,
+        userPermissions: ['MANAGE_GUILD'],
       },
     });
   }
 
   async run({ channel, database, guild, guildData, query, t }) {
-    let role = null; let msg;
+    let msg, role = null;
     if (!query && !guildData.autrole) {
       throw new CommandError('commands:autorole.requireRole', { onUsage: true });
     } else if (!query && guildData.autrole) {
@@ -34,9 +34,7 @@ class AutoRole extends Command {
       role = id;
     }
 
-    await database.guilds.edit(guild.id, {
-      autorole: role,
-    });
+    await database.guilds.edit(guild.id, { autorole: role });
 
     await channel.send(msg);
   }

@@ -1,18 +1,18 @@
 'use strict';
 
-const { Command } = require('@structures');
 const { ChannelParameter } = require('@parameters');
+const { Command } = require('@structures');
 
 class Starboard extends Command {
   constructor(client) {
     super(client, {
-      name: 'starboard',
       category: 'module',
       cooldown: 30000,
+      name: 'starboard',
       requirements: {
-        requireDatabase: true,
-        permissions: ['MANAGE_GUILD'],
         guildOnly: true,
+        permissions: ['MANAGE_GUILD'],
+        requireDatabase: true,
       },
     });
   }

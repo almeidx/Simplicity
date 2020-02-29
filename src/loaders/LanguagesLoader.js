@@ -1,12 +1,12 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
+const { promisify } = require('util');
 const Loader = require('@structures/Loader');
 const i18next = require('i18next');
 const translationBackend = require('i18next-node-fs-backend');
-const fs = require('fs');
-const { promisify } = require('util');
 const readdir = promisify(fs.readdir);
-const path = require('path');
 const pathFolder = path.resolve('src', 'locales');
 class LanguagesLoader extends Loader {
   constructor(client) {
@@ -17,14 +17,12 @@ class LanguagesLoader extends Loader {
     const connected = await i18next
       .use(translationBackend)
       .init({
+        backend: { loadPath: `${pathFolder}/{{lng}}/{{ns}}.json` },
+        defaultNS: 'commands',
+        fallbackLng: 'en-US',
+        interpolation: { escapeValue: false },
         ns: ['categories', 'commands', 'errors', 'permissions', 'common', 'loggers', 'api_errors'],
         preload: await readdir(pathFolder),
-        fallbackLng: 'en-US',
-        defaultNS: 'commands',
-        backend: {
-          loadPath: `${pathFolder}/{{lng}}/{{ns}}.json`,
-        },
-        interpolation: { escapeValue: false },
         returnEmptyString: false,
       }, () => {
         console.log(Object.keys(i18next.store.data));

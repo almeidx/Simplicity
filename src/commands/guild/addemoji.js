@@ -5,35 +5,35 @@ const { SimplicityEmbed, Command, CommandError } = require('@structures');
 class AddEmoji extends Command {
   constructor(client) {
     super(client, {
-      name: 'addemoji',
       aliases: ['createmoji', 'createemoji'],
       category: 'guild',
+      name: 'addemoji',
       requirements: {
+        clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS'],
         guildOnly: true,
         permissions: ['MANAGE_EMOJIS'],
-        clientPermissions: ['EMBED_LINKS', 'MANAGE_EMOJIS'],
       },
     }, [
       {
-        type: 'string',
-        maxLength: 32,
-        minLength: 2,
         errorRegex: /[^a-z0-9_]/gi,
-        required: true,
-        missingError: '',
         errors: {
           maxLength: 'commands:addemoji:nameTooBig',
           minLength: 'commands:addemoji:nameTooShort',
           regex: 'commands:addemoji:invalidName',
         },
+        maxLength: 32,
+        minLength: 2,
+        missingError: '',
+        required: true,
+        type: 'string',
       },
       {
+        attachment: true,
+        authorAvatar: false,
+        lastMessages: { limit: 25 },
+        required: true,
         type: 'image',
         url: true,
-        required: true,
-        authorAvatar: false,
-        attachment: true,
-        lastMessages: { limit: 25 },
       },
     ]);
   }

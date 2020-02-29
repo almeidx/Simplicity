@@ -1,8 +1,8 @@
 'use strict';
 
-const Parameter = require('./Parameter.js');
-const CommandError = require('../../CommandError.js');
 const { URL } = require('url');
+const CommandError = require('../../CommandError.js');
+const Parameter = require('./Parameter.js');
 
 class URLParameter extends Parameter {
   static parse(arg, { t }) {

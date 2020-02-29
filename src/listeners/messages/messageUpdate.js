@@ -25,7 +25,7 @@ class MessageUpdate extends SimplicityListener {
     // MESSAGE EDITED
     if (oldContent !== newContent) {
       embed
-        .setDescription('loggers:messageEdited', { url, user, channel: msgChannel })
+        .setDescription('loggers:messageEdited', { channel: msgChannel, url, user })
         .setColor(COLORS.MESSAGE_EDIT);
       if (oldContent) embed.addField('loggers:before', cleanString(oldContent) || 'loggers:messageError', true);
       if (newContent) embed.addField('loggers:after', cleanString(newContent) || 'loggers:messageError', true);
@@ -36,14 +36,14 @@ class MessageUpdate extends SimplicityListener {
       // MESSAGE PINNED
       if (!oldMessage.pinned && newMessage.pinned) {
         embed
-          .setDescription('loggers:messagePinned', { url, user, channel: msgChannel })
+          .setDescription('loggers:messagePinned', { channel: msgChannel, url, user })
           .setColor(COLORS.MESSAGE_PIN);
         return this.sendLogMessage(oldMessage.guild.id, 'MessageUpdate', embed).catch(() => null);
       } else
       // MESSAGE UNPINNED
       if (oldMessage.pinned && !newMessage.pinned) {
         embed
-          .setDescription('loggers:messageUnpinned', { url, user, channel: msgChannel })
+          .setDescription('loggers:messageUnpinned', { channel: msgChannel, url, user })
           .setColor(COLORS.MESSAGE_UNPIN);
         return this.sendLogMessage(oldMessage.guild.id, 'MessageUpdate', embed).catch(() => null);
       }

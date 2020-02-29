@@ -1,8 +1,8 @@
 'use strict';
 
 const { CommandContext, SimplicityListener } = require('@structures');
-const { escapeRegExp } = require('@util/Util');
 const Logger = require('@util/Logger');
+const { escapeRegExp } = require('@util/Util');
 const i18next = require('i18next');
 
 class MessageListener extends SimplicityListener {
@@ -49,11 +49,9 @@ class MessageListener extends SimplicityListener {
 
       if (command) {
         const totalLength = usedPrefix.length + commandName.length;
-        const params = { args, guildData, command, language, message, prefix, query: args.join(' '), totalLength };
+        const params = { args, command, guildData, language, message, prefix, query: args.join(' '), totalLength };
         command._run(new CommandContext(params), args).catch(console.error);
-        Logger.logCommand({
-          guild: guild.name, channel: channel.name, author: author.tag, content: cleanContent,
-        });
+        Logger.logCommand({ author: author.tag, channel: channel.name, content: cleanContent, guild: guild.name });
       }
     }
   }

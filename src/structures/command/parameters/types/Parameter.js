@@ -5,16 +5,14 @@ const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
 class Parameter {
   static parseOptions(options = {}) {
     return {
-      required: defVal(options, 'required', true),
-      showUsage: defVal(options, 'showUsage', true),
+      aliases: options.aliases,
       full: !!options.full,
-      whitelist: options.whitelist,
       fullJoin: options.fullJoin,
       missingError: options.missingError || 'errors:generic',
-
-      // Flags
       name: options.name,
-      aliases: options.aliases,
+      required: defVal(options, 'required', true),
+      showUsage: defVal(options, 'showUsage', true),
+      whitelist: options.whitelist,
     };
   }
 

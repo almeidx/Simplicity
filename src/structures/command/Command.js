@@ -1,11 +1,10 @@
 'use strict';
 
-const CommandRequirements = require('./CommandRequirements');
-const CommandParameters = require('./parameters/CommandParameters');
-
+const { PermissionUtil: { verifyDev } } = require('@util');
 const CommandCooldown = require('./CommandCooldown');
 const CommandError = require('./CommandError');
-const { PermissionUtil: { verifyDev } } = require('@util');
+const CommandRequirements = require('./CommandRequirements');
+const CommandParameters = require('./parameters/CommandParameters');
 
 class Command {
   constructor(client, options = {}, parameters = []) {
@@ -70,7 +69,7 @@ class Command {
   }
 
   getSubCommand(name) {
-    return this.subcommands.find((i) => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)));
+    return this.subcommands.find(i => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)));
   }
 
   runSubCommand(subcommand, context) {
