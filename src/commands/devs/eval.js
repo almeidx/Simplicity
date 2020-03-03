@@ -66,7 +66,7 @@ class Eval extends Command {
 
     let res;
 
-    const toEval = expr.replace(/(^`{3}(\w+)?|`{3}$)/g, '');
+    const toEval = expr.replace(/(^`{3}(.+)?|`{3}$)/g, '');
 
     const cleanResult = async (evaluated, hrStart) => {
       const resolved = await Promise.resolve(evaluated);
