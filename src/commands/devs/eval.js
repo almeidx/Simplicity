@@ -1,23 +1,50 @@
 'use strict';
 
 /* eslint-disable no-unused-vars */
+
 const { inspect } = require('util');
 const { Command, CommandError, SimplicityEmbed } = require('@structures');
-const { code } = require('@util/Util');
-const token = process.env.DISCORD_TOKEN;
-const value = s => code(s, 'js').replace(new RegExp(token, 'g'), () => '*'.repeat(token.length));
+const { Constants, Util } = require('@util');
 
+const token = process.env.DISCORD_TOKEN;
+const { code, isEmpty, isPromise } = Util;
+
+const value = (s) => code(s, 'js').replace(new RegExp(token, 'g'), () => '*'.repeat(token.length));
+const hrToSeconds = (hrtime) => (hrtime[0] + (hrtime[1] / 1e9)).toFixed(3);
+const exec = (c) => require('child_process').execSync(c).toString();
+
+/**
+ * The Eval command class.
+ * @extends Command
+ */
 class Eval extends Command {
+  /**
+   * Creates an instance of EvalCommand.
+   * @param {Client} client The Client.
+   */
   constructor(client) {
     super(client, {
       aliases: ['compile', 'ev', 'evaluate', 'exec', 'execute'],
       category: 'dev',
       name: 'eval',
-      requirements: { argsRequired: true, ownerOnly: true },
-    });
+      requirements: { ownerOnly: true },
+    }, [
+      {
+        full: true,
+        missingError: 'You need to input an expression for me to evaluate.',
+        required: true,
+        type: 'string',
+      },
+    ]);
   }
 
-  async run(ctx) {
+  /**
+   * What gets ran when the command is called.
+   * @param {CommandContext} ctx The context of the command.
+   * @param {string} expr The expression to be evaluated.
+   * @returns {Promise<Message>} The reply from the command.
+   */
+  async run(ctx, expr) {
     const {
       args,
       author,
@@ -36,25 +63,44 @@ class Eval extends Command {
       send,
       t,
     } = ctx;
-    const embed = new SimplicityEmbed({ author });
+
+    let res;
+
     const text = query.replace(/^```(js|javascript ?\n)?|```$/gi, '');
 
+    const evaluate = (c) => eval(c);
+    const toEval = expr.replace(/(^`{3}(\w+)?|`{3}$)/g, '');
+
+    console.log('toEval: ', toEval);
+
+    const cleanResult = async (evaluated, hrStart) => {
+      const resolved = await Promise.resolve(evaluated);
+      const hrDiff = process.hrtime(hrStart);
+
+      const inspected = typeof resolved === 'string' ? resolved : inspect(resolved, { depth: 0, showHidden: true });
+      const cleanEvaluated = value(this.clean(inspected));
+
+      const executedIn = `Executed in ${hrDiff[0] > 0 ? `${hrDiff[0]}s ` : ''}${hrDiff[1] / 1000000}ms`;
+      return `${isPromise(evaluated) ? 'Promise ' : ''}Result (${executedIn}): ${cleanEvaluated}`;
+    };
+
     try {
-      const evald = await Promise.resolve(eval(text));
-      const fixed = inspect(evald, { depth: 0, showHidden: true });
-
-      embed
-        .setDescription(value(fixed))
-        .setColor('GREEN');
-
-      if (!fixed || !evald) embed.setColor('RED');
-    } catch (error) {
-      embed
-        .setDescription(value(error))
-        .setColor('RED');
-      console.error(['COMMAND', 'EVAL-RESULT'], error);
+      const hrStart = process.hrtime();
+      const evaluated = evaluate(expr);
+      res = await cleanResult(evaluated, hrStart);
+    } catch (err) {
+      if (err.message === 'await is only valid in async function') {
+        try {
+          const hrStart = process.hrtime();
+          if (toEval.trim().split('\n').length === 1) {
+            res = await cleanResult(evaluate(`(async () => ${toEval})()`), hrStart);
+          } else res = await cleanResult(evaluate(`(async () => {\n${toEval}\n})()`), hrStart);
+        } catch (er) {
+          res = `Error: ${value(this.clean(er))}`;
+        }
+      } else res = `Error: ${value(this.clean(err))}`;
     } finally {
-      const msg = await send(embed);
+      const msg = await send(res);
       const permissions = channel.permissionsFor(guild.me);
 
       if (permissions.has('ADD_REACTIONS') && permissions.has('MANAGE_MESSAGES')) {
@@ -64,14 +110,25 @@ class Eval extends Command {
         const collector = await msg.createReactionCollector(filter, { errors: ['time'], max: 1, time: 30000 });
 
         collector.on('collect', async () => {
-          if (msg) await msg.delete().catch(() => null);
-          if (message) await message.delete().catch(() => null);
+          if (!msg.deleted) await msg.delete().catch(() => null);
+          if (!message.deleted) await message.delete().catch(() => null);
         });
         collector.on('end', async () => {
-          if (msg) await msg.reactions.removeAll().catch(() => null);
+          if (!msg.deleted) await msg.reactions.removeAll().catch(() => null);
         });
       }
     }
+  }
+
+  /**
+   * Cleans blank space from the eval response.
+   * @param {*} text The text to clean.
+   * @returns {*} The text cleaned.
+   * @private
+   */
+  clean(text) {
+    const blankSpace = String.fromCharCode(8203);
+    return typeof text === 'string' ? text.replace(/`/g, `\`${blankSpace}`).replace(/@/g, `@${blankSpace}`) : text;
   }
 }
 
