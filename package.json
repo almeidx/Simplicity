@@ -45,18 +45,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Almeeida/Simplicity.git"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ]
+    "url": "https://github.com/Almeeida/simplicity.git"
   },
   "_moduleAliases": {
     "@root": ".",
