@@ -19,16 +19,16 @@ class ServerInfo extends Command {
     moment.locale(language);
 
     const totalMembers = guild.memberCount;
-    const onlineMembers = guild.members.filter(m => m.user.presence.status !== 'offline').size;
-    const offlineMembers = guild.members.filter(m => m.user.presence.status === 'offline').size;
+    const onlineMembers = guild.members.filter((m) => m.user.presence.status !== 'offline').size;
+    const offlineMembers = guild.members.filter((m) => m.user.presence.status === 'offline').size;
 
-    const totalChannels = guild.channels.cache.filter(c => c.type === 'text' || c.type === 'voice').size;
-    const textChannels = guild.channels.cache.filter(c => c.type === 'text').size;
-    const voiceChannels = guild.channels.cache.filter(c => c.type === 'voice').size;
+    const totalChannels = guild.channels.cache.filter((c) => c.type === 'text' || c.type === 'voice').size;
+    const textChannels = guild.channels.cache.filter((c) => c.type === 'text').size;
+    const voiceChannels = guild.channels.cache.filter((c) => c.type === 'voice').size;
 
-    const totalRoles = guild.roles && guild.roles.cache.filter(r => r.id !== guild.id).size;
-    const roles = guild.roles && guild.roles.cache.sort((a, b) => b.position - a.position).map(r => r).slice(0, -1);
-    const rolesClean = roles && roles.map(r => r.name || r.toString());
+    const totalRoles = guild.roles && guild.roles.cache.filter((r) => r.id !== guild.id).size;
+    const roles = guild.roles && guild.roles.cache.sort((a, b) => b.position - a.position).map((r) => r).slice(0, -1);
+    const rolesClean = roles && roles.map((r) => r.name || r.toString());
 
     const guildIconURL = getServerIconURL(guild);
     const emojis = guild.emojis && guild.emojis.cache.size;
@@ -102,7 +102,7 @@ class ServerInfo extends Command {
 
       collector.on('collect', async ({ emoji: emote, users, message: collectorMessage }) => {
         const name = emote.id || emote.name;
-        const checkEmbed = e => e.author.name === collectorMessage.embeds[0].author.name;
+        const checkEmbed = (e) => e.author.name === collectorMessage.embeds[0].author.name;
 
         if (permissions.has('MANAGE_MESSAGES')) await users.remove(author.id);
         if (name === serverinfoEmoji && !checkEmbed(embed)) await collectorMessage.edit(embed);
@@ -118,7 +118,7 @@ class ServerInfo extends Command {
 
 function createEmbedRoles(roles, guild, embedOptions = {}) {
   const guildIconURL = getServerIconURL(guild);
-  const clean = a => a.slice(0, 25).join('\n') + (a.length > 25 ? '\n...' : '');
+  const clean = (a) => a.slice(0, 25).join('\n') + (a.length > 25 ? '\n...' : '');
   return new SimplicityEmbed(embedOptions)
     .setAuthor('$$commands:serverinfo.roles', guildIconURL, '', { totalRoles: roles.length })
     .setDescription(clean(roles))

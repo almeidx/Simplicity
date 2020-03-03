@@ -6,7 +6,7 @@ const { Collection } = require('discord.js');
 
 class CommandStore extends Collection {
   fetch(str) {
-    return this.find(c => c.name.toLowerCase() === str.toLowerCase() || c.aliases.includes(str.toLowerCase()));
+    return this.find((c) => c.name.toLowerCase() === str.toLowerCase() || c.aliases.includes(str.toLowerCase()));
   }
 }
 

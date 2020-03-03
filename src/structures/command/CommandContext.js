@@ -2,8 +2,8 @@
 
 const { EMOJIS, EMOJIS_CUSTOM } = require('@util/Constants');
 const i18next = require('i18next');
-const getCustomEmoji = id => EMOJIS_CUSTOM && EMOJIS_CUSTOM[id];
-const getDefaultEmoji = name => EMOJIS && EMOJIS[name];
+const getCustomEmoji = (id) => EMOJIS_CUSTOM && EMOJIS_CUSTOM[id];
+const getDefaultEmoji = (name) => EMOJIS && EMOJIS[name];
 
 class CommandContext {
   constructor(options) {

@@ -10,7 +10,7 @@ const fetch = require('node-fetch');
  * @returns {boolean} If the URL returns a status different than 404.
  * @private
  */
-const checkRequestURL = url => fetch(url).then(r => r.status !== 404).catch(() => null);
+const checkRequestURL = (url) => fetch(url).then((r) => r.status !== 404).catch(() => null);
 
 /**
  * Contains various message related utility methods.
@@ -48,7 +48,7 @@ class MessageUtil {
     if (resultQuery) return url;
 
     const attachments = message && message.attachments;
-    const attachment = attachments && attachments.find(a => IMGFormats.some(format => a.name.endsWith(format)));
+    const attachment = attachments && attachments.find((a) => IMGFormats.some((format) => a.name.endsWith(format)));
     return attachment && await checkRequestURL(attachment.url) && attachment.url;
   }
 
@@ -61,7 +61,7 @@ class MessageUtil {
    */
   static async fetchImages(channel, limit = 100) {
     const messages = await channel.messages.fetch(limit).catch(() => null);
-    return messages && (await Promise.all(messages.map(message => this.getImage(message)))).filter(r => r);
+    return messages && (await Promise.all(messages.map((message) => this.getImage(message)))).filter((r) => r);
   }
 
   /**

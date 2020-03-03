@@ -69,7 +69,7 @@ class Command {
   }
 
   getSubCommand(name) {
-    return this.subcommands.find(i => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)));
+    return this.subcommands.find((i) => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)));
   }
 
   runSubCommand(subcommand, context) {

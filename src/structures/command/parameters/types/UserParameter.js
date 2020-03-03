@@ -32,7 +32,7 @@ class UserParameter extends Parameter {
 
     const regexResult = MENTION_REGEX.exec(arg);
     const id = regexResult && regexResult[1];
-    const findMember = guild.members.find(m =>
+    const findMember = guild.members.find((m) =>
       m.user.username.toLowerCase().includes(arg.toLowerCase()) ||
       m.displayName.toLowerCase().includes(arg.toLowerCase()));
 

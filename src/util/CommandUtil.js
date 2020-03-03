@@ -42,18 +42,18 @@ class CommandUtil {
 
     // Add aliases
     if (!isEmpty(command.aliases)) {
-      embed.addField('common:aliases', command.aliases.map(a => `\`${a}\``).join(' '), true);
+      embed.addField('common:aliases', command.aliases.map((a) => `\`${a}\``).join(' '), true);
     }
 
     // Add examples
     const examples = getTranslation(`commands:${command.name}.examples`, t, { returnObjects: true });
     if (examples.lenght) {
-      const examplesFixed = examples.map(e => `${prefix}${command.name} ${e}`).join('\n');
+      const examplesFixed = examples.map((e) => `${prefix}${command.name} ${e}`).join('\n');
       embed.addField('common:examples', examplesFixed, true);
     }
 
     // Add subcommands
-    const subcommands = command.subcommands && command.subcommands.map(sub => {
+    const subcommands = command.subcommands && command.subcommands.map((sub) => {
       const commandName = `\`${prefix + command.name} ${sub.name}\` `;
       return `${commandName} ${t(`commands:${command.name}-${sub.name}.description`)}`;
     });

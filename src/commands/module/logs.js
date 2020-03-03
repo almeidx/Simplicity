@@ -28,7 +28,7 @@ class Logs extends Command {
   }
 
   async run({ args, author, client, emoji, guild, query, send, t }) {
-    const checkChannel = c => guild.channels.cache.get(c) ? c : '#TICK_NO';
+    const checkChannel = (c) => guild.channels.cache.get(c) ? c : '#TICK_NO';
     const embed = new SimplicityEmbed({ author, emoji, t });
     const { logs } = await client.database.guilds.get(guild.id);
     const logTypes = Object.keys(logs);
@@ -37,7 +37,7 @@ class Logs extends Command {
     const condition = type && args.length && args.shift().toLowerCase();
     const aliasesList = [];
     const aliasesValues = Object.values(Aliases);
-    for (const i in aliasesValues) aliasesValues[i].forEach(a => aliasesList.push(a));
+    for (const i in aliasesValues) aliasesValues[i].forEach((a) => aliasesList.push(a));
 
     if (!query) {
       for (const i of logTypes) if (i !== '$init') embed.addField(`» $$commands:logs.${i}`, checkChannel(i), true);

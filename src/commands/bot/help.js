@@ -27,7 +27,7 @@ class Help extends Command {
         .setDescription('commands:help.about', { name: client.user.username, prefix });
       categories.each((cmds, i) => {
         if (i === 'dev' && !verifyDev(author.id, client)) return;
-        return embed.addField(`categories:${i}.name`, cmds.keyArray().map(c => `\`${c}\``).join(', '));
+        return embed.addField(`categories:${i}.name`, cmds.keyArray().map((c) => `\`${c}\``).join(', '));
       });
       return send(embed);
     }

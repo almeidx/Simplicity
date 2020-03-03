@@ -40,15 +40,15 @@ class SnipeCommand extends Command {
 
     let attachments = msg.attachments.array();
     if (attachments.length > 0) {
-      const image = attachments.find(a => AllowedImageFormats.some(format => a.name.endsWith(format)));
+      const image = attachments.find((a) => AllowedImageFormats.some((format) => a.name.endsWith(format)));
       if (image) {
         embed.setImage(image.proxyURL);
         delete attachments[attachments.indexOf(image)];
       }
 
-      attachments = attachments.filter(a => a);
+      attachments = attachments.filter((a) => a);
       if (attachments.length > 0) {
-        embed.addField(t('commands:snipe.files'), attachments.map(a => `[${a.name}](${a.url})`));
+        embed.addField(t('commands:snipe.files'), attachments.map((a) => `[${a.name}](${a.url})`));
       }
     }
 

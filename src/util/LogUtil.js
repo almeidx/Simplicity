@@ -49,7 +49,7 @@ class LogUtil {
     const avatar = channel.client.user.displayAvatarURL();
 
     const webhooks = await channel.fetchWebhooks();
-    let webhook = webhooks.find(wk => wk.name === name);
+    let webhook = webhooks.find((wk) => wk.name === name);
 
     if (!webhook) webhook = await channel.createWebhook(name);
 

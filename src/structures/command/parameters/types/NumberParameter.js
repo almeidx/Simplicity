@@ -3,7 +3,7 @@
 const CommandError = require('../../CommandError.js');
 const Parameter = require('./Parameter.js');
 
-const isNull = n => n === null || n === undefined || isNaN(n);
+const isNull = (n) => n === null || n === undefined || isNaN(n);
 
 class NumberParameter extends Parameter {
   static parseOptions(options = {}) {

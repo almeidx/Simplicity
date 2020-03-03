@@ -42,8 +42,8 @@ class Permissions extends Command {
   }
 
   resolveColor(embed, emoji) {
-    const yResult = embed.fields.filter(f => f.value === emoji('TICK_YES')).length;
-    const nResult = embed.fields.filter(f => f.value === emoji('TICK_NO')).length;
+    const yResult = embed.fields.filter((f) => f.value === emoji('TICK_YES')).length;
+    const nResult = embed.fields.filter((f) => f.value === emoji('TICK_NO')).length;
     if (Math.abs(yResult / embed.fields.length * 100).toFixed(2) >= 70) {
       return 'GREEN';
     } else if (Math.abs(nResult / embed.fields.length * 100).toFixed(2) >= 70) {

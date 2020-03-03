@@ -30,7 +30,7 @@ class MessageDelete extends SimplicityListener {
 
     if (message.guild.me.permissions.has('VIEW_AUDIT_LOG')) {
       const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' })
-        .then(audit => audit.entries.first());
+        .then((audit) => audit.entries.first());
       if (entry) {
         const channelCondition = entry.extra && entry.extra.channel.id === message.channel.id;
         const userCondition = entry.target && entry.target.id === user.id;

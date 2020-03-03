@@ -40,7 +40,7 @@ class Role extends Command {
   async run({ author, member: guildMember, t, channel }, option, member = guildMember, ...Xroles) {
     option = addAliases.includes(option.toLowerCase()) ? 'add' : 'remove';
 
-    const roles = Xroles.filter(role => role);
+    const roles = Xroles.filter((role) => role);
 
     for (const role of roles) {
       if (option === 'add') {
@@ -73,7 +73,7 @@ class Role extends Command {
     }
 
     const embed = new SimplicityEmbed({ author, t });
-    const strRoles = roles.map(role => role.toString() || role.name);
+    const strRoles = roles.map((role) => role.toString() || role.name);
     const msg = option === 'add' ? 'commands:role.added' : 'commands:role.removed';
     embed.setDescription(msg, { author, count: roles.length, member, roles: strRoles.join(', ') });
 

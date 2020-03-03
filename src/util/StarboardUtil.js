@@ -35,11 +35,11 @@ class StarboardUtil {
     const channel = channelId && message.channel.guild.channels.cache.get(channelId);
 
     if (channel) {
-      const reactionsSize = users.filter(u => u.id !== message.author.id).size;
+      const reactionsSize = users.filter((u) => u.id !== message.author.id).size;
 
       // Search embed exists
       const messages = await channel.messages.fetch({ limit: 100 });
-      const found = messages.find(msg =>
+      const found = messages.find((msg) =>
         msg.author.id === client.user.id &&
         msg.embeds.length &&
         msg.embeds[0].footer &&

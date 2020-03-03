@@ -4,9 +4,9 @@ const CommandError = require('../CommandError.js');
 const ParameterTypes = require('./types');
 const Parameter = require('./types/Parameter.js');
 
-const isNull = n => n === null || n === undefined;
+const isNull = (n) => n === null || n === undefined;
 const funcOrString = (f, sf, ...args) => typeof f === 'function' ? f(...args) : sf ? sf(f) : f;
-const normalizeParam = options => {
+const normalizeParam = (options) => {
   const types = options.type.split('|');
   const parameters = [];
   for (const i in types) {
@@ -48,15 +48,15 @@ class CommandParameters {
    */
   static async handleFlags(context, opts, args) {
     if (opts.flags) {
-      const flagIndex = args.findIndex(a => a.startsWith('--'));
+      const flagIndex = args.findIndex((a) => a.startsWith('--'));
       if (flagIndex > -1) {
         const [, ...allFlags] = args.splice(flagIndex).join(' ').split('--');
         const flagsObject = {};
 
-        const flagsParsed = allFlags.map(s => s.trim().split(/[ \t]+/));
+        const flagsParsed = allFlags.map((s) => s.trim().split(/[ \t]+/));
         for (let i = 0; i < flagsParsed.length; i++) {
           const [name, ...flagArgs] = flagsParsed[i];
-          const flag = opts.flags.find(f => f.name === name || (f.aliases && f.aliases.includes(name)));
+          const flag = opts.flags.find((f) => f.name === name || (f.aliases && f.aliases.includes(name)));
           if (!flag) return;
 
           const flagValue = flagArgs.join(' ');

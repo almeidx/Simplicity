@@ -35,8 +35,8 @@ class Disable extends Command {
 
     // Multi arguments
     if (args.length > 1) {
-      const channels = await Promise.all(args.map(str => ChannelParameter.search(str, { guild })));
-      const channelsParsed = channels.filter(e => e);
+      const channels = await Promise.all(args.map((str) => ChannelParameter.search(str, { guild })));
+      const channelsParsed = channels.filter((e) => e);
 
       if (isEmpty(channelsParsed) && !isEmpty(args)) throw new CommandError('commands:disable.notFound');
 

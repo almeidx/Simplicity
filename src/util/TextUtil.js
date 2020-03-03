@@ -25,11 +25,11 @@ class TextUtil {
 
     const { emoji, t, embed } = Object.assign({ embed: null, emoji: null, options: {}, t: null }, options);
     // Add Emojis in #...
-    if (emoji) text = text.replace(/(?:#)\w+/g, e => emoji(e.slice(1).toUpperCase()) || e);
+    if (emoji) text = text.replace(/(?:#)\w+/g, (e) => emoji(e.slice(1).toUpperCase()) || e);
 
     // Add text embed in @...
     if (embed) {
-      text = text.replace(/(?:@)\S+/g, k => {
+      text = text.replace(/(?:@)\S+/g, (k) => {
         const [key, v1, v2] = k.slice(1).split('.');
         const result = key && embed[key];
         const result1 = v1 && result && result[v1];
@@ -40,7 +40,7 @@ class TextUtil {
 
     // Add translation in $"..."
     if (t) {
-      text = text.replace(/(?:\$\$)(\S+)/g, s => this.t(t, s.slice(2), options.options));
+      text = text.replace(/(?:\$\$)(\S+)/g, (s) => this.t(t, s.slice(2), options.options));
       return this.t(t, text, options.options);
     }
     return text;

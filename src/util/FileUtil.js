@@ -27,7 +27,7 @@ class FileUtil {
   static async requireDirectory(dirPath, success, error, recursive = true) {
     const files = await FileUtil.readdir(dirPath);
     const filesObject = {};
-    return Promise.all(files.map(async file => {
+    return Promise.all(files.map(async (file) => {
       const fullPath = path.resolve(dirPath, file);
       if (/\.(js|json)$/.test(file)) {
         try {
@@ -39,7 +39,7 @@ class FileUtil {
           error(e, file, dirPath);
         }
       } else if (recursive) {
-        const isDirectory = await FileUtil.stat(fullPath).then(f => f.isDirectory());
+        const isDirectory = await FileUtil.stat(fullPath).then((f) => f.isDirectory());
         if (isDirectory) return FileUtil.requireDirectory(fullPath, success, error);
       }
     })).then(() => filesObject).catch(console.error);

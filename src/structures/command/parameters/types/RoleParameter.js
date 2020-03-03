@@ -20,8 +20,8 @@ class RoleParameter extends Parameter {
     const regexResult = MENTION_ROLE_REGEX.exec(arg);
     const id = regexResult && regexResult[1];
 
-    const role = guild.roles.get(id) || guild.roles.find(r => r.name.toLowerCase() === arg.toLowerCase()) ||
-      guild.roles.find(r => r.name.toLowerCase().includes(arg.toLowerCase()));
+    const role = guild.roles.get(id) || guild.roles.find((r) => r.name.toLowerCase() === arg.toLowerCase()) ||
+      guild.roles.find((r) => r.name.toLowerCase().includes(arg.toLowerCase()));
 
     if (!role && !this.moreParams) throw new CommandError(t('errors:invalidRole'));
     if (this.clientHasHigh && role && role.position > guild.me.roles.highest.position) {

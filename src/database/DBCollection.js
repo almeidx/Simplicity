@@ -10,7 +10,7 @@ class Collection {
   }
 
   get(id) {
-    return this.model.findById(id).then(e => this.parse(e) || this.create(id));
+    return this.model.findById(id).then((e) => this.parse(e) || this.create(id));
   }
 
   create(id) {
@@ -22,7 +22,7 @@ class Collection {
   }
 
   remove(id) {
-    return this.model.findById(id).then(i => this.model.deleteOne(i)).then(this.parse);
+    return this.model.findById(id).then((i) => this.model.deleteOne(i)).then(this.parse);
   }
 }
 

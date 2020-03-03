@@ -34,8 +34,8 @@ class CommandRequirements {
     if (options.guildOnly && !guild) throw new CommandError(ERROR_RESPONSES.guildOnly);
 
     if (channel.type === 'text') {
-      const clientPerms = options.clientPermissions.filter(p =>
-        !channel.permissionsFor(guild.me).has(p)).map(p => t(`permissions:${p}`),
+      const clientPerms = options.clientPermissions.filter((p) =>
+        !channel.permissionsFor(guild.me).has(p)).map((p) => t(`permissions:${p}`),
       );
       if (clientPerms.length !== 0) {
         throw new CommandError(t(ERROR_RESPONSES.clientPermissions, {
@@ -45,8 +45,8 @@ class CommandRequirements {
         }));
       }
 
-      const memberPerms = options.permissions.filter(p =>
-        !channel.permissionsFor(author.id).has(p)).map(p => t(`permissions:${p}`),
+      const memberPerms = options.permissions.filter((p) =>
+        !channel.permissionsFor(author.id).has(p)).map((p) => t(`permissions:${p}`),
       );
       if (memberPerms.length !== 0) {
         throw new CommandError(t(ERROR_RESPONSES.userMissingPermission, {
