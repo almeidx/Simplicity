@@ -1,4 +1,4 @@
-name: linter
+name: Use ESLint and check for errors or code stlye irregularities
 
 on:
   pull_request:
