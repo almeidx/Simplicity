@@ -137,6 +137,15 @@ class Util {
   static getDevs() {
     return process.env.DEVS_IDS.split(',');
   }
+
+  /**
+   * Checks if something is a promise.
+   * @param {*} val The value to be checked.
+   * @returns {boolean} If the value was a promise.
+   */
+  static isPromise(val) {
+    return val && Object.prototype.toString.call(val) === '[object Promise]' && typeof val.then === 'function';
+  }
 }
 
 module.exports = Util;
