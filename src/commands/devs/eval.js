@@ -66,12 +66,7 @@ class Eval extends Command {
 
     let res;
 
-    const text = query.replace(/^```(js|javascript ?\n)?|```$/gi, '');
-
-    const evaluate = (c) => eval(c);
     const toEval = expr.replace(/(^`{3}(\w+)?|`{3}$)/g, '');
-
-    console.log('toEval: ', toEval);
 
     const cleanResult = async (evaluated, hrStart) => {
       const resolved = await Promise.resolve(evaluated);
@@ -86,15 +81,15 @@ class Eval extends Command {
 
     try {
       const hrStart = process.hrtime();
-      const evaluated = evaluate(expr);
+      const evaluated = eval(expr);
       res = await cleanResult(evaluated, hrStart);
     } catch (err) {
       if (err.message === 'await is only valid in async function') {
         try {
           const hrStart = process.hrtime();
           if (toEval.trim().split('\n').length === 1) {
-            res = await cleanResult(evaluate(`(async () => ${toEval})()`), hrStart);
-          } else res = await cleanResult(evaluate(`(async () => {\n${toEval}\n})()`), hrStart);
+            res = await cleanResult(eval(`(async () => ${toEval})()`), hrStart);
+          } else res = await cleanResult(eval(`(async () => {\n${toEval}\n})()`), hrStart);
         } catch (er) {
           res = `Error: ${value(this.clean(er))}`;
         }
