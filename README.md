@@ -1,10 +1,10 @@
 <p align="center"><img src="src/assets/simplicity-text.png" alt="Simplicity"></p>
 <p align="center">
-  <a title="Code Style" href="https://google.github.io/styleguide/jsguide.html" target="_blank">
-    <img src="https://img.shields.io/badge/code%20style-google-brightgreen.svg?style=flat-square" alt="Google">
+  <a title="Code Style" href="https://www.npmjs.com/package/eslint-config-almeida" target="_blank">
+    <img src="https://img.shields.io/badge/code%20style-almeida-brightgreen.svg?style=flat-square" alt="Google">
   </a>
   <a title="Dependencies" href="https://david-dm.org/Almeeida/Simplicity/" target="_blank">
-    <img src="https://david-dm.org/Almeeida/Simplicity/status.svg?style=flat-square" alt="Dependencies">
+    <img src="https://david-dm.org/SimplicityDiscord/Simplicity.svg?style=flat-square" alt="Dependencies">
   </a>
   <a title="Library" target="_blank" href="https://discord.js.org/#/">
     <img src="https://img.shields.io/badge/library-discord.js-blue.svg?style=flat-square" alt="discord.js">
@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/codacy/grade/4f29cb30be614ad3a5af1fa381efa9f7.svg?style=flat-square" alt="Code Quality" />
   </a>
   <a title="License" href="https://github.com/Almeeida/Simplicity/blob/master/LICENSE" target="_blank">
-    <img src="https://img.shields.io/github/license/SwitchbladeBot/switchblade.svg?style=flat-square" alt="License"/>
+    <img src="https://img.shields.io/github/license/SimplicityDiscord/Simplicity?style=flat-square" alt="License"/>
   </a>
 </p>
 
