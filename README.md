@@ -3,16 +3,16 @@
   <a title="Code Style" href="https://www.npmjs.com/package/eslint-config-almeida" target="_blank">
     <img src="https://img.shields.io/badge/code%20style-almeida-brightgreen.svg?style=flat-square" alt="Google">
   </a>
-  <a title="Dependencies" href="https://david-dm.org/Almeeida/Simplicity/" target="_blank">
+  <a title="Dependencies" href="https://david-dm.org/SimplicityDiscord/Simplicity/" target="_blank">
     <img src="https://david-dm.org/SimplicityDiscord/Simplicity.svg?style=flat-square" alt="Dependencies">
   </a>
   <a title="Library" target="_blank" href="https://discord.js.org/#/">
     <img src="https://img.shields.io/badge/library-discord.js-blue.svg?style=flat-square" alt="discord.js">
   </a>
-  <a title="Code Quality" href="https://www.codacy.com/app/Almeeida/Simplicity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Almeeida/Simplicity&amp;utm_campaign=Badge_Grade" target="_blank">
+  <a title="Code Quality" href="https://www.codacy.com/app/SimplicityDiscord/Simplicity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SimplicityDiscord/Simplicity&amp;utm_campaign=Badge_Grade" target="_blank">
     <img src="https://img.shields.io/codacy/grade/4f29cb30be614ad3a5af1fa381efa9f7.svg?style=flat-square" alt="Code Quality" />
   </a>
-  <a title="License" href="https://github.com/Almeeida/Simplicity/blob/master/LICENSE" target="_blank">
+  <a title="License" href="https://github.com/SimplicityDiscord/Simplicity/blob/dev/LICENSE" target="_blank">
     <img src="https://img.shields.io/github/license/SimplicityDiscord/Simplicity?style=flat-square" alt="License"/>
   </a>
 </p>
