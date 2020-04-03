@@ -28,7 +28,7 @@
     "module-alias": "^2.2.2",
     "moment": "^2.23.0",
     "moment-duration-format": "^2.3.2",
-    "mongoose": "^5.7.1",
+    "mongoose": "^5.9.7",
     "node-fetch": "^2.6.0",
     "source-map": "^0.7.3",
     "utf-8-validate": "^5.0.2"
