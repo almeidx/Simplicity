@@ -41,7 +41,7 @@
     "eslint-config-almeida": "^1.0.7",
     "husky": "^4.2.3",
     "lint-staged": "^9.4.3",
-    "nodemon": "^1.19.3"
+    "nodemon": "^2.0.2"
   },
   "repository": {
     "type": "git",
