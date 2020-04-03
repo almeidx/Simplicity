@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "bufferutil": "^4.0.1",
-    "cross-env": "^7.0.0",
+    "cross-env": "^7.0.2",
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^7.0.0",
     "erlpack": "^0.1.3",
