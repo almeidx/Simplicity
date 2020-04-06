@@ -911,8 +911,8 @@ detect-indent@6.0.0:
 
 "discord.js@github:discordjs/discord.js":
   version "12.1.1"
-  uid "0e44ecd420ba94b490c2cba1f7a30d1fa5878183"
-  resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/0e44ecd420ba94b490c2cba1f7a30d1fa5878183"
+  uid "828640ca263db2c95ed21e7353a2746fe6ac9fb8"
+  resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/828640ca263db2c95ed21e7353a2746fe6ac9fb8"
   dependencies:
     "@discordjs/collection" "^0.1.5"
     abort-controller "^3.0.0"
