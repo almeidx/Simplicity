@@ -50,7 +50,7 @@ class UserInfo extends Command {
       if (!member) {
         throw new CommandError('commands:userinfo.notInGuild');
       }
-      return channel.send(this.rolesEmbed(member.roles.filter((r) => r.id !== guild.id), user, author, t));
+      return channel.send(this.rolesEmbed(member.roles.cache.filter((r) => r.id !== guild.id), user, author, t));
     } else {
       const content = user.isPartial ? t('commands:userinfo.cannotPartial') : '';
       return channel.send(content, this.userInfoEmbed(user, author, t, emoji, guild));
@@ -129,7 +129,7 @@ class UserInfo extends Command {
     const created = moment(user.createdAt);
     const joined = member && moment(member.joinedAt);
 
-    const rolesClean = member && member.roles && member.roles
+    const rolesClean = member && member.roles.cache
       .filter((r) => r.id !== guild.id)
       .map((r) => r.name || r.toString());
 
@@ -147,7 +147,7 @@ class UserInfo extends Command {
       embed.addField('» $$commands:userinfo.status', userStatus, true);
     }
 
-    if (member && highestRole && member.roles.length > 5) {
+    if (member && highestRole && member.roles.cache.length > 5) {
       const roleString = highestRole.name || highestRole.toString();
       embed.addField('» $$commands:userinfo.highestRole', roleString, true);
     }
