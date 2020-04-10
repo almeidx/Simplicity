@@ -12,8 +12,7 @@
     "start": "cross-env NODE_ENV=production node .",
     "dev": "cross-env NODE_ENV=development nodemon . --watch src --watch .env",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
-    "commit": "git-cz"
+    "lint:fix": "eslint src --fix"
   },
   "license": "ISC",
   "dependencies": {
@@ -22,7 +21,6 @@
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
     "erlpack": "^0.1.3",
-    "express": "^4.17.1",
     "i18next": "^19.4.0",
     "i18next-node-fs-backend": "^2.1.3",
     "module-alias": "^2.2.2",
@@ -30,13 +28,9 @@
     "moment-duration-format": "^2.3.2",
     "mongoose": "^5.9.7",
     "node-fetch": "^2.6.0",
-    "source-map": "^0.7.3",
     "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
-    "@types/node": "^13.11.1",
-    "commitizen": "^4.0.4",
-    "cz-conventional-changelog": "3.1.0",
     "eslint": "^6.4.0",
     "eslint-config-almeida": "^1.0.7",
     "husky": "^4.2.3",
@@ -45,25 +39,35 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Almeeida/simplicity.git"
+    "url": "https://github.com/Simplicity/Simplicity.git"
   },
   "_moduleAliases": {
     "@root": ".",
     "@src": "src",
-    "@database": "src/database",
+    "@assets": "src/assets",
     "@commands": "src/commands",
-    "@structures": "src/structures",
-    "@util": "src/util",
-    "@parameters": "src/structures/command/parameters/types",
+    "@database": "src/database",
+    "@listeners": "src/listeners",
     "@loaders": "src/loaders",
-    "@command": "src/structures/command",
-    "@discord": "src/structures/discord",
     "@locales": "src/locales",
-    "@listeners": "src/listeners"
+    "@structures": "src/structures",
+    "@command": "src/structures/command",
+    "@parameters": "src/structures/command/parameters/types",
+    "@discord": "src/structures/discord",
+    "@util": "src/util"
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+  "eslintConfig": {
+    "extends": "almeida"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
