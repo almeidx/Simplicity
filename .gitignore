@@ -5,6 +5,7 @@ yarn.lock
 # IDE configuration directories
 .vscode/
 .idea/
+.editorconfig
 
 # dotenv environment variables file
 .env
