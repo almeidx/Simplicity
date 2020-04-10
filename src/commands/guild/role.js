@@ -44,7 +44,7 @@ class Role extends Command {
 
     for (const role of roles) {
       if (option === 'add') {
-        if (member.roles.has(role.id)) {
+        if (member.roles.cache.has(role.id)) {
           throw new CommandError('commands:role.alreadyHasRole', { member: member.toString(), role: role.toString() });
         }
 
@@ -58,7 +58,7 @@ class Role extends Command {
       }
 
       if (option === 'remove') {
-        if (!member.roles.has(role.id)) {
+        if (!member.roles.cache.has(role.id)) {
           throw new CommandError('commands:role.hasNotRole', { member: member.toString(), role: role.toString() });
         }
 

@@ -107,7 +107,7 @@ class UserInfo extends Command {
   getJoinPosition(id, guild) {
     if (!guild.member(id)) return;
 
-    const array = guild.members.array();
+    const array = guild.members.cache.array();
     array.sort((a, b) => a.joinedAt - b.joinedAt);
 
     const result = array.map((m, i) => ({ id: m.user.id, index: i })).find((m) => m.id === id);

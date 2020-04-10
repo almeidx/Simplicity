@@ -14,13 +14,13 @@ class ServerInfo extends Command {
   }
 
   async run({ author, channel, emoji, guild, send, t, language }) {
-    if (guild.memberCount !== guild.members.size || guild.large) await guild.members.fetch();
+    if (guild.memberCount !== guild.members.cache.size) await guild.members.fetch();
 
     moment.locale(language);
 
     const totalMembers = guild.memberCount;
-    const onlineMembers = guild.members.filter((m) => m.user.presence.status !== 'offline').size;
-    const offlineMembers = guild.members.filter((m) => m.user.presence.status === 'offline').size;
+    const onlineMembers = guild.members.cache.filter((m) => m.user.presence.status !== 'offline').size;
+    const offlineMembers = guild.members.cache.filter((m) => m.user.presence.status === 'offline').size;
 
     const totalChannels = guild.channels.cache.filter((c) => c.type === 'text' || c.type === 'voice').size;
     const textChannels = guild.channels.cache.filter((c) => c.type === 'text').size;
@@ -49,9 +49,7 @@ class ServerInfo extends Command {
     else embed.addField('» $$commands:serverinfo.totalRoles', totalRoles, true);
 
     if (boostTier && boosters) {
-      embed.addField(
-        '» $$commands:serverinfo.boostTier', 'commands:serverinfo.tier', true, {}, { boostTier },
-      );
+      embed.addField('» $$commands:serverinfo.boostTier', 'commands:serverinfo.tier', true, {}, { boostTier });
     }
 
     embed

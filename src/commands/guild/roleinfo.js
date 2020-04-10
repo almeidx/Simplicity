@@ -31,8 +31,8 @@ class RoleInfo extends Command {
 
     if (role.hexColor !== '#000000') embed.addField('» $$commands:roleinfo.color', role.hexColor, true);
 
-    const roleMembers = role.members;
-    const members = role.members && `${roleMembers.first(15).join(', ')}${roleMembers.size > 15 ?
+    const roleMembers = role.members && role.members.cache;
+    const members = roleMembers && `${roleMembers.first(15).join(', ')}${roleMembers.size > 15 ?
       ` ${t('commands:roleinfo.moreMembers', { size: roleMembers.size - 15 })}` :
       ''}`;
     const date = moment(role.createdAt);
