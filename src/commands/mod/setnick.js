@@ -51,7 +51,7 @@ class SetNick extends Command {
     const text = nickname ? 'commands:setnick.success' : 'commands:setnick.removedNickname';
 
     const embed = new SimplicityEmbed({ author })
-      .setDescription(t(text, { member, nickname }));
+      .setDescription(t(text, { member: member.user.tag, nickname }));
     return channel.send(embed);
   }
 }

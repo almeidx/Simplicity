@@ -24,7 +24,9 @@ class Permissions extends Command {
   }
 
   run({ author, emoji, guild, member: guildMember, send, t }, victim = guildMember) {
-    const avatar = victim instanceof GuildMember ? victim.user.displayAvatarURL() : getServerIconURL(guild);
+    const avatar = victim instanceof GuildMember ?
+      victim.user.displayAvatarURL({ dynamic: true }) :
+      getServerIconURL(guild);
     const name = victim instanceof GuildMember ? victim.user.tag : victim.name;
     const title = victim instanceof GuildMember ? 'commands:permissions.author' : 'commands:permissions.role';
 

@@ -19,16 +19,23 @@ class ServerInfo extends Command {
     moment.locale(language);
 
     const totalMembers = guild.memberCount;
-    const onlineMembers = guild.members.cache.filter((m) => m.user.presence.status !== 'offline').size;
-    const offlineMembers = guild.members.cache.filter((m) => m.user.presence.status === 'offline').size;
+    const members = guild.members.cache;
+    const onlineMembers = members.filter((m) => m.presence.status !== 'offline').size;
+    const offlineMembers = members.filter((m) => m.presence.status === 'offline').size;
 
-    const totalChannels = guild.channels.cache.filter((c) => c.type === 'text' || c.type === 'voice').size;
-    const textChannels = guild.channels.cache.filter((c) => c.type === 'text').size;
-    const voiceChannels = guild.channels.cache.filter((c) => c.type === 'voice').size;
+    const channels = guild.channels.cache;
+    let textChannels = 0, totalChannels = 0, voiceChannels = 0;
+
+    for (let { type } of channels.values()) {
+      totalChannels++;
+      if (type === 'voice') voiceChannels++;
+      else if (type === 'category') totalChannels--;
+      else textChannels++;
+    }
 
     const totalRoles = guild.roles && guild.roles.cache.filter((r) => r.id !== guild.id).size;
     const roles = guild.roles && guild.roles.cache.sort((a, b) => b.position - a.position).map((r) => r).slice(0, -1);
-    const rolesClean = roles && roles.map((r) => r.name || r.toString());
+    const rolesClean = roles && roles.map((r) => r.name || `${r}`);
 
     const guildIconURL = getServerIconURL(guild);
     const emojis = guild.emojis && guild.emojis.cache.size;

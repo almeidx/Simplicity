@@ -17,16 +17,14 @@ class CommandLoader extends Loader {
   }
 
   async load() {
-    await requireDirectory('src/commands', this.loadSuccess.bind(this), (x, ...args) => console.error(x.stack, args));
+    await requireDirectory('src/commands', this.loadCommand.bind(this), (x, ...args) => console.error(x.stack, args));
     this.client.commands = this.commands;
     return true;
   }
 
-  loadSuccess(Command, fileName, folderName) {
+  loadCommand(Command) {
     const command = new Command(this.client);
-    command.name = fileName;
-    if (folderName !== 'commands' && command.category === 'none') command.category = folderName;
-    this.commands.set(fileName, command);
+    this.commands.set(command.name, command);
   }
 }
 

@@ -42,8 +42,9 @@ class Util {
    * @returns {string} The icon url.
    */
   static getServerIconURL(guild) {
-    if (guild.iconURL()) return guild.iconURL({ size: 2048 });
-    else return `https://guild-default-icon.herokuapp.com/${guild.nameAcronym}`;
+    const icon = guild.iconURL({ dynamic: true, size: 4096 });
+    if (icon) return icon;
+    else return `https://guild-default-icon.herokuapp.com/${encodeURIComponent(guild.nameAcronym)}`;
   }
 
   /**

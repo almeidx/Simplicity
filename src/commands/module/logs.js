@@ -1,6 +1,6 @@
 'use strict';
 
-const { ChannelParameter } = require('@parameters');
+const Parameters = require('@parameters');
 const { Command, CommandError, SimplicityEmbed } = require('@structures');
 
 const Aliases = {
@@ -27,7 +27,7 @@ class Logs extends Command {
     });
   }
 
-  async run({ args, author, client, emoji, guild, query, send, t }) {
+  async run({ args, author, client, emoji, guild, query, send, t, member }) {
     const checkChannel = (c) => guild.channels.cache.get(c) ? c : '#TICK_NO';
     const embed = new SimplicityEmbed({ author, emoji, t });
     const { logs } = await client.database.guilds.get(guild.id);
@@ -43,7 +43,7 @@ class Logs extends Command {
       for (const i of logTypes) if (i !== '$init') embed.addField(`» $$commands:logs.${i}`, checkChannel(i), true);
       return send(embed);
     } else if (aliasesList.includes(type) && condition === Condition) {
-      const channel = args.length && await ChannelParameter.search(args.join(' '), { guild });
+      const channel = args.length && await Parameters.channel.parse(args.join(' '), { client, guild, member, t });
       if (!channel) throw new CommandError('errors:invalidChannel');
       if (logs[type] === channel.id) throw new CommandError('commands:logs.alreadySet');
 

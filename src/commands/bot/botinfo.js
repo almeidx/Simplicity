@@ -25,7 +25,10 @@ class BotInfo extends Command {
 
     let devs = getDevs();
     if (devs) {
-      devs = devs.filter((id) => client.users.cache.has(id)).map((id) => client.users.cache.get(id).tag).join(', ');
+      devs = devs.filter((id) => client.users.cache.has(id))
+        .map((id) => client.users.cache.get(id).tag)
+        .sort()
+        .join(', ');
     }
 
     const embed = new SimplicityEmbed({ author, emoji, t })
@@ -37,7 +40,7 @@ class BotInfo extends Command {
       .addField('» $$commands:botinfo.discordjs', version, true)
       .addField('» $$commands:botinfo.nodejs', process.versions.node, true)
       .addField('» $$commands:botinfo.commands', client.commands.size, true)
-      .addField('» $$commands:botinfo.links', `#bot_tag [$$commands:botinfo.inviteBot ](${inviteLink})`, true);
+      .addField('» $$commands:botinfo.links', `[$$commands:botinfo.inviteBot ](${inviteLink})`, true);
 
     if (devs) embed.addField('» $$commands:botinfo.developers', devs);
 

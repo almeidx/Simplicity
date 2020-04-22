@@ -60,14 +60,20 @@
     "roles": "Server Roles: {{- totalRoles }}",
     "totalRoles": "Total Roles",
     "verificationLevel": "Verification Level: $t(commands:serverinfo.verificationName.{{- level }})",
-    "verificationName": ["None", "Low", "Medium", "Hard", "Extreme"],
-    "verificationDetails": [
-      "Unrestricted.",
-      "Must have a verified email on their Discord account.",
-      "Must be registered on Discord for longer than 5 minutes.",
-      "Must be a member of the server for longer than 10 minutes.",
-      "Must have a verified phone on their Discord account."
-    ],
+    "verificationName": {
+      "NONE": "None", 
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HARD": "Hard",
+      "EXTREME": "Extreme"
+    },
+    "verificationDetails": {
+      "NONE": "Unrestricted.",
+      "LOW": "Must have a verified email on their Discord account.",
+      "MEDIUM":"Must be registered on Discord for longer than 5 minutes.",
+      "HARD": "Must be a member of the server for longer than 10 minutes.",
+      "EXTREME": "Must have a verified phone on their Discord account."
+    },
     "unknown": "Unknown",
     "boostTier": "Boost Tier",
     "tier": "Tier {{- boostTier }}"
@@ -199,7 +205,7 @@
   },
   "setnick": {
     "description": "This command allows you to change the nickname of somebody",
-    "usage": "<member> <name>",
+    "usage": "<member> [name]",
     "nameTooBig": "The name you provided is too long! (Max: 32 characters)",
     "reason": "Requested by: {{- author }}",
     "failed": "There was an error when I tried to change the user's nickname",

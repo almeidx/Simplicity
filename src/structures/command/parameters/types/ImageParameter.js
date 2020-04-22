@@ -102,8 +102,8 @@ class ImageParameter extends Parameter {
           const user = UserParameter._parse(arg, this.userOptions, context);
           if (user) {
             try {
-              if (this.url) return user.displayAvatarURL;
-              const buffer = await imageRequest(user.displayAvatarURL, client);
+              if (this.url) return user.displayAvatarURL({ dynamic: true });
+              const buffer = await imageRequest(user.displayAvatarURL({ dynamic: true }), client);
               return buffer;
             } catch (e) {
               client.logError(e);
@@ -117,7 +117,7 @@ class ImageParameter extends Parameter {
 
     // Last attachment from channel's last 10 messages
     if (this.lastMessages.accept) {
-      const lastMessages = channel.messages.last(this.lastMessages.limit);
+      const lastMessages = channel.messages.cache.last(this.lastMessages.limit);
       if (lastMessages.length) {
         for (let i = lastMessages.length - 1; i >= 0; i--) {
           const msg = lastMessages[i];
@@ -164,8 +164,8 @@ class ImageParameter extends Parameter {
     if (this.authorAvatar) {
       try {
         parseState.argIndex--;
-        if (this.url) return author.displayAvatarURL;
-        const buffer = await imageRequest(author.displayAvatarURL, client);
+        if (this.url) return author.displayAvatarURL({ dynamic: true });
+        const buffer = await imageRequest(author.displayAvatarURL({ dynamic: true }), client);
         return buffer;
       } catch (e) {
         client.logError(e);

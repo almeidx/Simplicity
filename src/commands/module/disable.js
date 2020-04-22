@@ -1,6 +1,6 @@
 'use strict';
 
-const { ChannelParameter } = require('@parameters');
+const Parameters = require('@parameters');
 const { Command, CommandError } = require('@structures');
 const { isEmpty } = require('@util/Util');
 
@@ -16,7 +16,7 @@ class Disable extends Command {
   }
 
   // eslint-disable-next-line complexity
-  async run({ args, channel, database, guild, guildData, query, t, prefix }) {
+  async run({ args, channel, database, guild, guildData, query, t, prefix, client, member }) {
     const disableChannels = guildData.disableChannels || [];
     let msg;
 
@@ -26,16 +26,20 @@ class Disable extends Command {
       msg = t(`commands:disable.${disable ? 'currentDisable' : 'currentEnabled'}`);
     }
 
+    const parameterOptions = { acceptText: true, required: true };
+    const parameterContext = { client, guild, member, t };
     // One argument
     if (args.length === 1) {
-      const argChannel = await ChannelParameter.parse(args[0], {}, { guild });
+      const argChannel = await Parameters.channel.parse.call(parameterOptions, args[0], parameterContext);
       const disable = this.checkChannelAndEdit(disableChannels, argChannel.id);
-      msg = t(`commands:disable.${disable ? 'channelDisable' : 'channelEnabled'}`, { channel: argChannel.toString() });
+      msg = t(`commands:disable.${disable ? 'channelDisable' : 'channelEnabled'}`, { channel: `${argChannel}` });
     }
 
     // Multi arguments
     if (args.length > 1) {
-      const channels = await Promise.all(args.map((str) => ChannelParameter.search(str, { guild })));
+      const channels = await Promise.all(
+        args.map((str) => Parameters.channel.parse.call(parameterOptions, str, parameterContext)),
+      );
       const channelsParsed = channels.filter((e) => e);
 
       if (isEmpty(channelsParsed) && !isEmpty(args)) throw new CommandError('commands:disable.notFound');
@@ -44,8 +48,8 @@ class Disable extends Command {
 
       for (const c of channelsParsed) {
         const result = this.checkChannelAndEdit(disableChannels, c.id);
-        if (result) newChannels.push(c.toString());
-        else removedChannels.push(c.toString());
+        if (result) newChannels.push(`${c}`);
+        else removedChannels.push(`${c}`);
       }
 
       if (newChannels.length && removedChannels.length) {
@@ -53,11 +57,11 @@ class Disable extends Command {
       } else if (newChannels.length > 1 && removedChannels.length === 0) {
         msg = t('commands:disable.channelDisable', { channels: newChannels, count: newChannels.length });
       } else if (newChannels.length === 1 && removedChannels.length === 0) {
-        msg = t(`commands:disable.channelDisable`, { channel: newChannels[0].toString() });
+        msg = t(`commands:disable.channelDisable`, { channel: `${newChannels[0]}` });
       } else if (removedChannels.length > 1 && newChannels.length === 0) {
-        msg = msg = t('commands:disable.channelEnabled', { channels: removedChannels, count: removedChannels.length });
+        msg = t('commands:disable.channelEnabled', { channels: removedChannels, count: removedChannels.length });
       } else if (removedChannels.length === 1 && newChannels.length === 0) {
-        msg = t(`commands:disable.channelEnabled`, { channel: removedChannels[0].toString() });
+        msg = t(`commands:disable.channelEnabled`, { channel: `${removedChannels[0]}` });
       }
     }
 

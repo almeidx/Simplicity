@@ -19,6 +19,7 @@ class Role extends Command {
         whitelist: [...addAliases, ...removeAliases],
       },
       {
+        acceptSelf: true,
         required: false,
         type: 'member',
       },
@@ -45,7 +46,7 @@ class Role extends Command {
     for (const role of roles) {
       if (option === 'add') {
         if (member.roles.cache.has(role.id)) {
-          throw new CommandError('commands:role.alreadyHasRole', { member: member.toString(), role: role.toString() });
+          throw new CommandError('commands:role.alreadyHasRole', { member: `${member}`, role: `${role}` });
         }
 
         try {
@@ -59,7 +60,7 @@ class Role extends Command {
 
       if (option === 'remove') {
         if (!member.roles.cache.has(role.id)) {
-          throw new CommandError('commands:role.hasNotRole', { member: member.toString(), role: role.toString() });
+          throw new CommandError('commands:role.hasNotRole', { member: `${member}`, role: `${role}` });
         }
 
         try {
@@ -73,7 +74,7 @@ class Role extends Command {
     }
 
     const embed = new SimplicityEmbed({ author, t });
-    const strRoles = roles.map((role) => role.toString() || role.name);
+    const strRoles = roles.map((role) => `${role}` || role.name);
     const msg = option === 'add' ? 'commands:role.added' : 'commands:role.removed';
     embed.setDescription(msg, { author, count: roles.length, member, roles: strRoles.join(', ') });
 

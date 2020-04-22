@@ -17,13 +17,13 @@ class AddEmoji extends Command {
       {
         errorRegex: /[^a-z0-9_]/gi,
         errors: {
-          maxLength: 'commands:addemoji:nameTooBig',
-          minLength: 'commands:addemoji:nameTooShort',
-          regex: 'commands:addemoji:invalidName',
+          maxLength: 'commands:addemoji.nameTooBig',
+          minLength: 'commands:addemoji.nameTooShort',
+          regex: 'commands:addemoji.invalidName',
         },
         maxLength: 32,
         minLength: 2,
-        missingError: '',
+        missingError: 'commands:addemoji.invalidName',
         required: true,
         type: 'string',
       },
@@ -31,6 +31,8 @@ class AddEmoji extends Command {
         attachment: true,
         authorAvatar: false,
         lastMessages: { limit: 25 },
+        missingError: 'commands:addemoji.invalidURL',
+
         required: true,
         type: 'image',
         url: true,

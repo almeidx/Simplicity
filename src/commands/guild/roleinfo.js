@@ -22,7 +22,7 @@ class RoleInfo extends Command {
 
   run({ author, emoji, guild, send, t, language }, role) {
     moment.locale(language);
-    const totalRoles = guild.roles.filter((r) => r.id !== guild.id).size;
+    const totalRoles = guild.roles.cache.filter((r) => r.id !== guild.id).size;
 
     const embed = new SimplicityEmbed({ author, emoji, t })
       .setThumbnail(getServerIconURL(guild))

@@ -26,7 +26,7 @@ function checkName(resolvable) {
  * @private
  */
 function checkIcon(resolvable) {
-  const o = { size: 2048 };
+  const o = { dynamic: true, size: 4096 };
   if (resolvable instanceof User) return resolvable.displayAvatarURL(o);
   if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o);
   if (resolvable instanceof Guild) return getServerIconURL(resolvable);
@@ -204,12 +204,13 @@ class SimplicityEmbed extends MessageEmbed {
    * @returns {SimplicityEmbed} The embed.
    */
   addField(name = '???', value = '???', inline = null, options = {}, valueOptions = {}) {
-    this.fieldsFixedT.push({ inline, name, options, value, valueOptions });
     return this
       .addFields({
         inline,
-        name: TextUtil.parse(name, this._setupOptions(options)),
-        value: TextUtil.parse(value, this._setupOptions(valueOptions)),
+        name,
+        options,
+        value,
+        valueOptions,
       });
   }
 
@@ -219,7 +220,18 @@ class SimplicityEmbed extends MessageEmbed {
    * @returns {SimplicityEmbed} The embed.
    */
   addFields(...fields) {
-    return super.addFields(fields);
+    for (let data of fields) {
+      this.fieldsFixedT.push(data);
+      const { name, value, inline, options = {}, valueOptions = {} } = data;
+
+      this.fields.push(
+        SimplicityEmbed.normalizeField(
+          TextUtil.parse(name, this._setupOptions(options)),
+          TextUtil.parse(value, this._setupOptions(valueOptions)),
+          inline),
+      );
+    }
+    return this;
   }
 
   /**

@@ -17,8 +17,8 @@ class MessageDelete extends SimplicityListener {
 
     const embed = new SimplicityEmbed(this.getFixedT(message.guild.id))
       .setTimestamp()
-      .setAuthor(user.tag, user.displayAvatarURL())
-      .setFooter(`ID: ${user.id}`, user.displayAvatarURL())
+      .setAuthor(user.tag, user.displayAvatarURL({ dynamic: true }))
+      .setFooter(`ID: ${user.id}`, user.displayAvatarURL({ dynamic: true }))
       .setDescription('loggers:messageDeleted', { channel: message.channel, user })
       .setColor(COLORS.MESSAGE_DELETE);
 

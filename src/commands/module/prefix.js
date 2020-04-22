@@ -1,6 +1,6 @@
 'use strict';
 
-const { StringParameter } = require('@parameters');
+const Parameters = require('@parameters');
 const { Command, SimplicityEmbed, CommandError } = require('@structures');
 
 class Prefix extends Command {
@@ -18,12 +18,12 @@ class Prefix extends Command {
     });
   }
 
-  async run({ author, client, guild, prefix: currentPrefix, query, send, t }) {
-    const prefix = await StringParameter.parse(query, {
+  async run({ message, author, client, guild, prefix: currentPrefix, query, send, t }) {
+    const prefix = await Parameters.string.parse.call({
       errors: { maxLength: 'commands:prefix.multiCharacters' },
       maxLength: 15,
       minLength: 1,
-    });
+    }, query, { message, t });
 
     if (currentPrefix === prefix) throw new CommandError('commands:prefix.alreadySet', { prefix });
 

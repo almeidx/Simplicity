@@ -50,12 +50,12 @@ class ChannelParameter extends Parameter {
     check(this.acceptNews, 'news');
     check(this.acceptStore, 'store');
 
-    const hiddenChannel = channel.permissionsFor(member).has('READ_MESSAGES');
+    const hiddenChannel = channel.permissionsFor(member).has('VIEW_CHANNEL');
     if (!this.canBeHiddenUser && !hiddenChannel) {
       throw new CommandError('errors:hiddenChannel', { onUsage: false });
     }
 
-    const hiddenChannelBot = channel.permissionsFor(guild.me).has('READ_MESSAGES');
+    const hiddenChannelBot = channel.permissionsFor(guild.me).has('VIEW_CHANNEL');
     if (!this.canBeHiddenBot && !hiddenChannelBot) {
       throw new CommandError('errors:hiddenChannelBot', { onUsage: false });
     }

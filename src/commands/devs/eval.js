@@ -84,7 +84,7 @@ class Eval extends Command {
       const evaluated = eval(expr);
       res = await cleanResult(evaluated, hrStart);
     } catch (err) {
-      if (err.message === 'await is only valid in async function') {
+      if (['await is only valid in async function', 'await is not defined'].includes(err.message)) {
         try {
           const hrStart = process.hrtime();
           if (toEval.trim().split('\n').length === 1) {

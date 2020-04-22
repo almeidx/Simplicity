@@ -40,8 +40,8 @@ class TextUtil {
 
     // Add translation in $"..."
     if (t) {
-      text = text.replace(/(?:\$\$)(\S+)/g, (s) => this.t(t, s.slice(2), options.options));
-      return this.t(t, text, options.options);
+      text = text.replace(/(?:\$\$)(\S+)/g, (s) => TextUtil.t(t, s.slice(2), options.options));
+      return TextUtil.t(t, text, options.options);
     }
     return text;
   }

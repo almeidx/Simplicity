@@ -4,6 +4,7 @@
   "denied": "Denied!",
   "usage": "Usage",
   "general": "An error occurred.",
+  "generic": "An error occurred.",
   "oops": "Oops!",
   "developerOnly": "You must be a bot developer in order to execute this command!",
   "missingParameters": "Invalid Parameters!",

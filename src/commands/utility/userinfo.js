@@ -85,7 +85,9 @@ class UserInfo extends Command {
   rolesEmbed(roles, user, author, t) {
     const role = roles && roles.find((r) => r.color);
     return new SimplicityEmbed({ author, t })
-      .setAuthor('» $$commands:userinfo.authorRoles', user.displayAvatarURL(), '', { user: user.username })
+      .setAuthor(
+        '» $$commands:userinfo.authorRoles', user.displayAvatarURL({ dynamic: true }), '', { user: user.username },
+      )
       .setDescription(roles.map((r) => r).sort((a, b) => b.position - a.position).join('\n'))
       .setColor(role ? role.color : process.env.COLOR);
   }
@@ -131,10 +133,10 @@ class UserInfo extends Command {
 
     const rolesClean = member && member.roles.cache
       .filter((r) => r.id !== guild.id)
-      .map((r) => r.name || r.toString());
+      .map((r) => r.name || `${r}`);
 
     const embed = new SimplicityEmbed({ author, emoji, t }, { autoAuthor: false })
-      .setAuthor(titles, user.displayAvatarURL())
+      .setAuthor(titles, user.displayAvatarURL({ dynamic: true }))
       .setThumbnail(user)
       .addField('» $$commands:userinfo.username', tag, true);
 
@@ -148,7 +150,7 @@ class UserInfo extends Command {
     }
 
     if (member && highestRole && member.roles.cache.length > 5) {
-      const roleString = highestRole.name || highestRole.toString();
+      const roleString = highestRole.name || `${highestRole}`;
       embed.addField('» $$commands:userinfo.highestRole', roleString, true);
     }
 

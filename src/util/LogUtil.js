@@ -46,7 +46,7 @@ class LogUtil {
    */
   static async getWebhook(channel) {
     const name = `${channel.client.user.username} Logs`;
-    const avatar = channel.client.user.displayAvatarURL();
+    const avatar = channel.client.user.displayAvatarURL({ dynamic: true, size: 4096 });
 
     const webhooks = await channel.fetchWebhooks();
     let webhook = webhooks.find((wk) => wk.name === name);

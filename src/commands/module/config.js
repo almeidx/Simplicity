@@ -35,14 +35,14 @@ class Config extends Command {
     const disableChannels = guildData.disableChannels
       .map((id) => guild.channels.cache.get(id))
       .filter((ch) => ch)
-      .map((ch) => ch.toString());
+      .map((ch) => `${ch}`);
 
     const text = disableChannels.length ? disableChannels.join(', ') : '$$commands:config.noDisableChannel';
 
     const embed = new SimplicityEmbed({ author, t })
       .addField('» $$commands:config.prefix', prefix, true)
       .addField('» $$commands:config.language', language, true)
-      .addField('» $$commands:config.starboard', channel ? channel.toString() : '$$commands:config.moduleOff', true)
+      .addField('» $$commands:config.starboard', channel ? `${channel}` : '$$commands:config.moduleOff', true)
       .addField('» $$commands:config.disableChannels', text);
     return send(embed);
   }
