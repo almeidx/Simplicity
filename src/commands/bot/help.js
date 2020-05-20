@@ -25,9 +25,20 @@ class Help extends Command {
       const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
         .setAuthor(client.user)
         .setDescription('commands:help.about', { name: client.user.username, prefix });
+      const userIsDev = verifyDev(author.id, client);
       categories.each((cmds, i) => {
-        if (i === 'dev' && !verifyDev(author.id, client)) return;
-        return embed.addField(`categories:${i}.name`, cmds.keyArray().map((c) => `\`${c}\``).join(', '));
+        if (i === 'dev' && !userIsDev) return;
+        return embed.addField(
+          `categories:${i}.name`,
+          cmds
+            .array()
+            .filter((c) => {
+              const x = Help.isDevCommand(c) ? userIsDev : true;
+              console.log(c.name, x);
+              return x;
+            })
+            .map((c) => `\`${c.name}\``)
+            .join(', '));
       });
       return send(embed);
     }
@@ -37,6 +48,10 @@ class Help extends Command {
 
     const embed = await getHelp({ client, command, prefix, t });
     return send(embed);
+  }
+
+  static isDevCommand(command) {
+    return command.category === 'dev' || (command.requirements && command.requirements.ownerOnly);
   }
 }
 
