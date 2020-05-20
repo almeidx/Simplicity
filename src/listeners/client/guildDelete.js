@@ -18,6 +18,12 @@ class GuildDeleteListener extends SimplicityListener {
         .addField('Guild ID', guild.id, true)
         .addField('Member Count', guild.memberCount)
         .setThumbnail(getServerIconURL(guild)));
+
+    await client.database.joinLeaveGuild.model.create({
+      date_at: new Date(),
+      guild_id: guild.id,
+      type: 'LEAVE',
+    });
   }
 }
 

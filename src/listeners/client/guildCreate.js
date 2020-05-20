@@ -9,7 +9,8 @@ class GuildCreateListener extends SimplicityListener {
   }
 
   async on(client, guild) {
-    if (client.database) await client.database.guilds.create(guild.id);
+    // GET Function create when not found
+    if (client.database) await client.database.guilds.get(guild.id);
     const owner = guild.owner;
 
     this.sendMessage('guild_join',
@@ -18,6 +19,12 @@ class GuildCreateListener extends SimplicityListener {
         .addField('Guild ID', guild.id, true)
         .addField('Member Count', guild.memberCount)
         .setThumbnail(getServerIconURL(guild)));
+
+    await client.database.joinLeaveGuild.model.create({
+      date_at: new Date(),
+      guild_id: guild.id,
+      type: 'JOIN',
+    });
   }
 }
 

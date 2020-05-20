@@ -17,4 +17,9 @@ module.exports = {
     prefix: { default: process.env.PREFIX, type: String },
     starboard: { default: null, type: String },
   },
+  joinLeaveGuild: {
+    date_at: { required: true, type: Date },
+    guild_id: { required: true, type: String },
+    type: { enum: ['JOIN', 'LEAVE'], required: true, type: String },
+  },
 };
