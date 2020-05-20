@@ -30,7 +30,7 @@
     "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
-    "eslint": "^6.4.0",
+    "eslint": "^7.0.0",
     "eslint-config-almeida": "^1.0.7",
     "husky": "^4.2.3",
     "lint-staged": "^10.1.2",
