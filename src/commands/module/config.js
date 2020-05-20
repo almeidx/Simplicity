@@ -11,7 +11,7 @@ class Config extends Command {
     super(client, {
       aliases: ['configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration'],
       category: 'module',
-      cooldown: 60000,
+      cooldown: 5000,
       name: 'config',
       requirements: {
         guildOnly: true,

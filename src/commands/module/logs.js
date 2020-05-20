@@ -17,7 +17,7 @@ class Logs extends Command {
     super(client, {
       aliases: ['log', 'logger', 'loggers', 'modlog', 'modlogs', 'eventlog', 'logevent'],
       category: 'module',
-      cooldown: 60000,
+      cooldown: 5000,
       name: 'logs',
       requirements: {
         ownerOnly: true,

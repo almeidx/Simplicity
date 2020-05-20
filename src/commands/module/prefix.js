@@ -8,7 +8,7 @@ class Prefix extends Command {
     super(client, {
       aliases: ['setprefix', 'p', 'setp', 'prefixset'],
       category: 'module',
-      cooldown: 60000,
+      cooldown: 5000,
       name: 'prefix',
       requirements: {
         argsRequired: true,

@@ -7,7 +7,7 @@ class Language extends Command {
     super(client, {
       aliases: ['lang', 'l', 'botlanguage'],
       category: 'module',
-      cooldown: 60000,
+      cooldown: 5000,
       name: 'language',
       requirements: {
         argsRequired: true,

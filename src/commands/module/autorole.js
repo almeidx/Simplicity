@@ -8,7 +8,7 @@ class AutoRole extends Command {
     super(client, {
       aliases: ['roleauto', 'joinrole'],
       category: 'module',
-      cooldown: 30000,
+      cooldown: 5000,
       name: 'autorole',
       requirements: {
         guildOnly: true,
