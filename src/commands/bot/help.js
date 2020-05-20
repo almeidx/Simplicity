@@ -32,11 +32,7 @@ class Help extends Command {
           `categories:${i}.name`,
           cmds
             .array()
-            .filter((c) => {
-              const x = Help.isDevCommand(c) ? userIsDev : true;
-              console.log(c.name, x);
-              return x;
-            })
+            .filter((c) => Help.isDevCommand(c) ? userIsDev : true)
             .map((c) => `\`${c.name}\``)
             .join(', '));
       });
