@@ -147,6 +147,24 @@ class Util {
   static isPromise(val) {
     return val && Object.prototype.toString.call(val) === '[object Promise]' && typeof val.then === 'function';
   }
+
+  /**
+   * Destructures an object using the provided properties.
+   * @param {Object<*>} obj The object to be destructured.
+   * @param {...string} props The properties of the object.
+   * @returns {*} The final value, or the object, if empty.
+   */
+  static dest(obj, ...props) {
+    if (Util.isEmpty(obj)) return obj;
+
+    let main = obj;
+    for (const prop of props) {
+      if (!main || !prop) return main;
+      main = main[prop];
+    }
+
+    return main;
+  }
 }
 
 module.exports = Util;

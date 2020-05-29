@@ -2,6 +2,7 @@
 
 const { Command } = require('@structures');
 const { Util } = require('discord.js');
+
 class Say extends Command {
   constructor(client) {
     super(client, {

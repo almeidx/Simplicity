@@ -10,7 +10,6 @@ const token = process.env.DISCORD_TOKEN;
 const { code, isEmpty, isPromise } = Util;
 
 const value = (s) => code(s, 'js').replace(new RegExp(token, 'g'), () => '*'.repeat(token.length));
-const hrToSeconds = (hrtime) => (hrtime[0] + (hrtime[1] / 1e9)).toFixed(3);
 const exec = (c) => require('child_process').execSync(c).toString();
 
 /**
@@ -65,8 +64,7 @@ class Eval extends Command {
     } = ctx;
 
     let res;
-
-    const toEval = expr.replace(/(^`{3}(.+)?|`{3}$)/g, '');
+    const toEval = expr.replace(/(^`{3}(\w+)?|`{3}$)/g, '');
 
     const cleanResult = async (evaluated, hrStart) => {
       const resolved = await Promise.resolve(evaluated);
@@ -81,7 +79,7 @@ class Eval extends Command {
 
     try {
       const hrStart = process.hrtime();
-      const evaluated = eval(expr);
+      const evaluated = eval(toEval);
       res = await cleanResult(evaluated, hrStart);
     } catch (err) {
       if (['await is only valid in async function', 'await is not defined'].includes(err.message)) {
@@ -108,6 +106,7 @@ class Eval extends Command {
           if (!msg.deleted) await msg.delete().catch(() => null);
           if (!message.deleted) await message.delete().catch(() => null);
         });
+
         collector.on('end', async () => {
           if (!msg.deleted) await msg.reactions.removeAll().catch(() => null);
         });
@@ -117,8 +116,8 @@ class Eval extends Command {
 
   /**
    * Cleans blank space from the eval response.
-   * @param {*} text The text to clean.
-   * @returns {*} The text cleaned.
+   * @param {string} text The text to clean.
+   * @returns {string} The text cleaned.
    * @private
    */
   clean(text) {

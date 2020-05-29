@@ -10,9 +10,9 @@
     "inviteBot": "Invite Bot",
     "prefix": "Prefix",
     "developers": "Developers",
-    "ramUsage": "RAM Usage",
+    "memoryUsage": "Memory Usage",
     "discordjs": "Discord.js Version",
-    "nodejs": "Node.js Version",
+    "node": "Node Version",
     "latency": "{{- ping }}ms"
   },
   "help": {
@@ -61,7 +61,7 @@
     "totalRoles": "Total Roles",
     "verificationLevel": "Verification Level: $t(commands:serverinfo.verificationName.{{- level }})",
     "verificationName": {
-      "NONE": "None", 
+      "NONE": "None",
       "LOW": "Low",
       "MEDIUM": "Medium",
       "HARD": "Hard",
@@ -87,7 +87,7 @@
     "invalidName": "Please, note that the emoji name can only have letters, numbers or underscores.",
     "invalidURL": "The URL you provided was not a valid url.",
     "emojiCreated": "The {{- emoji }} emoji has been created!",
-    "error": "There was an error when creating the emoji.",
+    "error": "There was an error when creating the emoji. ({{- msg }})",
     "reason": "Responsible user: {{- author.tag }} [{{- author.id }}]",
     "success": "Emoji Created",
     "cancelled": "The emoji creation has been cancelled.",
