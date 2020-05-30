@@ -223,8 +223,8 @@
   },
   "role": {
     "description": "This command allows you to add and remove roles from users",
-    "usage": " <add|remove> <user> <role>",
-    "noArgs": "You need to provide a user and a role",
+    "usage": "<add|remove> <user> <role>",
+    "noArgs": "You need to provide a type (add/remove), a user and a role",
     "reasonAdd:": "{{- author }} Added the role to {{- user }}",
     "reasonRemove": "{{- author }} Removed the role from {{- user }}",
     "failedAdd": "There was an error when trying to add the role to the user",
