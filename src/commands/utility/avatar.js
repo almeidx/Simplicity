@@ -4,19 +4,19 @@ const { Command, SimplicityEmbed } = require('@structures');
 
 class Avatar extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'avatar', {
       aliases: ['av'],
+      args: [
+        {
+          acceptBot: true,
+          acceptSelf: true,
+          fetchGlobal: true,
+          required: false,
+          type: 'user',
+        },
+      ],
       category: 'util',
-      name: 'avatar',
-    }, [
-      {
-        acceptBot: true,
-        acceptSelf: true,
-        fetchGlobal: true,
-        required: false,
-        type: 'user',
-      },
-      [
+      flags: [
         {
           missingError: 'errors:invalidImageSize',
           name: 'size',
@@ -30,7 +30,7 @@ class Avatar extends Command {
           whitelist: ['png', 'jpg', 'webp', 'gif'],
         },
       ],
-    ]);
+    });
   }
 
   run({ author, flags, send, t }, user = author) {

@@ -9,21 +9,20 @@ const moment = require('moment');
 
 class UserInfo extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'userinfo', {
       aliases: ['ui', 'user', 'userinformation', 'infouser', 'informationuser'],
+      args: [
+        {
+          acceptBot: true,
+          acceptSelf: true,
+          fetchGlobal: true,
+          missingError: 'errors:invalidUser',
+          required: false,
+          type: 'user',
+        },
+      ],
       category: 'util',
-      name: 'userinfo',
-      requirements: { clientPermissions: ['EMBED_LINKS'] },
-    }, [
-      {
-        acceptBot: true,
-        acceptSelf: true,
-        fetchGlobal: true,
-        missingError: 'errors:invalidUser',
-        required: false,
-        type: 'user',
-      },
-      [
+      flags: [
         {
           aliases: ['music', 'song', 's', 'm'],
           name: 'spotify',
@@ -35,7 +34,8 @@ class UserInfo extends Command {
           type: 'booleanFlag',
         },
       ],
-    ]);
+      requirements: { clientPermissions: ['EMBED_LINKS'] },
+    });
   }
 
   run({ author, channel, flags, guild, language, t, emoji }, user = author) {
