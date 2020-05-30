@@ -2,9 +2,7 @@
 
 const { CommandError, SimplicityEmbed, SimplicityListener } = require('@structures');
 const CommandUtil = require('@util/CommandUtil');
-const i18next = require('i18next');
-const getTranslation = (dirct, t) => i18next.exists(dirct) && t(dirct);
-
+const { ERROR_CODE_PATHS } = require('@util/Constants');
 class CommandErrorListener extends SimplicityListener {
   constructor(client) {
     super(client);
@@ -13,7 +11,8 @@ class CommandErrorListener extends SimplicityListener {
   on(client, error, { t, author, prefix, channel, guild, message, canEmbed, send, command }) {
     if (!(error instanceof CommandError)) {
       client.logger.error(error.stack);
-      const errorTranslation = error.code && getTranslation(`api_errors:${error.code}`, t);
+      const errorPath = ERROR_CODE_PATHS[error.code];
+      const errorTranslation = errorPath && t(errorPath);
       const errorMessage = errorTranslation || t('errors:errorCommand');
       this.sendErrorCommandMessage(errorMessage, false, { author, canEmbed, command, send, t });
 
