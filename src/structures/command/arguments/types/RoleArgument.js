@@ -1,7 +1,7 @@
 'use strict';
 
 const CommandError = require('@command/CommandError');
-const Parameter = require('./Parameter');
+const Parameter = require('./Argument');
 
 const MENTION_ROLE_REGEX = /^(?:<@&?)?([0-9]{16,18})(?:>)?$/;
 

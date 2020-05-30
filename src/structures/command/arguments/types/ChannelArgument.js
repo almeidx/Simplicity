@@ -1,7 +1,7 @@
 'use strict';
 
 const CommandError = require('../../CommandError');
-const Parameter = require('./Parameter');
+const Argument = require('./Argument');
 
 const MENTION_REGEX = /(<#)?([0-9]{16,18})>?$/;
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
@@ -10,7 +10,7 @@ const searchOn = (local, id, arg) =>
   local.channels.cache.get(id) || local.channels.cache.find((c) => c.name.toLowerCase().includes(arg.toLowerCase()))
 ;
 
-class ChannelParameter extends Parameter {
+class ChannelArgument extends Argument {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
@@ -64,4 +64,4 @@ class ChannelParameter extends Parameter {
   }
 }
 
-module.exports = ChannelParameter;
+module.exports = ChannelArgument;

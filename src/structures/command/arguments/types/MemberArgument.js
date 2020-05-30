@@ -1,9 +1,9 @@
 'use strict';
 
 const CommandError = require('@command/CommandError');
-const UserParameter = require('./UserParameter');
+const UserArgument = require('./UserArgument');
 
-class MemberParameter extends UserParameter {
+class MemberArgument extends UserArgument {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
@@ -34,4 +34,4 @@ class MemberParameter extends UserParameter {
   }
 }
 
-module.exports = MemberParameter;
+module.exports = MemberArgument;

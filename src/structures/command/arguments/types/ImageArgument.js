@@ -5,8 +5,8 @@ const { URL } = require('url');
 const AbortController = require('abort-controller');
 const fetch = require('node-fetch');
 const CommandError = require('../../CommandError.js');
-const Parameter = require('./Parameter.js');
-const UserParameter = require('./UserParameter.js');
+const Argument = require('./Argument.js');
+const UserArgument = require('./UserArgument.js');
 
 const isValidURL = (q) => {
   try {
@@ -33,7 +33,7 @@ const imageRequest = (url, client, timeout = 3000) => {
 
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
 
-class ImageParameter extends Parameter {
+class ImageArgument extends Argument {
   static parseOptions(options = {}) {
     const user = defVal(options, 'user', true);
     return {
@@ -52,7 +52,7 @@ class ImageParameter extends Parameter {
       link: defVal(options, 'link', true),
       url: defVal(options, 'url', false),
       user,
-      userOptions: user ? UserParameter.parseOptions(options.userOptions) : null,
+      userOptions: user ? UserArgument.parseOptions(options.userOptions) : null,
     };
   }
 
@@ -99,7 +99,7 @@ class ImageParameter extends Parameter {
       // Mention (gets the mentioned user's avatar)
       if (this.user) {
         try {
-          const user = UserParameter._parse(arg, this.userOptions, context);
+          const user = UserArgument._parse(arg, this.userOptions, context);
           if (user) {
             try {
               if (this.url) return user.displayAvatarURL({ dynamic: true });
@@ -175,4 +175,4 @@ class ImageParameter extends Parameter {
   }
 }
 
-module.exports = ImageParameter;
+module.exports = ImageArgument;

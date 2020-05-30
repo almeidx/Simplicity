@@ -2,7 +2,7 @@
 
 const ms = require('ms');
 const CommandError = require('../../CommandError');
-const Parameter = require('./Parameter');
+const Parameter = require('./Argument');
 
 class TimeParameter extends Parameter {
   static parse(arg, { t }) {

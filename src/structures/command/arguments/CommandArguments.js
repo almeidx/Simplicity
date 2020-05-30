@@ -1,8 +1,8 @@
 'use strict';
 
 const CommandError = require('../CommandError.js');
-const ParameterTypes = require('./types');
-const Parameter = require('./types/Parameter.js');
+const ArgumentType = require('./types');
+const Argument = require('./types/Argument.js');
 
 const isNull = (n) => n === null || n === undefined;
 const funcOrString = (f, sf, ...args) => typeof f === 'function' ? f(...args) : sf ? sf(f) : f;
@@ -11,8 +11,8 @@ const normalizeParam = (options) => {
   const parameters = [];
   for (const i in types) {
     const entry = types[i];
-    const type = ParameterTypes[entry] || entry;
-    if (!type || !(type.prototype instanceof Parameter)) throw new TypeError('Invalid parameter type');
+    const type = ArgumentType[entry] || entry;
+    if (!type || !(type.prototype instanceof Argument)) throw new TypeError('Invalid parameter type');
     options = { ...type.parseOptions(i), ...options };
     parameters.push(type);
   }

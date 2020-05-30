@@ -1,11 +1,11 @@
 'use strict';
 
 const CommandError = require('../../CommandError.js');
-const Parameter = require('./Parameter.js');
+const Argument = require('./Argument.js');
 
 const isNull = (n) => n === null || n === undefined || isNaN(n);
 
-class NumberParameter extends Parameter {
+class NumberArgument extends Argument {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
@@ -34,4 +34,4 @@ class NumberParameter extends Parameter {
   }
 }
 
-module.exports = NumberParameter;
+module.exports = NumberArgument;

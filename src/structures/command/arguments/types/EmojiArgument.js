@@ -1,11 +1,11 @@
 'use strict';
 
 const CommandError = require('../../CommandError.js');
-const Parameter = require('./Parameter.js');
+const Argument = require('./Argument.js');
 
 const EMOJI_REGEX = /^<(a)?:(\w+):(\d{16,18})>$/;
 
-class EmojiParameter extends Parameter {
+class EmojiArgument extends Argument {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
@@ -29,4 +29,4 @@ class EmojiParameter extends Parameter {
   }
 }
 
-module.exports = EmojiParameter;
+module.exports = EmojiArgument;

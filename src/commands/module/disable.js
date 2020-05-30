@@ -1,6 +1,6 @@
 'use strict';
 
-const Parameters = require('@parameters');
+const Arguments = require('@arguments');
 const { Command, CommandError } = require('@structures');
 const { isEmpty } = require('@util/Util');
 
@@ -30,7 +30,7 @@ class Disable extends Command {
     const parameterContext = { client, guild, member, t };
     // One argument
     if (args.length === 1) {
-      const argChannel = await Parameters.channel.parse.call(parameterOptions, args[0], parameterContext);
+      const argChannel = await Arguments.channel.parse.call(parameterOptions, args[0], parameterContext);
       const disable = this.checkChannelAndEdit(disableChannels, argChannel.id);
       msg = t(`commands:disable.${disable ? 'channelDisable' : 'channelEnabled'}`, { channel: `${argChannel}` });
     }
@@ -38,7 +38,7 @@ class Disable extends Command {
     // Multi arguments
     if (args.length > 1) {
       const channels = await Promise.all(
-        args.map((str) => Parameters.channel.parse.call(parameterOptions, str, parameterContext)),
+        args.map((str) => Arguments.channel.parse.call(parameterOptions, str, parameterContext)),
       );
       const channelsParsed = channels.filter((e) => e);
 

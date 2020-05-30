@@ -1,6 +1,6 @@
 'use strict';
 
-const Parameters = require('@parameters');
+const Arguments = require('@arguments');
 const { Command } = require('@structures');
 
 class Starboard extends Command {
@@ -18,7 +18,7 @@ class Starboard extends Command {
   }
 
   async run({ query, guild, channel: currentChannel, guildData, database, t, send, client, member }) {
-    const channel = !query ? currentChannel : await Parameters.channel.parse.call(
+    const channel = !query ? currentChannel : await Arguments.channel.parse.call(
       { acceptText: true, required: true },
       query,
       { client, guild, member, t },

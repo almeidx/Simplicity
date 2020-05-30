@@ -6,7 +6,7 @@ const i18next = require('i18next');
 const { CommandCooldown, CooldownTypes } = require('./CommandCooldown');
 const CommandError = require('./CommandError');
 const CommandRequirements = require('./CommandRequirements');
-const CommandParameters = require('./parameters/CommandParameters');
+const CommandParameters = require('./arguments/CommandArguments');
 
 class Command {
   constructor(client, name, options = {}) {

@@ -1,9 +1,9 @@
 'use strict';
 
 const CommandError = require('../../CommandError.js');
-const Parameter = require('./Parameter.js');
+const Argument = require('./Argument.js');
 
-class BooleanParameter extends Parameter {
+class BooleanArgument extends Argument {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
@@ -18,4 +18,4 @@ class BooleanParameter extends Parameter {
   }
 }
 
-module.exports = BooleanParameter;
+module.exports = BooleanArgument;

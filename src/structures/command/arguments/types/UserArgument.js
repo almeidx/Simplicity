@@ -2,12 +2,12 @@
 
 const CommandError = require('@command/CommandError');
 const { verifyDev } = require('@util/PermissionUtil');
-const Parameter = require('./Parameter');
+const Argument = require('./Argument');
 
 const MENTION_REGEX = /^(?:<@!?)?([0-9]{16,18})(?:>)?$/;
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
 
-class UserParameter extends Parameter {
+class UserArgument extends Argument {
   static parseOptions(options = {}) {
     return {
       ...super.parseOptions(options),
@@ -52,4 +52,4 @@ class UserParameter extends Parameter {
   }
 }
 
-module.exports = UserParameter;
+module.exports = UserArgument;
