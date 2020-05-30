@@ -1,7 +1,7 @@
 'use strict';
 
 const { COMMAND_COOLDOWN } = require('@data/config');
-const { PermissionUtil: { verifyDev } } = require('@util');
+const { PermissionUtil: { verifyDev }, Util: { isEmpty } } = require('@util');
 const i18next = require('i18next');
 const { CommandCooldown, CooldownTypes } = require('./CommandCooldown');
 const CommandError = require('./CommandError');
@@ -9,17 +9,16 @@ const CommandRequirements = require('./CommandRequirements');
 const CommandParameters = require('./parameters/CommandParameters');
 
 class Command {
-  constructor(client, options = {}, parameters = []) {
+  constructor(client, name, options = {}) {
     this.client = client;
-    this.parameters = parameters;
-    this.setup(options);
+    this.setup(name, options);
   }
 
-  setup(options) {
-    if (!options.name) throw new Error(`${this.constructor.name} doesn't have name`);
+  setup(name, options) {
+    if (!name) throw new Error(`${this.constructor.name} doesn't have name`);
     if (!options.category) throw new Error(`${this.constructor.name} doesn't have category`);
 
-    this.name = options.name;
+    this.name = name;
     this.category = options.category;
     this.aliases = options.aliases || [];
     this.requirements = options.requirements;
@@ -27,6 +26,9 @@ class Command {
     this.subcommands = options.subcommands || [];
     this.cooldown = options.cooldown || COMMAND_COOLDOWN || 10000;
     this.usersCooldown = this.cooldown > 0 ? new CommandCooldown(this.cooldown) : null;
+
+    this.args = CommandParameters.parseOptions(options.args || []);
+    this.flags = CommandParameters.parseOptions(options.flags || []);
 
     const strUsage = `commands:${this.name}.usage`;
     this.usagePath = i18next.exists(strUsage) ? strUsage : null;
@@ -60,8 +62,8 @@ class Command {
         await CommandRequirements.handle(ctx, this.requirements, this.argRequireResponse);
       }
 
-      if (this.parameters) {
-        args = await CommandParameters.handle(ctx, this.parameters, args);
+      if (!isEmpty(this.args) || !isEmpty(this.flags)) {
+        args = await CommandParameters.handle(ctx, this.flags, this.args);
       }
 
       await this.run(ctx, ...args);
