@@ -6,14 +6,14 @@ const Collection = require('./DBCollection');
 const Schemas = require('./Schemas');
 
 class Database {
-  static async connect() {
+  static async connect(uri = process.env.MONGO_URI) {
     const database = {};
     for (const x in Schemas) {
       const schema = new Schema(Schemas[x]);
       const model = mongoose.model(x, schema);
       database[x] = new Collection(model);
     }
-    await mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     return database;
   }
 }
