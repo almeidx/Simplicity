@@ -38,7 +38,6 @@ class TextUtil {
     // Add translation in $"..."
     if (t) {
       text = text.replace(/(?:\$\$)(\S+)/g, (s) => t(s.slice(2), tOptions));
-      return t(text, tOptions);
     }
     return text;
   }
