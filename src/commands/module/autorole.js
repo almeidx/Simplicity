@@ -12,8 +12,8 @@ class AutoRole extends Command {
       name: 'autorole',
       requirements: {
         guildOnly: true,
+        permissions: ['MANAGE_GUILD'],
         requireDatabase: true,
-        userPermissions: ['MANAGE_GUILD'],
       },
     },
     );
