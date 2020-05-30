@@ -1,7 +1,7 @@
 'use strict';
 
 const { PermissionUtil: { verifyDev } } = require('@util');
-const CommandCooldown = require('./CommandCooldown');
+const { CommandCooldown, CooldownTypes } = require('./CommandCooldown');
 const CommandError = require('./CommandError');
 const CommandRequirements = require('./CommandRequirements');
 const CommandParameters = require('./parameters/CommandParameters');
@@ -37,8 +37,8 @@ class Command {
     try {
       if (!isDev && this.usersCooldown) {
         const cooldown = await this.runCooldown(ctx.author.id, ctx.t);
-        if (cooldown === 'continue') inCooldown = false;
-        if (cooldown === 'ratelimit') return;
+        if (cooldown === CooldownTypes.CONTINUE) inCooldown = false;
+        if (cooldown === CooldownTypes.RATE_LIMIT) return;
       }
 
       const [subcmd] = ctx.args;
@@ -62,10 +62,10 @@ class Command {
   }
 
   runCooldown(userID, t) {
-    const isCooldown = this.usersCooldown.isCooldown(userID);
-    if (isCooldown === 'continue') return 'continue';
-    else if (isCooldown === 'ratelimit') return 'ratelimit';
-    else throw new CommandError(this.usersCooldown.toMessage(isCooldown, t), { notEmbed: true });
+    const cooldown = this.usersCooldown.handle(userID);
+    if (cooldown === CooldownTypes.CONTINUE) return CooldownTypes.CONTINUE;
+    else if (cooldown === CooldownTypes.RATE_LIMIT) return CooldownTypes.RATE_LIMIT;
+    else throw new CommandError(CommandCooldown.getMessage(cooldown, t), { notEmbed: true });
   }
 
   getSubCommand(name) {
