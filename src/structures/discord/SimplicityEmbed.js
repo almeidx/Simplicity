@@ -13,7 +13,7 @@ const types = { error: 'RED', normal: process.env.COLOR, warn: 0xfdfd96 };
  * @returns {string|void} The resolved name.
  * @private
  */
-function checkName(resolvable) {
+function resolveName(resolvable) {
   if (resolvable instanceof User) return resolvable.tag;
   if (resolvable instanceof GuildMember) return resolvable.user.tag;
   if (resolvable instanceof Guild) return resolvable.name;
@@ -25,7 +25,7 @@ function checkName(resolvable) {
  * @returns {string|void} The resolved image url.
  * @private
  */
-function checkIcon(resolvable) {
+function resolveImage(resolvable) {
   const o = { dynamic: true, size: 4096 };
   if (resolvable instanceof User) return resolvable.displayAvatarURL(o);
   if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o);
@@ -138,9 +138,9 @@ class SimplicityEmbed extends MessageEmbed {
    * @returns {SimplicityEmbed} The embed.
    */
   setAuthor(name = '???', iconURL = null, url = null, options = {}) {
-    const authorName = checkName(name);
-    const authorNameIcon = checkIcon(name);
-    const authorIcon = checkIcon(iconURL);
+    const authorName = resolveName(name);
+    const authorNameIcon = resolveImage(name);
+    const authorIcon = resolveImage(iconURL);
 
     if (authorName) name = authorName;
     if (authorNameIcon && !iconURL) iconURL = authorNameIcon;
@@ -158,9 +158,9 @@ class SimplicityEmbed extends MessageEmbed {
    * @returns {SimplicityEmbed} The embed.
    */
   setFooter(text = '???', iconURL = null, options = {}) {
-    const footerTextName = checkName(text);
-    const footerTextIcon = checkIcon(text);
-    const footerIcon = checkIcon(iconURL);
+    const footerTextName = resolveName(text);
+    const footerTextIcon = resolveImage(text);
+    const footerIcon = resolveImage(iconURL);
 
     if (footerTextName) text = footerTextName;
     if (footerTextIcon && !iconURL) iconURL = footerTextIcon;
@@ -240,7 +240,7 @@ class SimplicityEmbed extends MessageEmbed {
    * @returns {SimplicityEmbed} The embed.
    */
   setThumbnail(url) {
-    const thumbnail = checkIcon(url) || url;
+    const thumbnail = resolveImage(url) || url;
     return super.setThumbnail(thumbnail);
   }
 
@@ -250,7 +250,7 @@ class SimplicityEmbed extends MessageEmbed {
    * @returns {SimplicityEmbed} The embed.
    */
   setImage(url) {
-    const image = checkIcon(url) || url;
+    const image = resolveImage(url) || url;
     return super.setImage(image);
   }
 
