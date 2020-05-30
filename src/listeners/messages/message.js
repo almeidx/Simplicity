@@ -1,5 +1,6 @@
 'use strict';
 
+const { LANGUAGE, PREFIX } = require('@data/config');
 const { CommandContext, SimplicityListener } = require('@structures');
 const Logger = require('@util/Logger');
 const { escapeRegExp } = require('@util/Util');
@@ -16,9 +17,9 @@ class MessageListener extends SimplicityListener {
     if (author.bot || (guild && !channel.permissionsFor(client.user).has('SEND_MESSAGES'))) return;
 
     const guildData = client.database && await client.database.guilds.get(message.guild.id);
-    const prefix = (guildData && guildData.prefix) || process.env.PREFIX;
+    const prefix = (guildData && guildData.prefix) || PREFIX;
     const fixedPrefix = escapeRegExp(prefix);
-    const language = (guildData && guildData.lang) || process.env.DEFAULT_LANG;
+    const language = (guildData && guildData.lang) || LANGUAGE;
 
     const usernameFixed = escapeRegExp(client.user.username);
     // eslint-disable-next-line no-useless-escape

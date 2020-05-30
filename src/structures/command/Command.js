@@ -1,5 +1,6 @@
 'use strict';
 
+const { COMMAND_COOLDOWN } = require('@data/config');
 const { PermissionUtil: { verifyDev } } = require('@util');
 const { CommandCooldown, CooldownTypes } = require('./CommandCooldown');
 const CommandError = require('./CommandError');
@@ -23,7 +24,7 @@ class Command {
     this.requirements = options.requirements;
     this.argRequireResponse = options.argRequiredResponse;
     this.subcommands = options.subcommands || [];
-    this.cooldown = options.cooldown || process.env.COMMAND_COOLDOWN || 10000;
+    this.cooldown = options.cooldown || COMMAND_COOLDOWN || 10000;
     this.usersCooldown = this.cooldown > 0 ? new CommandCooldown(this.cooldown) : null;
   }
 

@@ -1,5 +1,6 @@
 'use strict';
 
+const { LANGUAGE } = require('@data/config');
 const EmojiUtl = require('@util/EmojiUtil');
 const i18next = require('i18next');
 
@@ -21,7 +22,7 @@ class CommandContext {
     this.botLanguages = Object.keys(i18next.store.data);
     this.language = this.botLanguages.includes(options.language) ?
       options.language :
-      this.message.language || process.env.DEFAULT_LANG;
+      this.message.language || LANGUAGE;
     this.query = options.query;
     this.args = options.args;
     this.t = i18next.getFixedT(this.language);

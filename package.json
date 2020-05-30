@@ -18,7 +18,7 @@
   "dependencies": {
     "bufferutil": "^4.0.1",
     "cross-env": "^7.0.2",
-    "discord.js": "github:discordjs/discord.js",
+    "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "i18next": "^19.4.0",
     "i18next-node-fs-backend": "^2.1.3",
@@ -32,6 +32,7 @@
   "devDependencies": {
     "eslint": "^7.0.0",
     "eslint-config-almeida": "^1.0.7",
+    "eslint-plugin-import": "^2.20.2",
     "husky": "^4.2.3",
     "lint-staged": "^10.1.2",
     "nodemon": "^2.0.3"
@@ -45,6 +46,7 @@
     "@src": "src",
     "@assets": "src/assets",
     "@commands": "src/commands",
+    "@data": "data",
     "@database": "src/database",
     "@listeners": "src/listeners",
     "@loaders": "src/loaders",

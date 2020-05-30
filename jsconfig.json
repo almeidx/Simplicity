@@ -13,7 +13,8 @@
       "@parameters/*": ["src/structures/command/parameters/types/*"],
       "@loaders/*": ["src/loaders/*"],
       "@discord/*": ["src/structures/discord/*"],
-      "@command/*": ["src/structures/command/*"]
+      "@command/*": ["src/structures/command/*"],
+      "@data/*": ["data/*"]
     }
   },
   "exclude": ["node_modules"]

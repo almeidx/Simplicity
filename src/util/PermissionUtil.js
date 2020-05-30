@@ -1,5 +1,8 @@
 'use strict';
 
+const { DEVELOPER_ROLE_ID, SUPPORT_GUILD } = require('@data/config');
+const { getDevs } = require('@util/Util');
+
 /**
  * Contains various permission related utility methods.
  * @class PermissionsUtil
@@ -19,11 +22,12 @@ class PermissionsUtil {
    * @returns {boolean} If the user is a developer.
    */
   static verifyDev(userID, client) {
-    const guildClient = client.guilds.cache.get(process.env.SERVER_ID);
-    const devRole = guildClient && guildClient.roles.cache.get(process.env.DEV_ROLE_ID);
+    const guildClient = client.guilds.cache.get(SUPPORT_GUILD);
+    const devRole = guildClient && guildClient.roles.cache.get(DEVELOPER_ROLE_ID);
 
     const roleCondition = devRole && devRole.members.has(userID);
-    const idCondition = process.env.DEVS_IDS && process.env.DEVS_IDS.includes(userID);
+    const devs = getDevs();
+    const idCondition = devs && devs.includes(userID);
 
     return !!(roleCondition || idCondition);
   }

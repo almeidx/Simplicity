@@ -1,5 +1,6 @@
 'use strict';
 
+const { DEVELOPER_IDS } = require('@data/config');
 const moment = require('moment');
 const { REGEX: { REGEX } } = require('./Constants');
 require('moment-duration-format');
@@ -136,7 +137,7 @@ class Util {
    * @returns {Array<string>} An array containing the developer's IDs.
    */
   static getDevs() {
-    return process.env.DEVS_IDS ? process.env.DEVS_IDS.split(',') : [];
+    return DEVELOPER_IDS || [];
   }
 
   /**

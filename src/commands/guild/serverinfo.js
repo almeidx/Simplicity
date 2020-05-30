@@ -1,5 +1,6 @@
 'use strict';
 
+const { COLOR } = require('@data/config');
 const { Command, SimplicityEmbed } = require('@structures');
 const { getServerIconURL } = require('@util/Util');
 const moment = require('moment');
@@ -127,7 +128,7 @@ function createEmbedRoles(roles, guild, embedOptions = {}) {
   return new SimplicityEmbed(embedOptions)
     .setAuthor('$$commands:serverinfo.roles', guildIconURL, '', { totalRoles: roles.length })
     .setDescription(clean(roles))
-    .setColor(process.env.COLOR);
+    .setColor(COLOR);
 }
 
 module.exports = ServerInfo;

@@ -1,11 +1,12 @@
 'use strict';
 
 const CommandContext = require('@command/CommandContext');
+const { COLOR } = require('@data/config');
 const TextUtil = require('@util/TextUtil');
 const { getServerIconURL } = require('@util/Util');
 const { Guild, GuildMember, Message, MessageEmbed, User } = require('discord.js');
 
-const types = { error: 'RED', normal: process.env.COLOR, warn: 0xfdfd96 };
+const types = { error: 'RED', normal: COLOR, warn: 0xfdfd96 };
 
 /**
  * Resolves a name.

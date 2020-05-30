@@ -1,7 +1,7 @@
 'use strict';
 
+const { LANGUAGE } = require('@data/config');
 const i18next = require('i18next');
-
 const SimplicityEmbed = require('../structures/discord/SimplicityEmbed');
 const { EMOJIS: { STARBOARD } } = require('./Constants');
 
@@ -51,7 +51,7 @@ class StarboardUtil {
         else return;
       }
 
-      const language = (guildData && guildData.lang) || process.env.DEFAULT_LANG;
+      const language = (guildData && guildData.lang) || LANGUAGE;
       const t = i18next.getFixedT(language);
 
       const image = message.attachments.size > 0 ? message.attachments.first().url : null;
