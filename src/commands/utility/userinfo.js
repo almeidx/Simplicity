@@ -1,5 +1,6 @@
 'use strict';
 
+const { COLOR } = require('@data/config');
 const { Command, SimplicityEmbed, CommandError } = require('@structures');
 const { Constants, PermissionUtil, Util } = require('@util');
 const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = Constants;
@@ -11,7 +12,7 @@ class UserInfo extends Command {
     super(client, {
       aliases: ['ui', 'user', 'userinformation', 'infouser', 'informationuser'],
       category: 'util',
-      name: 'userInfo',
+      name: 'userinfo',
       requirements: { clientPermissions: ['EMBED_LINKS'] },
     }, [
       {
@@ -96,7 +97,7 @@ class UserInfo extends Command {
         '» $$commands:userinfo.authorRoles', user.displayAvatarURL({ dynamic: true }), '', { user: user.username },
       )
       .setDescription(roles.map((r) => r).sort((a, b) => b.position - a.position).join('\n'))
-      .setColor(role ? role.hexColor : process.env.COLOR);
+      .setColor(role ? role.hexColor : COLOR);
   }
 
   getTitles(user, client, guild) {
