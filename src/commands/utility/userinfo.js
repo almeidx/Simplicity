@@ -1,8 +1,9 @@
 'use strict';
 
 const { Command, SimplicityEmbed, CommandError } = require('@structures');
-const { PermissionUtil } = require('@util');
-const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = require('@util/Constants');
+const { Constants, PermissionUtil, Util } = require('@util');
+const { SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION, NORMAL_PERMISSIONS } = Constants;
+const { dest, isEmpty } = Util;
 const moment = require('moment');
 
 class UserInfo extends Command {
@@ -58,13 +59,19 @@ class UserInfo extends Command {
   }
 
   isListeningToSpotify(presence) {
-    return presence && presence.activity && presence.activity.type === 'LISTENING' &&
-      presence.activity.party && presence.activity.party.id && presence.activity.party.id.includes('spotify:');
+    const activities = dest(presence, 'activites');
+    return !isEmpty(activities) && activities.some(
+      (a) => a.type === 'LISTENING' && dest(a.party, 'id') && dest(a.party, 'id').includes('spotify:'),
+    );
   }
 
   spotifyEmbed(author, user, t) {
     const presence = user.presence;
-    const activity = presence && presence.activity;
+    const activities = dest(presence, 'activities');
+    const activity = !isEmpty(activities) && activities.filter(
+      (a) => a.type === 'LISTENING' && dest(a.party, 'id') && dest(a.party, 'id').includes('spotify:'),
+    );
+    if (!activity) throw new CommandError('commands:userinfo.notListeningToSpotify');
     const trackName = activity.details;
     const artist = activity.state.split(';').join(',');
     const album = activity.assets && activity.assets.largeText;
@@ -89,7 +96,7 @@ class UserInfo extends Command {
         '» $$commands:userinfo.authorRoles', user.displayAvatarURL({ dynamic: true }), '', { user: user.username },
       )
       .setDescription(roles.map((r) => r).sort((a, b) => b.position - a.position).join('\n'))
-      .setColor(role ? role.color : process.env.COLOR);
+      .setColor(role ? role.hexColor : process.env.COLOR);
   }
 
   getTitles(user, client, guild) {
@@ -118,14 +125,15 @@ class UserInfo extends Command {
 
   // eslint-disable-next-line complexity
   userInfoEmbed(user, author, t, emoji, guild) {
-    const { tag, id } = user;
+    const { id, tag } = user;
     const member = guild.member(user);
     const presence = !user.isPartial && user.presence;
     const custom = this.getTitles(user, user.client, guild);
-    const status = presence && this.getClientStatus(presence);
+    const status = (presence && this.getClientStatus(presence)) || [];
     const titles = [...custom, ...status].join(' ');
     const highestRole = member && member.roles.highest.id !== guild.id && member.roles.highest;
-    const activity = presence && presence.activity;
+    const activities = dest(presence, 'activities');
+    const activity = !isEmpty(activities) && activities.map((a) => a.name);
     const activityType = activity && activity.type && activity.name;
     const joinPosition = this.getJoinPosition(user.id, guild);
     const created = moment(user.createdAt);

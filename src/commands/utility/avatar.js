@@ -33,15 +33,14 @@ class Avatar extends Command {
     ]);
   }
 
-  run({ author, flags, t, channel }, user = author) {
+  run({ author, flags, send, t }, user = author) {
     const { size = 2048, format } = flags;
     const avatarUrl = user.displayAvatarURL({ dynamic: true, format, size });
 
     const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
       .setAuthor(user)
       .setImage(avatarUrl);
-
-    return channel.send(embed);
+    return send(embed);
   }
 }
 

@@ -32,7 +32,6 @@ class AddEmoji extends Command {
         authorAvatar: false,
         lastMessages: { limit: 25 },
         missingError: 'commands:addemoji.invalidURL',
-
         required: true,
         type: 'image',
         url: true,
@@ -41,8 +40,9 @@ class AddEmoji extends Command {
   }
 
   async run({ author, send, t, guild }, name, image) {
-    const emoji = await guild.emojis.create(image, name);
-    if (!emoji) throw new CommandError('commands:addemoji.error');
+    let error;
+    const emoji = await guild.emojis.create(image, name).catch((err) => { error = err; });
+    if (!emoji || error) throw new CommandError('commands:addemoji.error', { msg: error.message });
 
     const embed = new SimplicityEmbed({ author, t })
       .setDescription('commands:addemoji.emojiCreated', { emoji: emoji.toString() })

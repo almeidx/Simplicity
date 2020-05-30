@@ -11,9 +11,10 @@ class Ping extends Command {
     });
   }
 
-  async run({ message, send, t }) {
-    const msg = await send(t('commands:ping.loading'));
-    msg.edit(t('commands:ping.success', { ping: msg.createdTimestamp - message.createdTimestamp }));
+  async run({ channel, client, message }) {
+    const ws = Math.ceil(client.ws.ping);
+    const msg = await channel.send(`WebSocket: ${ws}ms`);
+    await msg.edit(`WebSocket: ${ws}ms | Ping: ${Math.ceil(msg.createdTimestamp - message.createdTimestamp)}ms`);
   }
 }
 

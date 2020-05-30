@@ -48,7 +48,7 @@ class Clear extends Command {
   }
 
   async run({ author, channel, client, flags, message, send, t }, limit, ...users) {
-    message.delete();
+    await message.delete();
     const { uppercase, bot, role } = flags;
     const res = await channel.messages.fetch({ limit });
 

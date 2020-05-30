@@ -32,15 +32,17 @@ class BotInfo extends Command {
     }
 
     const embed = new SimplicityEmbed({ author, emoji, t })
-      .addField('» $$commands:botinfo.ping', `${ping}ms`, true)
-      .addField('» $$commands:botinfo.users', client.users.cache.size, true)
-      .addField('» $$commands:botinfo.guilds', client.guilds.cache.size, true)
-      .addField('» $$commands:botinfo.prefix', prefix, true)
-      .addField('» $$commands:botinfo.ramUsage', `${ram}mb`, true)
-      .addField('» $$commands:botinfo.discordjs', version, true)
-      .addField('» $$commands:botinfo.nodejs', process.versions.node, true)
-      .addField('» $$commands:botinfo.commands', client.commands.size, true)
-      .addField('» $$commands:botinfo.links', `[$$commands:botinfo.inviteBot ](${inviteLink})`, true);
+      .addFields(
+        { inline: true, name: '» $$commands:botinfo.ping', value: `${ping}ms` },
+        { inline: true, name: '» $$commands:botinfo.users', value: client.users.cache.size },
+        { inline: true, name: '» $$commands:botinfo.guilds', value: client.guilds.cache.size },
+        { inline: true, name: '» $$commands:botinfo.prefix', value: prefix },
+        { inline: true, name: '» $$commands:botinfo.memoryUsage', value: `${ram}mb` },
+        { inline: true, name: '» $$commands:botinfo.discordjs', value: version },
+        { inline: true, name: '» $$commands:botinfo.node', value: process.versions.node },
+        { inline: true, name: '» $$commands:botinfo.commands', value: client.commands.size },
+        { inline: true, name: '» $$commands:botinfo.links', value: `[$$commands:botinfo.inviteBot ](${inviteLink})` },
+      );
 
     if (devs) embed.addField('» $$commands:botinfo.developers', devs);
 

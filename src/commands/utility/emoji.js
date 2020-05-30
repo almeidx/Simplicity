@@ -19,8 +19,7 @@ class Emoji extends Command {
   }
 
   async run({ args, send }) {
-    let result,
-      type = 'png';
+    let result, type = 'png';
 
     const clean = args[0].codePointAt().toString(16);
     const defaultEmoji = clean && clean.split(RegexEmojis)[0];
