@@ -28,13 +28,13 @@ class Command {
     this.usersCooldown = this.cooldown > 0 ? new CommandCooldown(this.cooldown) : null;
 
     const strUsage = `commands:${this.name}.usage`;
-    this.usage = i18next.exists(strUsage) ? strUsage : null;
+    this.usagePath = i18next.exists(strUsage) ? strUsage : null;
     const strExamples = `commands:${this.name}.examples`;
-    this.examples = i18next.exists(strExamples) ? strExamples : null;
+    this.examplesPath = i18next.exists(strExamples) ? strExamples : null;
   }
 
   getUsage(t) {
-    return this.usage ? t(this.usage) : '';
+    return this.usagePath ? t(this.usagePath) : '';
   }
 
   run() {

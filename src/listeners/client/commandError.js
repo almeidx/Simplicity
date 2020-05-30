@@ -36,7 +36,7 @@ class CommandErrorListener extends SimplicityListener {
   }
 
   sendErrorCommandMessage(errorMessage, onUsage, { send, author, prefix, command, canEmbed, t }) {
-    const usage = onUsage && command.usage && CommandUtil.getUsage({ command, prefix, t });
+    const usage = onUsage && command.usagePath && CommandUtil.getUsage({ command, prefix, t });
     const keyUsage = onUsage && t('errors:usage');
 
     if (!canEmbed) {

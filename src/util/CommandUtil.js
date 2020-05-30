@@ -43,8 +43,8 @@ class CommandUtil {
     }
 
     // Add examples
-    if (command.examples) {
-      const examples = t(command.examples, { returnObjects: true });
+    if (command.examplesPath) {
+      const examples = t(command.examplesPath, { returnObjects: true });
       if (!isEmpty(examples.length)) {
         const examplesFixed = examples.map((e) => `${prefix}${command.name} ${e}`).join('\n');
         embed.addField('common:examples', examplesFixed, true);
