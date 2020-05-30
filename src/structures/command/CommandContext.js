@@ -1,9 +1,7 @@
 'use strict';
 
-const { EMOJIS, EMOJIS_CUSTOM } = require('@util/Constants');
+const EmojiUtl = require('@util/EmojiUtil');
 const i18next = require('i18next');
-const getCustomEmoji = (id) => EMOJIS_CUSTOM && EMOJIS_CUSTOM[id];
-const getDefaultEmoji = (name) => EMOJIS && EMOJIS[name];
 
 class CommandContext {
   constructor(options) {
@@ -40,18 +38,14 @@ class CommandContext {
     this.flags = {};
   }
 
-  _emoji(name = 'QUESTION', options = {}) {
-    const { id, other } = Object.assign({ id: false, other: null }, options);
-    name = name.toUpperCase();
-
-    const custom = getCustomEmoji(name) || (other && getCustomEmoji(other));
-    const normal = getDefaultEmoji(name) || (other && getDefaultEmoji(other));
-
-    if (this.guild && this.channel.permissionsFor(this.guild.me).has('USE_EXTERNAL_EMOJIS') && custom) {
-      const emoji = this.client.emojis.cache.get(custom);
-      if (emoji) return id ? emoji.id : emoji.toString();
+  _emoji(...emojis) {
+    if (typeof emojis[emojis.length - 1] === 'object') {
+      emojis[emojis.length - 1].textChannel = this.channel;
+    } else {
+      emojis.push({ textChannel: this.channel });
     }
-    return normal || false;
+
+    return EmojiUtl.getEmoji(...emojis);
   }
 }
 

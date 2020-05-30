@@ -136,7 +136,7 @@ class Util {
    * @returns {Array<string>} An array containing the developer's IDs.
    */
   static getDevs() {
-    return process.env.DEVS_IDS.split(',');
+    return process.env.DEVS_IDS ? process.env.DEVS_IDS.split(',') : [];
   }
 
   /**

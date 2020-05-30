@@ -4,6 +4,7 @@ module.exports = {
   CommandUtil: require('./CommandUtil'),
   Constants: require('./Constants'),
   EmojiRegex: require('./EmojiRegex'),
+  EmojiUtil: require('./EmojiUtil'),
   FileUtil: require('./FileUtil'),
   GuildIconGenerator: require('./Canvas/GuildIconGenerator'),
   LogUtil: require('./LogUtil'),
