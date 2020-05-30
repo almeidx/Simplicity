@@ -50,7 +50,7 @@ class MessageListener extends SimplicityListener {
       if (command) {
         const totalLength = usedPrefix.length + commandName.length;
         const params = { args, command, guildData, language, message, prefix, query: args.join(' '), totalLength };
-        command._run(new CommandContext(params), args).catch(console.error);
+        command.handle(new CommandContext(params), args).catch(console.error);
         Logger.logCommand({ author: author.tag, channel: channel.name, content: cleanContent, guild: guild.name });
       }
     }

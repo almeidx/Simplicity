@@ -31,7 +31,7 @@ class Command {
     throw new Error(`${this.constructor.name} doesn't have a run() method.`);
   }
 
-  async _run(ctx, args) {
+  async handle(ctx, args) {
     let inCooldown = true;
     const isDev = verifyDev(ctx.author.id, ctx.client);
     try {
@@ -75,7 +75,7 @@ class Command {
   runSubCommand(subcommand, context) {
     context.query = context.query.replace(`${context.args[0]} `, '').slice(1);
     context.args = context.args.slice(1);
-    return subcommand._run(context);
+    return subcommand.handle(context);
   }
 }
 
