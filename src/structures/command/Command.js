@@ -2,6 +2,7 @@
 
 const { COMMAND_COOLDOWN } = require('@data/config');
 const { PermissionUtil: { verifyDev } } = require('@util');
+const i18next = require('i18next');
 const { CommandCooldown, CooldownTypes } = require('./CommandCooldown');
 const CommandError = require('./CommandError');
 const CommandRequirements = require('./CommandRequirements');
@@ -26,6 +27,15 @@ class Command {
     this.subcommands = options.subcommands || [];
     this.cooldown = options.cooldown || COMMAND_COOLDOWN || 10000;
     this.usersCooldown = this.cooldown > 0 ? new CommandCooldown(this.cooldown) : null;
+
+    const strUsage = `commands:${this.name}.usage`;
+    this.usagePath = i18next.exists(strUsage) ? strUsage : null;
+    const strExamples = `commands:${this.name}.examples`;
+    this.examplesPath = i18next.exists(strExamples) ? strExamples : null;
+  }
+
+  getUsage(t) {
+    return this.usagePath ? t(this.usagePath) : '';
   }
 
   run() {

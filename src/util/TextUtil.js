@@ -1,7 +1,4 @@
 'use strict';
-
-const i18next = require('i18next');
-
 /**
  * Contains various text related utility methods.
  * @class TextUtil
@@ -23,7 +20,7 @@ class TextUtil {
   static parse(text = '', options = {}) {
     if (typeof text !== 'string') return text;
 
-    const { emoji, t, embed } = Object.assign({ embed: null, emoji: null, options: {}, t: null }, options);
+    const { emoji, t, embed, options: tOptions } = options;
     // Add Emojis in #...
     if (emoji) text = text.replace(/(?:#)\w+/g, (e) => emoji(e.slice(1).toUpperCase()) || e);
 
@@ -40,22 +37,10 @@ class TextUtil {
 
     // Add translation in $"..."
     if (t) {
-      text = text.replace(/(?:\$\$)(\S+)/g, (s) => TextUtil.t(t, s.slice(2), options.options));
-      return TextUtil.t(t, text, options.options);
+      text = text.replace(/(?:\$\$)(\S+)/g, (s) => t(s.slice(2), tOptions));
+      return t(text, tOptions);
     }
     return text;
-  }
-
-  /**
-   * Resolves a translation.
-   * @param {*} t The i18next object.
-   * @param {string} [key=''] The key of said translation.
-   * @param {*} [options={}] The options.
-   * @returns {string} The finalized translation.
-   */
-  static t(t, key = '', options = {}) {
-    if (!i18next.exists(key) || !t) return key;
-    else if (t) return t(key, options);
   }
 
   /**
