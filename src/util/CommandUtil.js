@@ -3,9 +3,6 @@
 const CommandError = require('@command/CommandError');
 const SimplicityEmbed = require('@discord/SimplicityEmbed');
 const { fixText, isEmpty } = require('@util/Util');
-const i18next = require('i18next');
-const getTranslation = (dirct, t, options = {}) => i18next.exists(dirct) && t(dirct, options);
-
 /**
  * Contains various command utility methods.
  * @class CommandUtil
@@ -18,9 +15,9 @@ class CommandUtil {
    * @returns {string} The usage.
    */
   static getUsage({ command, prefix, t }, full = true) {
-    const usage = getTranslation(`commands:${command.name}.usage`, t);
+    const usage = command.getUsage(t);
     if (!full || !prefix) return usage;
-    else return `${prefix + command.name} ${usage || ''}`;
+    else return `${prefix + command.name} ${usage}`;
   }
 
   /**
@@ -46,10 +43,12 @@ class CommandUtil {
     }
 
     // Add examples
-    const examples = getTranslation(`commands:${command.name}.examples`, t, { returnObjects: true });
-    if (examples.lenght) {
-      const examplesFixed = examples.map((e) => `${prefix}${command.name} ${e}`).join('\n');
-      embed.addField('common:examples', examplesFixed, true);
+    if (command.examples) {
+      const examples = t(command.examples, { returnObjects: true });
+      if (!isEmpty(examples.length)) {
+        const examplesFixed = examples.map((e) => `${prefix}${command.name} ${e}`).join('\n');
+        embed.addField('common:examples', examplesFixed, true);
+      }
     }
 
     // Add subcommands

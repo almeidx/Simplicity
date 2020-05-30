@@ -1,7 +1,7 @@
 'use strict';
 
 const { CommandError, SimplicityEmbed, SimplicityListener } = require('@structures');
-
+const CommandUtil = require('@util/CommandUtil');
 const i18next = require('i18next');
 const getTranslation = (dirct, t) => i18next.exists(dirct) && t(dirct);
 
@@ -35,10 +35,9 @@ class CommandErrorListener extends SimplicityListener {
     }
   }
 
-  sendErrorCommandMessage(errorMessage, onUsage, { send, author, prefix, command: { name }, canEmbed, t }) {
-    const strUsage = name && `commands:${name}.usage`;
-    const usage = onUsage && i18next.exists(strUsage) && `${prefix + name} ${t(strUsage)}`;
-    const keyUsage = usage && t('errors:usage');
+  sendErrorCommandMessage(errorMessage, onUsage, { send, author, prefix, command, canEmbed, t }) {
+    const usage = onUsage && command.usage && CommandUtil.getUsage({ command, prefix, t });
+    const keyUsage = onUsage && t('errors:usage');
 
     if (!canEmbed) {
       if (usage) errorMessage += `\n**${keyUsage}**: ${usage}`;
