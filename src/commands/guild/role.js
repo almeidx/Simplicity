@@ -7,35 +7,35 @@ const removeAliases = ['remove', 'removerole', 'r', 'take', 'takerole'];
 
 class Role extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'role', {
       aliases: ['r'],
+      args: [
+        {
+          missingError: 'commands:role.noArgs',
+          required: true,
+          type: 'string',
+          whitelist: [...addAliases, ...removeAliases],
+        },
+        {
+          acceptSelf: true,
+          required: false,
+          type: 'member',
+        },
+        {
+          authorHasHigh: true,
+          clientHasHigh: true,
+          required: true,
+          type: 'role',
+        },
+        ...new Array(9).fill({
+          authorHasHigh: true,
+          clientHasHigh: true,
+          required: false,
+          type: 'role',
+        }),
+      ],
       category: 'guild',
-      name: 'role',
-    }, [
-      {
-        missingError: 'commands:role.noArgs',
-        required: true,
-        type: 'string',
-        whitelist: [...addAliases, ...removeAliases],
-      },
-      {
-        acceptSelf: true,
-        required: false,
-        type: 'member',
-      },
-      {
-        authorHasHigh: true,
-        clientHasHigh: true,
-        required: true,
-        type: 'role',
-      },
-      ...new Array(9).fill({
-        authorHasHigh: true,
-        clientHasHigh: true,
-        required: false,
-        type: 'role',
-      }),
-    ]);
+    });
   }
 
   async run({ author, member: guildMember, t, channel }, option, member = guildMember, ...Xroles) {

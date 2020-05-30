@@ -6,18 +6,19 @@ const moment = require('moment');
 
 class RoleInfo extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'roleinfo', {
       aliases: ['ri', 'roleinformation'],
+      args:
+        [
+          {
+            missingError: 'commands:roleinfo.noArgs',
+            required: true,
+            type: 'role',
+          },
+        ],
       category: 'guild',
-      name: 'roleinfo',
       requirements: { guildOnly: true },
-    }, [
-      {
-        missingError: 'commands:roleinfo.noArgs',
-        required: true,
-        type: 'role',
-      },
-    ]);
+    });
   }
 
   run({ author, emoji, guild, send, t, language }, role) {

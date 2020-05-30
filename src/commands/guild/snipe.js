@@ -10,20 +10,20 @@ const AllowedImageFormats = [
 
 class SnipeCommand extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'snipe', {
+      args: [
+        {
+          acceptText: true,
+          canBeHiddenBot: false,
+          canBeHiddenUser: false,
+          required: false,
+          type: 'channel',
+        },
+      ],
       category: 'guild',
       cooldown: 3000,
-      name: 'snipe',
       requirements: { guildOnly: true },
-    }, [
-      {
-        acceptText: true,
-        canBeHiddenBot: false,
-        canBeHiddenUser: false,
-        required: false,
-        type: 'channel',
-      },
-    ]);
+    });
   }
 
   async run({ channel: currentChannel, client, t, send }, channel = currentChannel) {
