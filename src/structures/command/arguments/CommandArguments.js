@@ -20,7 +20,7 @@ const normalizeParam = (options) => {
   return result;
 };
 
-class CommandParameters {
+class CommandArguments {
   static parseOptions(argsOrFlags = []) {
     return argsOrFlags.map(normalizeParam);
   }
@@ -50,12 +50,13 @@ class CommandParameters {
         for (let i in flagsParsed) {
           const [name, ...flagArgs] = flagsParsed[i];
           const flag = flags.find((f) => f.name === name || (f.aliases && f.aliases.includes(name)));
-          if (!flag) return;
+          if (!flag) continue;
 
           const flagValue = flagArgs.join(' ');
-          const missingErr = funcOrString(flag.missingError, context.t, context);
+
           // eslint-disable-next-line no-await-in-loop
-          const parsedFlag = await this.parseParameter(context, flag, flagValue, missingErr);
+          const parsedFlag = await this.parseParameter(context, flag, flagValue);
+
           flagsObject[flag.name] = parsedFlag;
         }
         context.flags = flagsObject;
@@ -87,9 +88,7 @@ class CommandParameters {
       if (param.full) arg = args.slice(parseState.argIndex).join(param.fullJoin || ' ');
 
       // eslint-disable-next-line no-await-in-loop
-      const parsedArg = await this.parseParameter(
-        context, param, arg, funcOrString(param.missingError, context.t, context),
-      );
+      const parsedArg = await this.parseParameter(context, param, arg);
       parsedArgs.push(parsedArg);
       parseState.argIndex++;
     }
@@ -98,33 +97,41 @@ class CommandParameters {
     return parsedArgs;
   }
 
-  static async parseParameter(context, param, arg, missingErr) {
-    let parsedArg;
-    for (const parameter of param.types) {
-      // eslint-disable-next-line no-await-in-loop
-      const result = await parameter._parse(arg, param, context);
-      if (result) {
-        parsedArg = result;
-        break;
-      }
-    }
+  static async parseParameter(context, param, query) {
+    const result = await CommandArguments.runParameter(param, query, context);
 
-    if (isNull(parsedArg) && param.required) {
+    if (isNull(result) && param.required) {
+      const missingErr = CommandArguments.getErrorTraslation(param, context);
       throw new CommandError(missingErr, param.showUsage);
     }
 
-    if (!isNull(parsedArg)) {
+    if (!isNull(result)) {
       if (param.whitelist) {
-        const whitelist = funcOrString(param.whitelist, null, parsedArg, context);
-        const whitelisted = Array.isArray(whitelist) ? whitelist.includes(parsedArg) : !!whitelist;
+        const whitelist = funcOrString(param.whitelist, null, result, context);
+        const whitelisted = Array.isArray(whitelist) ? whitelist.includes(result) : !!whitelist;
         if (!whitelisted) {
+          const missingErr = CommandArguments.getErrorTraslation(param, context);
           throw new CommandError(missingErr, param.showUsage);
         }
       }
     }
 
-    return parsedArg;
+    return result;
+  }
+
+  static getErrorTraslation(arg, context) {
+    return funcOrString(arg.missingError, context.t, context);
+  }
+
+  static async runParameter(param, query, context) {
+    for (const parameter of param.types) {
+      // eslint-disable-next-line no-await-in-loop
+      const result = await parameter._parse(query, param, context);
+      if (result) {
+        return result;
+      }
+    }
   }
 }
 
-module.exports = CommandParameters;
+module.exports = CommandArguments;
