@@ -4,33 +4,33 @@ const { Command, CommandError, SimplicityEmbed } = require('@structures');
 
 class SetNick extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'setnick', {
       aliases: ['nick', 'nickname', 'setnickname'],
+      args: [
+        {
+          acceptBot: true,
+          acceptSelf: true,
+          authorHasHigh: true,
+          clientHasHigh: true,
+          missingError: 'errors:invalidUser',
+          required: true,
+          type: 'member',
+        },
+        {
+          clean: true,
+          maxLength: 32,
+          required: false,
+          type: 'string',
+        },
+      ],
       category: 'mod',
-      name: 'setnick',
       requirements: {
         argsRequired: true,
         clientPermissions: ['MANAGE_NICKNAMES'],
         guildOnly: true,
         permissions: ['MANAGE_NICKNAMES'],
       },
-    }, [
-      {
-        acceptBot: true,
-        acceptSelf: true,
-        authorHasHigh: true,
-        clientHasHigh: true,
-        missingError: 'errors:invalidUser',
-        required: true,
-        type: 'member',
-      },
-      {
-        clean: true,
-        maxLength: 32,
-        required: false,
-        type: 'string',
-      },
-    ]);
+    });
   }
 
   async run({ t, author, client, channel }, member, nickname = '') {

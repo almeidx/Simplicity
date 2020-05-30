@@ -22,19 +22,19 @@ class Eval extends Command {
    * @param {Client} client The Client.
    */
   constructor(client) {
-    super(client, {
+    super(client, 'eval', {
       aliases: ['compile', 'ev', 'evaluate', 'exec', 'execute'],
+      args: [
+        {
+          full: true,
+          missingError: 'You need to input an expression for me to evaluate.',
+          required: true,
+          type: 'string',
+        },
+      ],
       category: 'dev',
-      name: 'eval',
       requirements: { ownerOnly: true },
-    }, [
-      {
-        full: true,
-        missingError: 'You need to input an expression for me to evaluate.',
-        required: true,
-        type: 'string',
-      },
-    ]);
+    });
   }
 
   /**

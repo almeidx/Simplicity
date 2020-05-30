@@ -5,11 +5,10 @@ const { Command, SimplicityEmbed, CommandError } = require('@structures');
 
 class Prefix extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'prefix', {
       aliases: ['setprefix', 'p', 'setp', 'prefixset'],
       category: 'module',
       cooldown: 5000,
-      name: 'prefix',
       requirements: {
         argsRequired: true,
         permissions: ['MANAGE_GUILD'],

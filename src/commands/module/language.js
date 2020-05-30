@@ -4,11 +4,10 @@ const { Command, CommandError, SimplicityEmbed } = require('@structures');
 
 class Language extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'language', {
       aliases: ['lang', 'l', 'botlanguage'],
       category: 'module',
       cooldown: 5000,
-      name: 'language',
       requirements: {
         argsRequired: true,
         permissions: ['MANAGE_GUILD'],

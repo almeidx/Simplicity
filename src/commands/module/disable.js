@@ -6,10 +6,9 @@ const { isEmpty } = require('@util/Util');
 
 class Disable extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'disable', {
       aliases: ['disablecommands', 'disablecommand', 'disablecmd', 'cmddisable', 'cmddisable'],
       category: 'module',
-      name: 'disable',
       permissions: ['MANAGE_GUILD'],
       requireDatabase: true,
     });

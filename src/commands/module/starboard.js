@@ -5,7 +5,7 @@ const { Command } = require('@structures');
 
 class Starboard extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'starboard', {
       category: 'module',
       cooldown: 5000,
       name: 'starboard',

@@ -8,11 +8,10 @@ const StarboardCommand = require('./starboard');
 
 class Config extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'config', {
       aliases: ['configuration', 'serversettings', 's', 'serverconfig', 'serverconfiguration'],
       category: 'module',
       cooldown: 5000,
-      name: 'config',
       requirements: {
         guildOnly: true,
         permissions: ['MANAGE_GUILD'],

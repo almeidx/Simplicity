@@ -14,11 +14,10 @@ const Condition = 'set';
 
 class Logs extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'logs', {
       aliases: ['log', 'logger', 'loggers', 'modlog', 'modlogs', 'eventlog', 'logevent'],
       category: 'module',
       cooldown: 5000,
-      name: 'logs',
       requirements: {
         ownerOnly: true,
         permissions: ['MANAGE_GUILD'],
