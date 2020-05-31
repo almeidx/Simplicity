@@ -5,17 +5,17 @@ const { Util } = require('discord.js');
 
 class Say extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'say', {
       aliases: ['send'],
+      args: [
+        {
+          missingError: 'commands:say.error',
+          required: true,
+          type: 'string',
+        },
+      ],
       category: 'util',
-      name: 'say',
-    }, [
-      {
-        missingError: 'commands:say.error',
-        required: true,
-        type: 'string',
-      },
-    ]);
+    });
   }
 
   async run({ channel, guild, message, member }, text) {

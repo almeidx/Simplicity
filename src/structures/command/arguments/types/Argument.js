@@ -2,7 +2,7 @@
 
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
 
-class Parameter {
+class Argument {
   static parseOptions(options = {}) {
     return {
       aliases: options.aliases,
@@ -25,4 +25,4 @@ class Parameter {
   }
 }
 
-module.exports = Parameter;
+module.exports = Argument;

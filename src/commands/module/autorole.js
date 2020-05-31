@@ -1,15 +1,14 @@
 'use strict';
 
-const Parameters = require('@parameters');
+const Arguments = require('@arguments');
 const { Command, CommandError } = require('@structures');
 
 class AutoRole extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'autorole', {
       aliases: ['roleauto', 'joinrole'],
       category: 'module',
       cooldown: 5000,
-      name: 'autorole',
       requirements: {
         guildOnly: true,
         permissions: ['MANAGE_GUILD'],
@@ -29,7 +28,7 @@ class AutoRole extends Command {
       return channel.send(t('commands:autorole.disabled'));
     }
 
-    const role = await Parameters.role.parse.call(
+    const role = await Arguments.role.parse.call(
       { clientHasHigh: true, required: true },
       query,
       { guild },

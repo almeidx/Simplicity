@@ -4,30 +4,26 @@ const { Command } = require('@structures');
 
 class Clear extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'clear', {
       aliases: ['purge', 'prune', 'clean'],
+      args: [
+        {
+          max: 100,
+          min: 2,
+          missingError: 'commands:clear.invalidValue',
+          required: true,
+          type: 'number',
+        },
+        ...new Array(10).fill({
+          acceptBot: true,
+          acceptSelf: true,
+          fetchGlobal: false,
+          required: false,
+          type: 'user',
+        }),
+      ],
       category: 'mod',
-      name: 'clear',
-      requirements: {
-        clientPermissions: ['MANAGE_MESSAGES'],
-        permissions: ['MANAGE_MESSAGES'],
-      },
-    }, [
-      {
-        max: 100,
-        min: 2,
-        missingError: 'commands:clear.invalidValue',
-        required: true,
-        type: 'number',
-      },
-      ...new Array(10).fill({
-        acceptBot: true,
-        acceptSelf: true,
-        fetchGlobal: false,
-        required: false,
-        type: 'user',
-      }),
-      [
+      flags: [
         {
           aliases: ['b'],
           name: 'bot',
@@ -44,7 +40,11 @@ class Clear extends Command {
           type: 'booleanFlag',
         },
       ],
-    ]);
+      requirements: {
+        clientPermissions: ['MANAGE_MESSAGES'],
+        permissions: ['MANAGE_MESSAGES'],
+      },
+    });
   }
 
   async run({ author, channel, client, flags, message, send, t }, limit, ...users) {

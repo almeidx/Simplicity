@@ -1,15 +1,14 @@
 'use strict';
 
-const Parameters = require('@parameters');
+const Arguments = require('@arguments');
 const { Command, SimplicityEmbed, CommandError } = require('@structures');
 
 class Prefix extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'prefix', {
       aliases: ['setprefix', 'p', 'setp', 'prefixset'],
       category: 'module',
       cooldown: 5000,
-      name: 'prefix',
       requirements: {
         argsRequired: true,
         permissions: ['MANAGE_GUILD'],
@@ -19,7 +18,7 @@ class Prefix extends Command {
   }
 
   async run({ message, author, client, guild, prefix: currentPrefix, query, send, t }) {
-    const prefix = await Parameters.string.parse.call({
+    const prefix = await Arguments.string.parse.call({
       errors: { maxLength: 'commands:prefix.multiCharacters' },
       maxLength: 15,
       minLength: 1,

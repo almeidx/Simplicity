@@ -1,9 +1,9 @@
 'use strict';
 
 const CommandError = require('../../CommandError.js');
-const Parameter = require('./Parameter.js');
+const Argument = require('./Argument.js');
 
-class GuildParameter extends Parameter {
+class GuildArgument extends Argument {
   static parse(arg, { t, client }) {
     if (!arg) return;
     const guild = client.guilds.cache.get(arg);
@@ -12,4 +12,4 @@ class GuildParameter extends Parameter {
   }
 }
 
-module.exports = GuildParameter;
+module.exports = GuildArgument;

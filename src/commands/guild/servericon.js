@@ -5,10 +5,9 @@ const { getServerIconURL } = require('@util/Util');
 
 class ServerIcon extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'servericon', {
       aliases: ['svicon', 'sicon', 'guildicon', 'gicon', 'icon'],
       category: 'guild',
-      name: 'servericon',
     });
   }
 

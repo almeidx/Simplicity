@@ -7,10 +7,9 @@ const { GuildMember } = require('discord.js');
 
 class Permissions extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'permissions', {
       aliases: ['perms', 'perm', 'permission'],
       category: 'guild',
-      name: 'permissions',
       requirements: { guildOnly: true },
     }, [
       {

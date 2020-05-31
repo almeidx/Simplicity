@@ -53,7 +53,7 @@
     "@locales": "src/locales",
     "@structures": "src/structures",
     "@command": "src/structures/command",
-    "@parameters": "src/structures/command/parameters/types",
+    "@arguments": "src/structures/command/arguments/types",
     "@discord": "src/structures/discord",
     "@util": "src/util"
   },

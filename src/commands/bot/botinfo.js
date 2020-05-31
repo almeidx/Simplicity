@@ -8,11 +8,10 @@ const { version } = require('discord.js');
 
 class BotInfo extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'botinfo', {
       aliases: ['bi', 'botinformation', 'infobot', 'informationbot', 'stats', 'statistics'],
       category: 'bot',
       cooldown: 10000,
-      name: 'botinfo',
       requirements: { clientPermissions: ['EMBED_LINKS'] },
     });
   }
@@ -41,7 +40,7 @@ class BotInfo extends Command {
         { inline: true, name: '» $$commands:botinfo.discordjs', value: version },
         { inline: true, name: '» $$commands:botinfo.node', value: process.versions.node },
         { inline: true, name: '» $$commands:botinfo.commands', value: client.commands.size },
-        { inline: true, name: '» $$commands:botinfo.links', value: `[$$commands:botinfo.inviteBot ](${inviteLink})` },
+        { inline: true, name: '» $$commands:botinfo.links', value: `[ $$commands:botinfo.inviteBot ](${inviteLink})` },
       );
 
     if (devs) embed.addField('» $$commands:botinfo.developers', devs);

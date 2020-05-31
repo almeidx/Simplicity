@@ -7,10 +7,9 @@ const moment = require('moment');
 
 class ServerInfo extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'serverinfo', {
       aliases: ['si', 'server', 'svinfo', 'sv', 'guild', 'serverinformation', 'svinformation'],
       category: 'guild',
-      name: 'serverinfo',
     });
   }
 

@@ -2,9 +2,9 @@
 
 const { URL } = require('url');
 const CommandError = require('../../CommandError.js');
-const Parameter = require('./Parameter.js');
+const Argument = require('./Argument.js');
 
-class URLParameter extends Parameter {
+class URLArgument extends Argument {
   static parse(arg, { t }) {
     if (!arg) return;
 
@@ -16,4 +16,4 @@ class URLParameter extends Parameter {
   }
 }
 
-module.exports = URLParameter;
+module.exports = URLArgument;

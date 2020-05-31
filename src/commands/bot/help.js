@@ -6,16 +6,16 @@ const { verifyDev } = require('@util/PermissionUtil');
 
 class Help extends Command {
   constructor(client) {
-    super(client, {
+    super(client, 'help', {
       aliases: ['h', 'commands', 'cmd', 'cmds', 'howtouse'],
+      args: [
+        {
+          required: false,
+          type: 'string',
+        },
+      ],
       category: 'bot',
-      name: 'help',
-    }, [
-      {
-        required: false,
-        type: 'string',
-      },
-    ]);
+    });
   }
 
   async run({ author, client, prefix, send, t }, cmdName) {
