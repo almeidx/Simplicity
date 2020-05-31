@@ -80,7 +80,7 @@ class UserInfo extends Command {
     const image = largeImage && `https://i.scdn.co/image/${largeImage.replace('spotify:', '')}`;
 
     const embed = new SimplicityEmbed({ author, t })
-      .setAuthor('commands:userinfo.spotify', SPOTIFY_LOGO_PNG_URL)
+      .setAuthor('$$commands:userinfo.spotify', SPOTIFY_LOGO_PNG_URL)
       .addField('» $$commands:userinfo.track', trackName, true)
       .addField('» $$commands:userinfo.artist', artist, true)
       .addField('» $$commands:userinfo.album', album)

@@ -56,7 +56,7 @@ class ServerInfo extends Command {
     else embed.addField('» $$commands:serverinfo.totalRoles', totalRoles, true);
 
     if (boostTier && boosters) {
-      embed.addField('» $$commands:serverinfo.boostTier', 'commands:serverinfo.tier', true, {}, { boostTier });
+      embed.addField('» $$commands:serverinfo.boostTier', '$$commands:serverinfo.tier', true, {}, { boostTier });
     }
 
     embed
@@ -83,7 +83,7 @@ class ServerInfo extends Command {
           inline: true,
           name: '» $$commands:serverinfo.verificationLevel',
           options: { level: guild.verificationLevel },
-          value: `commands:serverinfo.verificationDetails.${guild.verificationLevel}`,
+          value: `$$commands:serverinfo.verificationDetails.${guild.verificationLevel}`,
         },
       );
 

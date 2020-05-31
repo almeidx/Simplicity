@@ -30,16 +30,16 @@ class CommandUtil {
     if (command.name === 'help') throw new CommandError('commands:help.commandHelp');
 
     const embed = new SimplicityEmbed({ author: client.user, t })
-      .setDescription(`commands:${command.name}.description`)
+      .setDescription(`$$commands:${command.name}.description`)
       .setTitle(fixText(command.name), {}, false);
 
     // Add arguments
     const usage = CommandUtil.getUsage({ command, prefix, t });
-    if (usage) embed.addField('common:usage', usage, true);
+    if (usage) embed.addField('$$common:usage', usage, true);
 
     // Add aliases
     if (!isEmpty(command.aliases)) {
-      embed.addField('common:aliases', command.aliases.map((a) => `\`${a}\``).join(' '), true);
+      embed.addField('$$common:aliases', command.aliases.map((a) => `\`${a}\``).join(' '), true);
     }
 
     // Add examples
@@ -47,18 +47,18 @@ class CommandUtil {
       const examples = t(command.examplesPath, { returnObjects: true });
       if (!isEmpty(examples.length)) {
         const examplesFixed = examples.map((e) => `${prefix}${command.name} ${e}`).join('\n');
-        embed.addField('common:examples', examplesFixed, true);
+        embed.addField('$$common:examples', examplesFixed, true);
       }
     }
 
     // Add subcommands
     const subcommands = command.subcommands && command.subcommands.map((sub) => {
       const commandName = `\`${prefix + command.name} ${sub.name}\` `;
-      return `${commandName} ${t(`commands:${command.name}-${sub.name}.description`)}`;
+      return `${commandName} ${t(`$$commands:${command.name}-${sub.name}.description`)}`;
     });
 
     if (!isEmpty(subcommands)) {
-      embed.addField('common:subcommands', subcommands.join('\n'));
+      embed.addField('$$common:subcommands', subcommands.join('\n'));
     }
     return embed;
   }

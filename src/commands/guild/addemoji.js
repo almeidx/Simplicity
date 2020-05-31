@@ -45,8 +45,8 @@ class AddEmoji extends Command {
     if (!emoji || error) throw new CommandError('commands:addemoji.error', { msg: error.message });
 
     const embed = new SimplicityEmbed({ author, t })
-      .setDescription('commands:addemoji.emojiCreated', { emoji: emoji.toString() })
-      .setTitle('commands:addemoji.success');
+      .setDescription('$$commands:addemoji.emojiCreated', { emoji: emoji.toString() })
+      .setTitle('$$commands:addemoji.success');
     return send(embed);
   }
 }

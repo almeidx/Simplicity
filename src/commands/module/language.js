@@ -27,8 +27,8 @@ class Language extends Command {
     if (!data) throw new CommandError('commands:language.failed');
 
     const embed = new SimplicityEmbed({ author, t })
-      .setTitle('commands:language.done')
-      .setDescription('commands:language.success', { lang });
+      .setTitle('$$commands:language.done')
+      .setDescription('$$commands:language.success', { lang });
     await send(embed);
   }
 }

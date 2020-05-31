@@ -30,8 +30,8 @@ class Prefix extends Command {
     if (!data) throw new CommandError('commands:prefix.failed');
 
     const embed = new SimplicityEmbed({ author, t })
-      .setTitle('commands:prefix.done')
-      .setDescription('commands:prefix.success', { prefix });
+      .setTitle('$$commands:prefix.done')
+      .setDescription('$$commands:prefix.success', { prefix });
     await send(embed);
   }
 }

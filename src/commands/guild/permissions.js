@@ -27,13 +27,13 @@ class Permissions extends Command {
       victim.user.displayAvatarURL({ dynamic: true }) :
       getServerIconURL(guild);
     const name = victim instanceof GuildMember ? victim.user.tag : victim.name;
-    const title = victim instanceof GuildMember ? 'commands:permissions.author' : 'commands:permissions.role';
+    const title = victim instanceof GuildMember ? '$$commands:permissions.author' : '$$commands:permissions.role';
 
     const embed = new SimplicityEmbed({ author, emoji, t })
       .setAuthor(title, avatar, null, { name });
 
     for (const p of MANAGER_PERMISSIONS) {
-      embed.addField(`permissions:${p}`, checkTick(victim.permissions.has(p)), true);
+      embed.addField(`$$permissions:${p}`, checkTick(victim.permissions.has(p)), true);
     }
 
     const color = this.resolveColor(embed, emoji);

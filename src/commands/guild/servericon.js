@@ -15,7 +15,7 @@ class ServerIcon extends Command {
     const guildIconURL = getServerIconURL(guild);
 
     const embed = new SimplicityEmbed({ author, t })
-      .setDescription('commands:servericon:text', { guildIconURL })
+      .setDescription('$$commands:servericon:text', { guildIconURL })
       .setImage(guildIconURL);
     return send(embed);
   }

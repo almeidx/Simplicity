@@ -75,7 +75,7 @@ class Role extends Command {
 
     const embed = new SimplicityEmbed({ author, t });
     const strRoles = roles.map((role) => `${role}` || role.name);
-    const msg = option === 'add' ? 'commands:role.added' : 'commands:role.removed';
+    const msg = option === 'add' ? '$$commands:role.added' : '$$commands:role.removed';
     embed.setDescription(msg, { author, count: roles.length, member, roles: strRoles.join(', ') });
 
     return channel.send(embed);
