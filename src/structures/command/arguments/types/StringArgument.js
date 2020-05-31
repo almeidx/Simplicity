@@ -18,7 +18,6 @@ class StringArgument extends Argument {
   static parse(arg, { t, message }) {
     arg = arg ? typeof arg === 'string' ? arg : String(arg) : null;
     if (!arg) return;
-
     if (this.clean) arg = Util.cleanContent(arg, message);
 
     if (this.maxLength > 0 && arg.length > this.maxLength) {

@@ -27,16 +27,6 @@ class CommandArguments {
 
   /**
    * @param {CommandContext} context The command context
-   * @param {Object} flags Array of the command flags
-   * @param {Object} args Array of the command args
-   */
-  static async handle(context, flags, args) {
-    await this.handleFlags(context, flags);
-    return this.handleArguments(context, args);
-  }
-
-  /**
-   * @param {CommandContext} context The command context
    * @param {Array<Object>} flags Array of the command flags
    */
   static async handleFlags(context, flags) {
@@ -57,9 +47,13 @@ class CommandArguments {
           // eslint-disable-next-line no-await-in-loop
           const parsedFlag = await this.parseParameter(context, flag, flagValue);
 
+          if (flag.isDefaultFlag) {
+            return flag.handle;
+          }
+
           flagsObject[flag.name] = parsedFlag;
         }
-        context.flags = flagsObject;
+        return flagsObject;
       }
     }
   }
@@ -85,8 +79,7 @@ class CommandArguments {
         continue;
       }
 
-      if (param.full) arg = args.slice(parseState.argIndex).join(param.fullJoin || ' ');
-
+      if (param.full) arg = context.args.slice(parseState.argIndex).join(param.fullJoin || ' ');
       // eslint-disable-next-line no-await-in-loop
       const parsedArg = await this.parseParameter(context, param, arg);
       parsedArgs.push(parsedArg);
@@ -99,7 +92,6 @@ class CommandArguments {
 
   static async parseParameter(context, param, query) {
     const result = await CommandArguments.runParameter(param, query, context);
-
     if (isNull(result) && param.required) {
       const missingErr = CommandArguments.getErrorTraslation(param, context);
       throw new CommandError(missingErr, param.showUsage);

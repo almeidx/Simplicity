@@ -7,6 +7,7 @@ const { CommandCooldown, CooldownTypes } = require('./CommandCooldown');
 const CommandError = require('./CommandError');
 const CommandRequirements = require('./CommandRequirements');
 const CommandParameters = require('./arguments/CommandArguments');
+const defaultFlags = require('./defaultFlags');
 
 class Command {
   constructor(client, name, options = {}) {
@@ -28,7 +29,10 @@ class Command {
     this.usersCooldown = this.cooldown > 0 ? new CommandCooldown(this.cooldown) : null;
 
     this.args = CommandParameters.parseOptions(options.args || []);
-    this.flags = CommandParameters.parseOptions(options.flags || []);
+
+    const flags = options.flags || [];
+    flags.push(...defaultFlags);
+    this.flags = CommandParameters.parseOptions(flags);
 
     const strUsage = `commands:${this.name}.usage`;
     this.usagePath = i18next.exists(strUsage) ? strUsage : null;
@@ -62,8 +66,18 @@ class Command {
         await CommandRequirements.handle(ctx, this.requirements, this.argRequireResponse);
       }
 
-      if (!isEmpty(this.args) || !isEmpty(this.flags)) {
-        args = await CommandParameters.handle(ctx, this.flags, this.args);
+      if (!isEmpty(this.flags)) {
+        const flags = await CommandParameters.handleFlags(ctx, this.flags);
+        if (typeof flags === 'function') {
+          await flags(ctx);
+          return;
+        }
+        ctx.flags = flags;
+      }
+
+      if (!isEmpty(this.args)) {
+        args = await CommandParameters.handleArguments(ctx, this.args);
+        console.log(args, this.args);
       }
 
       await this.run(ctx, ...args);
