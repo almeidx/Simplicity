@@ -11,13 +11,15 @@ class Emoji extends Command {
   constructor(client) {
     super(client, 'emoji', {
       aliases: ['emote', 'jumbo'],
-      argsRequiredResponse: 'commands:emoji.noArgs',
       category: 'util',
-      requirements: { argsRequired: true },
     });
   }
 
   async run({ args, send }) {
+    if (!args[0]) {
+      throw new CommandError('commands:emoji.noArgs');
+    }
+
     let result, type = 'png';
 
     const clean = args[0].codePointAt().toString(16);

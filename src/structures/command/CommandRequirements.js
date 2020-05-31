@@ -6,7 +6,6 @@ const { TextChannel } = require('discord.js');
 const CommandError = require('./CommandError');
 
 const ERROR_RESPONSES = {
-  argsRequired: 'errors:missingParameters',
   clientPermissions: 'errors:clientMissingPermission',
   guildOnly: 'errors:guildOnly',
   ownerOnly: 'errors:developerOnly',
@@ -17,7 +16,6 @@ const ERROR_RESPONSES = {
 class CommandRequirements {
   static parseOptions(options) {
     return Object.assign({
-      argsRequired: false,
       clientPermissions: [],
       guildOnly: true,
       nsfwChannelOnly: false,
@@ -27,9 +25,8 @@ class CommandRequirements {
     }, options);
   }
 
-  static handle({ author, client, channel, guild, args, t }, requirements, argResponse) {
+  static handle({ author, client, channel, guild, t }, requirements) {
     const {
-      argsRequired,
       clientPermissions,
       guildOnly,
       ownerOnly,
@@ -67,10 +64,6 @@ class CommandRequirements {
           permissions: PermissionUtil.normalize(memberPerms).join(', '),
         }));
       }
-    }
-
-    if (argsRequired && isEmpty(args)) {
-      throw new CommandError(argResponse || ERROR_RESPONSES.argsRequired, { onUsage: true });
     }
   }
 }
