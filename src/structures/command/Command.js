@@ -22,7 +22,7 @@ class Command {
     this.name = name;
     this.category = options.category;
     this.aliases = options.aliases || [];
-    this.requirements = options.requirements;
+    this.requirements = CommandRequirements.parseOptions(options.requirements);
     this.argRequireResponse = options.argRequiredResponse;
     this.subcommands = options.subcommands || [];
     this.cooldown = options.cooldown || COMMAND_COOLDOWN || 10000;

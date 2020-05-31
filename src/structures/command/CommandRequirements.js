@@ -1,6 +1,8 @@
 'use strict';
 
-const { verifyDev } = require('@util/PermissionUtil');
+const PermissionUtil = require('@util/PermissionUtil');
+const { isEmpty } = require('@util/Util');
+const { TextChannel } = require('discord.js');
 const CommandError = require('./CommandError');
 
 const ERROR_RESPONSES = {
@@ -26,38 +28,48 @@ class CommandRequirements {
   }
 
   static handle({ author, client, channel, guild, args, t }, requirements, argResponse) {
-    const options = CommandRequirements.parseOptions(requirements);
-    if (options.requireDatabase && !client.database) throw new CommandError(ERROR_RESPONSES.requireDatabase);
+    const {
+      argsRequired,
+      clientPermissions,
+      guildOnly,
+      ownerOnly,
+      permissions,
+      requireDatabase,
+    } = CommandRequirements.parseOptions(requirements);
 
-    if (options.ownerOnly && !verifyDev(author.id, client)) throw new CommandError(ERROR_RESPONSES.ownerOnly);
+    if (requireDatabase && !client.database) {
+      throw new CommandError(ERROR_RESPONSES.requireDatabase);
+    }
 
-    if (options.guildOnly && !guild) throw new CommandError(ERROR_RESPONSES.guildOnly);
+    if (ownerOnly && !PermissionUtil.verifyDev(author.id, client)) {
+      throw new CommandError(ERROR_RESPONSES.ownerOnly);
+    }
 
-    if (channel.type === 'text') {
-      const clientPerms = options.clientPermissions.filter((p) =>
-        !channel.permissionsFor(guild.me).has(p)).map((p) => t(`permissions:${p}`),
-      );
-      if (clientPerms.length !== 0) {
+    if (guildOnly && !guild) {
+      throw new CommandError(ERROR_RESPONSES.guildOnly);
+    }
+
+    if (channel instanceof TextChannel) {
+      const clientPerms = clientPermissions.filter((p) => !channel.permissionsFor(guild.me).has(p));
+      if (!isEmpty(clientPerms)) {
         throw new CommandError(t(ERROR_RESPONSES.clientPermissions, {
           count: clientPerms.length,
           onUsage: true,
-          permissions: clientPerms.join(', '),
+          permissions: PermissionUtil.normalize(clientPerms).join(', '),
         }));
       }
 
-      const memberPerms = options.permissions.filter((p) =>
-        !channel.permissionsFor(author.id).has(p)).map((p) => t(`permissions:${p}`),
-      );
-      if (memberPerms.length !== 0) {
+      const memberPerms = permissions.filter((p) => !channel.permissionsFor(author.id).has(p));
+      if (!isEmpty(memberPerms)) {
         throw new CommandError(t(ERROR_RESPONSES.userMissingPermission, {
           count: memberPerms.length,
           onUsage: true,
-          permissions: memberPerms.join(', '),
+          permissions: PermissionUtil.normalize(memberPerms).join(', '),
         }));
       }
     }
 
-    if (options.argsRequired && args.length === 0) {
+    if (argsRequired && isEmpty(args)) {
       throw new CommandError(argResponse || ERROR_RESPONSES.argsRequired, { onUsage: true });
     }
   }

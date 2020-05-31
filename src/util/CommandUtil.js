@@ -1,8 +1,7 @@
 'use strict';
-
-const CommandError = require('@command/CommandError');
 const SimplicityEmbed = require('@discord/SimplicityEmbed');
-const { capitalize, isEmpty } = require('@util/Util');
+const PermissionUtil = require('@util/PermissionUtil');
+const { isEmpty } = require('@util/Util');
 /**
  * Contains various command utility methods.
  * @class CommandUtil
@@ -27,22 +26,24 @@ class CommandUtil {
    */
   static getHelp({ client, command, prefix, t }) {
     command = typeof command === 'string' ? client.commands.fetch(command) : command;
-    if (command.name === 'help') throw new CommandError('commands:help.commandHelp');
 
-    const embed = new SimplicityEmbed({ author: client.user, t })
-      .setDescription(`$$commands:${command.name}.description`)
-      .setTitle(capitalize(command.name), {}, false);
+    const noneTranslation = t('commons:none');
 
-    // Add arguments
-    const usage = CommandUtil.getUsage({ command, prefix, t });
-    if (usage) embed.addField('$$common:usage', usage, true);
+    const embed = new SimplicityEmbed({ t })
+      .setTitle(CommandUtil.getUsage({ command, prefix, t }))
+      .setDescription(`$$commands:${command.name}.description`);
 
-    // Add aliases
-    if (!isEmpty(command.aliases)) {
-      embed.addField('$$common:aliases', command.aliases.map((a) => `\`${a}\``).join(' '), true);
-    }
+    embed.addField('$$commands:help.commandName', command.name, true);
 
-    // Add examples
+    const aliases = command.aliases.map((a) => `\`${a}\``).join(' ');
+    embed.addField('$$common:aliases', aliases || noneTranslation, true);
+
+    const userPermissions = PermissionUtil.normalize(command.requirements.permissions, t).join(', ');
+    embed.addField('$$commands:help.requiredUserPermissions', userPermissions || noneTranslation, false);
+
+    const clientPermissions = PermissionUtil.normalize(command.requirements.clientPermissions, t).join(', ');
+    embed.addField('$$commands:help.requiredClientPermissions', clientPermissions || noneTranslation, true);
+
     if (command.examplesPath) {
       const examples = t(command.examplesPath, { returnObjects: true });
       if (!isEmpty(examples.length)) {

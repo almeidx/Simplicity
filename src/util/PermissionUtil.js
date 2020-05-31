@@ -31,6 +31,10 @@ class PermissionsUtil {
 
     return !!(roleCondition || idCondition);
   }
+
+  static normalize(permissions, t) {
+    return permissions.map((p) => t(`permissions:${p}`));
+  }
 }
 
 module.exports = PermissionsUtil;

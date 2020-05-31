@@ -16,11 +16,14 @@
     "latency": "{{- ping }}ms"
   },
   "help": {
+    "description": "Shows information about me and my commands",
     "about": "{{- name }} is yet another Discord bot that has lots of commands.\nMy prefix on this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo view more info about each command type: `{{- prefix }}help <command>`",
     "categories": "Categories",
     "aliases": "Aliases",
     "_usage": "Usage",
-    "commandHelp": "What?!",
+    "commandName": "Name",
+    "requiredClientPermissions": "Required Bot Permissions",
+    "requiredUserPermissions": "Required User Permissions",
     "commandUndefined": "This command does not exist or is disabled"
   },
   "config-prefix": {

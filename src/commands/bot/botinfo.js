@@ -9,7 +9,7 @@ const { version } = require('discord.js');
 class BotInfo extends Command {
   constructor(client) {
     super(client, 'botinfo', {
-      aliases: ['bi', 'botinformation', 'infobot', 'informationbot', 'stats', 'statistics'],
+      aliases: ['bi', 'stats'],
       category: 'bot',
       cooldown: 10000,
       requirements: { clientPermissions: ['EMBED_LINKS'] },
