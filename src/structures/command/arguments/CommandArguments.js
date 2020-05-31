@@ -30,32 +30,29 @@ class CommandArguments {
    * @param {Array<Object>} flags Array of the command flags
    */
   static async handleFlags(context, flags) {
-    if (flags) {
-      const flagIndex = context.args.findIndex((a) => a.startsWith('--'));
-      if (flagIndex > -1) {
-        const [, ...allFlags] = context.args.splice(flagIndex).join(' ').split('--');
-        const flagsObject = {};
+    const flagsObject = {};
+    const flagIndex = context.args.findIndex((a) => a.startsWith('--'));
+    if (flagIndex > -1) {
+      const [, ...allFlags] = context.args.splice(flagIndex).join(' ').split('--');
 
-        const flagsParsed = allFlags.map((s) => s.trim().split(/[ \t]+/));
-        for (let i in flagsParsed) {
-          const [name, ...flagArgs] = flagsParsed[i];
-          const flag = flags.find((f) => f.name === name || (f.aliases && f.aliases.includes(name)));
-          if (!flag) continue;
+      const flagsParsed = allFlags.map((s) => s.trim().split(/[ \t]+/));
+      for (let i in flagsParsed) {
+        const [name, ...flagArgs] = flagsParsed[i];
+        const flag = flags.find((f) => f.name === name || (f.aliases && f.aliases.includes(name)));
+        if (!flag) continue;
 
-          const flagValue = flagArgs.join(' ');
+        const flagValue = flagArgs.join(' ');
 
-          // eslint-disable-next-line no-await-in-loop
-          const parsedFlag = await this.parseParameter(context, flag, flagValue);
-
-          if (flag.isDefaultFlag) {
-            return flag.handle;
-          }
-
-          flagsObject[flag.name] = parsedFlag;
+        // eslint-disable-next-line no-await-in-loop
+        const parsedFlag = await this.parseParameter(context, flag, flagValue);
+        if (parsedFlag && flag.isDefaultFlag) {
+          return flag.handle;
         }
-        return flagsObject;
+
+        flagsObject[flag.name] = parsedFlag;
       }
     }
+    return flagsObject;
   }
 
   /**
