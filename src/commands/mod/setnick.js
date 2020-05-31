@@ -25,7 +25,6 @@ class SetNick extends Command {
       ],
       category: 'mod',
       requirements: {
-        argsRequired: true,
         clientPermissions: ['MANAGE_NICKNAMES'],
         guildOnly: true,
         permissions: ['MANAGE_NICKNAMES'],

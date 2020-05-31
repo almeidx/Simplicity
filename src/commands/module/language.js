@@ -9,7 +9,6 @@ class Language extends Command {
       category: 'module',
       cooldown: 5000,
       requirements: {
-        argsRequired: true,
         permissions: ['MANAGE_GUILD'],
         requireDatabase: true,
       },

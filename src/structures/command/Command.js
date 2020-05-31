@@ -23,7 +23,6 @@ class Command {
     this.category = options.category;
     this.aliases = options.aliases || [];
     this.requirements = CommandRequirements.parseOptions(options.requirements);
-    this.argRequireResponse = options.argRequiredResponse;
     this.subcommands = options.subcommands || [];
     this.cooldown = options.cooldown || COMMAND_COOLDOWN || 10000;
     this.usersCooldown = this.cooldown > 0 ? new CommandCooldown(this.cooldown) : null;
