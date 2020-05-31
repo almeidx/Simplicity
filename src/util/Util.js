@@ -87,8 +87,7 @@ class Util {
    * @param {string} text The text to be made proper cased.
    * @returns {string} The proper cased text.
    */
-  static fixText(text) {
-    if (typeof text !== 'string') return '???';
+  static capitalize(text) {
     return text[0].toUpperCase() + text.slice(1).toLowerCase();
   }
 

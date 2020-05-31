@@ -2,7 +2,7 @@
 
 const CommandError = require('@command/CommandError');
 const SimplicityEmbed = require('@discord/SimplicityEmbed');
-const { fixText, isEmpty } = require('@util/Util');
+const { capitalize, isEmpty } = require('@util/Util');
 /**
  * Contains various command utility methods.
  * @class CommandUtil
@@ -31,7 +31,7 @@ class CommandUtil {
 
     const embed = new SimplicityEmbed({ author: client.user, t })
       .setDescription(`$$commands:${command.name}.description`)
-      .setTitle(fixText(command.name), {}, false);
+      .setTitle(capitalize(command.name), {}, false);
 
     // Add arguments
     const usage = CommandUtil.getUsage({ command, prefix, t });
