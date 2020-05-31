@@ -77,7 +77,6 @@ class Command {
 
       if (!isEmpty(this.args)) {
         args = await CommandParameters.handleArguments(ctx, this.args);
-        console.log(args, this.args);
       }
 
       await this.run(ctx, ...args);
