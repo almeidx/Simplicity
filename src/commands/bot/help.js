@@ -24,12 +24,12 @@ class Help extends Command {
     if (!cmdName) {
       const embed = new SimplicityEmbed({ author, t }, { autoAuthor: false })
         .setAuthor(client.user)
-        .setDescription('commands:help.about', { name: client.user.username, prefix });
+        .setDescription('$$commands:help.about', { name: client.user.username, prefix });
       const userIsDev = verifyDev(author.id, client);
       categories.each((cmds, i) => {
         if (i === 'dev' && !userIsDev) return;
         return embed.addField(
-          `categories:${i}.name`,
+          `$$categories:${i}.name`,
           cmds
             .array()
             .filter((c) => Help.isDevCommand(c) ? userIsDev : true)
