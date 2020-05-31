@@ -58,7 +58,7 @@ class Command {
       }
 
       const [subcmd] = ctx.args;
-      const subcommand = subcmd && this.getSubCommand(subcmd.toLowerCase());
+      const subcommand = subcmd && this.findSubCommand(subcmd.toLowerCase());
       if (subcommand) return await this.runSubCommand(subcommand, ctx);
 
       if (this.requirements) {
@@ -93,7 +93,7 @@ class Command {
     else throw new CommandError(CommandCooldown.getMessage(cooldown, t), { notEmbed: true });
   }
 
-  getSubCommand(name) {
+  findSubCommand(name) {
     return this.subcommands.find((i) => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)));
   }
 
