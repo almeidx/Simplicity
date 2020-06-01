@@ -120,10 +120,9 @@ class ServerInfo extends Command {
 }
 
 function createEmbedRoles(roles, guild, embedOptions = {}) {
-  const guildIconURL = guild.iconURL();
   const clean = (a) => a.slice(0, 25).join('\n') + (a.length > 25 ? '\n...' : '');
   return new SimplicityEmbed(embedOptions)
-    .setAuthor('$$commands:serverinfo.roles', guildIconURL, '', { totalRoles: roles.length })
+    .setAuthor('$$commands:serverinfo.roles', guild, '', { totalRoles: roles.length })
     .setDescription(clean(roles))
     .setColor(COLOR);
 }
