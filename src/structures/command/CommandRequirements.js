@@ -52,7 +52,7 @@ class CommandRequirements {
         throw new CommandError(t(ERROR_RESPONSES.clientPermissions, {
           count: clientPerms.length,
           onUsage: true,
-          permissions: PermissionUtil.normalize(clientPerms).join(', '),
+          permissions: PermissionUtil.normalize(clientPerms, t).join(', '),
         }));
       }
 
@@ -61,7 +61,7 @@ class CommandRequirements {
         throw new CommandError(t(ERROR_RESPONSES.userMissingPermission, {
           count: memberPerms.length,
           onUsage: true,
-          permissions: PermissionUtil.normalize(memberPerms).join(', '),
+          permissions: PermissionUtil.normalize(memberPerms, t).join(', '),
         }));
       }
     }
