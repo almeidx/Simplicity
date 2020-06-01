@@ -1,7 +1,6 @@
 'use strict';
 
 const { Command, SimplicityEmbed } = require('@structures');
-const { getServerIconURL } = require('@util/Util');
 
 class ServerIcon extends Command {
   constructor(client) {
@@ -12,11 +11,11 @@ class ServerIcon extends Command {
   }
 
   run({ author, guild, send, t }) {
-    const guildIconURL = getServerIconURL(guild);
-
     const embed = new SimplicityEmbed({ author, t })
-      .setDescription('$$commands:servericon:text', { guildIconURL })
-      .setImage(guildIconURL);
+      .setDescription('$$commands:servericon.text');
+
+    embed.setImage(guild);
+
     return send(embed);
   }
 }

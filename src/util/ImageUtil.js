@@ -14,7 +14,7 @@ class ImageUtil {
     throw new Error(`The ${this.constructor.name} class may not be instantiated`);
   }
 
-  static renderGuildDefultIcon(acronym) {
+  static renderGuildIcon(acronym) {
     const width = 300;
     const height = 300;
     const canvas = createCanvas(width, height);

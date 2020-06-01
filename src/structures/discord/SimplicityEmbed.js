@@ -1,11 +1,11 @@
 'use strict';
 
+const crypto = require('crypto');
 const CommandContext = require('@command/CommandContext');
 const { COLOR } = require('@data/config');
+const ImageUtil = require('@util/ImageUtil');
 const TextUtil = require('@util/TextUtil');
-const { getServerIconURL } = require('@util/Util');
-const { Guild, GuildMember, Message, MessageEmbed, User } = require('discord.js');
-
+const { Guild, GuildMember, Message, MessageAttachment, MessageEmbed, User } = require('discord.js');
 const types = { error: 'RED', normal: COLOR, warn: 0xfdfd96 };
 
 /**
@@ -30,7 +30,7 @@ function resolveImage(resolvable) {
   const o = { dynamic: true, size: 4096 };
   if (resolvable instanceof User) return resolvable.displayAvatarURL(o);
   if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o);
-  if (resolvable instanceof Guild) return getServerIconURL(resolvable);
+  if (resolvable instanceof Guild) return resolvable.iconURL();
 }
 
 /**
@@ -54,6 +54,20 @@ class SimplicityEmbed extends MessageEmbed {
     this.optionsText = {};
     this.textImages = [];
     this._setupEmbed(embedResolvable, options);
+  }
+
+  resolveImage(resolvable) {
+    const o = { dynamic: true, size: 4096 };
+    if (resolvable instanceof User) return resolvable.displayAvatarURL(o);
+    if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o);
+    if (resolvable instanceof Guild) {
+      const icon = resolvable.iconURL();
+      if (icon) return icon;
+      const defaulIcon = ImageUtil.renderGuildIcon(resolvable.nameAcronym);
+      const name = `${crypto.randomBytes(20).toString('hex')}.png`;
+      super.attachFiles([new MessageAttachment(defaulIcon, name)]);
+      return `attachment://${name}`;
+    }
   }
 
   /**
@@ -160,8 +174,8 @@ class SimplicityEmbed extends MessageEmbed {
    */
   setFooter(text = '???', iconURL = null, options = {}) {
     const footerTextName = resolveName(text);
-    const footerTextIcon = resolveImage(text);
-    const footerIcon = resolveImage(iconURL);
+    const footerTextIcon = this.resolveImage(text);
+    const footerIcon = this.resolveImage(iconURL);
 
     if (footerTextName) text = footerTextName;
     if (footerTextIcon && !iconURL) iconURL = footerTextIcon;
@@ -241,7 +255,7 @@ class SimplicityEmbed extends MessageEmbed {
    * @returns {SimplicityEmbed} The embed.
    */
   setThumbnail(url) {
-    const thumbnail = resolveImage(url) || url;
+    const thumbnail = this.resolveImage(url) || url;
     return super.setThumbnail(thumbnail);
   }
 
@@ -251,7 +265,7 @@ class SimplicityEmbed extends MessageEmbed {
    * @returns {SimplicityEmbed} The embed.
    */
   setImage(url) {
-    const image = resolveImage(url) || url;
+    const image = this.resolveImage(url) || url;
     return super.setImage(image);
   }
 
