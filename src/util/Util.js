@@ -3,6 +3,7 @@
 const { DEVELOPER_IDS } = require('@data/config');
 const moment = require('moment');
 const { REGEX: { REGEX } } = require('./Constants');
+const ImageUtil = require('./ImageUtil');
 require('moment-duration-format');
 
 /**
@@ -45,7 +46,7 @@ class Util {
   static getServerIconURL(guild) {
     const icon = guild.iconURL({ dynamic: true, size: 4096 });
     if (icon) return icon;
-    else return `https://guild-default-icon.herokuapp.com/${encodeURIComponent(guild.nameAcronym)}`;
+    return ImageUtil.renderGuildDefultIcon(guild.nameAcronym);
   }
 
   /**

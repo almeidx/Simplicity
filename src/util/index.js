@@ -6,7 +6,7 @@ module.exports = {
   EmojiRegex: require('./EmojiRegex'),
   EmojiUtil: require('./EmojiUtil'),
   FileUtil: require('./FileUtil'),
-  GuildIconGenerator: require('./Canvas/GuildIconGenerator'),
+  ImageUtil: require('./ImageUtil'),
   LogUtil: require('./LogUtil'),
   Logger: require('./Logger'),
   MessageUtil: require('./MessageUtil'),
