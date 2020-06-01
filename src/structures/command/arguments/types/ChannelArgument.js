@@ -2,29 +2,42 @@
 
 const CommandError = require('../../CommandError');
 const Argument = require('./Argument');
-
 const MENTION_REGEX = /(<#)?([0-9]{16,18})>?$/;
 const defVal = (o, k, d) => typeof o[k] === 'undefined' ? d : o[k];
 
 const searchOn = (local, id, arg) =>
-  local.channels.cache.get(id) || local.channels.cache.find((c) => c.name.toLowerCase().includes(arg.toLowerCase()))
+  local.channels.cache.get(id) ||
+  local.channels.cache.find((c) => c.name.toLowerCase().includes(arg.toLowerCase()))
 ;
+
+const ChannelTypes = {
+  category: 'category',
+  dm: 'dm',
+  news: 'news',
+  text: 'text',
+  voice: 'voice',
+};
 
 class ChannelArgument extends Argument {
   static parseOptions(options = {}) {
-    return {
+    const opts = {
       ...super.parseOptions(options),
       acceptCategory: defVal(options, 'acceptCategory', false),
-      acceptDM: defVal(options, 'acceptDM', false),
-      acceptGroup: defVal(options, 'acceptGroup', false),
-      acceptNews: defVal(options, 'acceptNews', false),
-      acceptStore: defVal(options, 'acceptStore', false),
-      acceptText: defVal(options, 'acceptText', false),
-      acceptVoice: defVal(options, 'acceptVoice', false),
       canBeHiddenBot: defVal(options, 'canBeHiddenBot', false),
       canBeHiddenUser: defVal(options, 'canBeHiddenUser', false),
       onlySameGuild: defVal(options, 'onlySameGuild', true),
+      types: options.types || [ChannelTypes.text],
     };
+
+    if (typeof opts.types === 'string') {
+      opts.types = [opts.types];
+    }
+
+    if (!opts.types.every((p) => ChannelTypes[p])) {
+      throw new Error('Channel type invalid');
+    }
+
+    return opts;
   }
 
   static parse(arg, { t, client, guild, member }) {
@@ -36,19 +49,14 @@ class ChannelArgument extends Argument {
     let channel = searchOn(guild, id, arg);
     if (!this.onlySameGuild) channel = channel || searchOn(client, id, arg);
 
-    const check = (option, type) => {
-      if (!option && channel.type === type) throw new CommandError(t('errors:invalidChannelType', { type }));
-    };
-
     if (!channel) throw new CommandError(t('errors:invalidChannel'));
 
-    check(this.acceptDM, 'dm');
-    check(this.acceptGroup, 'group');
-    check(this.acceptText, 'text');
-    check(this.acceptVoice, 'voice');
-    check(this.acceptCategory, 'category');
-    check(this.acceptNews, 'news');
-    check(this.acceptStore, 'store');
+    for (const i in ChannelTypes) {
+      const type = ChannelTypes[i];
+      if (!this.types.includes(type) && channel.type === type) {
+        throw new CommandError(t('errors:invalidChannel'));
+      }
+    }
 
     const hiddenChannel = channel.permissionsFor(member).has('VIEW_CHANNEL');
     if (!this.canBeHiddenUser && !hiddenChannel) {

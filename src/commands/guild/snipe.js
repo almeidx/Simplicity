@@ -13,7 +13,6 @@ class SnipeCommand extends Command {
     super(client, 'snipe', {
       args: [
         {
-          acceptText: true,
           canBeHiddenBot: false,
           canBeHiddenUser: false,
           required: false,

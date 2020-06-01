@@ -7,14 +7,12 @@ class Starboard extends Command {
     super(client, 'starboard', {
       args: [
         {
-          acceptText: true,
           required: false,
           type: 'channel',
         },
       ],
       category: 'module',
       cooldown: 5000,
-      name: 'starboard',
       requirements: {
         guildOnly: true,
         permissions: ['MANAGE_GUILD'],
