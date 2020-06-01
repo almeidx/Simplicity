@@ -3,10 +3,10 @@
 const { COMMAND_COOLDOWN } = require('@data/config');
 const { PermissionUtil: { verifyDev }, Util: { isEmpty } } = require('@util');
 const i18next = require('i18next');
-const { CommandCooldown, CooldownTypes } = require('./CommandCooldown');
 const CommandError = require('./CommandError');
 const CommandRequirements = require('./CommandRequirements');
 const CommandParameters = require('./arguments/CommandArguments');
+const { CommandCooldown, CooldownTypes } = require('./cooldown/CommandCooldown');
 const defaultFlags = require('./defaultFlags');
 
 class Command {
