@@ -1,19 +1,13 @@
 'use strict';
 
+const CommandCollection = require('@command/CommandCollection');
 const { Loader } = require('@structures');
 const { requireDirectory } = require('@util/FileUtil');
-const { Collection } = require('discord.js');
-
-class CommandStore extends Collection {
-  fetch(str) {
-    return this.find((c) => c.name.toLowerCase() === str.toLowerCase() || c.aliases.includes(str.toLowerCase()));
-  }
-}
 
 class CommandLoader extends Loader {
   constructor(client) {
     super(client, true);
-    this.commands = new CommandStore();
+    this.commands = new CommandCollection();
   }
 
   async load() {
@@ -23,8 +17,7 @@ class CommandLoader extends Loader {
   }
 
   loadCommand(Command) {
-    const command = new Command(this.client);
-    this.commands.set(command.name, command);
+    this.commands.set(new Command(this.client));
   }
 }
 

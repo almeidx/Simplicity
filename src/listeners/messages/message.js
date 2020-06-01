@@ -40,7 +40,7 @@ class MessageListener extends SimplicityListener {
     if (usedPrefix) {
       const args = content.slice(usedPrefix.length).trim().split(/ +/g);
       const commandName = args.shift().toLowerCase();
-      const command = client.commands.fetch(commandName);
+      const command = client.commands.find(commandName);
 
       if (command && command.name !== 'disable' && commandsDisabled) return author.send(t('common:commandsBlocked'));
       if (mentioned && !command) {
