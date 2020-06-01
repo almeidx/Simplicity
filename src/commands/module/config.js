@@ -17,15 +17,13 @@ class Config extends Command {
         permissions: ['MANAGE_GUILD'],
         requireDatabase: true,
       },
-      subcommands: [
-        new PrefixCommand(client, { aliases: ['p', 'setp', 'setprefix'] }),
-        new LanguageCommand(client, { aliases: ['l', 'lang', 'setlang', 'setlanguage', 'setl'] }),
-        new StarboardCommand(client, { aliases: ['star', 's', 'setstarboard'] }),
-        new DisableCommand(client, {
-          aliases: ['disablecommands', 'disable-command', 'disablecmd', 'cmddisable', 'cmddisable'],
-          name: 'disablecommand',
-        }),
-      ],
+    });
+    this.registerSubCommand(PrefixCommand, { aliases: ['p', 'setp', 'setprefix'] });
+    this.registerSubCommand(LanguageCommand, { aliases: ['l', 'lang', 'setlang', 'setlanguage', 'setl'] });
+    this.registerSubCommand(StarboardCommand, { aliases: ['star', 's', 'setstarboard'] });
+    this.registerSubCommand(DisableCommand, {
+      aliases: ['disablecommands', 'disable-command', 'disablecmd', 'cmddisable'],
+      name: 'disablecommand',
     });
   }
 

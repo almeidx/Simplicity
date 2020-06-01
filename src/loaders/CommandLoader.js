@@ -17,7 +17,7 @@ class CommandLoader extends Loader {
   }
 
   loadCommand(Command) {
-    this.commands.set(new Command(this.client));
+    this.commands.register(new Command(this.client));
   }
 }
 

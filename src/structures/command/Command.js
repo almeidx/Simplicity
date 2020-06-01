@@ -2,7 +2,9 @@
 
 const { COMMAND_COOLDOWN } = require('@data/config');
 const { PermissionUtil: { verifyDev }, Util: { isEmpty } } = require('@util');
+const { Client } = require('discord.js');
 const i18next = require('i18next');
+const CommandCollection = require('./CommandCollection');
 const CommandError = require('./CommandError');
 const CommandRequirements = require('./CommandRequirements');
 const CommandParameters = require('./arguments/CommandArguments');
@@ -11,25 +13,37 @@ const defaultFlags = require('./defaultFlags');
 
 class Command {
   constructor(client, name, options = {}) {
+    if (!client || !(client instanceof Client)) {
+      throw new Error(`${this.constructor.name} doesn't have client`);
+    }
+
+    if (!name) {
+      throw new Error(`${this.constructor.name} doesn't have name`);
+    }
+
     this.client = client;
-    this.setup(name, options);
+    this.name = name;
+    this.subcommands = new CommandCollection();
+    this.setOptions(options);
   }
 
-  setup(name, options) {
-    if (!name) throw new Error(`${this.constructor.name} doesn't have name`);
-    if (!options.category) throw new Error(`${this.constructor.name} doesn't have category`);
+  setOptions(options = {}) {
+    if (!options.category && !this.category) {
+      throw new Error(`${this.constructor.name} doesn't have category`);
+    }
 
-    this.name = name;
     this.category = options.category;
-    this.aliases = options.aliases || [];
-    this.requirements = CommandRequirements.parseOptions(options.requirements);
-    this.subcommands = options.subcommands || [];
+    this.aliases = options.aliases || this.aliases || [];
+    this.requirements = CommandRequirements.parseOptions({
+      ...(this.requirements ? this.requirements : {}),
+      ...options.requirements,
+    });
     this.cooldown = options.cooldown || COMMAND_COOLDOWN || 10000;
     this.usersCooldown = this.cooldown > 0 ? new CommandCooldown(this.cooldown) : null;
 
-    this.args = CommandParameters.parseOptions(options.args || []);
+    this.args = CommandParameters.parseOptions(options.args || this.args || []);
 
-    const flags = options.flags || [];
+    const flags = options.flags || this.flags || [];
     flags.push(...defaultFlags);
     this.flags = CommandParameters.parseOptions(flags);
 
@@ -94,7 +108,13 @@ class Command {
   }
 
   findSubCommand(name) {
-    return this.subcommands.find((i) => i.name === name || (Array.isArray(i.aliases) && i.aliases.includes(name)));
+    return this.subcommands.find(name.toLowerCase());
+  }
+
+  registerSubCommand(SubCommand, customOptions = {}) {
+    const subcommand = new SubCommand(this.client);
+    subcommand.setOptions(customOptions);
+    this.subcommands.register(subcommand);
   }
 
   runSubCommand(subcommand, context) {

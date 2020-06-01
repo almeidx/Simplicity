@@ -12,7 +12,7 @@ class CommandCollection extends Collection {
     return this.get(this.aliases.get(str.toLowerCase()));
   }
 
-  set(command) {
+  register(command) {
     super.set(command.name, command);
     this.aliases.set(command.name, command.name);
     for (let alias of command.aliases) {
