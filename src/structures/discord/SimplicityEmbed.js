@@ -9,31 +9,6 @@ const { Guild, GuildMember, Message, MessageAttachment, MessageEmbed, User } = r
 const types = { error: 'RED', normal: COLOR, warn: 0xfdfd96 };
 
 /**
- * Resolves a name.
- * @param {Guild|GuildMember|User} resolvable The resolvable to be resolved.
- * @returns {string|void} The resolved name.
- * @private
- */
-function resolveName(resolvable) {
-  if (resolvable instanceof User) return resolvable.tag;
-  if (resolvable instanceof GuildMember) return resolvable.user.tag;
-  if (resolvable instanceof Guild) return resolvable.name;
-}
-
-/**
- * Resolves an icon.
- * @param {Guild|GuildMember|User} resolvable The resolvable to be resolved.
- * @returns {string|void} The resolved image url.
- * @private
- */
-function resolveImage(resolvable) {
-  const o = { dynamic: true, size: 4096 };
-  if (resolvable instanceof User) return resolvable.displayAvatarURL(o);
-  if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o);
-  if (resolvable instanceof Guild) return resolvable.iconURL();
-}
-
-/**
  * Main SimplicityEmbed class.
  * @class SimplicityEmbed
  * @extends {MessageEmbed}
@@ -56,12 +31,29 @@ class SimplicityEmbed extends MessageEmbed {
     this._setupEmbed(embedResolvable, options);
   }
 
+  /**
+ * Resolves a name.
+ * @param {Guild|GuildMember|User} resolvable The resolvable to be resolved.
+ * @returns {string|void} The resolved name.
+ * @private
+ */
+  static resolveName(resolvable) {
+    if (resolvable instanceof User) return resolvable.tag;
+    if (resolvable instanceof GuildMember) return resolvable.user.tag;
+    if (resolvable instanceof Guild) return resolvable.name;
+  }
+
+  /**
+ * Resolves an icon.
+ * @param {Guild|GuildMember|User} resolvable The resolvable to be resolved.
+ * @returns {string|void} The resolved image url.
+ */
   resolveImage(resolvable) {
     const o = { dynamic: true, size: 4096 };
     if (resolvable instanceof User) return resolvable.displayAvatarURL(o);
     if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o);
     if (resolvable instanceof Guild) {
-      const icon = resolvable.iconURL();
+      const icon = resolvable.iconURL(o);
       if (icon) return icon;
       const defaulIcon = ImageUtil.renderGuildIcon(resolvable.nameAcronym);
       const name = `${crypto.randomBytes(20).toString('hex')}.png`;
@@ -153,9 +145,9 @@ class SimplicityEmbed extends MessageEmbed {
    * @returns {SimplicityEmbed} The embed.
    */
   setAuthor(name = '???', iconURL = null, url = null, options = {}) {
-    const authorName = resolveName(name);
-    const authorNameIcon = resolveImage(name);
-    const authorIcon = resolveImage(iconURL);
+    const authorName = SimplicityEmbed.resolveName(name);
+    const authorNameIcon = this.resolveImage(name);
+    const authorIcon = this.resolveImage(iconURL);
 
     if (authorName) name = authorName;
     if (authorNameIcon && !iconURL) iconURL = authorNameIcon;
@@ -173,7 +165,7 @@ class SimplicityEmbed extends MessageEmbed {
    * @returns {SimplicityEmbed} The embed.
    */
   setFooter(text = '???', iconURL = null, options = {}) {
-    const footerTextName = resolveName(text);
+    const footerTextName = SimplicityEmbed.resolveName(text);
     const footerTextIcon = this.resolveImage(text);
     const footerIcon = this.resolveImage(iconURL);
 

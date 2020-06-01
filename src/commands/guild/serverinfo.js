@@ -44,11 +44,13 @@ class ServerInfo extends Command {
     const boosters = guild.premiumSubscriptionCount;
 
     const embed = new SimplicityEmbed({ author, guild, t })
-      .setThumbnail(guild)
       .addField('» $$commands:serverinfo.name', guild.name, true)
       .addField('» $$commands:serverinfo.id', guild.id, true)
       .addField('» $$commands:serverinfo.owner', owner, true)
       .addField('» $$commands:serverinfo.emotes', emojis, true);
+
+    const guildIcon = embed.resolveImage(guild);
+    embed.setThumbnail(guildIcon);
 
     if (roles.length <= 5) embed.addField('» $$commands:serverinfo.roles', rolesClean.join(', '), true, { totalRoles });
     else embed.addField('» $$commands:serverinfo.totalRoles', totalRoles, true);
@@ -92,7 +94,7 @@ class ServerInfo extends Command {
 
     if (permissions.has('ADD_REACTIONS') && roleRestriction) {
       const role = {
-        embed: createEmbedRoles(roles, guild, { author, t }),
+        embed: createEmbedRoles(roles, guildIcon, { author, t }),
         emoji: emoji('ROLES', { id: true }),
       };
       await message.react(role.emoji);
@@ -119,10 +121,11 @@ class ServerInfo extends Command {
   }
 }
 
-function createEmbedRoles(roles, guild, embedOptions = {}) {
+function createEmbedRoles(roles, guildIcon, embedOptions = {}) {
   const clean = (a) => a.slice(0, 25).join('\n') + (a.length > 25 ? '\n...' : '');
   return new SimplicityEmbed(embedOptions)
-    .setAuthor('$$commands:serverinfo.roles', guild, '', { totalRoles: roles.length })
+    .setThumbnail(guildIcon)
+    .setAuthor('$$commands:serverinfo.roles', null, '', { totalRoles: roles.length })
     .setDescription(clean(roles))
     .setColor(COLOR);
 }
