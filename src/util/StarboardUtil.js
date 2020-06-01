@@ -47,7 +47,7 @@ class StarboardUtil {
       );
       // Delete message if users reaction = 0
       if (reactionsSize < 3) {
-        if (found) return found.delete();
+        if (found && !found.deleted) return found.delete();
         else return;
       }
 

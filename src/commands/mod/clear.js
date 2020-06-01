@@ -48,7 +48,7 @@ class Clear extends Command {
   }
 
   async run({ author, channel, client, flags, message, send, t }, limit, ...users) {
-    await message.delete();
+    if (!message.deleted) await message.delete();
     const { uppercase, bot, role } = flags;
     const res = await channel.messages.fetch({ limit });
 
@@ -64,7 +64,7 @@ class Clear extends Command {
     try {
       await channel.bulkDelete(filtered, true);
       const msg = await send(t('commands:clear.deleted', { amount: filtered.length, author: author.tag }));
-      msg.delete({ timeout: 5000 });
+      if (!msg.deleted) msg.delete({ timeout: 5000 });
     } catch (error) {
       client.logger.error(error);
     }
