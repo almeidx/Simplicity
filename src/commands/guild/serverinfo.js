@@ -63,14 +63,14 @@ class ServerInfo extends Command {
           inline: true,
           name: '» $$commands:serverinfo.members',
           options: { totalMembers },
-          value: 'commands:serverinfo.onlineOffline',
+          value: '$$commands:serverinfo.onlineOffline',
           valueOptions: { offlineMembers, onlineMembers },
         },
         {
           inline: true,
           name: '» $$commands:serverinfo.channels',
           options: { totalChannels },
-          value: 'commands:serverinfo.textVoice',
+          value: '$$commands:serverinfo.textVoice',
           valueOptions: { textChannels, voiceChannels },
         },
         {
