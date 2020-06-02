@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
@@ -11,7 +11,8 @@
     "paths": {
       "@data": ["data/*"],
       "@root": ["."],
-      "@src": ["src/*"]
+      "@src": ["src/*"],
+      "@util": ["src/util/*"]
     },
     "resolveJsonModule": true,
     "rootDir": "src",

@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "bufferutil": "^4.0.1",
+    "canvas": "^2.6.1",
     "cross-env": "^7.0.2",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
@@ -47,9 +48,10 @@
     "url": "https://github.com/Simplicity/Simplicity.git"
   },
   "_moduleAliases": {
+    "@data": "data",
     "@root": ".",
     "@src": "src",
-    "@data": "data"
+    "@util": "src/util"
   },
   "husky": {
     "hooks": {
