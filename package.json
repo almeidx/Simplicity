@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "author": "Simplicity Team",
   "contributors": [
-    "Almeida <almeida@pm.me> (https://almeeida.github.io)",
+    "Almeida <almeida@pm.me> (almeida.js.org)",
     "Tsugami"
   ],
-  "description": "Multiporpose Discord bot.",
-  "main": "dist/src/index.js",
+  "description": "Multipurpose Discord bot.",
+  "main": "dist/index.js",
   "scripts": {
     "start": "tsc && cross-env NODE_ENV=production node .",
     "dev": "cross-env NODE_ENV=development ts-node-dev . --respawn --transpileOnly --watch src,.env",
