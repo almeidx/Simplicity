@@ -1,0 +1,16 @@
+# Dependency files/directories
+node_modules/
+
+# IDE configuration directories
+.vscode/
+.idea/
+.editorconfig
+
+# dotenv environment variables file
+.env
+
+# Log files
+yarn-error.log
+
+# Build directories
+dist/
