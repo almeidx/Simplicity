@@ -2,6 +2,7 @@ env:
   es6: true
   node: true
 extends:
+  - plugin:@typescript-eslint/recommended
   - airbnb-base
 globals:
   Atomics: readonly
@@ -12,12 +13,11 @@ parserOptions:
   sourceType: module
 plugins:
   - '@typescript-eslint'
-rules: {}
 ignorePatterns:
   - dist/*
+  - nod_modules/*
 settings:
   import/resolver:
     node:
       extensions:
-        - .js
         - .ts
