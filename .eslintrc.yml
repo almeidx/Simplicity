@@ -5,6 +5,7 @@ extends:
   - airbnb-base
   - plugin:@typescript-eslint/recommended
   - prettier/@typescript-eslint
+  - import
   # - eslint:recommended
   # - plugin:import/errors
   # - plugin:import/warnings
