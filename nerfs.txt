@@ -2,3 +2,5 @@ Arquivos que não estão prontos pq dependem de arquivos futuros:
 
 - Logger#logCommand
 - LogUtil#getChannel
+- CommandUtil
+- StarboardUtil

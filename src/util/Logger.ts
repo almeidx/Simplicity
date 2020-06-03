@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -42,7 +43,7 @@ export default class Logger {
    * @returns {void}
    * @private
    */
-  static createLog(color: Colors, text: string, consoleFn: (...args: any) => void): void {
+  static createLog(color: Colors, text: any, consoleFn: (...args: any) => void): void {
     return consoleFn(`${Logger.timestamp} ${setColor(color, text)}`);
   }
 
@@ -50,7 +51,7 @@ export default class Logger {
    * Logs normally.
    * @param text The text to log
    */
-  static log(text: string): void {
+  static log(text: any): void {
     return Logger.createLog(Colors.FgGreen, text, console.log);
   }
 
@@ -58,7 +59,7 @@ export default class Logger {
    * Logs an error.
    * @param text The text to log
    */
-  static error(text: string): void {
+  static error(text: any): void {
     return Logger.createLog(Colors.FgRed, text, console.error);
   }
 
@@ -66,7 +67,7 @@ export default class Logger {
    * Logs a warn.
    * @param text The text to log
    */
-  static warn(text: string): void {
+  static warn(text: any): void {
     return Logger.createLog(Colors.FgYellow, text, console.warn);
   }
 

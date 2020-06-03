@@ -25,6 +25,8 @@ ignorePatterns:
 rules:
   no-restricted-syntax: ['off']
   import/extensions: ['error', 'never']
+  lines-between-class-members: ["error", "always", { exceptAfterSingleLine: true }]
+  class-methods-use-this: ['off']
 settings:
   import/resolver:
     node:
