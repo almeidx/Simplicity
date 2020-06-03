@@ -1,7 +1,14 @@
 import { MessageEmbed, Permissions } from 'discord.js';
 import { TFunction, TOptions } from 'i18next';
+import { SimplicityEmbed } from '../structures';
 
-type GetEmojiFunction = (e: string) => string | null
+export type GetEmojiFunction = (e: string) => string | null
+export interface ParseTextOptions {
+  emoji?: GetEmojiFunction,
+  t?: TFunction,
+  embed?: MessageEmbed | SimplicityEmbed,
+  tOptions?: TOptions
+}
 
 /**
  * Contains various text related utility methods.
@@ -14,12 +21,7 @@ export default class TextUtil {
    * @param {*} [options={}] The options.
    * @returns {string} The resolved string.
   //  */
-  static parse(text: string, options: {
-    emoji?: GetEmojiFunction,
-    t?: TFunction,
-    embed?: MessageEmbed,
-    tOptions?: TOptions
-  } = {}): string {
+  static parse(text: string, options: ParseTextOptions = {}): string {
     const {
       emoji, t, embed, tOptions = {},
     } = options;
@@ -41,10 +43,10 @@ export default class TextUtil {
       const keys = k.slice(1).split('.');
       let obj = embed;
       for (const key of keys) {
-        if (!obj[key]) {
+        if (!Object.hasOwnProperty.call(obj, key)) {
           return String(obj);
         }
-        obj = obj[key];
+        obj = Object.getPrototypeOf.call(obj, key);
       }
       return String(obj);
     });
