@@ -1,0 +1,12 @@
+Arquivos que não estão prontos pq dependem de arquivos futuros:
+
+- Logger#logCommand
+- LogUtil#getChannel
+- CommandUtil
+- StarboardUtil
+
+
+Coisas modificadas (NÃO REFATORADAS)
+- Removido SimplicityClient#categories (quero colocar direto no ComandCollection)
+- Removido SimplicityClient#logger (melhor chama direto no comando)
+- Remove SimplicityClient#deletedMessages (era usado no snipe pelo oq eu lembro, dps add dnv)

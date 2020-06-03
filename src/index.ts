@@ -1,3 +1,2 @@
-import { config } from 'dotenv';
-
-config();
+import 'dotenv/config';
+import 'tsconfig-paths/register';
