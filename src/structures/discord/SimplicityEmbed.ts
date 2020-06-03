@@ -134,8 +134,8 @@ export default class SimplicityEmbed extends MessageEmbed {
    * Sets the SimplicityEmbed's author.
    * @param name= The name of the author.
    * @param iconURL The resolvable to resolve the icon from.
-   * @param {GuildMember|User|string} [url=null] The resolvable to resolve the url from.
-   * @param {Object} [options={}] The options for the author.
+   * @param url The resolvable to resolve the url from.
+   * @param options The options for the author.
    */
   setAuthor(
     name: EmbedInput,

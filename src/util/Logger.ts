@@ -27,9 +27,7 @@ const setColor = (color: Colors, text: string) => `${color + text + resetColor}`
 export default class Logger {
   /**
    * Gets the current timestamp.
-   * @returns {string} The current timestamp formatted.
-   * @private
-   * @readonly
+   * @returns The current timestamp formatted.
    */
   static get timestamp(): string {
     return setColor(Colors.FgMagenta, moment().format('DD/MM/YYYY HH:mm:ss'));
@@ -40,8 +38,6 @@ export default class Logger {
    * @param color The color of the log.
    * @param text The text to log.
    * @param type The type of log.
-   * @returns {void}
-   * @private
    */
   static createLog(color: Colors, text: any, consoleFn: (...args: any) => void): void {
     return consoleFn(`${Logger.timestamp} ${setColor(color, text)}`);

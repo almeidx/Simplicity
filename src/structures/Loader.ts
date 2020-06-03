@@ -20,7 +20,6 @@ export default abstract class Loader {
 
   /**
    * Loads the listener.
-   * @returns {void}
    */
   abstract load(): void;
 }
