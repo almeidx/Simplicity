@@ -11,7 +11,7 @@ import Logger from '../util/Logger';
 const readdir = promisify(fs.readdir);
 const pathFolder = path.resolve('src', 'locales');
 
-export default class LanguagesLoader extends Loader {
+class LanguagesLoader extends Loader {
   constructor(client: Client) {
     super(client, true);
   }
@@ -34,5 +34,4 @@ export default class LanguagesLoader extends Loader {
     return !!connected;
   }
 }
-
-module.exports = LanguagesLoader;
+export default LanguagesLoader;

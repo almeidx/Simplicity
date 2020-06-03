@@ -11,16 +11,15 @@ export interface ParseTextOptions {
 }
 
 /**
- * Contains various text related utility methods.
- * @class TextUtil
+ * Contains various text related utility methods
  */
 export default class TextUtil {
   /**
-   * Resolves emotes, text and translations on strings.
-   * @param text The text to be resolved.
-   * @param options The options.
-   * @returns The resolved string.
-  //  */
+   * Resolves emotes, text and translations on strings
+   * @param text The text to be resolved
+   * @param options The options
+   * @returns The resolved string
+  */
   static parse(text: string, options: ParseTextOptions = {}): string {
     const {
       emoji, t, embed, tOptions = {},
@@ -57,11 +56,11 @@ export default class TextUtil {
   }
 
   /**
-   * Parses an image from a string.
-   * @param text The text.
-   * @param imageURL The image url.
-   * @param permissions The permissions of the client.
-   * @returns The image url.
+   * Parses an image from a string
+   * @param text The text
+   * @param imageURL The image url
+   * @param permissions The permissions of the client
+   * @returns The image url
    */
   static parseImage(text: string, imageURL: string, permissions: Permissions): string {
     const arrCount: string[] = [];

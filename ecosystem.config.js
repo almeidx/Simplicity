@@ -4,6 +4,6 @@ module.exports = {
     env: { NODE_ENV: 'production' },
     instances: 1,
     name: 'simplicity',
-    script: 'src/index.js',
+    script: 'dist/index.js',
   }],
 };

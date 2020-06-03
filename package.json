@@ -11,7 +11,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc --build tsconfig.json",
-    "start": "tsc && cross-env NODE_ENV=production node .",
+    "start": "yarn build && cross-env NODE_ENV=production node .",
     "dev": "cross-env NODE_ENV=development ts-node-dev . --respawn --transpileOnly --watch src,.env",
     "lint": "eslint src --ext ts",
     "lint:fix": "eslint src --fix --ext ts"

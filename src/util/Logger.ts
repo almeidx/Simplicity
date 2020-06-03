@@ -21,23 +21,22 @@ const resetColor = '\x1b[0m';
 const setColor = (color: Colors, message: string) => `${color + message + resetColor}`;
 
 /**
- * Contains various logger utility methods.
- * @class Logger
+ * Contains various logger utility methods
  */
 export default class Logger {
   /**
-   * Gets the current timestamp.
-   * @returns The current timestamp formatted.
+   * Gets the current timestamp
+   * @returns The current timestamp formatted
    */
   static get timestamp(): string {
     return setColor(Colors.FgMagenta, moment().format('DD/MM/YYYY HH:mm:ss'));
   }
 
   /**
-   * Logs to console.
-   * @param color The color of the log.
-   * @param message The message to log.
-   * @param type The type of log.
+   * Logs to console
+   * @param color The color of the log
+   * @param message The message to log
+   * @param type The type of log
    */
   static createLog(
     consoleFn: (...args: any) => void,
@@ -49,7 +48,7 @@ export default class Logger {
   }
 
   /**
-   * Logs normally.
+   * Logs normally
    * @param message The message to log
    */
   static log(message: any, ...optionalParams: any[]): void {
@@ -57,7 +56,7 @@ export default class Logger {
   }
 
   /**
-   * Logs an error.
+   * Logs an error
    * @param message The message to log
    */
   static error(message: any, ...optionalParams: any[]): void {
@@ -65,7 +64,7 @@ export default class Logger {
   }
 
   /**
-   * Logs a warn.
+   * Logs a warn
    * @param message The message to log
    */
   static warn(message: any, ...optionalParams: any[]): void {

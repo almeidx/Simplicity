@@ -5,7 +5,6 @@ import Config from '../config';
 
 /**
  * Contains various permission related utility methods.
- * @class PermissionsUtil
  */
 export default class PermissionsUtil {
   /**

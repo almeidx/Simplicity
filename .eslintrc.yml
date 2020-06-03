@@ -3,30 +3,39 @@ env:
   node: true
 extends:
   - airbnb-base
-  - plugin:@typescript-eslint/recommended
-  - prettier/@typescript-eslint
   - import
-  - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - 'plugin:@typescript-eslint/recommended'
+  - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
+  - prettier/@typescript-eslint
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
+ignorePatterns:
+  - dist/*
+  - node_modules/*
 parser: '@typescript-eslint/parser'
 parserOptions:
-  project: './tsconfig.json'
   ecmaVersion: 11
+  project: ./tsconfig.json
   sourceType: module
 plugins:
   - '@typescript-eslint'
-ignorePatterns:
-  - dist/*
-  - nod_modules/*
 rules:
-  no-restricted-syntax: ['off']
-  import/extensions: ['error', 'never']
-  lines-between-class-members: ["error", "always", { exceptAfterSingleLine: true }]
-  class-methods-use-this: ['off']
-  import/no-cycle: ['off']
-  '@typescript-eslint/no-unsafe-assignment': ['off']
+  '@typescript-eslint/no-unsafe-assignment':
+    - off
+  class-methods-use-this:
+    - off
+  import/extensions:
+    - error
+    - never
+  import/no-cycle:
+    - off
+  lines-between-class-members:
+    - error
+    - always
+    - exceptAfterSingleLine: true
+  no-restricted-syntax:
+    - off
 settings:
   import/resolver:
     node:

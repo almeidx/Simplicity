@@ -10,7 +10,11 @@ type ContentResolvable = StringResolvable | MessageOptions | MessageAdditions;
  */
 class LogUtil {
   /**
-   * Gets a channel from the database.
+   * Gets a channel from the database
+   * @param client The Client
+   * @param guild The guild
+   * @param logName The name of the log
+   * @returns The channel
    */
   // static async getChannel(client: Client, guild: Guild, logName: string) {
   //   const guildData = client.database && await client.database.guilds.get(guild.id);
@@ -19,7 +23,10 @@ class LogUtil {
   // }
 
   /**
-   * Sends a message to a channel using the bot or using a webhook.
+   * Sends a message to a channel using the bot or using a webhook
+   * @param channel The channel where the message will be sent
+   * @param body The body of the message
+   * @returns The message that was sent to the channel
    */
   static async send(channel: TextBasedChannel, body: ContentResolvable): Promise<Message> {
     const me = channel.guild?.me;
@@ -31,7 +38,9 @@ class LogUtil {
   }
 
   /**
-   * Resolves a webhook.
+   * Resolves a webhook
+   * @param channel The channel
+   * @returns The webhook that was created/found
    */
   static async getWebhook(channel: TextBasedChannel): Promise<Webhook> {
     const name = `${channel.client.user?.username ?? 'Bot'} Logs` || 'Logs';

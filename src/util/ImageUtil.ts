@@ -1,7 +1,7 @@
 import { createCanvas } from 'canvas';
 
 /**
- * Contains various image utility methods.
+ * Contains various image utility methods
  */
 class ImageUtil {
   static renderGuildIcon(acronym: string): Buffer {

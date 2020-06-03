@@ -5,14 +5,12 @@ import Loaders from '../../loaders';
 import Logger from '../../util/Logger';
 
 /**
- * Main Client class.
- * @class SimplicityClient
- * @extends {Client}
+ * Main Client class
  */
-export default class SimplicityClient extends Client {
+class SimplicityClient extends Client {
   /**
-   * Loads all the loader files.
-   * @returns {void}
+   * Loads all the loader files
+   * @returns
    */
   async loadFiles(): Promise<void> {
     for (const loader of Loaders(this)) {
@@ -31,9 +29,9 @@ export default class SimplicityClient extends Client {
   }
 
   /**
-   * Login the Client.
-   * @param token The API Token.
-   * @returns The Client after being logged in.
+   * Login the Client
+   * @param token The API Token
+   * @returns The Client after being logged in
    */
   async login(token: string): Promise<string> {
     await this.loadFiles();
@@ -41,4 +39,4 @@ export default class SimplicityClient extends Client {
   }
 }
 
-module.exports = SimplicityClient;
+export default SimplicityClient;

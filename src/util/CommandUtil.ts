@@ -4,15 +4,14 @@
 // const PermissionUtil = require('@util/PermissionUtil');
 // const { isEmpty } = require('@util/Util');
 /**
- * Contains various command utility methods.
- * @class CommandUtil
+ * Contains various command utility methods
  */
 export default class CommandUtil {
   // /**
-  //  * Gets the usage of a specific command.
-  //  * @param {*} options The options for the usage.
-  //  * @param {boolean} [full=true] Wether to return the prefix, command and usage at once.
-  //  * @returns {string} The usage.
+  //  * Gets the usage of a specific command
+  //  * @paramoptions The options for the usage
+  //  * @param full Wether to return the prefix, command and usage at once
+  //  * @returns The usage
   //  */
   // static getUsage({ command, prefix, t }, full = true) {
   //   const usage = command.getUsage(t);
@@ -21,9 +20,9 @@ export default class CommandUtil {
   // }
 
   // /**
-  //  * Returns all the info required on the help command.
-  //  * @param {Object} options The options for the help command.
-  //  * @returns {SimplicityEmbed}
+  //  * Returns all the info required on the help command
+  //  * @param options The options for the help command
+  //  * @returns
   //  */
   // static getHelp({ client, command, prefix, t }) {
   //   command = typeof command === 'string' ? client.commands.fetch(command) : command;

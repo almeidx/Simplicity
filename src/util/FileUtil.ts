@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
 
 /**
- * Contains various file utility methods.
- * @class FileUtil
+ * Contains various file utility methods
  */
 export default class FileUtil {
   static readdir = promisify(fs.readdir);
@@ -15,11 +15,11 @@ export default class FileUtil {
   static stat = promisify(fs.stat);
 
   /**
-   * Requires a directory and it's sub folders.
-   * @param dirPath The path of the directory.
-   * @param recursive Whether to require the main directory sub folders.
-   * @param callback when the require is successful.
-   * @returns Promise with an array with every file in the directories.
+   * Requires a directory and it's sub folders
+   * @param dirPath The path of the directory
+   * @param recursive Whether to require the main directory sub folders
+   * @param callback when the require is successful
+   * @returns Array with every file in the directories
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async requireDirectory<R = any>(

@@ -5,8 +5,7 @@ type CustomEmojiTypes = keyof typeof Constants.EMOJIS_CUSTOM
 type EmojiTypes = keyof typeof Constants.EMOJIS
 
 /**
- * Contains various emoji utility methods.
- * @class EmojiUtil
+ * Contains various emoji utility methods
  */
 class EmojiUtil {
   static getCustomEmoji(id: CustomEmojiTypes) {
