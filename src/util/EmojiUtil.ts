@@ -1,4 +1,4 @@
-import { Permissions, TextChannel } from 'discord.js';
+import { TextChannel } from 'discord.js';
 import Constants from './Constants';
 
 type CustomEmojiTypes = keyof typeof Constants.EMOJIS_CUSTOM
@@ -28,7 +28,7 @@ class EmojiUtil {
       if (
         client
         && custom
-        && channel?.permissionsFor(client)?.has(Permissions.FLAGS.USE_EXTERNAL_EMOJIS)
+        && channel?.permissionsFor(client)?.has('USE_EXTERNAL_EMOJIS')
       ) {
         const cachedEmoji = channel.client.emojis.cache.get(custom);
         if (cachedEmoji) return id ? cachedEmoji.id : cachedEmoji.toString();
