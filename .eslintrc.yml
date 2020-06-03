@@ -23,6 +23,7 @@ ignorePatterns:
   - dist/*
   - nod_modules/*
 rules:
+  no-restricted-syntax: ['off']
   import/extensions: ['error', 'never']
 settings:
   import/resolver:
