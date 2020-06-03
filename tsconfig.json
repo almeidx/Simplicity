@@ -1,26 +1,22 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "src",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "outDir": "dist",
+    "baseUrl": "src",
     "paths": {
-      "@data": ["data/*"],
+      "@data/*": ["../data/*"],
       "@root": ["."],
-      "@src": ["src/*"],
-      "@util": ["src/util/*"]
+      "@src": ["*"],
+      "@util/*": ["util/*"]
     },
     "resolveJsonModule": true,
-    "rootDir": "src",
+    "rootDir": "./src",
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "suppressImplicitAnyIndexErrors": true,
     "target": "es2020"
   },
   "exclude": [

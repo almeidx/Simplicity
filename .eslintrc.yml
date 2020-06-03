@@ -2,8 +2,13 @@ env:
   es6: true
   node: true
 extends:
-  - plugin:@typescript-eslint/recommended
   - airbnb-base
+  - plugin:@typescript-eslint/recommended
+  - prettier/@typescript-eslint
+  # - eslint:recommended
+  # - plugin:import/errors
+  # - plugin:import/warnings
+  # - plugin:import/typescript
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
@@ -16,6 +21,8 @@ plugins:
 ignorePatterns:
   - dist/*
   - nod_modules/*
+rules:
+  import/extensions: ['error', 'never']
 settings:
   import/resolver:
     node:
