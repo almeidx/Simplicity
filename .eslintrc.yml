@@ -6,15 +6,13 @@ extends:
   - plugin:@typescript-eslint/recommended
   - prettier/@typescript-eslint
   - import
-  # - eslint:recommended
-  # - plugin:import/errors
-  # - plugin:import/warnings
-  # - plugin:import/typescript
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
 parser: '@typescript-eslint/parser'
 parserOptions:
+  project: './tsconfig.json'
   ecmaVersion: 11
   sourceType: module
 plugins:
@@ -27,6 +25,8 @@ rules:
   import/extensions: ['error', 'never']
   lines-between-class-members: ["error", "always", { exceptAfterSingleLine: true }]
   class-methods-use-this: ['off']
+  import/no-cycle: ['off']
+  '@typescript-eslint/no-unsafe-assignment': ['off']
 settings:
   import/resolver:
     node:

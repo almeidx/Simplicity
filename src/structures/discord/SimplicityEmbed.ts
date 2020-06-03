@@ -110,7 +110,7 @@ export default class SimplicityEmbed extends MessageEmbed {
       const name = `${crypto.randomBytes(20).toString('hex')}.png`;
       super.attachFiles([new MessageAttachment(defaulIcon, name)]);
       return `attachment://${name}`;
-    };
+    }
     return resolvable;
   }
 

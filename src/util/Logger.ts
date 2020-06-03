@@ -14,11 +14,11 @@ enum Colors {
   FgRed = '\x1b[31m',
   FgWhite = '\x1b[37m',
   FgYellow = '\x1b[33m',
-};
+}
 
 const resetColor = '\x1b[0m';
 
-const setColor = (color: Colors, text: string) => `${color + text + resetColor}`;
+const setColor = (color: Colors, message: string) => `${color + message + resetColor}`;
 
 /**
  * Contains various logger utility methods.
@@ -36,42 +36,47 @@ export default class Logger {
   /**
    * Logs to console.
    * @param color The color of the log.
-   * @param text The text to log.
+   * @param message The message to log.
    * @param type The type of log.
    */
-  static createLog(color: Colors, text: any, consoleFn: (...args: any) => void): void {
-    return consoleFn(`${Logger.timestamp} ${setColor(color, text)}`);
+  static createLog(
+    consoleFn: (...args: any) => void,
+    color: Colors,
+    message: any,
+    optionalParams: any[] = [],
+  ): void {
+    return consoleFn(`${Logger.timestamp} ${setColor(color, message)}`, ...optionalParams);
   }
 
   /**
    * Logs normally.
-   * @param text The text to log
+   * @param message The message to log
    */
-  static log(text: any): void {
-    return Logger.createLog(Colors.FgGreen, text, console.log);
+  static log(message: any, ...optionalParams: any[]): void {
+    return Logger.createLog(console.log, Colors.FgGreen, message, optionalParams);
   }
 
   /**
    * Logs an error.
-   * @param text The text to log
+   * @param message The message to log
    */
-  static error(text: any): void {
-    return Logger.createLog(Colors.FgRed, text, console.error);
+  static error(message: any, ...optionalParams: any[]): void {
+    return Logger.createLog(console.error, Colors.FgRed, message, optionalParams);
   }
 
   /**
    * Logs a warn.
-   * @param text The text to log
+   * @param message The message to log
    */
-  static warn(text: any): void {
-    return Logger.createLog(Colors.FgYellow, text, console.warn);
+  static warn(message: any, ...optionalParams: any[]): void {
+    return Logger.createLog(console.warn, Colors.FgYellow, message, optionalParams);
   }
 
   // /**
   //  * Logs a command.
   //  * @param {Object} object Object with multiple required properties
   //  * @param {User} object.author The author of the command.
-  //  * @param {TextBasedChannel} object.channel The channel where the command was used.
+  //  * @param {messageBasedChannel} object.channel The channel where the command was used.
   //  * @param {string} object.content The content of the command message.
   //  * @param {Guild} object.guild The guild where the command was used.
   //  * @returns {void}

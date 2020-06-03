@@ -30,7 +30,7 @@ export default class LanguagesLoader extends Loader {
       }, () => {
         Logger.log(Object.keys(i18next.languages));
       })
-      .catch(Logger.error);
+      .catch((error) => Logger.error(error));
     return !!connected;
   }
 }

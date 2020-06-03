@@ -34,7 +34,7 @@ class LogUtil {
    * Resolves a webhook.
    */
   static async getWebhook(channel: TextBasedChannel): Promise<Webhook> {
-    const name = `${channel.client.user?.username} Logs` || 'Logs';
+    const name = `${channel.client.user?.username ?? 'Bot'} Logs` || 'Logs';
     const avatar = channel.client.user?.displayAvatarURL({ dynamic: true, size: 4096 });
 
     const webhooks = await channel.fetchWebhooks();
