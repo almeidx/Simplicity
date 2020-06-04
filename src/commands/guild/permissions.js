@@ -2,30 +2,31 @@
 
 const { Command, SimplicityEmbed } = require('@structures');
 const { MANAGER_PERMISSIONS } = require('@util/Constants');
-const { getServerIconURL, checkTick } = require('@util/Util');
+const { checkTick } = require('@util/Util');
 const { GuildMember } = require('discord.js');
 
 class Permissions extends Command {
   constructor(client) {
     super(client, 'permissions', {
       aliases: ['perms', 'perm', 'permission'],
+      args: [
+        {
+          acceptBot: true,
+          acceptSelf: true,
+          missingError: 'commands:permissions.error',
+          required: false,
+          type: 'member|role',
+        },
+      ],
       category: 'guild',
       requirements: { guildOnly: true },
-    }, [
-      {
-        acceptBot: true,
-        acceptSelf: true,
-        missingError: 'commands:permissions.error',
-        required: false,
-        type: 'member|role',
-      },
-    ]);
+    });
   }
 
   run({ author, emoji, guild, member: guildMember, send, t }, victim = guildMember) {
     const avatar = victim instanceof GuildMember ?
       victim.user.displayAvatarURL({ dynamic: true }) :
-      getServerIconURL(guild);
+      guild;
     const name = victim instanceof GuildMember ? victim.user.tag : victim.name;
     const title = victim instanceof GuildMember ? '$$commands:permissions.author' : '$$commands:permissions.role';
 
