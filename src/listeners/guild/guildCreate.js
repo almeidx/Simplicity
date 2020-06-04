@@ -1,7 +1,6 @@
 'use strict';
 
 const { SimplicityEmbed, SimplicityListener } = require('@structures');
-const { getServerIconURL } = require('@util/Util');
 
 class GuildCreateListener extends SimplicityListener {
   constructor(client) {
@@ -17,7 +16,7 @@ class GuildCreateListener extends SimplicityListener {
         .addField('Guild Name', guild.name, true)
         .addField('Guild ID', guild.id, true)
         .addField('Member Count', guild.memberCount)
-        .setThumbnail(getServerIconURL(guild)));
+        .setThumbnail(guild));
 
     if (client.database) {
       await client.database.guilds.get(guild.id);

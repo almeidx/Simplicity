@@ -1,7 +1,7 @@
 'use strict';
 
 const { Command, SimplicityEmbed } = require('@structures');
-const { getServerIconURL, checkTick } = require('@util/Util');
+const { checkTick } = require('@util/Util');
 const moment = require('moment');
 
 class RoleInfo extends Command {
@@ -26,7 +26,7 @@ class RoleInfo extends Command {
     const totalRoles = guild.roles.cache.filter((r) => r.id !== guild.id).size;
 
     const embed = new SimplicityEmbed({ author, emoji, t })
-      .setThumbnail(getServerIconURL(guild))
+      .setThumbnail(guild)
       .addField('» $$commands:roleinfo.name', role.name, true)
       .addField('» $$commands:roleinfo.id', role.id, true);
 
