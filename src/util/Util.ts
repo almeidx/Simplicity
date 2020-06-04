@@ -64,6 +64,14 @@ class Util {
   static code(str: string, lang: string, minLength = 0, maxLength = 1024) {
     return `\`\`\`${lang}\n${Util.sliceString(str, minLength, maxLength)}\n\`\`\``;
   }
+
+  static perString(str: string, fn: (str: string, index: number) => any, length = 1024) {
+    let state = str;
+    for (let i = 0; state.length !== 0; i + 1) {
+      fn(state.slice(0, length), i);
+      state = state.slice(length);
+    }
+  }
 }
 
 export default Util;

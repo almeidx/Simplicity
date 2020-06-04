@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 import { Guild, GuildModule, GuildStarboard } from './Guild.interfaces';
 
 const GuildModuleSchema = new Schema<GuildModule>({
-  enable: { required: true, default: false },
+  enable: { type: Boolean, default: false },
   channeldId: String,
 }, {
   id: false,
