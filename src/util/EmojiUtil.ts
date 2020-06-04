@@ -7,19 +7,19 @@ type EmojiTypes = keyof typeof Constants.EMOJIS
 /**
  * Contains various emoji utility methods
  */
-class EmojiUtil {
-  static getCustomEmoji(id: CustomEmojiTypes) {
+export default class EmojiUtil {
+  static getCustomEmoji(id: CustomEmojiTypes): string {
     return Constants.EMOJIS_CUSTOM[id];
   }
 
-  static getDefaultEmoji(name: EmojiTypes) {
+  static getDefaultEmoji(name: EmojiTypes): string {
     return Constants.EMOJIS[name];
   }
 
   static getEmoji(
     opts: { id?: boolean, channel?: TextChannel },
     ...emojis: (EmojiTypes | CustomEmojiTypes)[]
-  ) {
+  ): string | false {
     for (const emoji of emojis) {
       const custom = EmojiUtil.getCustomEmoji(emoji as CustomEmojiTypes);
       const { id, channel } = opts;
@@ -38,9 +38,6 @@ class EmojiUtil {
       const normal = EmojiUtil.getDefaultEmoji(emoji as EmojiTypes);
       if (normal) return normal;
     }
-
     return false;
   }
 }
-
-module.exports = EmojiUtil;

@@ -72,5 +72,3 @@ export default class TextUtil {
     });
   }
 }
-
-module.exports = TextUtil;

@@ -16,16 +16,13 @@ class SimplicityClient extends Client {
    */
   async loadFiles(): Promise<void> {
     for (const loader of Loaders(this)) {
-      let result;
       try {
         // eslint-disable-next-line no-await-in-loop
-        result = await loader.load();
+        await loader.load();
         Logger.log(`${loader.constructor.name} carregou sem problemas!`);
       } catch (err) {
         Logger.error('ops', err);
-        result = false;
-      } finally {
-        if (!result && loader.required) process.exit(1);
+        if (loader.required) process.exit(1);
       }
     }
   }

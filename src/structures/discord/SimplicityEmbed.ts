@@ -47,7 +47,7 @@ class SimplicityEmbed extends MessageEmbed {
    * @param data The data of the embed
    */
   constructor(
-    embedResolvable?: EmbedResolvable,
+    embedResolvable?: EmbedResolvable | null,
     options: Partial<EmbedOptions> = {},
     data: MessageEmbed | MessageEmbedOptions = {},
   ) {
@@ -162,7 +162,8 @@ class SimplicityEmbed extends MessageEmbed {
    */
   setFooter(text: EmbedInput, iconURL: EmbedInput | null = null, options: TOptions = {}): this {
     const parseText = SimplicityEmbed.resolveName(text);
-    const parseIconURL = iconURL ? this.resolveImage(iconURL) : this.resolveImage(text);
+    const parseIconURL = iconURL
+      ? this.resolveImage(iconURL) : this.resolveImage(text) ?? undefined;
 
     return super.setFooter(
       TextUtil.parse(

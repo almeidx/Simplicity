@@ -1,6 +1,11 @@
+/* eslint-disable max-len */
+/* eslint-disable consistent-return */
 import {
-  MessageAdditions, MessageOptions, NewsChannel, TextChannel, StringResolvable, Message, Webhook,
+  MessageAdditions, MessageOptions, NewsChannel, TextChannel,
+  StringResolvable, Message, Webhook, Guild,
 } from 'discord.js';
+import SimplicityClient from '../structures/discord/SimplicityClient';
+import { logTypes } from '../database/models/Guild';
 
 type TextBasedChannel = NewsChannel | TextChannel;
 type ContentResolvable = StringResolvable | MessageOptions | MessageAdditions;
@@ -16,11 +21,18 @@ class LogUtil {
    * @param logName The name of the log
    * @returns The channel
    */
-  // static async getChannel(client: Client, guild: Guild, logName: string) {
-  //   const guildData = client.database && await client.database.guilds.get(guild.id);
-  //   const logData = guildData?.logs[logName];
-  //   return logData && logData.channelID && guild.channels.cache.get(logData.channelID);
-  // }
+  static async getChannel(client: SimplicityClient, guild: Guild, log: logTypes): Promise<TextChannel|void> {
+    if (!client.database) return;
+
+    const guildData = await client.database.guilds.findById(guild.id);
+    if (!guildData) return;
+
+    const logData = guildData.logs.get(log);
+    if (!logData || !logData.id) return;
+
+    const logChannel = guild.channels.cache.get(logData.id);
+    if (logChannel instanceof TextChannel) return logChannel;
+  }
 
   /**
    * Sends a message to a channel using the bot or using a webhook
@@ -33,7 +45,7 @@ class LogUtil {
     const permissions = me && channel.permissionsFor(me);
     if (permissions && !permissions.has('MANAGE_WEBHOOKS')) return channel.send(body);
 
-    const webhook = await this.getWebhook(channel);
+    const webhook = await LogUtil.getWebhook(channel);
     return webhook.send(body);
   }
 

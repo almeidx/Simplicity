@@ -37,13 +37,14 @@ export default class FileUtil {
     return Promise.all(
       files.map(async (file) => {
         const fullPath = path.resolve(dirPath, file);
-        if (/\.(js|json)$/.test(file)) {
+        if (/\.(js|ts|json)$/.test(file)) {
           try {
-            const required = await import(fullPath);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            const required = (await import(fullPath)).default;
             callback(
               null,
               required,
-              file.replace(/.js|.json/g, ''),
+              file.replace(/.js|.ts|.json/g, ''),
               dirPath.split(/\\|\//g).pop() as string,
             );
             filesObject[file] = required;

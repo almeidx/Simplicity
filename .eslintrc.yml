@@ -21,6 +21,10 @@ parserOptions:
 plugins:
   - '@typescript-eslint'
 rules:
+  '@typescript-eslint/no-explicit-any':
+    - off
+  '@typescript-eslint/no-floating-promises':
+    - off
   '@typescript-eslint/no-unsafe-assignment':
     - off
   class-methods-use-this:
