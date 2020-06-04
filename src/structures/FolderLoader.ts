@@ -32,7 +32,6 @@ export default abstract class FolderLoader<A extends Function> extends Loader {
         return;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       const instance = new Instance(this.client);
       this.register(instance);
     });

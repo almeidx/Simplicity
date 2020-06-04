@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
@@ -21,7 +19,6 @@ export default class FileUtil {
    * @param callback when the require is successful
    * @returns Array with every file in the directories
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async requireDirectory<R = any>(
     dirPath: string,
     recursive = true,
@@ -39,7 +36,6 @@ export default class FileUtil {
         const fullPath = path.resolve(dirPath, file);
         if (/\.(js|ts|json)$/.test(file)) {
           try {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             const required = (await import(fullPath)).default;
             callback(
               null,

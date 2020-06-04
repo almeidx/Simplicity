@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import path from 'path';
 import {
   FolderLoader, SimplicityListener, SimplicityClient,

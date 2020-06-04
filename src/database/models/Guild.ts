@@ -1,42 +1,37 @@
 /* eslint-disable max-classes-per-file */
-import { prop, getModelForClass } from '@typegoose/typegoose';
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
+import { Schema, model } from 'mongoose';
+import { Guild, GuildModule, GuildStarboard } from './Guild.interfaces';
 
-class Module extends TimeStamps {
-  @prop({ default: false })
-  public enable!: boolean;
+const GuildModuleSchema = new Schema<GuildModule>({
+  enable: { required: true, default: false },
+  channeldId: String,
+}, {
+  id: false,
+  timestamps: true,
+});
 
-  @prop()
-  public id?: string;
-}
+const GuildStarboardSchema = new Schema<GuildStarboard>({
+  enable: { required: true, default: false, type: Boolean },
+  minStars: { required: true, default: 3, type: Number },
+  channeldId: String,
+}, {
+  id: false,
+  timestamps: true,
+});
 
-class StarboardModule extends Module {
-  @prop({ default: 3 })
-  public minStars!: number;
-}
+const GuildSchema = new Schema<Guild>({
+  id: { required: true, type: String, unique: true },
+  language: String,
+  prefix: String,
+  autorole: GuildModuleSchema,
+  starboard: GuildStarboardSchema,
+  disableChannels: { type: Array, of: String },
+  logs: { type: Map, of: GuildModuleSchema },
+}, {
+  id: false,
+  timestamps: true,
+});
 
-class Guild extends TimeStamps {
-  @prop({ required: true, unique: true })
-  public id!: string;
+const guildModel = model<Guild>('guilds', GuildSchema);
 
-  @prop()
-  public lang?: string;
-
-  @prop()
-  public prefix?: string;
-
-  @prop({ _id: false })
-  public autorole!: Module
-
-  @prop({ to: Module, _id: false })
-  public logs!: Map<logTypes, Module>
-
-  @prop({ _id: false })
-  public starboard!: StarboardModule
-
-  @prop()
-  public disableChannels!: string[];
-}
-
-export type logTypes = 'GuildMemberAdd' | 'GuildMemberRemove' | 'GuildUpdates' | 'MessageUpdate' | 'UserUpdate' | 'VoiceChannelLogs'
-export default getModelForClass(Guild);
+export default guildModel;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/await-thenable */
 
 import { Client } from 'discord.js';
 import Loaders from '../../loaders';
@@ -17,7 +16,6 @@ class SimplicityClient extends Client {
   async loadFiles(): Promise<void> {
     for (const loader of Loaders(this)) {
       try {
-        // eslint-disable-next-line no-await-in-loop
         await loader.load();
         Logger.log(`${loader.constructor.name} carregou sem problemas!`);
       } catch (err) {

@@ -1,11 +1,11 @@
-/* eslint-disable max-len */
+
 /* eslint-disable consistent-return */
 import {
   MessageAdditions, MessageOptions, NewsChannel, TextChannel,
   StringResolvable, Message, Webhook, Guild,
 } from 'discord.js';
 import SimplicityClient from '../structures/discord/SimplicityClient';
-import { logTypes } from '../database/models/Guild';
+import { logTypes } from '../database';
 
 type TextBasedChannel = NewsChannel | TextChannel;
 type ContentResolvable = StringResolvable | MessageOptions | MessageAdditions;
@@ -21,16 +21,18 @@ class LogUtil {
    * @param logName The name of the log
    * @returns The channel
    */
-  static async getChannel(client: SimplicityClient, guild: Guild, log: logTypes): Promise<TextChannel|void> {
+  static async getChannel(
+    client: SimplicityClient, guild: Guild, log: logTypes,
+  ): Promise<TextChannel|void> {
     if (!client.database) return;
 
     const guildData = await client.database.guilds.findById(guild.id);
     if (!guildData) return;
 
     const logData = guildData.logs.get(log);
-    if (!logData || !logData.id) return;
+    if (!logData || !logData.channelId) return;
 
-    const logChannel = guild.channels.cache.get(logData.id);
+    const logChannel = guild.channels.cache.get(logData.channelId);
     if (logChannel instanceof TextChannel) return logChannel;
   }
 

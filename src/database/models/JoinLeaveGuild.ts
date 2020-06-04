@@ -1,20 +1,10 @@
-import { Base } from '@typegoose/typegoose/lib/defaultClasses';
-import { prop, getModelForClass } from '@typegoose/typegoose';
+import { Schema, model, Document } from 'mongoose';
+import { JoinLeaveGuild, JoinLeaveGuildTypes } from './JoinLeaveGuild.interfaces';
 
-export enum JoinLeaveGuildTypes {
-  JOIN = 'JOIN',
-  LEAVE = 'LEAVE',
-}
+const JoinLeaveGuildSchema = new Schema<JoinLeaveGuild>({
+  createAt: { type: Date, required: true },
+  guildId: { type: Date, required: true },
+  type: { type: String, enum: JoinLeaveGuildTypes },
+});
 
-class JoinLeaveGuild extends Base {
-  @prop({ required: true })
-  public eventAt!: Date;
-
-  @prop({ required: true })
-  public guildId!: string;
-
-  @prop({ enum: JoinLeaveGuildTypes, type: String, required: true })
-  public type!:JoinLeaveGuildTypes
-}
-
-export default getModelForClass(JoinLeaveGuild);
+export default model<JoinLeaveGuild & Document>('joinLeaveGuild', JoinLeaveGuildSchema);

@@ -1,5 +1,4 @@
 /* eslint-disable consistent-return */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
   TextChannel, MessageAdditions, Message, ClientEvents,
 } from 'discord.js';

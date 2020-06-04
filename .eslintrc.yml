@@ -4,8 +4,7 @@ env:
 extends:
   - airbnb-base
   - import
-  - 'plugin:@typescript-eslint/recommended'
-  - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
+  - plugin:@typescript-eslint/recommended
   - prettier/@typescript-eslint
 globals:
   Atomics: readonly
@@ -26,6 +25,8 @@ rules:
   '@typescript-eslint/no-floating-promises':
     - off
   '@typescript-eslint/no-unsafe-assignment':
+    - off
+  no-await-in-loop:
     - off
   class-methods-use-this:
     - off
