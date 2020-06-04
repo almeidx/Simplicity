@@ -1,18 +1,17 @@
 
 import fs from 'fs';
 import path from 'path';
-import { promisify, inspect } from 'util';
+import { promisify } from 'util';
 import i18next from 'i18next';
 import translationBackend from 'i18next-node-fs-backend';
-import { Client } from 'discord.js';
-import Loader from '../structures/Loader';
-import Logger from '../util/Logger';
+import { Logger } from '../util';
+import { SimplicityClient, Loader } from '../structures';
 
 const readdir = promisify(fs.readdir);
 const pathFolder = path.resolve('src', 'locales');
 
 class LanguagesLoader extends Loader {
-  constructor(client: Client) {
+  constructor(client: SimplicityClient) {
     super(client, true);
   }
 

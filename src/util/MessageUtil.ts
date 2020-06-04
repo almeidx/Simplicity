@@ -8,7 +8,9 @@ const IMGFormats = ['webp', 'png', 'jpg', 'gif'];
  * Checks if an URL is valid (returns a status different than 404)
  * @param url The URL to be checked
  */
-const checkRequestURL = (url: string) => fetch(url).then((r) => r.status !== 404).catch(() => null);
+const checkRequestURL = (url: string): Promise<boolean> => fetch(url)
+  .then((r) => r.status !== 404)
+  .catch(() => false);
 
 /**
  * Contains various message related utility methods
@@ -20,7 +22,7 @@ class MessageUtil {
    * @param sliceCount The amount of characters that will be sliced of a message's content
    * @returns The URL
    */
-  static getContentUrl(message: Message | string, sliceCount = 0) {
+  static getContentUrl(message: Message | string, sliceCount = 0): string | null {
     const query = typeof message === 'string' ? message : message.content.slice(sliceCount);
     const resultRegex = query && REGEX_URL.exec(query);
     return resultRegex && resultRegex[0];
@@ -32,15 +34,18 @@ class MessageUtil {
    * @param sliceCount The amount of characters that will be sliced of a message's content
    * @returns The attachment URL
    */
-  static async getImage(message: Message, sliceCount = 0) {
+  static async getImage(message: Message, sliceCount = 0): Promise<string | null> {
     const url = MessageUtil.getContentUrl(message, sliceCount);
     const resultQuery = url && await checkRequestURL(url);
-    if (resultQuery) return url;
+    if (url && resultQuery) return url;
 
     const attachment = message.attachments.find(
       (a) => IMGFormats.some((format) => a.name?.endsWith(format)),
     );
-    return attachment && await checkRequestURL(attachment.url) && attachment.url;
+
+    if (!attachment) return null;
+    if (await checkRequestURL(attachment.url)) return null;
+    return attachment.url;
   }
 
   /**
@@ -49,11 +54,10 @@ class MessageUtil {
    * @param limit The limit of messages that will be fetched on the channel
    * @returns All the image URLs
    */
-  static async fetchImages(channel: TextChannel, limit = 100) {
-    const messages = await channel.messages.fetch({ limit }).catch(() => null);
-    return messages && (
-      await Promise.all(messages.map((message) => this.getImage(message))))
-      .filter((r) => r) as string[];
+  static async fetchImages(channel: TextChannel, limit = 100): Promise<string[]> {
+    const messages = await channel.messages.fetch({ limit });
+    const images = await Promise.all(messages.map((message) => MessageUtil.getImage(message)));
+    return images.filter((r) => r) as string[];
   }
 
   /**
@@ -62,8 +66,8 @@ class MessageUtil {
    * @param limit The limit of messages that will be fetched on the channel
    * @returns The image URL
    */
-  static async fetchImage(channel: TextChannel, limit = 100) {
-    const fetchResult = await this.fetchImages(channel, limit);
+  static async fetchImage(channel: TextChannel, limit = 100): Promise<string> {
+    const fetchResult = await MessageUtil.fetchImages(channel, limit);
     return fetchResult && fetchResult[0];
   }
 }
