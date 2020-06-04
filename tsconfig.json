@@ -17,7 +17,9 @@
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "es2020"
+    "target": "es2020",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "exclude": [
     "data",
