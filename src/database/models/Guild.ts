@@ -1,8 +1,6 @@
 /* eslint-disable max-classes-per-file */
+import { prop, getModelForClass } from '@typegoose/typegoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
-import {
-  prop, getModelForClass, arrayProp, mapProp,
-} from '@typegoose/typegoose';
 
 class Module extends TimeStamps {
   @prop({ default: false })
@@ -30,13 +28,13 @@ class Guild extends TimeStamps {
   @prop({ _id: false })
   public autorole!: Module
 
-  @mapProp({ to: Module, _id: false })
+  @prop({ to: Module, _id: false })
   public logs!: Map<logTypes, Module>
 
   @prop({ _id: false })
   public starboard!: StarboardModule
 
-  @arrayProp({ items: String })
+  @prop()
   public disableChannels!: string[];
 }
 

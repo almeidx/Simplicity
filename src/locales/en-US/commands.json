@@ -1,0 +1,290 @@
+{
+  "botinfo": {
+    "description": "This command shows you info about myself.",
+    "guilds": "Total Guilds",
+    "users": "Total Users",
+    "uptime": "Uptime",
+    "commands": "Commands",
+    "ping": "Ping",
+    "links": "Links",
+    "inviteBot": "Invite Bot",
+    "prefix": "Prefix",
+    "developers": "Developers",
+    "memoryUsage": "Memory Usage",
+    "discordjs": "Discord.js Version",
+    "node": "Node Version",
+    "latency": "{{- ping }}ms"
+  },
+  "help": {
+    "description": "Shows information about me and my commands",
+    "about": "{{- name }} is yet another Discord bot that has lots of commands.\nMy prefix on this server is: `{{- prefix }}`! To change it, use the **{{- prefix }}prefix <prefix>** command.\nTo view more info about each command type: `{{- prefix }}help <command>`",
+    "categories": "Categories",
+    "aliases": "Aliases",
+    "_usage": "Usage",
+    "commandName": "Name",
+    "requiredClientPermissions": "Required Bot Permissions",
+    "requiredUserPermissions": "Required User Permissions",
+    "commandUndefined": "This command does not exist or is disabled"
+  },
+  "config-prefix": {
+    "description": "$t(prefix.description)",
+    "usage": "$t(prefix.usage)"
+  },
+  "prefix": {
+    "description": "This command sets my prefix on the server the command was used!",
+    "usage": "<prefix>",
+    "multiCharacters": "My new prefix can\\'t have more than 15 characters!",
+    "done": "Done!",
+    "success": "My prefix on this server has been changed to: `{{- prefix }}`",
+    "oops": "Oops!",
+    "failed": "Sadly, something wen't wrong while trying to update the server's prefix!\nPlease, try again later.",
+    "alreadySet": "My prefix was already set to **{{- prefix }}** on this server!"
+  },
+  "servericon": {
+    "description": "This command shows the server icon.",
+    "text": "Click [here]({{- guildIconURL }}) to download the icon!"
+  },
+  "ping": {
+    "description": "This command shows the latency of the bot.",
+    "loading": "Loading...",
+    "success": "Pong! `{{- ping }}ms`"
+  },
+  "serverinfo": {
+    "description": "This command shows info about the server.",
+    "name": "Name",
+    "id": "ID",
+    "owner": "Owner",
+    "created": "Created At",
+    "emotes": "Total Emotes",
+    "channels": "Channels: {{- totalChannels }}",
+    "textVoice": "Text: {{- textChannels }} | Voice: {{- voiceChannels }}",
+    "members": "Members: {{- totalMembers }}",
+    "onlineOffline": "Online: {{- onlineMembers }} | Offline: {{- offlineMembers }}",
+    "roles": "Server Roles: {{- totalRoles }}",
+    "totalRoles": "Total Roles",
+    "verificationLevel": "Verification Level: $t(commands:serverinfo.verificationName.{{- level }})",
+    "verificationName": {
+      "NONE": "None",
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HARD": "Hard",
+      "EXTREME": "Extreme"
+    },
+    "verificationDetails": {
+      "NONE": "Unrestricted.",
+      "LOW": "Must have a verified email on their Discord account.",
+      "MEDIUM":"Must be registered on Discord for longer than 5 minutes.",
+      "HARD": "Must be a member of the server for longer than 10 minutes.",
+      "EXTREME": "Must have a verified phone on their Discord account."
+    },
+    "unknown": "Unknown",
+    "boostTier": "Boost Tier",
+    "tier": "Tier {{- boostTier }}"
+  },
+  "addemoji": {
+    "description": "This command allows you to create emojis.",
+    "usage": "[name] [link]",
+    "noNameLink": "You either didn't specify the link of the emoji or the name of it.",
+    "nameTooBig": "The name for the emoji you provided was too big.",
+    "nameTooShort": "The name for the emoji you provided was too short.",
+    "invalidName": "Please, note that the emoji name can only have letters, numbers or underscores.",
+    "invalidURL": "The URL you provided was not a valid url.",
+    "emojiCreated": "The {{- emoji }} emoji has been created!",
+    "error": "There was an error when creating the emoji. ({{- msg }})",
+    "reason": "Responsible user: {{- author.tag }} [{{- author.id }}]",
+    "success": "Emoji Created",
+    "cancelled": "The emoji creation has been cancelled.",
+    "waitingResponse": "If you want to create the emoji, send \"**confirm**\", else, send \"**cancel**\""
+  },
+  "clear": {
+    "description": "This command clears messages from the chat.",
+    "usage": "[amount]",
+    "invalidValue": "Please, give a value between 2 and 100!",
+    "deleted": "{{- amount }} messages have been deleted by {{- author }}.",
+    "reason": "{{- auth }} [{{- authID }}] | Deleted {{- amount }} messages."
+  },
+  "userinfo": {
+    "description": "This command shows info about the user.",
+    "usage": "<id/mention>",
+    "partial": "I cannot get those types of information from that user.",
+    "cannotPartial": "I cannot get more information from that user.",
+    "notListeningToSpotify": "That user isn't listening to spotify",
+    "notInGuild": "That user is not a member of this guild.",
+    "tag": "Tag",
+    "username": "Username",
+    "nickname": "Nickname",
+    "id": "ID",
+    "createdAt": "Created At",
+    "joinedAt": "Joined At",
+    "status": "Status",
+    "spotify": "Spotify",
+    "track": "Track",
+    "artist": "Artist",
+    "album": "Album",
+    "highestRole": "Highest Role",
+    "permissions": "Permissions",
+    "roles": "Roles",
+    "authorRoles": "{{- user }}'s Roles",
+    "joinPosition": "Join Position"
+  },
+  "avatar": {
+    "message": "{{- user.username }}'s Avatar"
+  },
+  "vckick": {
+    "description": "This command lets you kick members of voice channels.",
+    "usage": "[mention/id] <reason>",
+    "success": "{{- author }} kicked {{- user }} from the **{{- oldChannelName }}** voice channel",
+    "action": "voice kick",
+    "voiceKicked": "Voice Kicked by: {{- user }}",
+    "reason": "{{- author }} | Voice kicked:  {{- user }}"
+  },
+  "config": {
+    "description": "This command is the basis to config the bot on your server.",
+    "usage": "<module> <statement>",
+    "channel": "Logging Channel",
+    "prefix": "Prefix",
+    "language": "Language",
+    "starboard": "Starboard",
+    "disableChannels": "Disable channels",
+    "languageKeys": [
+      "lang",
+      "language",
+      "l"
+    ],
+    "prefixKeys": [
+      "prefix",
+      "p"
+    ],
+    "failed": "Failed to edit the information into the database",
+    "langChanged": "The server language has been changed to **{{- value }}**",
+    "prefixChanged": "The server prefix has been changed to **{{- value }}**",
+    "invalidLanguage": "The language you provided isn't valid",
+    "noDisableChannel": "No channels disabled.",
+    "moduleOff": "This module is disabled"
+  },
+  "emoji": {
+    "description": "This command sends the emoji image but bigger.",
+    "usage": "<emoji>",
+    "error": "The emoji was invalid.",
+    "noArgs": "You must provide an emoji."
+  },
+  "say": {
+    "description": "Makes the bot repeat a message of your choise",
+    "usage": "<message>",
+    "error": "You need to insert a message"
+  },
+  "config-language": {
+    "description": "$t(language.description)",
+    "usage": "$t(language.usage)"
+  },
+  "language": {
+    "description": "This command sets my language on the server the command was used!",
+    "usage": "<language>",
+    "success": "My language has been changed to **{{- lang }}**",
+    "failed": "Sadly, something wen't wrong while trying to update the server's language!\nPlease, try again later.",
+    "done": "Done!",
+    "invalidLang": "The language you provided is invalid.\n**Valid languages:** {{- botLanguages}}",
+    "alreadySet": "My language is already set to **{{- lang }}**"
+  },
+  "roleinfo": {
+    "description": "Shows information about a role",
+    "usage": "<role>",
+    "noArgs": "You need to either provide a role name or mention a role",
+    "name": "Name",
+    "id": "ID",
+    "color": "Color",
+    "position": "Position",
+    "mentionable":  "Mentionable",
+    "hoisted": "Hoisted",
+    "members": "Members: {{- size }}",
+    "createdAt": "Created At",
+    "moreMembers": "and {{- size }} more..."
+  },
+  "permissions": {
+    "usage": "<role|member>",
+    "author": "{{- name }}'s Permissions",
+    "role": "{{- name }} Role Permissions",
+    "error": "You need to either provide a member or role"
+  },
+  "setnick": {
+    "description": "This command allows you to change the nickname of somebody",
+    "usage": "<member> [name]",
+    "nameTooBig": "The name you provided is too long! (Max: 32 characters)",
+    "reason": "Requested by: {{- author }}",
+    "failed": "There was an error when I tried to change the user's nickname",
+    "success": "{{- member }}'s nickname has been changed to **{{- nickname }}**",
+    "action": "rename",
+    "removedNickname":  "{{- member }}'s nickname has been reset",
+    "alreadySet": "{{- member }}'s nickname is already set to **{{- nickname }}**!",
+    "alreadyReset": "{{- member }} doesn't have a nickname already"
+  },
+  "discriminator": {
+    "description": "This command allows you to see the members that have the same discriminator as the one provided",
+    "usage": "[discriminator]",
+    "nobody": "Couldn't find anyone in this server with that discriminator",
+    "users": "Users with #{{- discrim }} as discriminator"
+  },
+  "role": {
+    "description": "This command allows you to add and remove roles from users",
+    "usage": "<add|remove> <user> <role>",
+    "noArgs": "You need to provide a type (add/remove), a user and a role",
+    "reasonAdd:": "{{- author }} Added the role to {{- user }}",
+    "reasonRemove": "{{- author }} Removed the role from {{- user }}",
+    "failedAdd": "There was an error when trying to add the role to the user",
+    "failedRemove": "There was an error when trying to remove the role from the user",
+    "added": "{{- author }} has added the {{- roles }} role to {{- member }}",
+    "added_plural": "{{- author }} has added the {{- roles }} roles to {{- member }}",
+    "removed": "{{- author }} has removed the {{- roles }} role from {{- member }}",
+    "removed_plural": "{{- author }} has removed the {{- roles }} roles from {{- member }}",
+    "alreadyHasRole": "{{- member }} has already the {{ role }} role added",
+    "hasNotRole": "{{- member }} has not the {{ role }} role for remove"
+  },
+  "logs": {
+    "description": "This command allows you to set the logs in your server",
+    "usage": "[type] [on/off]",
+    "GuildMemberAdd": "Member Join",
+    "GuildMemberRemove": "Member Leave",
+    "GuildUpdates": "Guild Updates",
+    "MessageUpdate": "Message Updates",
+    "UserUpdate": "User Updates",
+    "VoiceChannelLogs": "Voice Channel Logs",
+    "edited": "You have successfully set the {{ type }} channel to: {{- channel }}"
+  },
+  "config-starboard": {
+    "description": "$t(starboard.description)",
+    "usage": "$t(starboard.usage)"
+  },
+  "starboard": {
+    "description": "This command sets the starboard channel",
+    "usage": "<channel>",
+    "enabled": "The starboard has been enabled in {{ channel }}",
+    "disabled": "The starboard has been disabled in {{ channel }}",
+    "channelChanged": "The starboard channel has been changed to {{ channel}}"
+  },
+  "disable": {
+    "description": "Disable commands run in channels",
+    "usage": "<channel, channel, ...>",
+    "currentDisable": "Commands have been disabled in the current channel",
+    "currentEnabled": "Commands have been enabled in the current channel",
+    "channelDisable": "Commands have been disabled in {{ channel }}",
+    "channelEnabled": "Commands have been enabled in {{ channel }}",
+    "multiChannels": "Commands have been disabled in {{ newChannels }} and enabled in {{ removedChannels }}.\nTo view all the disabled channels, run `{{ prefix }}config`",
+    "channelDisable_plural": "Commands have been disabled in {{ channels }}.",
+    "channelEnabled_plural": "Commands have been enabled in {{ channels }}."
+  },
+  "autorole": {
+    "description": "Sets the role that is given to members upon joining.",
+    "usage": "[role]",
+    "requireRole": "You need to provide a role.",
+    "disabled": "The AutoRole has been disabled",
+    "isCurrentRole": "The AutoRole is already set to {{ role }}",
+    "enabled": "The AutoRole has been set to `{{ role }}`",
+    "changed": "The AutoRole has been changed to `{{ role }}`"
+  },
+  "snipe": {
+    "description": "Returns the last deleted message from the specified channel.",
+    "usage": "<channel>",
+    "files": "Files",
+    "notFound": "I was not able to find any snipes for the specified channel."
+  }
+}

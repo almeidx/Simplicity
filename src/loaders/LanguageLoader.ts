@@ -1,7 +1,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { promisify } from 'util';
+import { promisify, inspect } from 'util';
 import i18next from 'i18next';
 import translationBackend from 'i18next-node-fs-backend';
 import { Client } from 'discord.js';
@@ -27,8 +27,6 @@ class LanguagesLoader extends Loader {
         ns: ['categories', 'commands', 'errors', 'permissions', 'common', 'loggers', 'api_errors'],
         preload: await readdir(pathFolder),
         returnEmptyString: false,
-      }, () => {
-        Logger.log(Object.keys(i18next.languages));
       })
       .catch((error) => Logger.error(error));
     return !!connected;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/await-thenable */
 
-import { Client } from 'discord.js';
+import { Client, ClientOptions } from 'discord.js';
 import Loaders from '../../loaders';
 import Logger from '../../util/Logger';
 import * as database from '../../database';
