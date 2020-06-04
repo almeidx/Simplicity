@@ -1,10 +1,10 @@
-import { Client } from 'discord.js';
+import SimplicityClient from './discord/SimplicityClient';
 
 /**
  * The main Loader class
  */
 export default abstract class Loader {
-  client: Client;
+  client: SimplicityClient;
   required: boolean;
 
   /**
@@ -12,7 +12,7 @@ export default abstract class Loader {
    * @param client The Client of the listener
    * @param required Whether the loader is required for the Client to function properly
    */
-  constructor(client: Client, required = true) {
+  constructor(client: SimplicityClient, required = true) {
     this.client = client;
     this.required = required;
   }
