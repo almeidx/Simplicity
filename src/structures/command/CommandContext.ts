@@ -1,6 +1,6 @@
 import i18next, { TFunction } from 'i18next';
 import {
-  Message, TextChannel, VoiceChannel, User, Guild,
+  Message, TextChannel, VoiceChannel, User, Guild, GuildMember,
 } from 'discord.js';
 import Config from '../../config';
 import { EmojiUtil, Emojis } from '../../util';
@@ -20,7 +20,7 @@ export interface CommandContextOptions {
 export default class CommandContext {
   message: Message;
   // mentions: MessageMentions;
-  // member: GuildMember | null;
+  member: GuildMember;
   author: User;
   guild: Guild;
   channel: TextChannel;
@@ -50,7 +50,7 @@ export default class CommandContext {
     this.flags = {};
 
     // this.mentions = this.message.mentions;
-    // this.member = this.message.member;
+    this.member = this.message.member as GuildMember;
     this.guild = this.message.guild as Guild;
     this.author = this.message.author;
     this.channel = this.message.channel as TextChannel;

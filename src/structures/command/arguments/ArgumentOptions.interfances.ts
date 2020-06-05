@@ -1,4 +1,5 @@
 import { Context } from 'vm';
+import { GuildChannel } from 'discord.js';
 import CommandContext from '../CommandContext';
 
 export type ArgumentFunc = (ctx: CommandContext, wordInvalid: string) => Promise<string> | string;
@@ -17,14 +18,22 @@ export interface ArgumentOptions {
   showUsage: boolean;
 }
 
+
+export interface DefaultFlagOptions extends FlagOptions {
+  isDefaultFlag: true,
+  handle: (ctx: Context) => any;
+}
+
 export interface BooleanArgOptions {
   falseValues: string[]
   trueValues: string[];
 }
 
-export interface DefaultFlagOptions extends FlagOptions {
-  isDefaultFlag: true,
-  handle: (ctx: Context) => any;
+export interface ChannelArgOptions {
+  acceptCategory: boolean;
+  canBeHiddenBot: boolean;
+  canBeHiddenUser: boolean;
+  types: GuildChannel['type'][],
 }
 
 export type ParameterOptions = ArgumentOptions & FlagOptions;
