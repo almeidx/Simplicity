@@ -36,8 +36,16 @@ export interface ChannelArgOptions {
   types: GuildChannel['type'][],
 }
 
+export interface EmojiArgOptions {
+  sameGuildOnly: boolean;
+}
+
 export type ParameterOptions = ArgumentOptions & FlagOptions;
-export type ParameterOptionsTypes = ParameterOptions & BooleanArgOptions
-export type ArgumentTypes = 'boolean';
+export type ParameterOptionsTypes = ParameterOptions
+  & BooleanArgOptions
+  & ChannelArgOptions
+  & EmojiArgOptions
+
+export type ArgumentTypes = 'boolean' | 'emoji';
 export type FlagTypes = 'booleanFlag' | ArgumentTypes;
 export type ParameterTypes = FlagTypes | ArgumentTypes
