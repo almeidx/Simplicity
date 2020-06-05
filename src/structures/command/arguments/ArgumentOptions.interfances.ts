@@ -29,4 +29,6 @@ export interface DefaultFlagOptions extends FlagOptions {
 
 export type ParameterOptions = ArgumentOptions & FlagOptions;
 export type ParameterOptionsTypes = ParameterOptions & BooleanArgOptions
-export type ParameterTypes = 'boolean';
+export type ArgumentTypes = 'boolean';
+export type FlagTypes = 'booleanFlag' | ArgumentTypes;
+export type ParameterTypes = FlagTypes | ArgumentTypes

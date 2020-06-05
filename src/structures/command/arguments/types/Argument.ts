@@ -1,7 +1,7 @@
 import { ParameterOptions } from '../ArgumentOptions.interfances';
 import CommandContext from '../../CommandContext';
 
-export default abstract class Argument<Result, Options> {
+export default abstract class Argument<Result, Options = ParameterOptions> {
   parseOptions(
     options: Partial<Options & ParameterOptions> = {},
   ): ParameterOptions {
