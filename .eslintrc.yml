@@ -26,6 +26,8 @@ rules:
     - off
   '@typescript-eslint/no-unsafe-assignment':
     - off
+  guard-for-in:
+    - off
   no-await-in-loop:
     - off
   class-methods-use-this:
