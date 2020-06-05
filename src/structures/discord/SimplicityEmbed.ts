@@ -24,11 +24,11 @@ interface EmbedOptions {
 }
 
 interface FieldOptions {
-  inline: boolean;
-  name: string;
-  options: TOptions;
-  value: string;
-  valueOptions: TOptions;
+  inline?: boolean;
+  name: string | number;
+  options?: TOptions;
+  value: string | number;
+  valueOptions?: TOptions;
 }
 
 /**

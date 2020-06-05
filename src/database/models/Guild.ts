@@ -1,6 +1,8 @@
 /* eslint-disable max-classes-per-file */
 import { Schema, model } from 'mongoose';
-import { Guild, GuildModule, GuildStarboard } from './Guild.interfaces';
+import {
+  Guild, GuildModule, GuildStarboard, GuildModel,
+} from './Guild.interfaces';
 
 const GuildModuleSchema = new Schema<GuildModule>({
   enable: { type: Boolean, default: false },
@@ -32,6 +34,13 @@ const GuildSchema = new Schema<Guild>({
   timestamps: true,
 });
 
-const guildModel = model<Guild>('guilds', GuildSchema);
+GuildSchema.method('get', async function get(this: Guild, guildId: string): Promise<Guild> {
+  const guildModel = this.model<Guild>('guilds');
+  const find = await guildModel.findOne({ id: guildId });
+  if (find) return find;
+  return guildModel.create({ id: guildId });
+});
+
+const guildModel = model<Guild, GuildModel>('guilds', GuildSchema);
 
 export default guildModel;

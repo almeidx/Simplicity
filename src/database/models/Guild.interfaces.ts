@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Model } from 'mongoose';
 
 export type logTypes = 'GuildMemberAdd' | 'GuildMemberRemove' | 'GuildUpdates' | 'MessageUpdate' | 'UserUpdate' | 'VoiceChannelLogs'
 
@@ -18,5 +18,9 @@ export interface Guild extends Document {
   autorole: GuildModule;
   starboard: GuildStarboard;
   disableChannels: string[];
-  logs: Map<logTypes, GuildModule>
+  logs: Map<logTypes, GuildModule>;
+}
+
+export interface GuildModel extends Model<Guild> {
+  get(guildId: string): Promise<Guild>
 }
