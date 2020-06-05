@@ -231,8 +231,8 @@ class SimplicityEmbed extends MessageEmbed {
 
       this.fields.push(
         SimplicityEmbed.normalizeField(
-          TextUtil.parse(name, this.getParseTextOptions(options)),
-          TextUtil.parse(value, this.getParseTextOptions(valueOptions)),
+          TextUtil.parse(String(name), this.getParseTextOptions(options)),
+          TextUtil.parse(String(value), this.getParseTextOptions(valueOptions)),
           inline,
         ),
       );

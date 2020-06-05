@@ -2,13 +2,13 @@ import { Guild } from 'discord.js';
 import { SimplicityEmbed, SimplicityListener, SimplicityClient } from '../../structures';
 import { JoinLeaveGuild, JoinLeaveGuildTypes } from '../../database';
 
-export default class GuildCreateListener extends SimplicityListener {
+export default class GuildDeleteListener extends SimplicityListener {
   constructor(client: SimplicityClient) {
-    super('guildCreate', client);
+    super('guildDelete', client);
   }
 
   async exec(guild: Guild): Promise<void> {
-    this.sendPrivateMessage('GUILD_JOIN',
+    this.sendPrivateMessage('GUILD_LEAVE',
       new SimplicityEmbed(guild.owner?.user)
         .setThumbnail(guild)
         .addFields(
@@ -18,11 +18,11 @@ export default class GuildCreateListener extends SimplicityListener {
         ));
 
     if (this.client.database) {
-      await this.client.database.findGuild(guild.id);
+      await this.client.database.guilds.deleteOne({ id: guild.id });
       const data: JoinLeaveGuild = {
         eventAt: new Date(),
         guildId: guild.id,
-        type: JoinLeaveGuildTypes.JOIN,
+        type: JoinLeaveGuildTypes.LEAVE,
       };
       await this.client.database.joinLeaveGuild.create(data);
     }
