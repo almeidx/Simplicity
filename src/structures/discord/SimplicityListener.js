@@ -1,5 +1,6 @@
 'use strict';
 
+const Config = require('@data/config');
 const LogUtil = require('@util/LogUtil');
 const i18next = require('i18next');
 const SimplicityEmbed = require('./SimplicityEmbed');
@@ -71,7 +72,7 @@ class SimplicityListener {
    * @returns {boolean|Promise<Message>} The message sent or false.
    */
   sendPrivateMessage(envName, content) {
-    const id = envName && process.env[envName.toUpperCase()];
+    const id = envName && Config[envName.toUpperCase()];
     const channel = this.client && id && this.client.channels.cache.get(id);
     if (channel) return channel.send(content);
     return false;

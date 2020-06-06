@@ -27,7 +27,7 @@ class CommandErrorListener extends SimplicityListener {
         .addField('» Error', `\`\`\`${error}\`\`\``)
         .setThumbnail(guild || author);
 
-      this.sendPrivateMessage('CHANNEL_LOG_ERROR', embed);
+      this.sendPrivateMessage('ERROR_LOG_CHANNEL', embed);
     } else {
       if (error.notEmbed) canEmbed = false;
       const args = { author, canEmbed, command, prefix, send, t };

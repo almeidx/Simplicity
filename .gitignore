@@ -12,3 +12,6 @@ yarn.lock
 
 # Log files
 yarn-error.log
+
+# Build folder
+dist/

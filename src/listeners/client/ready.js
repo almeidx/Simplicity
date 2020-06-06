@@ -12,7 +12,7 @@ class ReadyListener extends SimplicityListener {
     const message = `Logged on ${client.guilds.cache.size} guilds and ${client.users.cache.size} users`;
     Logger.log(`[Ready] ${message}`);
 
-    this.sendPrivateMessage('bot_log',
+    this.sendPrivateMessage('BOT_LOG_CHANNEL',
       new SimplicityEmbed({ author: client.user })
         .setColor('GREEN')
         .setDescription(message));

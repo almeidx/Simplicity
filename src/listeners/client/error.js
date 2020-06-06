@@ -11,7 +11,7 @@ class ErrorListener extends SimplicityListener {
   on(_, error) {
     Logger.error(`[Error]\n${error.stack}`);
 
-    this.sendPrivateMessage('channel_log_error',
+    this.sendPrivateMessage('ERROR_LOG_CHANNEL',
       new SimplicityEmbed()
         .setError()
         .setDescription(cleanString(error.stack)));
