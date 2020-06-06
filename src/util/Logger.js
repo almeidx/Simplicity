@@ -53,9 +53,9 @@ class Logger {
    * @private
    */
   static _log(color, type, ...texts) {
-    console[type](`${Logger.timestampColor} ${setColor(color, texts)}`);
+    console[type](`${Logger.timestampColor} ${setColor(color, texts.join(' '))}`);
     if (process.env.NODE_ENV !== 'development') {
-      return LogFile.addInfo(`${Logger.timestamp} ${type.toUpperCase()} - ${texts}`);
+      return LogFile.addInfo(`${Logger.timestamp} ${type.toUpperCase()} - ${texts.join(' ')}`);
     }
   }
 
