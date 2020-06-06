@@ -13,7 +13,7 @@ class LogFile {
 
   static async createFile() {
     try {
-      await fs.writeFileSync(LOG_FILE_PATH);
+      await fs.writeFileSync(LOG_FILE_PATH, '');
     } catch {
       await LogFile.createTmpFolder();
       await LogFile.createFile();
