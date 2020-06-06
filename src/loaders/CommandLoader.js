@@ -3,6 +3,7 @@
 const CommandCollection = require('@command/CommandCollection');
 const { Loader } = require('@structures');
 const { requireDirectory } = require('@util/FileUtil');
+const Logger = require('@util/Logger');
 
 class CommandLoader extends Loader {
   constructor(client) {
@@ -11,7 +12,7 @@ class CommandLoader extends Loader {
   }
 
   async load() {
-    await requireDirectory('src/commands', this.loadCommand.bind(this), (x, ...args) => console.error(x.stack, args));
+    await requireDirectory('src/commands', this.loadCommand.bind(this), (x, ...args) => Logger.error(x.stack, args));
     this.client.commands = this.commands;
     return true;
   }

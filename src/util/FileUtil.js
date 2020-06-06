@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
+const Logger = require('@util/Logger');
 
 /**
  * Contains various file utility methods.
@@ -42,7 +43,7 @@ class FileUtil {
         const isDirectory = await FileUtil.stat(fullPath).then((f) => f.isDirectory());
         if (isDirectory) return FileUtil.requireDirectory(fullPath, success, error);
       }
-    })).then(() => filesObject).catch(console.error);
+    })).then(() => filesObject).catch(Logger.error);
   }
 }
 

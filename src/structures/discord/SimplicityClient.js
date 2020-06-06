@@ -31,9 +31,9 @@ class SimplicityClient extends Client {
       try {
         // eslint-disable-next-line no-await-in-loop
         result = await loader.load();
-        console.log(`${loader.constructor.name} carregou sem problemas!`);
+        Logger.log(`${loader.constructor.name} carregou sem problemas!`);
       } catch (err) {
-        console.error('ops', err);
+        Logger.error('ops', err);
         result = false;
       } finally {
         if (!result && loader.required) process.exit(1);

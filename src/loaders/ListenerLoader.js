@@ -2,6 +2,7 @@
 
 const Loader = require('@structures/Loader');
 const { requireDirectory } = require('@util/FileUtil');
+const Logger = require('@util/Logger');
 
 class ListenerLoader extends Loader {
   constructor(client) {
@@ -14,7 +15,7 @@ class ListenerLoader extends Loader {
       const listener = new Listener(this.client);
       logs.push(fileName);
       this.client.on(fileName, (...args) => listener.on(this.client, ...args));
-    }, console.error);
+    }, Logger.error);
 
     this.client.availableLogs = logs;
 
