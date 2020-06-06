@@ -1,6 +1,7 @@
 'use strict';
 
 const moment = require('moment');
+const LogFile = require('./LogFile');
 moment.locale('pt-br');
 
 const colors = {
@@ -28,14 +29,17 @@ class Logger {
     throw new Error(`The ${this.constructor.name} class may not be instantiated`);
   }
 
+  static get timestamp() {
+    return moment().format('DD/MM/YYYY HH:mm:ss');
+  }
+
   /**
    * Gets the current timestamp.
    * @returns {string} The current timestamp formatted.
-   * @private
    * @readonly
    */
-  static get _timestamp() {
-    return setColor('FgMagenta', moment().format('DD/MM/YYYY HH:mm:ss'));
+  static get timestampColor() {
+    return setColor('FgMagenta', Logger.timestamp);
   }
 
   /**
@@ -47,7 +51,10 @@ class Logger {
    * @private
    */
   static _log(color, text, type = 'log') {
-    return console[type](`${Logger._timestamp} ${setColor(color, text)}`);
+    if (process.env.NODE_ENV === 'development') {
+      return console[type](`${Logger.timestampColor} ${setColor(color, text)}`);
+    }
+    return LogFile.addInfo(`${Logger.timestamp} ${type.toUpperCase()} - ${text}`);
   }
 
   /**
@@ -87,11 +94,15 @@ class Logger {
    * @returns {void}
    */
   static logCommand({ guild, channel, author, content }) {
-    const warn = setColor('FgYellow', '[Command]');
-    const g = setColor('FgBlue', guild);
-    const c = setColor('FgCyan', `#${channel}`);
-    const u = setColor('FgGreen', `@${author}`);
-    return console.warn(`${Logger._timestamp} ${warn} ${g} ${c} ${u} ${content}`);
+    if (process.env.NODE_ENV === 'development') {
+      const warn = setColor('FgYellow', '[Command]');
+      const g = setColor('FgBlue', guild);
+      const c = setColor('FgCyan', `#${channel}`);
+      const u = setColor('FgGreen', `@${author}`);
+      return console.warn(`${Logger._timestamp} ${warn} ${g} ${c} ${u} ${content}`);
+    }
+    return LogFile.addInfo(
+      `${Logger.timestamp} COMMAND_USE - GUILD_ID: ${guild.id} USER_ID: ${author.id} CONTENT: ${content}`);
   }
 }
 
