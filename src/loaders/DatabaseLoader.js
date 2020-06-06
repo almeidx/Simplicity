@@ -2,6 +2,7 @@
 
 const Database = require('@database/Database');
 const Loader = require('@structures/Loader');
+const Logger = require('@util/Logger');
 
 class DatabaseLoader extends Loader {
   constructor(client) {
@@ -13,7 +14,7 @@ class DatabaseLoader extends Loader {
       const database = await Database.connect();
       this.client.database = database;
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
       this.client.database = null;
     }
     return this.client.databaseLoaded;
