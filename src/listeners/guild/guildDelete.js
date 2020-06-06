@@ -10,7 +10,7 @@ class GuildDeleteListener extends SimplicityListener {
   async on(client, guild) {
     const owner = guild.owner;
 
-    this.sendMessage('guild_leave',
+    this.sendPrivateMessage('GUILD_LEAVE_CHANNEL',
       new SimplicityEmbed({ author: owner.user })
         .addField('Guild Name', guild.name, true)
         .addField('Guild ID', guild.id, true)

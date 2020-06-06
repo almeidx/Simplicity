@@ -39,18 +39,6 @@ class SimplicityListener {
   }
 
   /**
-   * Either sends a log message or a message using an ENV variable.
-   * @param {string} id The env name of the ID of the guild.
-   * @param {*} content The content to send.
-   * @returns {void}
-   */
-  async sendMessage(id, content) {
-    const resultPrivate = this.sendPrivateMessage(id, content);
-    if (resultPrivate === false) return resultPrivate;
-    await this.sendLogMessage(id, content);
-  }
-
-  /**
    * Sends a message to the logging channel of a guild.
    * @param {string} guildID The ID of the guild.
    * @param {string} log The name of the log.
@@ -75,7 +63,6 @@ class SimplicityListener {
     const id = envName && Config[envName.toUpperCase()];
     const channel = this.client && id && this.client.channels.cache.get(id);
     if (channel) return channel.send(content);
-    return false;
   }
 }
 

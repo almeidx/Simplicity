@@ -11,7 +11,7 @@ class GuildCreateListener extends SimplicityListener {
     // GET Function create when not found
     const owner = guild.owner;
 
-    this.sendMessage('guild_join',
+    this.sendPrivateMessage('GUILD_JOIN_CHANNEL',
       new SimplicityEmbed({ author: owner.user })
         .addField('Guild Name', guild.name, true)
         .addField('Guild ID', guild.id, true)
