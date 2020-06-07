@@ -53,6 +53,6 @@ export type ParameterOptionsTypes = ParameterOptions
   & ChannelArgOptions
   & EmojiArgOptions
 
-export type ArgumentTypes = 'boolean' | 'emoji';
+export type ArgumentTypes = 'boolean' | 'emoji' | 'user';
 export type FlagTypes = 'booleanFlag' | ArgumentTypes;
 export type ParameterTypes = FlagTypes | ArgumentTypes

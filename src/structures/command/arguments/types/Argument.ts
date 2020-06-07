@@ -19,12 +19,12 @@ export default abstract class Argument<Result, Options = ParameterOptions> {
 
   handle(
     arg: string, options: Options & ParameterOptions, ctx: CommandContext,
-  ): Result | void | null {
+  ): Result | void | null | Promise<Result | void | null> {
     return this.parse(options, arg, ctx);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   abstract parse(
     opts: Options & ParameterOptions, arg: string, ctx: CommandContext
-  ): Result | void | null;
+  ): Result | void | null | Promise<Result | void | null>;
 }
