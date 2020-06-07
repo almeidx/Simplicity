@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import 'tsconfig-paths/register';
+import './structures/discord/Structures';
 
 import { Constants } from './util';
 import { SimplicityClient } from './structures';

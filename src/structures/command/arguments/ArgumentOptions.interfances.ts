@@ -18,7 +18,6 @@ export interface ArgumentOptions {
   showUsage: boolean;
 }
 
-
 export interface DefaultFlagOptions extends FlagOptions {
   isDefaultFlag: true,
   handle: (ctx: Context) => any;
@@ -34,6 +33,14 @@ export interface ChannelArgOptions {
   canBeHiddenBot: boolean;
   canBeHiddenUser: boolean;
   types: GuildChannel['type'][],
+}
+
+export interface UserArgOptions {
+  acceptBot?: boolean;
+  acceptDeveloper?: boolean;
+  acceptSelf?: boolean;
+  acceptUser?: boolean;
+  fetchGlobal?: boolean;
 }
 
 export type ParameterOptions = ArgumentOptions & FlagOptions;
