@@ -40,11 +40,19 @@ export interface EmojiArgOptions {
 }
 
 export interface UserArgOptions {
-  acceptBot?: boolean;
-  acceptDeveloper?: boolean;
-  acceptSelf?: boolean;
-  acceptUser?: boolean;
-  fetchGlobal?: boolean;
+  acceptBot: boolean;
+  acceptDeveloper: boolean;
+  acceptSelf: boolean;
+  acceptUser: boolean;
+  fetchGlobal: boolean;
+}
+
+export interface StringArgOptions {
+  cleanContent: boolean;
+  errorRegex?: RegExp | null;
+  missingRegex?: string | null;
+  maxLength: number;
+  truncate: boolean;
 }
 
 export type ParameterOptions = ArgumentOptions & FlagOptions;
@@ -53,6 +61,6 @@ export type ParameterOptionsTypes = ParameterOptions
   & ChannelArgOptions
   & EmojiArgOptions
 
-export type ArgumentTypes = 'boolean' | 'emoji' | 'user';
+export type ArgumentTypes = 'boolean' | 'emoji' | 'user' | 'string';
 export type FlagTypes = 'booleanFlag' | ArgumentTypes;
 export type ParameterTypes = FlagTypes | ArgumentTypes
