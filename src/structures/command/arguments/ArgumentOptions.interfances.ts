@@ -1,4 +1,3 @@
-import { Context } from 'vm';
 import { GuildChannel } from 'discord.js';
 import CommandContext from '../CommandContext';
 
@@ -20,7 +19,7 @@ export interface ArgumentOptions {
 
 export interface DefaultFlagOptions extends FlagOptions {
   isDefaultFlag: true,
-  handle: (ctx: Context) => any;
+  handle: (ctx: CommandContext) => any;
 }
 
 export interface BooleanArgOptions {
