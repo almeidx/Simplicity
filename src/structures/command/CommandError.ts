@@ -1,5 +1,5 @@
-// import CommandUtil from '@util/CommandUtil';
 import i18next, { TFunction, TOptions } from 'i18next';
+import CommandUtil from './CommandUtil';
 import CommandContext from './CommandContext';
 import SimplicityEmbed from '../discord/SimplicityEmbed';
 import { Logger, Util } from '../../util';
@@ -8,7 +8,7 @@ export interface Error {
   code?: string;
 }
 
-const getTranslation = (dirct: string, t: TFunction) => i18next.exists(dirct) && t(dirct);
+const getTranslation = (path: string, t: TFunction) => i18next.exists(path) && t(path);
 
 export default class CommandError extends Error {
   notEmbed: boolean;
@@ -44,7 +44,8 @@ export default class CommandError extends Error {
     ctx: CommandContext,
   ): void {
     const usage = onUsage
-      && ctx.command.usagePath; // && CommandUtil.getUsage({ command, prefix, t });
+      && ctx.command.usagePath
+      && CommandUtil.getUsage(ctx);
     const keyUsage = onUsage && ctx.t('errors:usage');
 
     if (!Util.canSendEmbed(ctx.message)) {
