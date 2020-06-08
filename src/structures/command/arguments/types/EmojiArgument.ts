@@ -7,15 +7,19 @@ import CommandContext from '../../CommandContext';
 const EMOJI_REGEX = /^<(a)?:(\w+):(\d{16,18})>$/;
 
 export default class EmojiArgument extends Argument<GuildEmoji, EmojiArgOptions> {
-  parseOptions(options: Partial<EmojiArgOptions> = {}): EmojiArgOptions & ParameterOptions {
+  parseOptions(
+    options: Partial<EmojiArgOptions> = {},
+  ):Required<EmojiArgOptions & ParameterOptions> {
     return {
       ...super.parseOptions(options),
-      sameGuildOnly: !!options.sameGuildOnly,
+      sameGuildOnly: false,
+      ...options,
     };
   }
 
   parse(
-    opts: EmojiArgOptions & ParameterOptions, arg: string, { t, client, guild }: CommandContext,
+    opts: Required<EmojiArgOptions & ParameterOptions>,
+    arg: string, { t, client, guild }: CommandContext,
   ): GuildEmoji {
     const regexResult = EMOJI_REGEX.exec(arg);
     if (regexResult) {

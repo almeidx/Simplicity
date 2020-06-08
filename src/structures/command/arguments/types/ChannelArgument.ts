@@ -22,18 +22,21 @@ const ChannelTypes: GuildChannel['type'][] = [
 ];
 
 export default class ChannelArgument extends Argument<GuildChannel, ChannelArgOptions> {
-  parseOptions(options: Partial<ChannelArgOptions> = {}): ChannelArgOptions & ParameterOptions {
+  parseOptions(options: ChannelArgOptions = {}): Required<ChannelArgOptions & ParameterOptions> {
     return {
       ...super.parseOptions(options),
-      acceptCategory: options.acceptCategory ?? false,
-      canBeHiddenBot: options.canBeHiddenBot ?? false,
-      canBeHiddenUser: options.canBeHiddenUser ?? false,
-      types: options.types || ['text'],
+      acceptCategory: false,
+      canBeHiddenBot: false,
+      canBeHiddenUser: false,
+      types: ['text'],
+      ...options,
     };
   }
 
   parse(
-    opts: ChannelArgOptions & ParameterOptions, arg: string, { t, guild, member }: CommandContext,
+    opts: Required<ChannelArgOptions & ParameterOptions>,
+    arg: string,
+    { t, guild, member }: CommandContext,
   ): null | GuildChannel {
     if (!arg) return null;
 

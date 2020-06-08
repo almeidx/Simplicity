@@ -3,12 +3,10 @@ import { TFunction } from 'i18next';
 import CommandError from '../CommandError';
 import { Arguments, anyArgument } from './types';
 import {
-  ParameterTypes, ParameterOptionsTypes, ArgumentFunc, DefaultFlagOptions,
+  ArgumentFunc, ParameterOptsTypes, CommandParameter, FlagOptions,
 } from './ArgumentOptions.interfances';
 import CommandContext from '../CommandContext';
 
-export type CommandArgOptions = ParameterOptionsTypes & { type: ParameterTypes | ParameterTypes[] };
-export type CommandArg = CommandArgOptions & { parameters: anyArgument[] };
 
 const isNull = (n: any) => n === null || n === undefined;
 
@@ -22,24 +20,28 @@ const funcOrString = (
 };
 
 export default class CommandParameters {
-  static normalizeParam(opts: CommandArgOptions): CommandArg {
+  static normalizeParam(
+    opts: ParameterOptsTypes | ParameterOptsTypes & FlagOptions,
+  ): CommandParameter {
+    let options = {};
     const parameters: anyArgument[] = [];
     if (Array.isArray(opts.type)) {
       for (const param of opts.type) {
         parameters.push(Arguments[param]);
+        options = Arguments[param].parseOptions(opts);
       }
     } else {
       parameters.push(Arguments[opts.type]);
+      options = Arguments[opts.type].parseOptions(opts);
     }
-
     return {
-      ...opts,
+      ...options,
       parameters,
-    };
+    } as CommandParameter;
   }
 
   static async handleFlags(
-    context: CommandContext, flags: (CommandArg & DefaultFlagOptions)[],
+    context: CommandContext, flags: CommandParameter[],
   ): Promise<Record<string, any>> {
     const flagsObject: Record<string, any> = {};
     const flagIndex = context.args.findIndex((a) => a.startsWith('--'));
@@ -70,7 +72,7 @@ export default class CommandParameters {
    * @param {CommandContext} context The command context
    * @param {Object[]} args Array of the command args
    */
-  static async handleArguments(context: CommandContext, args: CommandArg[]): Promise<any[]> {
+  static async handleArguments(context: CommandContext, args: CommandParameter[]): Promise<any[]> {
     const parsedArgs: any[] = [];
 
     const parseState = { argIndex: 0 };
@@ -98,7 +100,7 @@ export default class CommandParameters {
   }
 
   static async parseParameter(
-    context: CommandContext, param: CommandArg, query: string,
+    context: CommandContext, param: CommandParameter, query: string,
   ): Promise<any> {
     const result = await CommandParameters.runParameter(param, query, context);
     if (isNull(result) && !param.optional) {
@@ -120,14 +122,14 @@ export default class CommandParameters {
   }
 
   static getErrorTraslation(
-    arg: CommandArg, wordInvalid: any, context: CommandContext,
+    arg: CommandParameter, wordInvalid: any, context: CommandContext,
   ): Promise<string> | string {
     return funcOrString(arg.missingError, context.t, wordInvalid, context);
   }
 
   // eslint-disable-next-line consistent-return
   static async runParameter(
-    param: CommandArg, query: string, context: CommandContext,
+    param: CommandParameter, query: string, context: CommandContext,
   ): Promise<any> {
     for (const parameter of param.parameters) {
       // eslint-disable-next-line no-await-in-loop

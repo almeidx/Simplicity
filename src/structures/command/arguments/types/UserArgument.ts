@@ -8,14 +8,15 @@ import PermissionUtil from '../../../../util/PermissionUtil';
 const MENTION_REGEX = /^(?:<@!?)?([0-9]{16,18})(?:>)?$/;
 
 export default class UserArgument extends Argument<User, UserArgOptions> {
-  parseOptions(options: Partial<UserArgOptions> = {}): UserArgOptions & ParameterOptions {
+  parseOptions(options: Partial<UserArgOptions> = {}): Required<UserArgOptions & ParameterOptions> {
     return {
       ...super.parseOptions(options),
-      acceptBot: options.acceptBot || true,
-      acceptDeveloper: options.acceptDeveloper || true,
-      acceptSelf: options.acceptSelf || true,
-      acceptUser: options.acceptUser || true,
-      fetchGlobal: options.fetchGlobal || true,
+      acceptBot: true,
+      acceptDeveloper: true,
+      acceptSelf: true,
+      acceptUser: true,
+      fetchGlobal: true,
+      ...options,
     };
   }
 

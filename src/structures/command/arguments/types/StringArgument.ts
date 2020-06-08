@@ -6,20 +6,23 @@ import CommandContext from '../../CommandContext';
 
 export default class StringArgument extends Argument<string, StringArgOptions> {
   parseOptions(
-    options: Partial<StringArgOptions & ParameterOptions> = {},
-  ): StringArgOptions & ParameterOptions {
+    options: StringArgOptions & Partial<ParameterOptions> = {},
+  ): Required<StringArgOptions & ParameterOptions> {
     return {
       ...super.parseOptions(options),
-      cleanContent: !!options.cleanContent,
-      errorRegex: options.errorRegex,
-      missingRegex: options.missingRegex || 'errors:generic',
-      maxLength: Number(options.maxLength) || 0,
-      truncate: !!options.truncate,
+      cleanContent: false,
+      errorRegex: null,
+      missingRegex: 'errors:generic',
+      maxLength: 0,
+      truncate: false,
+      ...options,
     };
   }
 
   parse(
-    opts: StringArgOptions & ParameterOptions, arg: string, { t, message }: CommandContext,
+    opts: Required<StringArgOptions & ParameterOptions>,
+    arg: string,
+    { t, message }: CommandContext,
   ): string {
     let result = arg;
     if (opts.cleanContent) {
