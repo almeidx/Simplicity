@@ -39,7 +39,7 @@ class Help extends Command {
       return send(embed);
     }
 
-    const command = client.commands.fetch(cmdName.toLowerCase());
+    const command = client.commands.find(cmdName.toLowerCase());
     if (!command) throw new CommandError('commands:help.commandUndefined');
 
     const embed = await getHelp({ client, command, prefix, t });
