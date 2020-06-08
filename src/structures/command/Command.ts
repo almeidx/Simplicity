@@ -103,7 +103,7 @@ export default abstract class Command {
 
       await this.run(ctx, ...args);
     } catch (error) {
-      // this.client.emit('commandError', error, ctx);
+      CommandError.handle(error, ctx);
     } finally {
       if (!isDev && this.usersCooldown && !inCooldown) {
         this.usersCooldown.add(ctx.author.id);

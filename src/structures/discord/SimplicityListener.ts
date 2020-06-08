@@ -1,9 +1,10 @@
 /* eslint-disable consistent-return */
 import {
-  TextChannel, MessageAdditions, Message, ClientEvents,
+  MessageAdditions, Message, ClientEvents,
 } from 'discord.js';
 import SimplicityClient from './SimplicityClient';
 import Config from '../../config';
+import Util from '../../util/Util';
 
 /**
  * Main Listener class.
@@ -36,7 +37,6 @@ export default abstract class SimplicityListener {
     configName: keyof typeof Config['CHANNELS'],
     content: MessageAdditions,
   ): void | Promise<Message | Message[]> {
-    const channel = this.client.channels.cache.get(Config.CHANNELS[configName]);
-    if (channel instanceof TextChannel) return channel.send(content);
+    Util.sendPrivateMessage(this.client, configName, content);
   }
 }

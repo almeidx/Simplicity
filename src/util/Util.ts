@@ -1,3 +1,8 @@
+import {
+  Message, TextChannel, DMChannel, MessageAdditions, Client,
+} from 'discord.js';
+import Config from '../config';
+
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 /**
@@ -71,6 +76,23 @@ class Util {
       fn(state.slice(0, length), i);
       state = state.slice(length);
     }
+  }
+
+  static canSendEmbed(message: Message): boolean {
+    if (message.channel instanceof DMChannel) return true;
+    return message.channel
+      .permissionsFor(String(message.guild?.me?.id))
+      ?.has('EMBED_LINKS')
+      ?? true;
+  }
+
+  static async sendPrivateMessage(
+    client: Client,
+    configName: keyof typeof Config['CHANNELS'],
+    content: MessageAdditions,
+  ): Promise<void> {
+    const channel = client.channels.cache.get(Config.CHANNELS[configName]);
+    if (channel instanceof TextChannel) await channel.send(content);
   }
 }
 

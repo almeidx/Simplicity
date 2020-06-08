@@ -7,6 +7,7 @@ import { EmojiUtil, Emojis } from '../../util';
 import SimplicityClient from '../discord/SimplicityClient';
 
 import { GuildDoc } from '../../database/models/Guild.interfaces';
+import Command from './Command';
 
 export interface CommandContextOptions {
   message: Message;
@@ -15,10 +16,12 @@ export interface CommandContextOptions {
   language?: string;
   t: TFunction;
   guildData: GuildDoc
+  command: Command;
 }
 
 export default class CommandContext {
   message: Message;
+  command: Command;
   // mentions: MessageMentions;
   member: GuildMember;
   author: User;
@@ -30,15 +33,14 @@ export default class CommandContext {
   language: string;
   args: string[];
   t: TFunction;
-  // send: TextChannel['send'];
-  // canEmbed: boolean;
+  send: TextChannel['send'];
   database: SimplicityClient['database']
   guildData: GuildDoc;
   flags: Record<string, any>;
   emoji: this['getEmoji'];
 
   constructor(opts: CommandContextOptions) {
-    // this.command = opts.command;
+    this.command = opts.command;
     this.args = opts.args;
     this.prefix = opts.prefix;
     this.t = opts.t;
@@ -57,9 +59,7 @@ export default class CommandContext {
     this.client = this.message.client as SimplicityClient;
     // this.database = this.client.database;
     // this.voiceChannel = this.member?.voice.channel;
-    // this.send = this.channel.send.bind(this.channel);
-    // this.canEmbed = this.channel
-    // .permissionsFor(String(this.guild.me?.id))?.has('EMBED_LINKS') ?? true;
+    this.send = this.channel.send.bind(this.channel);
   }
 
   getEmoji(id: boolean, ...emojis: Emojis[]): string {
