@@ -73,13 +73,17 @@ export interface StringOpts extends StringArgOptions {
   type: 'string';
 }
 
+export interface BooleanFlagOpts {
+  type: 'booleanFlag';
+}
+
 export type ParameterOptionsTypes = BooleanArgOptions
   & ChannelArgOptions
   & EmojiArgOptions
   & StringArgOptions
 
-export type ParameterOpts = BoolOpts | UserOpts | EmojiOpts | StringOpts;
-export type ParameterTypes = ParameterOpts['type'] | 'booleanFlag';
+export type ParameterOpts = BoolOpts | UserOpts | EmojiOpts | StringOpts | BooleanFlagOpts;
+export type ParameterTypes = ParameterOpts['type'];
 
 export type ParameterOptsTypes = ((ParameterOpts
   | (ParameterOptionsTypes & { type: ParameterTypes[] }))

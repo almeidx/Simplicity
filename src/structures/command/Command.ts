@@ -7,7 +7,7 @@ import CommandError from './CommandError';
 import CommandRequirements, { CommandRequirementOpts } from './CommandRequirements';
 import CommandParameters from './arguments/CommandParameter';
 import CommandCooldown, { CooldownTypes } from './cooldown/CommandCooldown';
-// import defaultFlags from './defaultFlags'
+import DefaultFlags from './arguments/DefaultFlags';
 import SimplicityClient from '../discord/SimplicityClient';
 import CommandContext from './CommandContext';
 
@@ -47,9 +47,7 @@ export default abstract class Command {
     this.args = options.args?.map((arg) => CommandParameters.normalizeParam(arg)) ?? [];
     this.flags = options.flags?.map((flag) => CommandParameters.normalizeParam(flag)) ?? [];
 
-    // const flags = options.flags || this.flags || [];
-    // flags.push(...defaultFlags);
-    // this.flags = CommandParameters.parseOptions(flags);
+    this.flags.push(...DefaultFlags);
 
     if (this.cooldown) {
       this.usersCooldown = new CommandCooldown(this.cooldown);

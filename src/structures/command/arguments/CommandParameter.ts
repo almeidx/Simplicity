@@ -3,7 +3,7 @@ import { TFunction } from 'i18next';
 import CommandError from '../CommandError';
 import { Arguments, anyArgument } from './types';
 import {
-  ArgumentFunc, ParameterOptsTypes, CommandParameter, FlagOptions,
+  ArgumentFunc, ParameterOptsTypes, CommandParameter, FlagOptions, DefaultFlagOptions,
 } from './ArgumentOptions.interfances';
 import CommandContext from '../CommandContext';
 
@@ -21,7 +21,10 @@ const funcOrString = (
 
 export default class CommandParameters {
   static normalizeParam(
-    opts: ParameterOptsTypes | ParameterOptsTypes & FlagOptions,
+    opts:
+      ParameterOptsTypes |
+      ParameterOptsTypes & FlagOptions |
+      ParameterOptsTypes & FlagOptions & DefaultFlagOptions,
   ): CommandParameter {
     let options = {};
     const parameters: anyArgument[] = [];
