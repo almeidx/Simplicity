@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "noUnusedLocals": false,
     "target": "es2019",
     "module": "commonjs",
     "noImplicitAny": true,
-    "noUnusedLocals": true,
     "outDir": "dist",
     "baseUrl": "src",
     "paths": {

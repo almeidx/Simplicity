@@ -3,7 +3,6 @@
 
 import moment from 'moment';
 import { Message } from 'discord.js';
-import CommandContext from '../structures/command/CommandContext';
 
 moment.locale('pt-br');
 
