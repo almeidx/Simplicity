@@ -2,6 +2,8 @@
 /* eslint-disable no-console */
 
 import moment from 'moment';
+import { Message } from 'discord.js';
+import CommandContext from '../structures/command/CommandContext';
 
 moment.locale('pt-br');
 
@@ -70,22 +72,22 @@ export default class Logger {
     return Logger.createLog(console.warn, Colors.FgYellow, message, optionalParams);
   }
 
-  // /**
-  //  * Logs a command.
-  //  * @param {Object} object Object with multiple required properties
-  //  * @param {User} object.author The author of the command.
-  //  * @param {messageBasedChannel} object.channel The channel where the command was used.
-  //  * @param {string} object.content The content of the command message.
-  //  * @param {Guild} object.guild The guild where the command was used.
-  //  * @returns {void}
-  //  */
-  // static logCommand({
-  //   guild, channel, author, content,
-  // }) {
-  //   const warn = setColor('FgYellow', '[Command]');
-  //   const g = setColor('FgBlue', guild);
-  //   const c = setColor('FgCyan', `#${channel}`);
-  //   const u = setColor('FgGreen', `@${author}`);
-  //   return console.warn(`${Logger._timestamp} ${warn} ${g} ${c} ${u} ${content}`);
-  // }
+  /**
+   * Logs a command.
+   * @param {Object} object Object with multiple required properties
+   * @param {User} object.author The author of the command.
+   * @param {messageBasedChannel} object.channel The channel where the command was used.
+   * @param {string} object.content The content of the command message.
+   * @param {Guild} object.guild The guild where the command was used.
+   * @returns {void}
+   */
+  static logCommand({
+    guild, channel, author, content,
+  }: Message) {
+    const warn = setColor(Colors.FgYellow, '[Command]');
+    const g = setColor(Colors.FgBlue, guild?.name ?? 'DM');
+    const c = setColor(Colors.FgCyan, `#${channel}`);
+    const u = setColor(Colors.FgGreen, `@${author}`);
+    return console.warn(`${Logger.timestamp} ${warn} ${g} ${c} ${u} ${content}`);
+  }
 }

@@ -15,7 +15,7 @@ export interface CommandContextOptions {
   prefix: string;
   language?: string;
   t: TFunction;
-  guildData: GuildDoc
+  guildData?: GuildDoc
   command: Command;
 }
 
@@ -35,7 +35,7 @@ export default class CommandContext {
   t: TFunction;
   send: TextChannel['send'];
   database: SimplicityClient['database']
-  guildData: GuildDoc;
+  guildData?: GuildDoc;
   flags: Record<string, any>;
   emoji: this['getEmoji'];
 

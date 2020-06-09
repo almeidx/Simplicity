@@ -10,7 +10,7 @@ export default class CommandCollection extends Collection<string, Command> {
   }
 
   get(str: string): Command | undefined {
-    return this.get(String(this.aliases.get(str.toLowerCase())));
+    return super.get(String(this.aliases.get(str.toLowerCase())));
   }
 
   register(command: Command): void {

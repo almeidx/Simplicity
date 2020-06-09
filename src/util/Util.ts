@@ -2,6 +2,7 @@ import {
   Message, TextChannel, DMChannel, MessageAdditions, Client,
 } from 'discord.js';
 import Config from '../config';
+import Constants from './Constants';
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
@@ -93,6 +94,10 @@ class Util {
   ): Promise<void> {
     const channel = client.channels.cache.get(Config.CHANNELS[configName]);
     if (channel instanceof TextChannel) await channel.send(content);
+  }
+
+  static escapeRegExp(str: string): string {
+    return str.replace(Constants.REGEX.REGEX, '\\$&');
   }
 }
 

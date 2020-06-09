@@ -110,8 +110,7 @@ export default class CommandParameters {
       const missingErr = await CommandParameters.getErrorTraslation(param, query, context);
       throw new CommandError(missingErr, { showUsage: param.showUsage });
     }
-
-    if (!isNull(result)) {
+    if (!isNull(result) && CommandParameters.isFlag(param)) {
       if (param.whitelist) {
         const whitelisted = param.whitelist.length > 0 && param.whitelist.includes(result);
         if (!whitelisted) {
@@ -120,8 +119,11 @@ export default class CommandParameters {
         }
       }
     }
-
     return result;
+  }
+
+  static isFlag(param: CommandParameter): boolean {
+    return isNull(param.name);
   }
 
   static getErrorTraslation(
