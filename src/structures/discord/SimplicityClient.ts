@@ -3,12 +3,14 @@ import { Client } from 'discord.js';
 import Loaders from '../../loaders';
 import Logger from '../../util/Logger';
 import * as database from '../../database';
+import CommandCollection from '../command/CommandCollection';
 
 /**
  * Main Client class
  */
 class SimplicityClient extends Client {
   database?: typeof database
+  commands!: CommandCollection
   /**
    * Loads all the loader files
    * @returns
