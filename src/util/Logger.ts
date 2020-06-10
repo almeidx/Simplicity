@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 
 import moment from 'moment';
-import { Message, TextChannel, GuildChannel } from 'discord.js';
+import { Message, GuildChannel } from 'discord.js';
 
 moment.locale('pt-br');
 

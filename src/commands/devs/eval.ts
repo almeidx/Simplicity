@@ -114,12 +114,11 @@ export default class Eval extends Command {
    * @returns {string} The text cleaned.
    * @private
    */
-  static clean(text: any): string {
+  static clean(text: string): string {
     const blankSpace = String.fromCharCode(8203);
-    if (typeof text === 'string') {
-      return text.replace(/`/g, `\`${blankSpace}`).replace(/@/g, `@${blankSpace}`);
-    }
-    return String(text);
+    return text
+      .replace(/`/g, `\`${blankSpace}`)
+      .replace(/@/g, `@${blankSpace}`);
   }
 
   static inspect(resolved: any): string {
