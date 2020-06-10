@@ -82,9 +82,9 @@ export default class Eval extends Command {
             res = await Eval.cleanResult(eval(`(async () => ${toEval})()`), hrStart);
           } else res = await Eval.cleanResult(eval(`(async () => {\n${toEval}\n})()`), hrStart);
         } catch (er) {
-          res = `Error: ${value(Eval.clean(er))}`;
+          res = `Error: ${value(Eval.clean(er.stack))}`;
         }
-      } else res = `Error: ${value(Eval.clean(err))}`;
+      } else res = `Error: ${value(Eval.clean(err.stack))}`;
     } finally {
       const msg = await send(res);
       const permissions = channel.permissionsFor(String(guild.me?.id));
@@ -116,9 +116,10 @@ export default class Eval extends Command {
    */
   static clean(text: any): string {
     const blankSpace = String.fromCharCode(8203);
-    return typeof text === 'string'
-      ? text.replace(/`/g, `\`${blankSpace}`).replace(/@/g, `@${blankSpace}`)
-      : text;
+    if (typeof text === 'string') {
+      return text.replace(/`/g, `\`${blankSpace}`).replace(/@/g, `@${blankSpace}`);
+    }
+    return String(text);
   }
 
   static inspect(resolved: any): string {
