@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 
 import moment from 'moment';
-import { Message } from 'discord.js';
+import { Message, TextChannel, GuildChannel } from 'discord.js';
 
 moment.locale('pt-br');
 
@@ -81,12 +81,14 @@ export default class Logger {
    * @returns {void}
    */
   static logCommand({
-    guild, channel, author, content,
+    guild, channel, author, cleanContent,
   }: Message) {
-    const warn = setColor(Colors.FgYellow, '[Command]');
-    const g = setColor(Colors.FgBlue, guild?.name ?? 'DM');
-    const c = setColor(Colors.FgCyan, `#${channel}`);
-    const u = setColor(Colors.FgGreen, `@${author}`);
-    return console.warn(`${Logger.timestamp} ${warn} ${g} ${c} ${u} ${content}`);
+    let message = ` ${setColor(Colors.FgYellow, '[Command]')}`;
+    if (guild) {
+      message += ` ${setColor(Colors.FgBlue, guild.name)}`;
+      message += ` ${setColor(Colors.FgCyan, `#${(channel as GuildChannel).name}`)}`;
+    }
+    message += ` ${setColor(Colors.FgGreen, `@${author.username}`)}`;
+    return console.warn(`${Logger.timestamp} ${message} ${cleanContent}`);
   }
 }
