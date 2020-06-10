@@ -33,11 +33,11 @@ export default class CommandContext {
   language: string;
   args: string[];
   t: TFunction;
-  send: TextChannel['send'];
   database: SimplicityClient['database']
   guildData?: GuildDoc;
   flags: Record<string, any>;
   emoji: this['getEmoji'];
+  send: this['sendMessage'];
 
   constructor(opts: CommandContextOptions) {
     this.command = opts.command;
@@ -48,6 +48,7 @@ export default class CommandContext {
     this.message = opts.message;
     this.t = i18next.getFixedT(this.language);
     this.emoji = this.getEmoji.bind(this);
+    this.send = this.sendMessage.bind(this);
     this.guildData = opts.guildData;
     this.flags = {};
 
@@ -59,10 +60,20 @@ export default class CommandContext {
     this.client = this.message.client as SimplicityClient;
     // this.database = this.client.database;
     // this.voiceChannel = this.member?.voice.channel;
-    this.send = this.channel.send.bind(this.channel);
   }
 
   getEmoji(id: boolean, ...emojis: Emojis[]): string {
     return EmojiUtil.getEmoji({ id, channel: this.channel }, ...emojis);
+  }
+
+  async sendMessage(...args: Parameters<TextChannel['send']>): Promise<Message> {
+    const message = this.client.commandMessages.get(this.message.id);
+    if (message) {
+      return message.edit(...args as Parameters<Message['edit']>);
+    }
+    const sent = await this.channel.send(...args);
+    this.client.commandMessages.set(this.message.id, sent);
+    this.client.setTimeout(() => this.client.commandMessages.delete(this.message.id), 3.6e+6);
+    return sent;
   }
 }

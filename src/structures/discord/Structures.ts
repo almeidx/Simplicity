@@ -1,4 +1,5 @@
-import { Structures } from 'discord.js';
+import { Structures, Message } from 'discord.js';
+import { SimplicityClient } from '..';
 
 Structures.extend('User', (User) => class extends User {
   public isPartial = false;
@@ -7,5 +8,8 @@ Structures.extend('User', (User) => class extends User {
 declare module 'discord.js' {
   interface User {
     isPartial: boolean;
+  }
+  interface Message {
+    client: SimplicityClient;
   }
 }

@@ -1,9 +1,9 @@
 
-import { Client } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import Loaders from '../../loaders';
 import Logger from '../../util/Logger';
 import * as database from '../../database';
-import CommandCollection from '../command/CommandCollection';
+import { CommandCollection } from '..';
 
 /**
  * Main Client class
@@ -11,6 +11,7 @@ import CommandCollection from '../command/CommandCollection';
 class SimplicityClient extends Client {
   database?: typeof database
   commands!: CommandCollection
+  commandMessages: Map<string, Message> = new Map();
   /**
    * Loads all the loader files
    * @returns
