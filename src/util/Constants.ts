@@ -78,9 +78,16 @@ const PERMISSIONS: PermissionString[] = [
   'PRIORITY_SPEAKER',
 ];
 
+export const BOT_DEFAULT_PERMISSIONS: PermissionString[] = [
+  'SEND_MESSAGES',
+  'READ_MESSAGE_HISTORY',
+  'ADD_REACTIONS',
+  'USE_EXTERNAL_EMOJIS',
+];
+
 export default {
   ADMINISTRATOR_PERMISSION: 'ADMINISTRATOR',
-  BOT_DEFAULT_PERMISSIONS: ['SEND_MESSAGES', 'READ_MESSAGE_HISTORY', 'ADD_REACTIONS', 'USE_EXTERNAL_EMOJIS'],
+
   CLIENT_OPTIONS,
   COLORS: {
     MEMBER_BAN: 'ff3535',
@@ -142,4 +149,4 @@ export default {
   REGEX: { REGEX: /[.*+?^${}()|[\]\\]/g },
   SPOTIFY_LOGO_PNG: 'src/assets/spotify-logo.png',
   SPOTIFY_LOGO_PNG_URL: 'https://images-na.ssl-images-amazon.com/images/I/51rttY7a%2B9L.png',
-};
+} as const;

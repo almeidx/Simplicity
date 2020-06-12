@@ -6,6 +6,7 @@
 
 import { inspect } from 'util';
 import { execSync } from 'child_process';
+import * as dateFns from 'date-fns';
 import {
   Command, CommandError, SimplicityEmbed, SimplicityClient, CommandContext,
 } from '../../structures';
@@ -35,7 +36,7 @@ export default class Eval extends Command {
           entireQuery: true,
           missingError: 'You need to input an expression for me to evaluate.',
           optional: false,
-          type: 'string' as const,
+          type: 'string',
         },
       ],
       category: 'dev',

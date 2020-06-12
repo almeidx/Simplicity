@@ -207,8 +207,8 @@ class SimplicityEmbed extends MessageEmbed {
    * @param valueOptions The options for the field value
    */
   addField(
-    name: string,
-    value: string,
+    name: string | number,
+    value: string | number,
     inline = false,
     options: TOptions = {},
     valueOptions: TOptions = {},

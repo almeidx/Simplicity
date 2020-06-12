@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable no-console */
 
-import moment from 'moment';
+import { format } from 'date-fns';
 import { Message, GuildChannel } from 'discord.js';
-
-moment.locale('pt-br');
 
 enum Colors {
   FgBlue = '\x1b[34m',
@@ -29,7 +27,7 @@ export default class Logger {
    * @returns The current timestamp formatted
    */
   static get timestamp(): string {
-    return setColor(Colors.FgMagenta, moment().format('DD/MM/YYYY HH:mm:ss'));
+    return setColor(Colors.FgMagenta, format(Date.now(), 'dd/mm/yyyy hh:mm:ss'));
   }
 
   /**

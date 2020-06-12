@@ -13,7 +13,7 @@ import CommandContext from './CommandContext';
 
 import { ParameterOptsTypes, FlagOptions, CommandParameter } from './arguments/ArgumentOptions.interfances';
 
-type CommandCategories = 'bot' | 'dev';
+type CommandCategories = 'bot' | 'dev' | 'moderation' | 'utility';
 
 interface CommandOptions {
   category: CommandCategories;
