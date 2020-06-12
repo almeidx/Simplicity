@@ -2,9 +2,7 @@ import { MessageEmbed, Permissions } from 'discord.js';
 import { TFunction, TOptions } from 'i18next';
 import { SimplicityEmbed } from '../structures';
 
-export type GetEmojiFunction = (e: string) => string | null
 export interface ParseTextOptions {
-  emoji?: GetEmojiFunction,
   t?: TFunction,
   embed?: MessageEmbed | SimplicityEmbed,
   tOptions?: TOptions
@@ -20,22 +18,14 @@ export default class TextUtil {
    * @param options The options
    * @returns The resolved string
   */
-  static parse(text: string, options: ParseTextOptions = {}): string {
-    const {
-      emoji, t, embed, tOptions = {},
-    } = options;
-
+  static parse(text: string, { t, embed, tOptions = {} }: ParseTextOptions = {}): string {
     let result = text;
-    if (emoji) result = TextUtil.parseEmoji(result, emoji);
     if (embed) result = TextUtil.parseEmbed(result, embed);
     if (t) result = TextUtil.parseTranslation(result, t, tOptions);
 
     return result;
   }
 
-  static parseEmoji(text: string, getEmoji: GetEmojiFunction): string {
-    return text.replace(/(?:#)\w+/g, (e) => getEmoji(e.slice(1).toUpperCase()) || e);
-  }
 
   static parseEmbed(text: string, embed: MessageEmbed): string {
     return text.replace(/(?:@)\S+/g, (k) => {

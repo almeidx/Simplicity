@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 import crypto from 'crypto';
 import {
@@ -5,7 +7,7 @@ import {
 } from 'discord.js';
 import { TFunction, TOptions } from 'i18next';
 import {
-  ImageUtil, TextUtil, ParseTextOptions, GetEmojiFunction,
+  ImageUtil, TextUtil, ParseTextOptions,
 } from '../../util';
 import Config from '../../config';
 
@@ -20,7 +22,6 @@ interface EmbedOptions {
   autoTimestamp: boolean;
   type: keyof typeof EmbedColors;
   t?: TFunction;
-  emoji?: GetEmojiFunction;
 }
 
 interface FieldOptions {
@@ -38,7 +39,6 @@ interface FieldOptions {
  */
 class SimplicityEmbed extends MessageEmbed {
   options: EmbedOptions;
-  t?: TFunction;
 
   /**
    * Creates an instance of SimplicityEmbed
@@ -60,14 +60,13 @@ class SimplicityEmbed extends MessageEmbed {
       type: 'normal',
       ...options,
     };
-
     if (embedResolvable) {
       if (embedResolvable instanceof User) {
         this.setTemplate(embedResolvable);
       } else if (embedResolvable instanceof GuildMember) {
         this.setTemplate(embedResolvable.user);
       } else {
-        this.t = embedResolvable;
+        this.options.t = embedResolvable;
       }
     }
 
@@ -92,6 +91,12 @@ class SimplicityEmbed extends MessageEmbed {
     if (resolvable instanceof GuildMember) return resolvable.user.tag;
     if (resolvable instanceof Guild) return resolvable.name;
     return resolvable;
+  }
+
+  static hasSupport(resolvable: any): boolean {
+    return resolvable instanceof GuildMember
+    || resolvable instanceof GuildMember
+    || resolvable instanceof Guild;
   }
 
   /**
@@ -124,9 +129,8 @@ class SimplicityEmbed extends MessageEmbed {
   getParseTextOptions(options: TOptions): ParseTextOptions {
     return {
       tOptions: options,
-      t: this.t,
+      t: this.options.t,
       embed: this,
-      emoji: this.options.emoji,
     };
   }
 
@@ -163,7 +167,8 @@ class SimplicityEmbed extends MessageEmbed {
   setFooter(text: EmbedInput, iconURL: EmbedInput | null = null, options: TOptions = {}): this {
     const parseText = SimplicityEmbed.resolveName(text);
     const parseIconURL = iconURL
-      ? this.resolveImage(iconURL) : this.resolveImage(text) ?? undefined;
+      ? this.resolveImage(iconURL)
+      : SimplicityEmbed.hasSupport(text) ? this.resolveImage(text) : undefined;
 
     return super.setFooter(
       TextUtil.parse(
@@ -228,7 +233,6 @@ class SimplicityEmbed extends MessageEmbed {
       const {
         name, value, inline, options = {}, valueOptions = {},
       } = data;
-
       this.fields.push(
         SimplicityEmbed.normalizeField(
           TextUtil.parse(String(name), this.getParseTextOptions(options)),
