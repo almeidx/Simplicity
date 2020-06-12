@@ -1,4 +1,4 @@
-export { default as Constants } from './Constants';
+export * as Constants from './Constants';
 export { default as EmojiRegex } from './EmojiRegex';
 export { default as EmojiUtil } from './EmojiUtil';
 export { default as ImageUtil } from './ImageUtil';

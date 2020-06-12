@@ -1,6 +1,6 @@
 import { ClientOptions, PermissionString } from 'discord.js';
 
-const CLIENT_OPTIONS: ClientOptions = {
+export const CLIENT_OPTIONS: ClientOptions = {
   disableMentions: 'everyone',
   fetchAllMembers: false,
   partials: ['MESSAGE', 'CHANNEL'],
@@ -12,7 +12,7 @@ const CLIENT_OPTIONS: ClientOptions = {
   },
 };
 
-const MANAGER_PERMISSIONS: PermissionString[] = [
+export const MANAGER_PERMISSIONS: PermissionString[] = [
   'ADMINISTRATOR',
   'VIEW_AUDIT_LOG',
   'MANAGE_GUILD',
@@ -30,7 +30,7 @@ const MANAGER_PERMISSIONS: PermissionString[] = [
   'MOVE_MEMBERS',
 ];
 
-const NORMAL_PERMISSIONS: PermissionString[] = [
+export const NORMAL_PERMISSIONS: PermissionString[] = [
   'CHANGE_NICKNAME',
   'USE_VAD',
   'SPEAK',
@@ -46,7 +46,7 @@ const NORMAL_PERMISSIONS: PermissionString[] = [
   'STREAM',
 ];
 
-const PERMISSIONS: PermissionString[] = [
+export const PERMISSIONS: PermissionString[] = [
   'ADMINISTRATOR',
   'VIEW_AUDIT_LOG',
   'MANAGE_GUILD',
@@ -85,68 +85,65 @@ export const BOT_DEFAULT_PERMISSIONS: PermissionString[] = [
   'USE_EXTERNAL_EMOJIS',
 ];
 
-export default {
-  ADMINISTRATOR_PERMISSION: 'ADMINISTRATOR',
+export const ADMINISTRATOR_PERMISSION: PermissionString = 'ADMINISTRATOR';
 
-  CLIENT_OPTIONS,
-  COLORS: {
-    MEMBER_BAN: 'ff3535',
-    MEMBER_UNBAN: '2ECC71',
-    MESSAGE_BULK_DELETE: '36393f',
-    MESSAGE_DELETE: '36393f',
-    MESSAGE_EDIT: '36393f',
-    MESSAGE_PIN: '36393f',
-    MESSAGE_UNPIN: '36393f',
-  },
-  EMOJIS: {
-    ALIASES: '🗝',
-    BACK: '↩',
-    BOOKS: '📚',
-    BOT: '🤖',
-    CANCEL: '❎',
-    CROWN: '👑',
-    DESKTOP: '💻',
-    DEVELOPER: '⚒️',
-    ERROR: '🚫',
-    HASH: '#⃣',
-    MOBILE: '📱',
-    MUSIC: '🎵',
-    PAGE: '📄',
-    PC: '💻',
-    PHOTO: '🖼',
-    PING: '🏓',
-    PINGS: '📊',
-    QUESTION: '❓',
-    RAM: '💾',
-    ROLES: '📜',
-    STARBOARD: '⭐',
-    SUCCESS: '✅',
-    THUMBS_DOWN: '👎',
-    THUMBS_UP: '👍',
-    TICK_NO: '❌',
-    TICK_YES: '✅',
-    USAGE: '🖊',
-    USERS: '👥',
-    WATCH: '⌚',
-    WEB: '🌐',
-  },
-  EMOJIS_CUSTOM: {
-    BOT_TAG: '564800285596450847',
-    CANCEL: '537327435180408842',
-    DND: '488658928540975104',
-    IDLE: '493050914614280192',
-    LOADING_EMOJI: '534521618177851393',
-    OFFLINE: '488658962535809034',
-    ONLINE: '488658856709455881',
-    SPOTIFY: '560221641922052123',
-    TICK_NO: '567751250079383552',
-    TICK_NULL: '567753051071578112',
-    TICK_YES: '567751193959596034',
-  },
-  MANAGER_PERMISSIONS,
-  NORMAL_PERMISSIONS,
-  PERMISSIONS,
-  REGEX: { REGEX: /[.*+?^${}()|[\]\\]/g },
-  SPOTIFY_LOGO_PNG: 'src/assets/spotify-logo.png',
-  SPOTIFY_LOGO_PNG_URL: 'https://images-na.ssl-images-amazon.com/images/I/51rttY7a%2B9L.png',
-} as const;
+export const COLORS = {
+  MEMBER_BAN: 'ff3535',
+  MEMBER_UNBAN: '2ECC71',
+  MESSAGE_BULK_DELETE: '36393f',
+  MESSAGE_DELETE: '36393f',
+  MESSAGE_EDIT: '36393f',
+  MESSAGE_PIN: '36393f',
+  MESSAGE_UNPIN: '36393f',
+};
+
+export const CUSTOM_EMOJIS = {
+  BOT_TAG: '564800285596450847',
+  CANCEL: '537327435180408842',
+  DND: '488658928540975104',
+  IDLE: '493050914614280192',
+  LOADING_EMOJI: '534521618177851393',
+  OFFLINE: '488658962535809034',
+  ONLINE: '488658856709455881',
+  SPOTIFY: '560221641922052123',
+  TICK_NO: '567751250079383552',
+  TICK_NULL: '567753051071578112',
+  TICK_YES: '567751193959596034',
+};
+
+export const NORMAL_EMOJIS = {
+  ALIASES: '🗝',
+  BACK: '↩',
+  BOOKS: '📚',
+  BOT: '🤖',
+  CANCEL: '❎',
+  CROWN: '👑',
+  DESKTOP: '💻',
+  DEVELOPER: '⚒️',
+  ERROR: '🚫',
+  HASH: '#⃣',
+  MOBILE: '📱',
+  MUSIC: '🎵',
+  PAGE: '📄',
+  PC: '💻',
+  PHOTO: '🖼',
+  PING: '🏓',
+  PINGS: '📊',
+  QUESTION: '❓',
+  RAM: '💾',
+  ROLES: '📜',
+  STARBOARD: '⭐',
+  SUCCESS: '✅',
+  THUMBS_DOWN: '👎',
+  THUMBS_UP: '👍',
+  TICK_NO: '❌',
+  TICK_YES: '✅',
+  USAGE: '🖊',
+  USERS: '👥',
+  WATCH: '⌚',
+  WEB: '🌐',
+};
+
+export const REGEX = { REGEX: /[.*+?^${}()|[\]\\]/g };
+export const SPOTIFY_LOGO_PNG = 'src/assets/spotify-logo.png';
+export const SPOTIFY_LOGO_PNG_URL = 'https://images-na.ssl-images-amazon.com/images/I/51rttY7a%2B9L.png';

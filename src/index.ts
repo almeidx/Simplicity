@@ -2,11 +2,11 @@ import 'dotenv/config';
 import 'tsconfig-paths/register';
 import './structures/discord/Structures';
 
-import { Constants } from './util';
+import { CLIENT_OPTIONS } from './util';
 import { SimplicityClient } from './structures';
 import Logger from './util/Logger';
 
-const client = new SimplicityClient(Constants.CLIENT_OPTIONS);
+const client = new SimplicityClient(CLIENT_OPTIONS);
 
 client.login(String(process.env.DISCORD_TOKEN))
   .catch((error) => Logger.error(error));

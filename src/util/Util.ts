@@ -2,7 +2,7 @@ import {
   Message, TextChannel, DMChannel, MessageAdditions, Client,
 } from 'discord.js';
 import Config from '../config';
-import Constants from './Constants';
+import { REGEX } from './Constants';
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
@@ -97,7 +97,7 @@ class Util {
   }
 
   static escapeRegExp(str: string): string {
-    return str.replace(Constants.REGEX.REGEX, '\\$&');
+    return str.replace(REGEX.REGEX, '\\$&');
   }
 }
 

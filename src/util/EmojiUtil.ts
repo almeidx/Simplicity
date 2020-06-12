@@ -1,8 +1,8 @@
 import { TextChannel } from 'discord.js';
-import Constants from './Constants';
+import { CUSTOM_EMOJIS, NORMAL_EMOJIS } from './Constants';
 
-export type CustomEmojiTypes = keyof typeof Constants.EMOJIS_CUSTOM
-export type EmojiTypes = keyof typeof Constants.EMOJIS
+export type CustomEmojiTypes = keyof typeof CUSTOM_EMOJIS
+export type EmojiTypes = keyof typeof NORMAL_EMOJIS
 export type Emojis = CustomEmojiTypes | EmojiTypes
 
 /**
@@ -10,11 +10,11 @@ export type Emojis = CustomEmojiTypes | EmojiTypes
  */
 export default class EmojiUtil {
   static getCustomEmoji(id: CustomEmojiTypes): string {
-    return Constants.EMOJIS_CUSTOM[id];
+    return CUSTOM_EMOJIS[id];
   }
 
   static getDefaultEmoji(name: EmojiTypes): string {
-    return Constants.EMOJIS[name];
+    return NORMAL_EMOJIS[name];
   }
 
   static getEmoji(
@@ -40,6 +40,6 @@ export default class EmojiUtil {
       if (normal) return normal;
     }
 
-    return Constants.EMOJIS.QUESTION;
+    return NORMAL_EMOJIS.QUESTION;
   }
 }

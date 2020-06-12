@@ -10,7 +10,7 @@ import * as dateFns from 'date-fns';
 import {
   Command, CommandError, SimplicityEmbed, SimplicityClient, CommandContext,
 } from '../../structures';
-import { Constants, Util } from '../../util';
+import { Util } from '../../util';
 
 const token = String(process.env.DISCORD_TOKEN);
 const { code, isEmpty } = Util;
