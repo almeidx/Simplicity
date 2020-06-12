@@ -55,6 +55,12 @@ export interface StringArgOptions {
   truncate?: boolean;
 }
 
+export interface RoleArgOptions {
+  acceptEveryone?: boolean;
+  authorNeedsHigherRole?: boolean;
+  botNeedsHigherRole?: boolean;
+}
+
 export type ParameterOptions = ArgumentOptions & FlagOptions;
 
 export interface BoolOpts extends BooleanArgOptions {

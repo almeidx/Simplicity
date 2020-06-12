@@ -30,8 +30,10 @@ export default class UserArgument extends Argument<User, UserArgOptions> {
     const regexResult = MENTION_REGEX.exec(arg);
     const id = regexResult && regexResult[1];
     const findMember = guild.members.cache
-      .find((m) => m.user.username.toLowerCase().includes(arg.toLowerCase())
-      || m.displayName.toLowerCase().includes(arg.toLowerCase()));
+      .find(
+        (m) => m.user.username.toLowerCase().includes(arg.toLowerCase())
+        || m.displayName.toLowerCase().includes(arg.toLowerCase()),
+      );
 
     let user = (id && (client.users.cache.get(id) || (!!findMember && findMember.user))) || null;
     if (!user && opts.fetchGlobal) {
