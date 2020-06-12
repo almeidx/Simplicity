@@ -9,6 +9,18 @@ export default class CommandCollection extends Collection<string, Command> {
     this.aliases = new Collection();
   }
 
+  get categories(): Collection<string, Collection<string, Command>> {
+    return this.reduce((categories, command) => {
+      let category = categories.get(command.category);
+      if (!category) {
+        category = new Collection();
+        categories.set(command.category, category);
+      }
+      category.set(command.name, command);
+      return categories;
+    }, new Collection<string, Collection<string, Command>>());
+  }
+
   get(str: string): Command | undefined {
     return super.get(String(this.aliases.get(str.toLowerCase())));
   }
