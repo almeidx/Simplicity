@@ -7,6 +7,7 @@ Structures.extend('User', (User) => class extends User {
 
 declare module 'discord.js' {
   interface User {
+    client: SimplicityClient;
     isPartial: boolean;
   }
   interface Message {

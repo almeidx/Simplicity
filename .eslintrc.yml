@@ -43,6 +43,9 @@ rules:
     - exceptAfterSingleLine: true
   no-restricted-syntax:
     - off
+  max-len:
+    - error
+    - 120
 settings:
   import/resolver:
     node:

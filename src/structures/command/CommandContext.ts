@@ -1,6 +1,6 @@
 import i18next, { TFunction } from 'i18next';
 import {
-  Message, TextChannel, VoiceChannel, User, Guild, GuildMember,
+  Message, MessageMentions, TextChannel, VoiceChannel, User, Guild, GuildMember,
 } from 'discord.js';
 import Config from '../../config';
 import { EmojiUtil, Emojis } from '../../util';
@@ -22,7 +22,7 @@ export interface CommandContextOptions {
 export default class CommandContext {
   message: Message;
   command: Command;
-  // mentions: MessageMentions;
+  mentions: MessageMentions;
   member: GuildMember;
   author: User;
   guild: Guild;
@@ -52,14 +52,14 @@ export default class CommandContext {
     this.guildData = opts.guildData;
     this.flags = {};
 
-    // this.mentions = this.message.mentions;
+    this.mentions = this.message.mentions;
     this.member = this.message.member as GuildMember;
     this.guild = this.message.guild as Guild;
     this.author = this.message.author;
     this.channel = this.message.channel as TextChannel;
     this.client = this.message.client as SimplicityClient;
-    // this.database = this.client.database;
-    // this.voiceChannel = this.member?.voice.channel;
+    this.database = this.client.database;
+    this.voiceChannel = this.member?.voice.channel;
   }
 
   getEmoji(id: boolean, ...emojis: Emojis[]): string {

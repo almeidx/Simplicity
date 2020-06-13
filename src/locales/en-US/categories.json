@@ -15,11 +15,11 @@
     "name": "General",
     "description": "This category has general commands."
   },
-  "mod": { 
+  "mod": {
     "name": "Moderation",
     "description": "This category has Moderator commands."
   },
-  "util": {
+  "utility": {
     "name": "Utility",
     "description": "This category has commands util commands."
   },
