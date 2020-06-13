@@ -10,6 +10,7 @@ import {
   Constants, DateUtil, PermissionUtil, Util,
 } from '../../util';
 import Config from '../../config';
+import { Emojis } from '../../util/EmojiUtil';
 
 const {
   SPOTIFY_LOGO_PNG_URL, PERMISSIONS, ADMINISTRATOR_PERMISSION: ADMINISTRATOR, NORMAL_PERMISSIONS,
@@ -46,9 +47,11 @@ export default class UserInfo extends Command {
     });
   }
 
-  async run({
-    author, channel, flags, guild, language, t,
-  }: CommandContext, user = author): Promise<void> {
+  async run(ctx: CommandContext, user = ctx.author): Promise<void> {
+    const {
+      author, channel, flags, guild, language, t,
+    } = ctx;
+
     const locale = DateUtil.getLocale(language);
     if (flags.spotify) {
       if (user.isPartial) {
@@ -65,7 +68,7 @@ export default class UserInfo extends Command {
       await channel.send(this.rolesEmbed(member.roles.cache.filter((r) => r.id !== guild.id), user, author, t));
     } else {
       const content = user.isPartial ? t('commands:userinfo.cannotPartial') : '';
-      await channel.send(content, this.userInfoEmbed(user, author, t, guild, locale));
+      await channel.send(content, this.userInfoEmbed(ctx, user, locale));
     }
   }
 
@@ -110,17 +113,17 @@ export default class UserInfo extends Command {
       .setColor(role ? role.hexColor : Config.COLOR);
   }
 
-  private getTitles(user: User, client: SimplicityClient, guild: Guild): string[] {
+  private getTitles(user: User, { client, guild, emoji }: CommandContext): string[] {
     const titles = [user.tag];
-    if (PermissionUtil.verifyDev(user.id, client)) titles.push('#developer');
-    if (guild && guild.ownerID === user.id) titles.push('#crown');
-    if (user.bot) titles.push('#bot');
+    if (PermissionUtil.verifyDev(user.id, client)) titles.push(emoji(false, 'DEVELOPER'));
+    if (guild && guild.ownerID === user.id) titles.push(emoji(false, 'CROWN'));
+    if (user.bot) titles.push(emoji(false, 'BOT'));
     return titles;
   }
 
-  private getClientStatus(presence: Presence): string[] {
+  private getClientStatus({ emoji }: CommandContext, presence: Presence): string[] {
     const status = presence.clientStatus && Object.keys(presence.clientStatus);
-    if (status && status.length) return status.map((x) => `#${x}`);
+    if (status && status.length) return status.map((x) => emoji(false, x.toUpperCase() as Emojis));
     return [];
   }
 
@@ -134,12 +137,13 @@ export default class UserInfo extends Command {
     return (result && result.index) || null;
   }
 
-  private userInfoEmbed(user: User, author: User, t: TFunction, guild: Guild, locale: Locale): SimplicityEmbed {
+  private userInfoEmbed(ctx: CommandContext, user: User, locale: Locale): SimplicityEmbed {
+    const { guild, author, t } = ctx;
     const { id, tag } = user;
     const member = guild.member(user);
     const presence = !user.isPartial && user.presence;
-    const custom = this.getTitles(user, user.client, guild);
-    const status = (presence && this.getClientStatus(presence)) || [];
+    const custom = this.getTitles(user, ctx);
+    const status = (presence && this.getClientStatus(ctx, presence)) || [];
     const titles = [...custom, ...status].join(' ');
     const highestRole = member && member.roles.highest.id !== guild.id && member.roles.highest;
     const activity: string[] | false = presence
