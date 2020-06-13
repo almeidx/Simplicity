@@ -12,7 +12,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc --build tsconfig.json",
     "start": "yarn build && cross-env NODE_ENV=production node .",
-    "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts --build tsconfig.json --respawn --transpileOnly --watch src,.env",
+    "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts --build tsconfig.json --respawn --transpileOnly --no-notify --watch src,.env",
     "lint": "eslint src --ext ts",
     "lint:fix": "eslint src --fix --ext ts"
   },
