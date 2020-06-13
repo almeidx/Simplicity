@@ -4,7 +4,7 @@ import CommandContext from './CommandContext';
 import SimplicityEmbed from '../discord/SimplicityEmbed';
 import { Logger, Util } from '../../util';
 
-export interface Error {
+export interface CodeError extends Error {
   code?: string;
 }
 
@@ -24,7 +24,7 @@ export default class CommandError extends Error {
     this.tOptions = options;
   }
 
-  static handle(error: CommandError | Error, ctx: CommandContext): void {
+  static handle(error: CommandError | CodeError, ctx: CommandContext): void {
     if (error instanceof CommandError) {
       CommandError.sendErrorMessage(ctx.t(error.message, error.tOptions), error.showUsage, ctx);
     } else {
@@ -33,7 +33,7 @@ export default class CommandError extends Error {
         ? errorTranslation
         : ctx.t('errors:errorCommand');
       CommandError.sendErrorMessage(errorMessage, false, ctx);
-      Logger.error(error);
+      Logger.error(error.stack);
       CommandError.sendLogChannel(error, ctx);
     }
   }
@@ -73,7 +73,7 @@ export default class CommandError extends Error {
       » Guild: ${ctx.guild ? ctx.guild.id : 'Direct Message'}
       `)
       .addField('» Message', ctx.message.content)
-      .addField('» Error', `\`\`\`${error}\`\`\``)
+      .addField('» Error', `\`\`\`${error.stack}\`\`\``)
       .setThumbnail(ctx.guild || ctx.author);
 
     Util.sendPrivateMessage(ctx.client, 'ERROR_LOG', embed);

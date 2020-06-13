@@ -1,5 +1,5 @@
 import {
-  Collection, Guild, Presence, Role, User,
+  Collection, Guild, Presence, Role, User, GuildMember,
 } from 'discord.js';
 import { TFunction } from 'i18next';
 import { Locale, format, formatDistance } from 'date-fns';
@@ -69,12 +69,12 @@ export default class UserInfo extends Command {
     }
   }
 
-  isListeningToSpotify(presence: Presence): boolean {
+  private isListeningToSpotify(presence: Presence): boolean {
     const activities = presence?.activities;
     return !isEmpty(activities) && activities.some((a) => a.type === 'LISTENING' && a.party?.id?.includes('spotify:'));
   }
 
-  spotifyEmbed(author: User, user: User, t: TFunction): SimplicityEmbed {
+  private spotifyEmbed(author: User, user: User, t: TFunction): SimplicityEmbed {
     const { presence } = user;
     const activity = presence?.activities?.find(
       (a) => a.type === 'LISTENING' && a.party?.id?.includes('spotify:')
@@ -99,7 +99,7 @@ export default class UserInfo extends Command {
     return embed;
   }
 
-  rolesEmbed(roles: Collection<string, Role>, user: User, author: User, t: TFunction): SimplicityEmbed {
+  private rolesEmbed(roles: Collection<string, Role>, user: User, author: User, t: TFunction): SimplicityEmbed {
     const role = roles && roles.find((r) => !!r.color);
     const opts = { dynamic: true, format: 'png', size: 4096 } as const;
     return new SimplicityEmbed(author, { t })
@@ -110,7 +110,7 @@ export default class UserInfo extends Command {
       .setColor(role ? role.hexColor : Config.COLOR);
   }
 
-  getTitles(user: User, client: SimplicityClient, guild: Guild): string[] {
+  private getTitles(user: User, client: SimplicityClient, guild: Guild): string[] {
     const titles = [user.tag];
     if (PermissionUtil.verifyDev(user.id, client)) titles.push('#developer');
     if (guild && guild.ownerID === user.id) titles.push('#crown');
@@ -118,13 +118,13 @@ export default class UserInfo extends Command {
     return titles;
   }
 
-  getClientStatus(presence: Presence): string[] {
+  private getClientStatus(presence: Presence): string[] {
     const status = presence.clientStatus && Object.keys(presence.clientStatus);
     if (status && status.length) return status.map((x) => `#${x}`);
     return [];
   }
 
-  getJoinPosition(id: string, guild: Guild): number | null {
+  private getJoinPosition(id: string, guild: Guild): number | null {
     if (!guild.member(id)) return null;
 
     const array = guild.members.cache.array();
@@ -134,7 +134,7 @@ export default class UserInfo extends Command {
     return (result && result.index) || null;
   }
 
-  userInfoEmbed(user: User, author: User, t: TFunction, guild: Guild, locale: Locale): SimplicityEmbed {
+  private userInfoEmbed(user: User, author: User, t: TFunction, guild: Guild, locale: Locale): SimplicityEmbed {
     const { id, tag } = user;
     const member = guild.member(user);
     const presence = !user.isPartial && user.presence;
@@ -159,7 +159,9 @@ export default class UserInfo extends Command {
       .setThumbnail(user)
       .addField('» $$commands:userinfo.username', tag, true);
 
-    if (member && member.nickname) embed.addField('» $$commands:userinfo.nickname', member.nickname, true);
+    if (member && member.nickname) {
+      embed.addField('» $$commands:userinfo.nickname', member.nickname, true);
+    }
 
     embed.addField('» $$commands:userinfo.id', id, true);
 
@@ -177,9 +179,13 @@ export default class UserInfo extends Command {
       embed.addField('» $$commands:userinfo.roles', rolesClean.join(', '), true);
     }
 
-    if (joinPosition) embed.addField('» $$commands:userinfo.joinPosition', joinPosition, true);
+    if (joinPosition) {
+      embed.addField('» $$commands:userinfo.joinPosition', joinPosition, true);
+    }
 
-    if (activity) embed.addField('activityies', activity.join('\n'), true);
+    if (activity && !Util.isEmpty(activity)) {
+      embed.addField('activityies', activity.join('\n'), true);
+    }
 
     embed.addField(
       '» $$commands:userinfo.createdAt',
@@ -193,20 +199,17 @@ export default class UserInfo extends Command {
       );
     }
 
-    const memberPermissions = member?.permissions?.toArray().filter((p) => !NORMAL_PERMISSIONS.includes(p));
-    let resultAdministrator;
-    let resultAllPermissions;
-    let resultPermissions;
 
-    if (memberPermissions) {
-      resultAdministrator = memberPermissions.includes(ADMINISTRATOR) && t(`permissions:${ADMINISTRATOR}`);
-      resultAllPermissions = memberPermissions.sort((a, b) => PERMISSIONS.indexOf(a) - PERMISSIONS.indexOf(b));
-      resultPermissions = resultAdministrator
-        || resultAllPermissions.map((p) => t(`permissions:${p}`)).join(', ');
+    if (member) {
+      embed.addField('» $$commands:userinfo.permissions', this.getMemberPermissions(member, t));
     }
-
-    if (resultPermissions) embed.addField('» $$commands:userinfo.permissions', resultPermissions as string);
-
     return embed;
+  }
+
+  private getMemberPermissions(member: GuildMember, t: TFunction): string {
+    const memberPermissions = member.permissions.toArray().filter((p) => !NORMAL_PERMISSIONS.includes(p));
+    const resultAdministrator = memberPermissions.includes(ADMINISTRATOR) && t(`permissions:${ADMINISTRATOR}`);
+    const resultAllPermissions = memberPermissions.sort((a, b) => PERMISSIONS.indexOf(a) - PERMISSIONS.indexOf(b));
+    return resultAdministrator || resultAllPermissions.map((p) => t(`permissions:${p}`)).join(', ');
   }
 }

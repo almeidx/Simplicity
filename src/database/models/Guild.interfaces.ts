@@ -1,6 +1,7 @@
 import { Document } from 'mongoose';
 
-export type logTypes = 'GuildMemberAdd' | 'GuildMemberRemove' | 'GuildUpdates' | 'MessageUpdate' | 'UserUpdate' | 'VoiceChannelLogs'
+export type logTypes =
+  'GuildMemberAdd' | 'GuildMemberRemove' | 'GuildUpdates' | 'MessageUpdate' | 'UserUpdate' | 'VoiceChannelLogs'
 
 export interface GuildModule {
   enable: boolean;
