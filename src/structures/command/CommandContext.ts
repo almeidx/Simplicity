@@ -39,6 +39,9 @@ export default class CommandContext {
   emoji: this['getEmoji'];
   send: this['sendMessage'];
 
+  /**
+   * @param opts The options for this command context
+   */
   constructor(opts: CommandContextOptions) {
     this.command = opts.command;
     this.args = opts.args;

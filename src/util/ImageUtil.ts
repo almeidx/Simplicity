@@ -3,7 +3,7 @@ import { createCanvas } from 'canvas';
 /**
  * Contains various image utility methods
  */
-class ImageUtil {
+export default class ImageUtil {
   static renderGuildIcon(acronym: string): Buffer {
     const width = 512;
     const height = 512;
@@ -23,5 +23,3 @@ class ImageUtil {
     return canvas.toBuffer();
   }
 }
-
-export default ImageUtil;

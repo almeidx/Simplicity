@@ -6,6 +6,9 @@ import {
 export default class CommandLoader extends FolderLoader<typeof Command> {
   commands: CommandCollection;
 
+  /**
+   * @param client The client for this loader
+   */
   constructor(client: SimplicityClient) {
     super(client, {
       instanceOf: Command,

@@ -7,6 +7,9 @@ import {
 } from '../../structures';
 
 export default class BotInfo extends Command {
+  /**
+   * @param client The client for this command
+   */
   constructor(client: SimplicityClient) {
     super(client, 'botinfo', {
       aliases: ['bi', 'stats'],

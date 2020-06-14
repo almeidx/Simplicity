@@ -7,15 +7,15 @@ import Config from '../../config';
 import Util from '../../util/Util';
 
 /**
- * Main Listener class.
+ * The main listener
  */
 export default abstract class Listener {
   client: SimplicityClient
   event: keyof ClientEvents
 
   /**
-   * Creates an instance of Listener.
-   * @param client The Listener's Client.
+   * @param event The event type
+   * @param client The client for this listener
    */
   constructor(event: keyof ClientEvents, client: SimplicityClient) {
     this.event = event;
@@ -23,15 +23,15 @@ export default abstract class Listener {
   }
 
   /**
-   * What gets ran when the event is triggered.
+   * What gets ran when the event is triggered
    */
   abstract exec (...args: any[]): any
 
   /**
-   * Sends a private message using an ENV variable.
-   * @param envName The name of the env variable.
-   * @param content The content to send.
-   * @returns The message sent or false.
+   * Sends a private message using an ENV variable
+   * @param envName The name of the env variable
+   * @param content The content to send
+   * @returns The message sent or false
    */
   sendPrivateMessage(
     configName: keyof typeof Config['CHANNELS'],

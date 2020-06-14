@@ -32,6 +32,4 @@ const GuildSchema = new Schema<GuildDoc>({
   timestamps: true,
 });
 
-const guildModel = model<GuildDoc>('guilds', GuildSchema);
-
-export default guildModel;
+export default model<GuildDoc>('guilds', GuildSchema);

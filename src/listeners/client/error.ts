@@ -3,6 +3,9 @@ import SimplicityClient from '../../structures/discord/SimplicityClient';
 import { Logger, Util } from '../../util';
 
 export default class ErrorListener extends Listener {
+  /**
+   * @param client The client for this listener
+   */
   constructor(client: SimplicityClient) {
     super('error', client);
   }

@@ -33,13 +33,12 @@ interface FieldOptions {
 }
 
 /**
- * Main Embed class.
+ * Represents a rich embed in a message.
  */
-class Embed extends MessageEmbed {
+export default class Embed extends MessageEmbed {
   options: EmbedOptions;
 
   /**
-   * Creates an instance of Embed
    * @param embedResolvable The embed resolvable
    * @param options The options for the embed
    * @param data The data of the embed
@@ -80,10 +79,10 @@ class Embed extends MessageEmbed {
   }
 
   /**
- * Resolves a name
- * @param resolvable The resolvable to be resolved
- * @returns The resolved name
- */
+   * Resolves a name
+   * @param resolvable The resolvable to be resolved
+   * @returns The resolved name
+   */
   static resolveName(resolvable: EmbedInput): string {
     if (resolvable instanceof User) return resolvable.tag;
     if (resolvable instanceof GuildMember) return resolvable.user.tag;
@@ -93,15 +92,15 @@ class Embed extends MessageEmbed {
 
   static hasSupport(resolvable: any): boolean {
     return resolvable instanceof GuildMember
-    || resolvable instanceof GuildMember
-    || resolvable instanceof Guild;
+      || resolvable instanceof GuildMember
+      || resolvable instanceof Guild;
   }
 
   /**
- * Resolves an icon
- * @param resolvable The resolvable to be resolved
- * @returns The resolved image url
- */
+   * Resolves an icon
+   * @param resolvable The resolvable to be resolved
+   * @returns The resolved image url
+   */
   resolveImage(resolvable: EmbedInput): string {
     const o: ImageURLOptions = { size: 4096 };
     if (resolvable instanceof User) return resolvable.displayAvatarURL(o);
@@ -118,7 +117,7 @@ class Embed extends MessageEmbed {
   }
 
   /**
-   * Sets the color of the embed to red
+   * Sets the color of this embed to red
    */
   setError(): this {
     return this.setColor(EmbedColors.error);
@@ -132,11 +131,11 @@ class Embed extends MessageEmbed {
   }
 
   /**
-   * Sets the Embed's author
+   * Sets the author of this embed.
    * @param name The name of the author
-   * @param iconURL The resolvable to resolve the icon from
-   * @param url The resolvable to resolve the url from
-   * @param options The options for the author
+   * @param iconURL The icon URL of the author
+   * @param url The URL of the author
+   * @param options The options of the author
    */
   setAuthor(
     name: EmbedInput,
@@ -155,11 +154,10 @@ class Embed extends MessageEmbed {
   }
 
   /**
-   * Set the Embed's footer
+   * Sets the footer of this embed.
    * @param text The text of the footer
-   * @param iconURL The resolvable to resolve the icon from
-   * @param options The options for the footer
-   * @returns The embed
+   * @param iconURL The icon URL of the footer
+   * @param options The options of the footer
    */
   setFooter(text: EmbedInput, iconURL: EmbedInput | null = null, options: TOptions = {}): this {
     const parseText = Embed.resolveName(text);
@@ -177,31 +175,30 @@ class Embed extends MessageEmbed {
   }
 
   /**
-   * Set the Embed's description
-   * @param description The embed's description
-   * @param options The options for the descripton
+   * Sets the description of this embed.
+   * @param description The description
+   * @param options The options of the descripton
    */
   setDescription(description: string, options: TOptions = {}): this {
     return super.setDescription(TextUtil.parse(description, this.getParseTextOptions(options)));
   }
 
   /**
-   * Set the Embed's title
-   * @param title The embed's title
-   * @param options The options for the title
-   * @returns The embed
+   * Sets the title of this embed.
+   * @param title The title
+   * @param options The options of the title
    */
   setTitle(title: string, options: TOptions = {}): this {
     return super.setTitle(TextUtil.parse(title, this.getParseTextOptions(options)));
   }
 
   /**
-   * Add a field to the Embed
-   * @param name The name for the field
-   * @param value The value for the field
-   * @param inline Whether the field should be inline
-   * @param options The options for the field name
-   * @param valueOptions The options for the field value
+   * Adds a field to the embed (max 25).
+   * @param name The name of this field
+   * @param value The value of this field
+   * @param inline If this field will be displayed inline
+   * @param options The options of the field name
+   * @param valueOptions The options of the field value
    */
   addField(
     name: string | number,
@@ -221,9 +218,8 @@ class Embed extends MessageEmbed {
   }
 
   /**
-   * Adds multiple fields to the embed
-   * @param fields The fields that will be added
-   * @returns The embed
+   * Adds fields to the embed (max 25).
+   * @param fields The fields to add
    */
   addFields(...fields: FieldOptions[]): this {
     for (const data of fields) {
@@ -242,20 +238,18 @@ class Embed extends MessageEmbed {
   }
 
   /**
-   * Set the Embed's thumbnail
-   * @param url The url to the image
+   * Sets the thumbnail of this embed.
+   * @param url The URL of the thumbnail
    */
   setThumbnail(url: EmbedInput): this {
     return super.setThumbnail(this.resolveImage(url));
   }
 
   /**
-   * Set the Embed's image
-   * @param url The url to the image
+   * Sets the image of this embed.
+   * @param url The URL of the image
    */
   setImage(url: EmbedInput): this {
     return super.setImage(this.resolveImage(url));
   }
 }
-
-export default Embed;

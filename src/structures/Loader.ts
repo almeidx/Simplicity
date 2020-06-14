@@ -8,9 +8,8 @@ export default abstract class Loader {
   required: boolean;
 
   /**
-   * Creates an instance of Loader
-   * @param client The Client of the listener
-   * @param required Whether the loader is required for the Client to function properly
+   * @param client The client of the listener
+   * @param required If this listener is required
    */
   constructor(client: SimplicityClient, required = true) {
     this.client = client;

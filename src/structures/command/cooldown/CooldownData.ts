@@ -5,6 +5,9 @@ export default class CooldownData {
   timestamp: number;
   rateLimitTimestamp?: number;
 
+  /**
+   * @param timestamp The timestamp for this cooldown
+   */
   constructor(timestamp = Date.now()) {
     this.timestamp = timestamp;
     this.ratelimit = 0;

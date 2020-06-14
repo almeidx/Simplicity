@@ -1,15 +1,15 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import {
   Message, TextChannel, DMChannel, MessageAdditions, Client,
 } from 'discord.js';
 import Config from '../config';
 import { REGEX } from './Constants';
 
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
 /**
  * Contains various general-purpose utility methods
  */
-class Util {
+export default class Util {
   /**
    * Checks if a value is empty
    * @param val The value to be checked
@@ -100,5 +100,3 @@ class Util {
     return str.replace(REGEX.REGEX, '\\$&');
   }
 }
-
-export default Util;

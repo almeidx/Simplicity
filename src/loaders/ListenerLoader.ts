@@ -4,6 +4,9 @@ import {
 } from '../structures';
 
 export default class ListenerLoader extends FolderLoader<typeof Listener> {
+  /**
+   * @param client The client for this loader
+   */
   constructor(client: SimplicityClient) {
     super(client, {
       instanceOf: Listener,

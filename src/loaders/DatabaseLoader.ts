@@ -4,6 +4,9 @@ import SimplicityClient from '../structures/discord/SimplicityClient';
 import Logger from '../util/Logger';
 
 export default class DatabaseLoader extends Loader {
+  /**
+   * @param client The client for this loader
+   */
   constructor(client: SimplicityClient) {
     super(client, false);
   }

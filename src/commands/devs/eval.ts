@@ -19,10 +19,10 @@ const value = (str: string) => code(str, 'js')
   .replace(new RegExp(token, 'g'), () => '*'.repeat(token.length));
 const exec = (str: string) => execSync(str).toString();
 
-/**
- * The Eval command class.
- */
 export default class Eval extends Command {
+  /**
+   * @param client The client for this command
+   */
   constructor(client: SimplicityClient) {
     super(client, 'eval', {
       aliases: ['compile', 'ev', 'evaluate', 'exec', 'execute'],

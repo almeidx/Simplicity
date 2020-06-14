@@ -15,7 +15,7 @@ const checkRequestURL = (url: string): Promise<boolean> => fetch(url)
 /**
  * Contains various message related utility methods
  */
-class MessageUtil {
+export default class MessageUtil {
   /**
    * Gets an URL from a message
    * @param message The message from which the URL will be grabbed (or a message's content)
@@ -71,5 +71,3 @@ class MessageUtil {
     return fetchResult && fetchResult[0];
   }
 }
-
-export default MessageUtil;

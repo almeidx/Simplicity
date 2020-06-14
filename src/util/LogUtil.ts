@@ -12,7 +12,7 @@ type ContentResolvable = StringResolvable | MessageOptions | MessageAdditions;
 /**
  * Contains various log related utility methods.
  */
-class LogUtil {
+export default class LogUtil {
   /**
    * Gets a channel from the database
    * @param client The Client
@@ -68,5 +68,3 @@ class LogUtil {
     return webhook;
   }
 }
-
-export default LogUtil;

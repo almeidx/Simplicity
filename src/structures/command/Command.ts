@@ -37,6 +37,11 @@ export default abstract class Command {
   usagePath?: string;
   examplesPath?: string;
 
+  /**
+   * @param client The client of this command.
+   * @param name The name for this command.
+   * @param options The options for this command.
+   */
   constructor(client: SimplicityClient, name: string, options: CommandOptions) {
     this.client = client;
     this.name = name;

@@ -4,6 +4,9 @@ import {
 } from '../../structures';
 
 export default class messageUpdateListener extends Listener {
+  /**
+   * @param client The client for this listener
+   */
   constructor(client: SimplicityClient) {
     super('messageUpdate', client);
   }

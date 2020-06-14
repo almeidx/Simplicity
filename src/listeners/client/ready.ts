@@ -2,6 +2,9 @@ import { Embed, Listener, SimplicityClient } from '../../structures';
 import Logger from '../../util/Logger';
 
 export default class ReadyListener extends Listener {
+  /**
+   * @param client The client for this listener
+   */
   constructor(client: SimplicityClient) {
     super('ready', client);
   }

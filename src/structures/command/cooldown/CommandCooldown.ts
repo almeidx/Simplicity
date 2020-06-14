@@ -10,6 +10,10 @@ export default class CommandCooldown extends Map {
   cooldown: number;
   ratelimitCooldown: number;
 
+  /**
+   * @param cooldown The cooldown for this command, in milliseconds
+   * @param ratelimitCooldown The ratelimit cooldown for this command, in milliseconds
+   */
   constructor(cooldown: number, ratelimitCooldown = cooldown / 3) {
     super();
     this.cooldown = cooldown;

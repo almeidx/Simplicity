@@ -9,7 +9,10 @@ import { SimplicityClient, Loader } from '../structures';
 const readdir = promisify(fs.readdir);
 const pathFolder = path.resolve('src', 'locales');
 
-class LanguagesLoader extends Loader {
+export default class LanguagesLoader extends Loader {
+  /**
+   * @param client The client for this loader
+   */
   constructor(client: SimplicityClient) {
     super(client, true);
   }
@@ -30,4 +33,3 @@ class LanguagesLoader extends Loader {
     return !!connected;
   }
 }
-export default LanguagesLoader;

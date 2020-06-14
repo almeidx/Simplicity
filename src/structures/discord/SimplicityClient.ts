@@ -5,15 +5,15 @@ import * as database from '../../database';
 import { CommandCollection } from '..';
 
 /**
- * Main Client class
+ * The main hub for interacting with the Discord API.
  */
-class SimplicityClient extends Client {
+export default class SimplicityClient extends Client {
   database?: typeof database
   commands!: CommandCollection
   commandMessages: Map<string, Message> = new Map();
+
   /**
    * Loads all the loader files
-   * @returns
    */
   async loadFiles(): Promise<void> {
     for (const loader of Loaders(this)) {
@@ -28,14 +28,12 @@ class SimplicityClient extends Client {
   }
 
   /**
-   * Login the Client
-   * @param token The API Token
-   * @returns The Client after being logged in
+   * Logs the client in, establishing a websocket connection to Discord.
+   * @param token Token of the account to log in with
+   * @returns Token of the account used
    */
   async login(token: string): Promise<string> {
     await this.loadFiles();
     return super.login(token);
   }
 }
-
-export default SimplicityClient;

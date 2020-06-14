@@ -3,6 +3,9 @@ import { Embed, Listener, SimplicityClient } from '../../structures';
 import { JoinLeaveGuild, JoinLeaveGuildTypes } from '../../database';
 
 export default class GuildDeleteListener extends Listener {
+  /**
+   * @param client The client for this listener
+   */
   constructor(client: SimplicityClient) {
     super('guildDelete', client);
   }

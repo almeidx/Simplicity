@@ -3,6 +3,9 @@ import {
 } from '../../structures';
 
 export default class Avatar extends Command {
+  /**
+   * @param client The client for this command
+   */
   constructor(client: SimplicityClient) {
     super(client, 'avatar', {
       aliases: ['av', 'pfp'],

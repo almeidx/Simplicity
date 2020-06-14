@@ -15,6 +15,10 @@ export default class CommandError extends Error {
   showUsage: boolean;
   tOptions: TOptions;
 
+  /**
+   * @param message The message for this error
+   * @param options The options for this error
+   */
   constructor(
     message: string, options: TOptions & { showUsage?: boolean, notEmbed?: boolean } = {},
   ) {

@@ -9,6 +9,10 @@ export default abstract class FolderLoader<A extends Function> extends Loader {
   requiredAllFiles: boolean;
   instanceOf: A;
 
+  /**
+   * @param client The Discord client
+   * @param opts The options for this loader
+   */
   constructor(
     client: SimplicityClient,
     opts: { directory: string, requiredAllFiles?: boolean, required?: boolean, instanceOf: A },
