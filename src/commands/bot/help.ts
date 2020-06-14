@@ -1,5 +1,5 @@
 import {
-  Command, CommandError, SimplicityEmbed, CommandUtil, SimplicityClient,
+  Command, CommandError, Embed, CommandUtil, SimplicityClient,
 } from '../../structures';
 import { PermissionUtil } from '../../util';
 import CommandContext from '../../structures/command/CommandContext';
@@ -24,7 +24,7 @@ export default class Help extends Command {
     } = ctx;
 
     if (!cmdName) {
-      const embed = new SimplicityEmbed(author, { t, autoAuthor: false })
+      const embed = new Embed(author, { t, autoAuthor: false })
         .setAuthor(client.user || 'Help')
         .setDescription('$$commands:help.about', { name: client.user?.username, prefix });
       const userIsDev = PermissionUtil.verifyDev(author.id, client);

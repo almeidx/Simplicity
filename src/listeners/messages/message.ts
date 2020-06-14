@@ -1,9 +1,9 @@
 import { Message } from 'discord.js';
 import {
-  SimplicityClient, SimplicityListener, CommandHandler,
+  SimplicityClient, Listener, CommandHandler,
 } from '../../structures';
 
-export default class MessageListener extends SimplicityListener {
+export default class MessageListener extends Listener {
   constructor(client: SimplicityClient) {
     super('message', client);
   }

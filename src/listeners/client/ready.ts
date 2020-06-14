@@ -1,7 +1,7 @@
-import { SimplicityEmbed, SimplicityListener, SimplicityClient } from '../../structures';
+import { Embed, Listener, SimplicityClient } from '../../structures';
 import Logger from '../../util/Logger';
 
-export default class ReadyListener extends SimplicityListener {
+export default class ReadyListener extends Listener {
   constructor(client: SimplicityClient) {
     super('ready', client);
   }
@@ -12,7 +12,7 @@ export default class ReadyListener extends SimplicityListener {
     Logger.log(`[Ready] ${message}`);
 
     this.sendPrivateMessage('BOT_LOG',
-      new SimplicityEmbed(this.client.user, { autoFooter: false })
+      new Embed(this.client.user, { autoFooter: false })
         .setColor('GREEN')
         .setDescription(message));
   }

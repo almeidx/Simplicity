@@ -1,15 +1,15 @@
 import { Guild } from 'discord.js';
-import { SimplicityEmbed, SimplicityListener, SimplicityClient } from '../../structures';
+import { Embed, Listener, SimplicityClient } from '../../structures';
 import { JoinLeaveGuild, JoinLeaveGuildTypes } from '../../database';
 
-export default class GuildCreateListener extends SimplicityListener {
+export default class GuildCreateListener extends Listener {
   constructor(client: SimplicityClient) {
     super('guildCreate', client);
   }
 
   async exec(guild: Guild): Promise<void> {
     this.sendPrivateMessage('GUILD_JOIN',
-      new SimplicityEmbed(guild.owner?.user)
+      new Embed(guild.owner?.user)
         .setThumbnail(guild)
         .addFields(
           { inline: true, name: 'Guild Name', value: guild.name },

@@ -1,6 +1,6 @@
 // const { LANGUAGE } = require('@data/config');
 // const i18next = require('i18next');
-// // const SimplicityEmbed = require('../structures/discord/SimplicityEmbed');
+// // const Embed = require('../structures/discord/Embed');
 // const { EMOJIS: { STARBOARD } } = require('./Constants');
 
 // /**
@@ -52,7 +52,7 @@
 
 //       const image = message.attachments.size > 0 ? message.attachments.first().url : null;
 
-//       const embed = new SimplicityEmbed({ author: message.author, t })
+//       const embed = new Embed({ author: message.author, t })
 //         .setTitle(`${STARBOARD} ${reactionsSize}`)
 //         .addField('$$common:starboardJumpToMessage', `[ $$common:clickHere ](${message.url})`)
 //         .setFooter(message.id)

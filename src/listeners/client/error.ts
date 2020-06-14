@@ -1,8 +1,8 @@
-import { SimplicityEmbed, SimplicityListener } from '../../structures';
+import { Embed, Listener } from '../../structures';
 import SimplicityClient from '../../structures/discord/SimplicityClient';
 import { Logger, Util } from '../../util';
 
-export default class ErrorListener extends SimplicityListener {
+export default class ErrorListener extends Listener {
   constructor(client: SimplicityClient) {
     super('error', client);
   }
@@ -12,7 +12,7 @@ export default class ErrorListener extends SimplicityListener {
 
     Util.perString(String(error.stack), (stack, i) => {
       this.sendPrivateMessage('ERROR_LOG',
-        new SimplicityEmbed()
+        new Embed()
           .setError()
           .setTitle(`PAGE ${i + 1}`)
           .setDescription(Util.code(stack, 'js', 0, 2000)));

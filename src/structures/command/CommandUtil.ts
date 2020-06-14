@@ -1,4 +1,4 @@
-import { SimplicityEmbed } from '..';
+import { Embed } from '..';
 import { PermissionUtil, Util } from '../../util';
 import CommandContext from './CommandContext';
 
@@ -22,13 +22,13 @@ export default class CommandUtil {
   /**
    * Returns all the info required on the help command.
    * @param {Object} options The options for the help command.
-   * @returns {SimplicityEmbed}
+   * @returns {Embed}
    */
-  static getHelpEmbed(ctx: CommandContext): SimplicityEmbed {
+  static getHelpEmbed(ctx: CommandContext): Embed {
     const { t, command, prefix } = ctx;
     const noneTranslation = t('commons:none');
 
-    const embed = new SimplicityEmbed(t)
+    const embed = new Embed(t)
       .setTitle(CommandUtil.getUsage(ctx))
       .setDescription(`$$commands:${command.name}.description`);
 

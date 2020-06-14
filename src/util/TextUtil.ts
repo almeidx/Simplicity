@@ -1,10 +1,10 @@
 import { MessageEmbed, Permissions } from 'discord.js';
 import { TFunction, TOptions } from 'i18next';
-import { SimplicityEmbed } from '../structures';
+import { Embed } from '../structures';
 
 export interface ParseTextOptions {
   t?: TFunction,
-  embed?: MessageEmbed | SimplicityEmbed,
+  embed?: MessageEmbed | Embed,
   tOptions?: TOptions
 }
 

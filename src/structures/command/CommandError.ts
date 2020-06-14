@@ -1,7 +1,7 @@
 import i18next, { TFunction, TOptions } from 'i18next';
 import CommandUtil from './CommandUtil';
 import CommandContext from './CommandContext';
-import SimplicityEmbed from '../discord/SimplicityEmbed';
+import { Embed } from '../discord';
 import { Logger, Util } from '../../util';
 
 export interface CodeError extends Error {
@@ -55,7 +55,7 @@ export default class CommandError extends Error {
       return;
     }
 
-    const embed = new SimplicityEmbed(ctx.client.user, { autoFooter: false, t: ctx.t, type: 'error' })
+    const embed = new Embed(ctx.client.user, { autoFooter: false, t: ctx.t, type: 'error' })
       .setDescription(errorMessage)
       .setFooter(ctx.author);
 
@@ -66,7 +66,7 @@ export default class CommandError extends Error {
   }
 
   static sendLogChannel(error: Error, ctx: CommandContext): void {
-    const embed = new SimplicityEmbed(ctx.author, { type: 'error' })
+    const embed = new Embed(ctx.author, { type: 'error' })
       .setDescription(`
       » User: ${ctx.author.id}
       » Channel: ${ctx.channel.id}

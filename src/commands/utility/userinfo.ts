@@ -4,7 +4,7 @@ import {
 import { TFunction } from 'i18next';
 import { Locale, format, formatDistance } from 'date-fns';
 import {
-  Command, CommandContext, CommandError, SimplicityClient, SimplicityEmbed,
+  Command, CommandContext, CommandError, SimplicityClient, Embed,
 } from '../../structures';
 import {
   Constants, DateUtil, PermissionUtil, Util,
@@ -76,7 +76,7 @@ export default class UserInfo extends Command {
     return !isEmpty(activities) && activities.some((a) => a.type === 'LISTENING' && a.party?.id?.includes('spotify:'));
   }
 
-  private spotifyEmbed(author: User, user: User, t: TFunction): SimplicityEmbed {
+  private spotifyEmbed(author: User, user: User, t: TFunction): Embed {
     const { presence } = user;
     const activity = presence?.activities?.find(
       (a) => a.type === 'LISTENING' && a.party?.id?.includes('spotify:')
@@ -89,7 +89,7 @@ export default class UserInfo extends Command {
     const largeImage = activity.assets?.largeImage;
     const image = largeImage && `https://i.scdn.co/image/${largeImage.replace('spotify:', '')}`;
 
-    const embed = new SimplicityEmbed(author, { t })
+    const embed = new Embed(author, { t })
       .setAuthor('$$commands:userinfo.spotify', SPOTIFY_LOGO_PNG_URL)
       .setColor('GREEN');
 
@@ -101,10 +101,10 @@ export default class UserInfo extends Command {
     return embed;
   }
 
-  private rolesEmbed(roles: Collection<string, Role>, user: User, author: User, t: TFunction): SimplicityEmbed {
+  private rolesEmbed(roles: Collection<string, Role>, user: User, author: User, t: TFunction): Embed {
     const role = roles && roles.find((r) => !!r.color);
     const opts = { dynamic: true, format: 'png', size: 4096 } as const;
-    return new SimplicityEmbed(author, { t })
+    return new Embed(author, { t })
       .setAuthor(
         '» $$commands:userinfo.authorRoles', user.displayAvatarURL(opts), '', { user: user.username },
       )
@@ -136,7 +136,7 @@ export default class UserInfo extends Command {
     return (result && result.index) || null;
   }
 
-  private userInfoEmbed(ctx: CommandContext, user: User, locale: Locale): SimplicityEmbed {
+  private userInfoEmbed(ctx: CommandContext, user: User, locale: Locale): Embed {
     const { guild, author, t } = ctx;
     const { id, tag } = user;
     const member = guild.member(user);
@@ -157,7 +157,7 @@ export default class UserInfo extends Command {
       .filter((r) => r.id !== guild.id)
       .map((r) => r.name || `${r}`);
 
-    const embed = new SimplicityEmbed(author, { autoAuthor: false, t })
+    const embed = new Embed(author, { autoAuthor: false, t })
       .setAuthor(titles, user.displayAvatarURL({ dynamic: true }))
       .setThumbnail(user)
       .addField('» $$commands:userinfo.username', tag, true);

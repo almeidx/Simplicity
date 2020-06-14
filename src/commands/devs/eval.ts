@@ -8,7 +8,7 @@ import { inspect } from 'util';
 import { execSync } from 'child_process';
 import * as dateFns from 'date-fns';
 import {
-  Command, CommandError, SimplicityEmbed, SimplicityClient, CommandContext,
+  Command, CommandError, Embed, SimplicityClient, CommandContext,
 } from '../../structures';
 import { Util } from '../../util';
 

@@ -1,4 +1,4 @@
-export { default as SimplicityEmbed } from './SimplicityEmbed';
+export { default as Embed } from './Embed';
 export { default as SimplicityClient } from './SimplicityClient';
-export { default as SimplicityListener } from './SimplicityListener';
-export * from './SimplicityEmbed';
+export { default as Listener } from './Listener';
+export * from './Embed';

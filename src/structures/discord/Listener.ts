@@ -8,13 +8,13 @@ import Util from '../../util/Util';
 
 /**
  * Main Listener class.
- * @class SimplicityListener
+ * @class Listener
  */
-export default abstract class SimplicityListener {
+export default abstract class Listener {
   client: SimplicityClient
   event: keyof ClientEvents
   /**
-   * Creates an instance of SimplicityListener.
+   * Creates an instance of Listener.
    * @param {Client} client The Listener's Client.
    */
   constructor(event: keyof ClientEvents, client: SimplicityClient) {

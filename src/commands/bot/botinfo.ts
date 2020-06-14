@@ -3,7 +3,7 @@ import { formatDistance } from 'date-fns';
 import { BOT_DEFAULT_PERMISSIONS, DateUtil } from '../../util';
 import Config from '../../config';
 import {
-  Command, SimplicityEmbed, SimplicityClient, CommandContext,
+  Command, Embed, SimplicityClient, CommandContext,
 } from '../../structures';
 
 export default class BotInfo extends Command {
@@ -32,7 +32,7 @@ export default class BotInfo extends Command {
       .sort()
       .join(', ');
 
-    const embed = new SimplicityEmbed(author, { t })
+    const embed = new Embed(author, { t })
       .addFields(
         { inline: true, name: '» $$commands:botinfo.ping', value: `${ping}ms` },
         { inline: true, name: '» $$commands:botinfo.users', value: client.users.cache.size },

@@ -33,13 +33,13 @@ interface FieldOptions {
 }
 
 /**
- * Main SimplicityEmbed class.
+ * Main Embed class.
  */
-class SimplicityEmbed extends MessageEmbed {
+class Embed extends MessageEmbed {
   options: EmbedOptions;
 
   /**
-   * Creates an instance of SimplicityEmbed
+   * Creates an instance of Embed
    * @param embedResolvable The embed resolvable
    * @param options The options for the embed
    * @param data The data of the embed
@@ -133,7 +133,7 @@ class SimplicityEmbed extends MessageEmbed {
   }
 
   /**
-   * Sets the SimplicityEmbed's author
+   * Sets the Embed's author
    * @param name= The name of the author
    * @param iconURL The resolvable to resolve the icon from
    * @param url The resolvable to resolve the url from
@@ -145,7 +145,7 @@ class SimplicityEmbed extends MessageEmbed {
     url?: EmbedInput | null,
     options: TOptions = {},
   ): this {
-    const parseName = SimplicityEmbed.resolveName(name);
+    const parseName = Embed.resolveName(name);
     const parseIcon = iconURL ? this.resolveImage(iconURL) : this.resolveImage(name);
     const parseUrl = url ? this.resolveImage(url) : undefined;
     return super.setAuthor(
@@ -156,17 +156,17 @@ class SimplicityEmbed extends MessageEmbed {
   }
 
   /**
-   * Set the SimplicityEmbed's footer
+   * Set the Embed's footer
    * @param text The text of the footer
    * @param iconURL The resolvable to resolve the icon from
    * @param options The options for the footer
    * @returns The embed
    */
   setFooter(text: EmbedInput, iconURL: EmbedInput | null = null, options: TOptions = {}): this {
-    const parseText = SimplicityEmbed.resolveName(text);
+    const parseText = Embed.resolveName(text);
     const parseIconURL = iconURL
       ? this.resolveImage(iconURL)
-      : SimplicityEmbed.hasSupport(text) ? this.resolveImage(text) : undefined;
+      : Embed.hasSupport(text) ? this.resolveImage(text) : undefined;
 
     return super.setFooter(
       TextUtil.parse(
@@ -178,7 +178,7 @@ class SimplicityEmbed extends MessageEmbed {
   }
 
   /**
-   * Set the SimplicityEmbed's description
+   * Set the Embed's description
    * @param description The embed's description
    * @param options The options for the descripton
    */
@@ -187,7 +187,7 @@ class SimplicityEmbed extends MessageEmbed {
   }
 
   /**
-   * Set the SimplicityEmbed's title
+   * Set the Embed's title
    * @param title The embed's title
    * @param options The options for the title
    * @returns The embed
@@ -197,7 +197,7 @@ class SimplicityEmbed extends MessageEmbed {
   }
 
   /**
-   * Add a field to the SimplicityEmbed
+   * Add a field to the Embed
    * @param name The name for the field
    * @param value The value for the field
    * @param inline Whether the field should be inline
@@ -232,7 +232,7 @@ class SimplicityEmbed extends MessageEmbed {
         name, value, inline, options = {}, valueOptions = {},
       } = data;
       this.fields.push(
-        SimplicityEmbed.normalizeField(
+        Embed.normalizeField(
           TextUtil.parse(String(name), this.getParseTextOptions(options)),
           TextUtil.parse(String(value), this.getParseTextOptions(valueOptions)),
           inline,
@@ -243,7 +243,7 @@ class SimplicityEmbed extends MessageEmbed {
   }
 
   /**
-   * Set the SimplicityEmbed's thumbnail
+   * Set the Embed's thumbnail
    * @param url The url to the image
    */
   setThumbnail(url: EmbedInput): this {
@@ -251,7 +251,7 @@ class SimplicityEmbed extends MessageEmbed {
   }
 
   /**
-   * Set the SimplicityEmbed's image
+   * Set the Embed's image
    * @param url The url to the image
    */
   setImage(url: EmbedInput): this {
@@ -259,4 +259,4 @@ class SimplicityEmbed extends MessageEmbed {
   }
 }
 
-export default SimplicityEmbed;
+export default Embed;

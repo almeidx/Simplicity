@@ -1,5 +1,5 @@
 import {
-  Command, CommandContext, SimplicityClient, SimplicityEmbed,
+  Command, CommandContext, SimplicityClient, Embed,
 } from '../../structures';
 
 export default class Avatar extends Command {
@@ -18,7 +18,7 @@ export default class Avatar extends Command {
   async run({
     author, send, t,
   }: CommandContext, user = author): Promise<void> {
-    const embed = new SimplicityEmbed(author, { autoAuthor: false, t })
+    const embed = new Embed(author, { autoAuthor: false, t })
       .setAuthor(user)
       .setImage(user.displayAvatarURL({ dynamic: true, format: 'png', size: 4096 }));
     await send(embed);
