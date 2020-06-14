@@ -4,7 +4,6 @@ import { CommandContext } from '..';
 import { Logger, Util } from '../../util';
 import Config from '../../config';
 
-
 export default class CommandHandler {
   static isInvalidMessage(message: Message): boolean {
     return message.author.bot

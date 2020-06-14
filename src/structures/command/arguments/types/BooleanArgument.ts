@@ -1,4 +1,3 @@
-
 import CommandError from '../../CommandError';
 import Argument from './Argument';
 import { BooleanArgOptions, ParameterOptions } from '../ArgumentOptions.interfances';

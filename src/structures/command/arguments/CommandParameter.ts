@@ -7,7 +7,6 @@ import {
 } from './ArgumentOptions.interfances';
 import CommandContext from '../CommandContext';
 
-
 const isNull = (n: any) => n === null || n === undefined;
 
 const funcOrString = (

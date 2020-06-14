@@ -1,4 +1,3 @@
-
 import { Loader } from '../structures';
 import * as database from '../database';
 import SimplicityClient from '../structures/discord/SimplicityClient';

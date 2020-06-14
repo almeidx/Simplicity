@@ -1,5 +1,5 @@
 import {
-  Collection, Guild, Presence, Role, User, GuildMember,
+  Collection, Guild, GuildMember, Presence, Message, Role, User,
 } from 'discord.js';
 import { TFunction } from 'i18next';
 import { Locale, format, formatDistance } from 'date-fns';
@@ -47,7 +47,7 @@ export default class UserInfo extends Command {
     });
   }
 
-  async run(ctx: CommandContext, user = ctx.author): Promise<void> {
+  run(ctx: CommandContext, user = ctx.author): Promise<Message> {
     const {
       author, channel, flags, guild, language, t,
     } = ctx;
@@ -59,17 +59,16 @@ export default class UserInfo extends Command {
       } else if (!this.isListeningToSpotify(user.presence)) {
         throw new CommandError('commands:userinfo.notListeningToSpotify');
       }
-      await channel.send(this.spotifyEmbed(author, user, t));
+      return channel.send(this.spotifyEmbed(author, user, t));
     } if (flags.roles) {
       const member = guild.member(user);
       if (!member) {
         throw new CommandError('commands:userinfo.notInGuild');
       }
-      await channel.send(this.rolesEmbed(member.roles.cache.filter((r) => r.id !== guild.id), user, author, t));
-    } else {
-      const content = user.isPartial ? t('commands:userinfo.cannotPartial') : '';
-      await channel.send(content, this.userInfoEmbed(ctx, user, locale));
+      return channel.send(this.rolesEmbed(member.roles.cache.filter((r) => r.id !== guild.id), user, author, t));
     }
+    const content = user.isPartial ? t('commands:userinfo.cannotPartial') : '';
+    return channel.send(content, this.userInfoEmbed(ctx, user, locale));
   }
 
   private isListeningToSpotify(presence: Presence): boolean {
@@ -109,7 +108,7 @@ export default class UserInfo extends Command {
       .setAuthor(
         '» $$commands:userinfo.authorRoles', user.displayAvatarURL(opts), '', { user: user.username },
       )
-      .setDescription(roles.map((r) => r).sort((a, b) => b.position - a.position).join('\n'))
+      .setDescription(roles.sort((a, b) => b.position - a.position).map((r) => r.toString()).join('\n'))
       .setColor(role ? role.hexColor : Config.COLOR);
   }
 
@@ -202,7 +201,6 @@ export default class UserInfo extends Command {
         `${joined} (${joinedRelative})`,
       );
     }
-
 
     if (member) {
       embed.addField('» $$commands:userinfo.permissions', this.getMemberPermissions(member, t));

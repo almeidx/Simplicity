@@ -34,8 +34,6 @@ interface FieldOptions {
 
 /**
  * Main SimplicityEmbed class.
- * @class SimplicityEmbed
- * @extends {MessageEmbed}
  */
 class SimplicityEmbed extends MessageEmbed {
   options: EmbedOptions;

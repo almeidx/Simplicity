@@ -1,4 +1,3 @@
-
 import { Client, Message } from 'discord.js';
 import Loaders from '../../loaders';
 import Logger from '../../util/Logger';

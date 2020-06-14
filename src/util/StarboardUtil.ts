@@ -1,4 +1,3 @@
-
 // const { LANGUAGE } = require('@data/config');
 // const i18next = require('i18next');
 // // const SimplicityEmbed = require('../structures/discord/SimplicityEmbed');

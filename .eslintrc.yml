@@ -46,6 +46,11 @@ rules:
   max-len:
     - error
     - 120
+  no-multiple-empty-lines:
+    - error
+    - max: 1
+      maxEOF: 1
+      maxBOF: 0
 settings:
   import/resolver:
     node:

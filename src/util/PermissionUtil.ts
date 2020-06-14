@@ -1,4 +1,3 @@
-
 import { PermissionString, Client } from 'discord.js';
 import { TFunction } from 'i18next';
 import Config from '../config';

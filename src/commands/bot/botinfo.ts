@@ -1,4 +1,3 @@
-
 import { version } from 'discord.js';
 import { formatDistance } from 'date-fns';
 import { BOT_DEFAULT_PERMISSIONS, DateUtil } from '../../util';

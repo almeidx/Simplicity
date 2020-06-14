@@ -18,27 +18,11 @@ export default class TextUtil {
    * @param options The options
    * @returns The resolved string
   */
-  static parse(text: string, { t, embed, tOptions = {} }: ParseTextOptions = {}): string {
+  static parse(text: string, { t, tOptions = {} }: ParseTextOptions = {}): string {
     let result = text;
-    if (embed) result = TextUtil.parseEmbed(result, embed);
     if (t) result = TextUtil.parseTranslation(result, t, tOptions);
 
     return result;
-  }
-
-
-  static parseEmbed(text: string, embed: MessageEmbed): string {
-    return text.replace(/(?:@)\S+/g, (k) => {
-      const keys = k.slice(1).split('.');
-      let obj = embed;
-      for (const key of keys) {
-        if (!Object.hasOwnProperty.call(obj, key)) {
-          return String(obj);
-        }
-        obj = Object.getPrototypeOf.call(obj, key);
-      }
-      return String(obj);
-    });
   }
 
   static parseTranslation(text: string, t: TFunction, tOptions: TOptions): string {
