@@ -7,22 +7,16 @@
     "noImplicitAny": true,
     "outDir": "dist",
     "baseUrl": "src",
-    "paths": {
-      "@data/*": ["../data/*"],
-      "@root": ["."],
-      "@src": ["*"],
-      "@util/*": ["util/*"]
-    },
     "resolveJsonModule": true,
     "rootDir": "./src",
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "removeComments": true
   },
   "exclude": [
-    "data",
     "node_modules"
   ]
 }
