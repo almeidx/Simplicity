@@ -8,14 +8,14 @@ import Util from '../../util/Util';
 
 /**
  * Main Listener class.
- * @class Listener
  */
 export default abstract class Listener {
   client: SimplicityClient
   event: keyof ClientEvents
+
   /**
    * Creates an instance of Listener.
-   * @param {Client} client The Listener's Client.
+   * @param client The Listener's Client.
    */
   constructor(event: keyof ClientEvents, client: SimplicityClient) {
     this.event = event;
@@ -29,9 +29,9 @@ export default abstract class Listener {
 
   /**
    * Sends a private message using an ENV variable.
-   * @param {string} envName The name of the env variable.
-   * @param {MessageEmbed|string} content The content to send.
-   * @returns {boolean|Promise<Message>} The message sent or false.
+   * @param envName The name of the env variable.
+   * @param content The content to send.
+   * @returns The message sent or false.
    */
   sendPrivateMessage(
     configName: keyof typeof Config['CHANNELS'],

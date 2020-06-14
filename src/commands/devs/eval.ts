@@ -21,13 +21,8 @@ const exec = (str: string) => execSync(str).toString();
 
 /**
  * The Eval command class.
- * @extends Command
  */
 export default class Eval extends Command {
-  /**
-   * Creates an instance of EvalCommand.
-   * @param {Client} client The Client.
-   */
   constructor(client: SimplicityClient) {
     super(client, 'eval', {
       aliases: ['compile', 'ev', 'evaluate', 'exec', 'execute'],
@@ -46,9 +41,9 @@ export default class Eval extends Command {
 
   /**
    * What gets ran when the command is called.
-   * @param {CommandContext} ctx The context of the command.
-   * @param {string} expr The expression to be evaluated.
-   * @returns {Promise<Message>} The reply from the command.
+   * @param ctx The context of the command.
+   * @param expr The expression to be evaluated.
+   * @returns The reply from the command.
    */
   async run(ctx: CommandContext, expr: string): Promise<void> {
     const {
@@ -111,9 +106,8 @@ export default class Eval extends Command {
 
   /**
    * Cleans blank space from the eval response.
-   * @param {string} text The text to clean.
-   * @returns {string} The text cleaned.
-   * @private
+   * @param text The text to clean.
+   * @returns The text cleaned.
    */
   static clean(text: string): string {
     const blankSpace = String.fromCharCode(8203);

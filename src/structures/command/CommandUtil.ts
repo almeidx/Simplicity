@@ -4,14 +4,13 @@ import CommandContext from './CommandContext';
 
 /**
  * Contains various command utility methods.
- * @class CommandUtil
  */
 export default class CommandUtil {
   /**
    * Gets the usage of a specific command.
-   * @param {*} options The options for the usage.
-   * @param {boolean} [full=true] Wether to return the prefix, command and usage at once.
-   * @returns {string} The usage.
+   * @param options The options for the usage.
+   * @param full Wether to return the prefix, command and usage at once.
+   * @returns The usage.
    */
   static getUsage(ctx: CommandContext, full = true): string {
     const usage = ctx.command.getUsage(ctx.t);
@@ -21,8 +20,8 @@ export default class CommandUtil {
 
   /**
    * Returns all the info required on the help command.
-   * @param {Object} options The options for the help command.
-   * @returns {Embed}
+   * @param options The options for the help command.
+   * @returns
    */
   static getHelpEmbed(ctx: CommandContext): Embed {
     const { t, command, prefix } = ctx;

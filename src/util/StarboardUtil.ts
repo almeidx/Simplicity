@@ -5,22 +5,18 @@
 
 // /**
 //  * Contains various starboard related utility methods.
-//  * @class StarboardUtil
 //  */
 // class StarboardUtil {
-//   /**
-//    * Creates an instance of StarboardUtil.
-//    */
 //   constructor() {
 //     throw new Error(`The ${this.constructor.name} class may not be instantiated.`);
 //   }
 
 //   /**
 //    * Handles a starboard reaction.
-//    * @param {Client} client The Client.
-//    * @param {Reaction} reaction The reaction that was added.
-//    * @param {User} user The user that reacted.
-//    * @returns {Promise<void>}
+//    * @param client The Client.
+//    * @param reaction The reaction that was added.
+//    * @param user The user that reacted.
+//    * @returns
 //    */
 //   async handle(client, reaction, user) {
 //     const { emoji, users } = reaction;

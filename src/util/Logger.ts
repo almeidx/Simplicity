@@ -71,11 +71,7 @@ export default class Logger {
 
   /**
    * Logs a command.
-   * @param {Object} object Object with multiple required properties
-   * @param {User} object.author The author of the command.
-   * @param {messageBasedChannel} object.channel The channel where the command was used.
-   * @param {string} object.content The content of the command message.
-   * @param {Guild} object.guild The guild where the command was used.
+   * @param ctx Context of the command.
    * @returns {void}
    */
   static logCommand({

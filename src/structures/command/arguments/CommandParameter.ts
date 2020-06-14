@@ -71,8 +71,8 @@ export default class CommandParameters {
   }
 
   /**
-   * @param {CommandContext} context The command context
-   * @param {Object[]} args Array of the command args
+   * @param context The command context
+   * @param args Array of the command args
    */
   static async handleArguments(context: CommandContext, args: CommandParameter[]): Promise<any[]> {
     const parsedArgs: any[] = [];

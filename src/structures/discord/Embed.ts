@@ -134,7 +134,7 @@ class Embed extends MessageEmbed {
 
   /**
    * Sets the Embed's author
-   * @param name= The name of the author
+   * @param name The name of the author
    * @param iconURL The resolvable to resolve the icon from
    * @param url The resolvable to resolve the url from
    * @param options The options for the author
