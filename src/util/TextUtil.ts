@@ -1,10 +1,8 @@
-import { MessageEmbed, Permissions } from 'discord.js';
+import { Permissions } from 'discord.js';
 import { TFunction, TOptions } from 'i18next';
-import { Embed } from '../structures';
 
 export interface ParseTextOptions {
   t?: TFunction,
-  embed?: MessageEmbed | Embed,
   tOptions?: TOptions
 }
 

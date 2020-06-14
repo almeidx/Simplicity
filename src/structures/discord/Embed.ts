@@ -128,7 +128,6 @@ class Embed extends MessageEmbed {
     return {
       tOptions: options,
       t: this.options.t,
-      embed: this,
     };
   }
 
