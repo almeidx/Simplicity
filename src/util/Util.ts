@@ -51,24 +51,26 @@ export default class Util {
   /**
    * Slices strings to meet certain length limits
    * @param str The string to be sliced
-   * @param minLength The minimum length of the string
+   * @param start The zero-based index at which to begin extraction
    * @param maxLength The maximum length of the string
    * @returns The sliced string
    */
-  static sliceString(str: string, minLength = 0, maxLength = 1024) {
-    return str.slice(minLength, maxLength - 3) + (str.length > maxLength - 3 ? '...' : '');
+  static sliceString(str: string, start = 0, maxLength = 1024) {
+    const end = str.length > maxLength ? maxLength - 3 : maxLength;
+    if (end <= 0) return '...';
+    return `${str.slice(start, end)}${str.length > maxLength ? '...' : ''}`;
   }
 
   /**
    * Makes the provided string a code block
    * @param str The string to be transformed
    * @param lang The language of the code block
-   * @param minLength The minimum length of the string
+   * @param start The zero-based index at which to begin extraction
    * @param maxLength The maximum length of the string
    * @returns The string in a code block.
    */
-  static code(str: string, lang: string, minLength = 0, maxLength = 1024) {
-    return `\`\`\`${lang}\n${Util.sliceString(str, minLength, maxLength)}\n\`\`\``;
+  static code(str: string, lang: string, start = 0, maxLength = 1024) {
+    return `\`\`\`${lang}\n${Util.sliceString(str, start, maxLength)}\n\`\`\``;
   }
 
   static perString(str: string, fn: (str: string, index: number) => any, length = 1024) {
