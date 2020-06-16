@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`if create guild default icon 1`] = `
+exports[`if it creates the guild default icon 1`] = `
 Object {
   "data": Array [
     137,
