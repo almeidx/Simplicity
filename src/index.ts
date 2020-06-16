@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import 'tsconfig-paths/register';
 import './structures/discord/Structures';
 
 import { CLIENT_OPTIONS } from './util';
