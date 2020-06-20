@@ -27,8 +27,10 @@
     "dotenv": "^8.2.0",
     "i18next": "^19.4.0",
     "i18next-node-fs-backend": "^2.1.3",
+    "lexure": "^0.7.0",
     "mongoose": "^5.9.17",
     "node-fetch": "^2.6.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.3",
     "utf-8-validate": "^5.0.2"
   },
