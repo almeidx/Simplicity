@@ -114,6 +114,7 @@
     "username": "Username",
     "nickname": "Nickname",
     "id": "ID",
+    "activities": "Activities",
     "createdAt": "Created At",
     "joinedAt": "Joined At",
     "status": "Status",
@@ -125,7 +126,8 @@
     "permissions": "Permissions",
     "roles": "Roles",
     "authorRoles": "{{- user }}'s Roles",
-    "joinPosition": "Join Position"
+    "joinPosition": "Join Position",
+    "noActivities": "No activities"
   },
   "avatar": {
     "message": "{{- user.username }}'s Avatar"
