@@ -52,7 +52,7 @@ export default class UserInfo extends Command {
 
   run(ctx: CommandContext, user = ctx.author): Promise<Message> {
     const {
-      author, channel, flags, guild, language, t,
+      author, flags, guild, language, t,
     } = ctx;
 
     const locale = DateUtil.getLocale(language);
@@ -62,25 +62,25 @@ export default class UserInfo extends Command {
       } else if (!this.isListeningToSpotify(user.presence)) {
         throw new CommandError('commands:userinfo.notListeningToSpotify');
       }
-      return channel.send(this.spotifyEmbed(author, user, t));
+      return ctx.send(this.spotifyEmbed(author, user, t));
     } if (flags.roles) {
       const member = guild.member(user);
       if (!member) {
         throw new CommandError('commands:userinfo.notInGuild');
       }
-      return channel.send(this.rolesEmbed(member.roles.cache.filter((r) => r.id !== guild.id), user, author, t));
+      return ctx.send(this.rolesEmbed(member.roles.cache.filter((r) => r.id !== guild.id), user, author, t));
     }
 
     const member = guild?.member(user);
 
-    const embed = new Embed()
-      .setAuthor(user, null)
+    const embed = new Embed(ctx.author)
+      .setAuthor(`${user.tag} ${this.getTitles(user, ctx).join(' ')}`, user)
       .setThumbnail(user)
       .addField('» User Information', this.getUserInformation(user, locale, t).join('\n'));
 
     if (member) embed.addField('» Member Information', this.getMemberInformation(member, locale, t).join('\n'));
     const content = user.isPartial ? t('commands:userinfo.cannotPartial') : '';
-    return channel.send(content, { embed });
+    return ctx.send({ content, embed });
   }
 
   private isListeningToSpotify(presence: Presence): boolean {
@@ -88,7 +88,7 @@ export default class UserInfo extends Command {
     return !isEmpty(activities) && activities.some((a) => a.type === 'LISTENING' && a.party?.id?.includes('spotify:'));
   }
 
-  private spotifyEmbed(author: User, user: User, t: TFunction): Embed {
+  public spotifyEmbed(author: User, user: User, t: TFunction): Embed {
     const { presence } = user;
     const activity = presence?.activities?.find(
       (a) => a.type === 'LISTENING' && a.party?.id?.includes('spotify:')
@@ -113,23 +113,66 @@ export default class UserInfo extends Command {
     return embed;
   }
 
-  private rolesEmbed(roles: Collection<string, Role>, user: User, author: User, t: TFunction): Embed {
-    const role = roles && roles.find((r) => !!r.color);
+  public rolesEmbed(roles: Collection<string, Role>, user: User, author: User, t: TFunction): Embed {
+    const color = roles.find((r) => !!r.color)?.hexColor ?? Config.COLOR;
     const opts = { dynamic: true, format: 'png', size: 4096 } as const;
     return new Embed(author, { t })
       .setAuthor(
         '» $$commands:userinfo.authorRoles', user.displayAvatarURL(opts), '', { user: user.username },
       )
       .setDescription(roles.sort((a, b) => b.position - a.position).map((r) => r.toString()).join('\n'))
-      .setColor(role ? role.hexColor : Config.COLOR);
+      .setColor(color);
   }
 
-  private getTitles(user: User, { client, guild, emoji }: CommandContext): string[] {
-    const titles = [user.tag];
-    if (PermissionUtil.verifyDev(user.id, client)) titles.push(emoji(false, 'DEVELOPER'));
-    if (guild && guild.ownerID === user.id) titles.push(emoji(false, 'CROWN'));
-    if (user.bot) titles.push(emoji(false, 'BOT'));
-    return titles;
+  private getUserInformation(user: User, locale: Locale, t: TFunction): string[] {
+    const infos = [
+      `» ${t('commands:userinfo.username')}: **${user.tag}**`,
+      `» ${t('commands:userinfo.id')}: **${user.id}**`,
+      `» ${t('commands:userinfo.createdAt')}: **${this.parseDate(user.createdAt, locale)}**`,
+    ];
+
+    if (!user.isPartial) {
+      const activities = this.getActivities(user.presence, t);
+      const parsedActivities = !Util.isEmpty(activities)
+        ? activities.join(', ') : `**${t('commands:userinfo.noActivities')}**`;
+
+      infos.push(`» ${t('commands:userinfo.activities', { count: activities.length })}: ${parsedActivities}`);
+      infos.push(`» ${t('commands:userinfo.status')}: **${t(`common:status.${user.presence.status}`)}**`);
+    }
+
+    return infos;
+  }
+
+  private getMemberInformation(member: GuildMember, locale: Locale, t: TFunction): string[] {
+    const infos = [
+      `» ${t('commands:userinfo.joinedAt')}: **${this.parseDate(member.joinedAt as Date, locale)}**`,
+      `» ${t('commands:userinfo.joinPosition')}: **${this.getJoinPosition(member, member.guild, locale)}**`,
+      `» ${t('commands:userinfo.permissions')}: **${this.getMemberPermissions(member, t)}**`,
+    ];
+
+    const roles = member.roles.cache.array().filter((role) => role.id !== member.guild.id);
+    if (!Util.isEmpty(roles)) {
+      infos.push(`» ${t('commands:userinfo.highestRole')}: **${member.roles.highest.name}**`);
+      infos.push(`» ${t('commands:userinfo.roles')}: ${this.parseRoles(roles, t)}`);
+    }
+    return infos;
+  }
+
+  private parseRoles(roles: Role[], t: TFunction): string {
+    const parsedRoles = roles
+      .sort((a, b) => b.position - a.position)
+      .slice(0, 5)
+      .map((role) => `**${role.name}**`).join(', ');
+    const moreRoles = roles.length > 5 ? `, ${t('commands:userinfo.moreRoles', { count: roles.length - 5 })}` : '';
+    return parsedRoles + moreRoles;
+  }
+
+  private getTitles(user: User, ctx: CommandContext): string[] {
+    const titles = [];
+    if (PermissionUtil.verifyDev(user.id, ctx.client)) titles.push(ctx.emoji(false, 'DEVELOPER'));
+    if (ctx.guild && ctx.guild.ownerID === user.id) titles.push(ctx.emoji(false, 'CROWN'));
+    if (user.bot) titles.push(ctx.emoji(false, 'BOT'));
+    return titles.concat(this.getClientStatus(ctx, user.presence));
   }
 
   private getClientStatus({ emoji }: CommandContext, presence: Presence): string[] {
@@ -142,50 +185,18 @@ export default class UserInfo extends Command {
     return `${format(date, 'PPPP', { locale })} (${formatDistance(date, new Date(), { locale })})`;
   }
 
-  private getActivities(presence: Presence, t: TFunction): string {
-    const activities = presence.activities?.map((a) => `**${t(`common:activityType.${a.type}`)} ${a.name}**`);
-    return !Util.isEmpty(activities) ? activities.join(', ') : `**${t('commands:userinfo.noActivities')}**`;
+  private getActivities(presence: Presence, t: TFunction): string[] {
+    return presence.activities?.filter((act) => act.type !== 'CUSTOM_STATUS')
+      .map((a) => `**${t(`common:activityType.${a.type}`)} ${a.name}**`) ?? [];
   }
 
-  private getUserInformation(user: User, locale: Locale, t: TFunction): string[] {
-    const {
-      tag, id, presence, createdAt,
-    } = user;
-    return [
-      `» ${t('commands:userinfo.username')}: **${tag}**`,
-      `» ${t('commands:userinfo.id')}: **${id}**`,
-      `» ${t('commands:userinfo.createdAt')}: **${this.parseDate(createdAt, locale)}**`,
-      `» ${t('commands:userinfo.activities')}: ${this.getActivities(presence, t)}`,
-    ];
-  }
-
-  private getMemberInformation(member: GuildMember, locale: Locale, t: TFunction): string[] {
-    // if (member && highestRole && member.roles.cache.size > 5) {
-    //   const roleString = highestRole.name || `${highestRole}`;
-    //   embed.addField('» $$commands:userinfo.highestRole', roleString, true);
-    // }
-
-    // if (rolesClean && rolesClean.length && rolesClean.length <= 5) {
-    //   embed.addField('» $$commands:userinfo.roles', rolesClean.join(', '), true);
-    // }
-    // const highestRole = member && member.roles.highest.id !== guild.id && member.roles.highest;
-    // const rolesClean = member && member.roles.cache
-    //   .filter((r) => r.id !== guild.id)
-    //   .map((r) => r.name || `${r}`);
-
-    return [
-      `${t('commands:userinfo.joinedAt')}: **${this.parseDate(member.joinedAt as Date, locale)}**`,
-      `${t('commands:userinfo.joinPosition')}: **${this.getJoinPosition(member, member.guild)}**`,
-      `${t('commands:userinfo.permissions')}: **${this.getMemberPermissions(member, t)}**`,
-    ];
-  }
-
-  private getJoinPosition(member: GuildMember, guild: Guild): number {
-    return (guild.members.cache
-      .array()
-      .sort((a, b) => (a.joinedTimestamp as number) - (b.joinedTimestamp as number))
-      .map((m, i) => ({ id: m.user.id, index: i }))
-      .find((m) => m.id === member.user.id)?.index ?? 0) + 1;
+  private getJoinPosition(member: GuildMember, guild: Guild, locale: Locale): number {
+    return locale.localize?.ordinalNumber((
+      guild.members.cache
+        .array()
+        .sort((a, b) => (a.joinedTimestamp as number) - (b.joinedTimestamp as number))
+        .map((m, i) => ({ id: m.user.id, index: i }))
+        .find((m) => m.id === member.user.id)?.index ?? 0) + 1);
   }
 
   private getMemberPermissions(member: GuildMember, t: TFunction): string {
