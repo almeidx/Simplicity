@@ -81,7 +81,7 @@ export default class UserInfo extends Command {
 
     if (member) embed.addField('» Member Information', this.getMemberInformation(member, locale, t).join('\n'));
     const content = user.isPartial ? t('commands:userinfo.cannotPartial') : '';
-    return ctx.send({ content, embed });
+    return send({ content, embed });
   }
 
   private isListeningToSpotify(presence: Presence): boolean {
