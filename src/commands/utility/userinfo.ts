@@ -52,7 +52,7 @@ export default class UserInfo extends Command {
 
   run(ctx: CommandContext, user = ctx.author): Promise<Message> {
     const {
-      author, flags, guild, language, t,
+      author, flags, guild, language, send, t,
     } = ctx;
 
     const locale = DateUtil.getLocale(language);
@@ -62,13 +62,14 @@ export default class UserInfo extends Command {
       } else if (!this.isListeningToSpotify(user.presence)) {
         throw new CommandError('commands:userinfo.notListeningToSpotify');
       }
-      return ctx.send(this.spotifyEmbed(author, user, t));
-    } if (flags.roles) {
-      const member = guild.member(user);
+      return send(this.spotifyEmbed(author, user, t));
+    }
+    if (flags.roles) {
+      const member = guild?.member(user);
       if (!member) {
         throw new CommandError('commands:userinfo.notInGuild');
       }
-      return ctx.send(this.rolesEmbed(member.roles.cache.filter((r) => r.id !== guild.id), user, author, t));
+      return send(this.rolesEmbed(member.roles.cache.filter((r) => r.id !== guild.id), user, author, t));
     }
 
     const member = guild?.member(user);

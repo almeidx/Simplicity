@@ -1,4 +1,4 @@
-import { ClientOptions, PermissionString, PresenceStatus } from 'discord.js';
+import { ClientOptions, PermissionString } from 'discord.js';
 
 export const CLIENT_OPTIONS: ClientOptions = {
   disableMentions: 'everyone',
