@@ -102,7 +102,7 @@ export default class Embed extends MessageEmbed {
    * @returns The resolved image url
    */
   resolveImage(resolvable: EmbedInput): string {
-    const o: ImageURLOptions = { size: 4096 };
+    const o: ImageURLOptions & { dynamic?: boolean } = { dynamic: true, format: 'png', size: 4096 };
     if (resolvable instanceof User) return resolvable.displayAvatarURL(o);
     if (resolvable instanceof GuildMember) return resolvable.user.displayAvatarURL(o);
     if (resolvable instanceof Guild) {

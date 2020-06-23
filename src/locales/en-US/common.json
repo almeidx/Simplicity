@@ -10,7 +10,7 @@
   "status": {
     "online": "Online",
     "idle": "Idle",
-    "dnd": "Do not Disturb",
+    "dnd": "Do Not Disturb",
     "offline": "Offline"
   },
   "activityType": {
