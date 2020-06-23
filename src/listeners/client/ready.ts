@@ -12,7 +12,7 @@ export default class ReadyListener extends Listener {
   exec(): void {
     const message = `Logged on ${this.client.guilds.cache.size} guilds and ${this.client.users.cache.size} users`;
 
-    Logger.log(`[Ready] ${message}`);
+    Logger.log(`${message}`);
 
     this.sendPrivateMessage('BOT_LOG',
       new Embed(this.client.user, { autoFooter: false })

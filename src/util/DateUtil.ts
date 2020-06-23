@@ -1,4 +1,4 @@
-import { Locale } from 'date-fns';
+import { Locale, formatDistance, format } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 
 export default class DateUtil {
@@ -7,5 +7,9 @@ export default class DateUtil {
       default:
         return enUS;
     }
+  }
+
+  static formatDiff(date: Date, locale: Locale): string {
+    return `${format(date, 'PPPP', { locale })} (${formatDistance(date, new Date(), { locale })})`;
   }
 }

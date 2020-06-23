@@ -85,15 +85,15 @@ export default class Logger {
    * Logs normally
    * @param message The message to log
    */
-  static log(...messages: string[]): void {
+  static log(...messages: any[]): void {
     return Logger.createLog('log', figures.arrowRight, Colors.FgGreen, messages);
   }
 
-  static success(...messages: string[]): void {
+  static success(...messages: any[]): void {
     return Logger.createLog('log', figures.tick, Colors.FgGreen, messages);
   }
 
-  static info(...messages: string[]): void {
+  static info(...messages: any[]): void {
     return Logger.createLog('log', figures.info, Colors.FgGreen, messages);
   }
 
@@ -101,7 +101,7 @@ export default class Logger {
    * Logs an error
    * @param message The message to log
    */
-  static error(...messages: string[]): void {
+  static error(...messages: any[]): void {
     return Logger.createLog('error', figures.cross, Colors.FgRed, messages);
   }
 
@@ -109,7 +109,7 @@ export default class Logger {
    * Logs a warn
    * @param message The message to log
    */
-  static warn(...messages: string[]): void {
+  static warn(...messages: any[]): void {
     return Logger.createLog('warn', figures.warning, Colors.FgYellow, messages);
   }
 

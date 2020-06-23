@@ -79,7 +79,8 @@
     },
     "unknown": "Unknown",
     "boostTier": "Boost Tier",
-    "tier": "Tier {{- boostTier }}"
+    "tier": "Tier {{- boostTier }}",
+    "moreRoles": "and more {{ count }} roles."
   },
   "addemoji": {
     "description": "This command allows you to create emojis.",

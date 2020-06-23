@@ -4,8 +4,6 @@ import Argument from './Argument';
 import { RoleArgOptions, ParameterOptions } from '../ArgumentOptions.interfances';
 import CommandContext from '../../CommandContext';
 
-const MENTION_ROLE_REGEX = /^(?:<@&?)?([0-9]{16,18})(?:>)?$/;
-
 export default class RoleArgument extends Argument<Role, RoleArgOptions> {
   parseOptions(
     options: Partial<RoleArgOptions> = {},
@@ -26,15 +24,14 @@ export default class RoleArgument extends Argument<Role, RoleArgOptions> {
     if (!arg) return null;
 
     const input = arg.toLowerCase();
+    const MENTION_ROLE_REGEX = /^(?:<@&?)?([0-9]{16,18})(?:>)?$/;
     const regexResult = MENTION_ROLE_REGEX.exec(arg);
     const id = regexResult && regexResult[1];
 
-    const role = (id && (
-      guild.roles.cache.get(id)
-      || guild.roles.cache.find(
-        (r) => r.name.toLowerCase() === input || r.name.toLowerCase().includes(input),
-      )
-    )) || null;
+    const role = ((id && guild.roles.cache.get(id))
+      || guild.roles.cache.find((r) => r.name.toLowerCase() === input)
+      || guild.roles.cache.find((r) => r.name.toLowerCase().includes(input))
+    ) || null;
 
     if (!opts.acceptEveryone && role && role.id === guild.id) {
       throw new CommandError(t('errors:roleIsEveryone'));
@@ -49,7 +46,7 @@ export default class RoleArgument extends Argument<Role, RoleArgOptions> {
       }
       if (
         opts.authorNeedsHigherRole
-        && (role.position > (member.roles.highest.position as number))
+        && (role.position > member.roles.highest.position)
       ) {
         throw new CommandError(t('errors:authorNeedsHigherRole', { role: `${role}` }));
       }

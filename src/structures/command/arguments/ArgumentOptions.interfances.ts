@@ -83,12 +83,16 @@ export interface BooleanFlagOpts {
   type: 'booleanFlag';
 }
 
+export interface RoleOpts extends RoleArgOptions {
+  type: 'role'
+}
+
 export type ParameterOptionsTypes = BooleanArgOptions
   & ChannelArgOptions
   & EmojiArgOptions
   & StringArgOptions
 
-export type ParameterOpts = BoolOpts | UserOpts | EmojiOpts | StringOpts | BooleanFlagOpts;
+export type ParameterOpts = BoolOpts | UserOpts | EmojiOpts | StringOpts | BooleanFlagOpts | RoleOpts;
 export type ParameterTypes = ParameterOpts['type'];
 
 export type ParameterOptsTypes = ((ParameterOpts

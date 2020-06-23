@@ -144,7 +144,8 @@ export default class Embed extends MessageEmbed {
     options: TOptions = {},
   ): this {
     const parseName = Embed.resolveName(name);
-    const parseIcon = iconURL ? this.resolveImage(iconURL) : this.resolveImage(name);
+    const parseIcon = iconURL
+      ? this.resolveImage(iconURL) : typeof name !== 'string' ? this.resolveImage(name) : undefined;
     const parseUrl = url ? this.resolveImage(url) : undefined;
     return super.setAuthor(
       TextUtil.parse(parseName, this.getParseTextOptions(options)),
