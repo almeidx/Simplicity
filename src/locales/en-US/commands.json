@@ -80,7 +80,7 @@
     "unknown": "Unknown",
     "boostTier": "Boost Tier",
     "tier": "Tier {{- boostTier }}",
-    "moreRoles": "and more {{ count }} roles."
+    "moreRoles": "and {{ count }} more roles."
   },
   "addemoji": {
     "description": "This command allows you to create emojis.",
@@ -130,7 +130,7 @@
     "authorRoles": "{{- user }}'s Roles",
     "joinPosition": "Join Position",
     "noActivities": "No activities",
-    "moreRoles": "and more {{ count }} roles."
+    "moreRoles": "and {{ count }} more roles."
   },
   "avatar": {
     "message": "{{- user.username }}'s Avatar"
