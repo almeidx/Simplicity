@@ -7,9 +7,6 @@ import {
 } from '../../structures';
 
 export default class BotInfo extends Command {
-  /**
-   * @param client The client for this command
-   */
   constructor(client: SimplicityClient) {
     super(client, 'botinfo', {
       aliases: ['bi', 'stats'],
@@ -30,7 +27,7 @@ export default class BotInfo extends Command {
     const inviteLink = await client.generateInvite(BOT_DEFAULT_PERMISSIONS);
     const ping = Math.ceil(guild ? guild.shard.ping : client.ws.ping);
     const devs = Config.DEVELOPER_IDS.filter((id) => client.users.cache.has(id))
-      .map((id) => client.users.cache.get(id)?.tag)
+      .map((id) => client.users.resolve(id)?.tag)
       .filter((u) => u)
       .sort()
       .join(', ');

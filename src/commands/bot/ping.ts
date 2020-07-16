@@ -1,9 +1,6 @@
 import { Command, CommandContext, SimplicityClient } from '../../structures';
 
 export default class Ping extends Command {
-  /**
-   * @param client The client for this command
-   */
   constructor(client: SimplicityClient) {
     super(client, 'ping', {
       aliases: ['pong'],

@@ -13,8 +13,8 @@ export default class PermissionsUtil {
    * @returns If the user is a developer.
    */
   static verifyDev(userID: string, client: Client): boolean {
-    const guildClient = client.guilds.cache.get(Config.SUPPORT_GUILD);
-    const devRole = guildClient && guildClient.roles.cache.get(Config.DEVELOPER_ROLE_ID);
+    const guildClient = client.guilds.resolve(Config.SUPPORT_GUILD);
+    const devRole = guildClient && guildClient.roles.resolve(Config.DEVELOPER_ROLE_ID);
 
     const roleCondition = devRole && devRole.members.has(userID);
     const devs = Config.DEVELOPER_IDS;

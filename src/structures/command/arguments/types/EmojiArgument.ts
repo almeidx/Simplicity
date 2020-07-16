@@ -24,7 +24,7 @@ export default class EmojiArgument extends Argument<GuildEmoji, EmojiArgOptions>
     const regexResult = EMOJI_REGEX.exec(arg);
     if (regexResult) {
       const [,,, id] = regexResult;
-      const emoji = client.emojis.cache.get(id);
+      const emoji = client.emojis.resolve(id);
       if (!emoji) {
         throw new CommandError(t('errors:invalidEmoji'), { showUsage: opts.showUsage });
       }

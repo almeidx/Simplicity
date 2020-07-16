@@ -6,9 +6,6 @@ import {
 } from '../../structures';
 
 export default class RoleInfoCommand extends Command {
-  /**
-   * @param client The client for this command
-   */
   constructor(client: SimplicityClient) {
     super(client, 'roleinfo', {
       aliases: ['ri'],

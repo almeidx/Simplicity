@@ -31,7 +31,7 @@ export default class LogUtil {
     const logData = guildData.logs.get(log);
     if (!logData || !logData.channelId) return;
 
-    const logChannel = guild.channels.cache.get(logData.channelId);
+    const logChannel = guild.channels.resolve(logData.channelId);
     if (logChannel instanceof TextChannel) return logChannel;
   }
 

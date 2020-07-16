@@ -30,7 +30,7 @@ export default class EmojiUtil {
         && custom
         && channel?.permissionsFor(client)?.has('USE_EXTERNAL_EMOJIS')
       ) {
-        const cachedEmoji = channel.client.emojis.cache.get(custom);
+        const cachedEmoji = channel.client.emojis.resolve(custom);
         if (cachedEmoji) return id ? cachedEmoji.id : cachedEmoji.toString();
       }
     }

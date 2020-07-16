@@ -28,7 +28,7 @@ export default class RoleArgument extends Argument<Role, RoleArgOptions> {
     const regexResult = MENTION_ROLE_REGEX.exec(arg);
     const id = regexResult && regexResult[1];
 
-    const role = ((id && guild.roles.cache.get(id))
+    const role = ((id && guild.roles.resolve(id))
       || guild.roles.cache.find((r) => r.name.toLowerCase() === input)
       || guild.roles.cache.find((r) => r.name.toLowerCase().includes(input))
     ) || null;

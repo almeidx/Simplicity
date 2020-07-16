@@ -18,6 +18,6 @@ export interface GuildDoc extends Document {
   prefix?: string;
   autorole: GuildModule;
   starboard: GuildStarboard;
-  disableChannels: string[];
+  disabledChannels: string[];
   logs: Map<logTypes, GuildModule>;
 }

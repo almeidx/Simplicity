@@ -5,9 +5,6 @@ import { PermissionUtil } from '../../util';
 import CommandContext from '../../structures/command/CommandContext';
 
 export default class Help extends Command {
-  /**
-   * @param client The client for this command
-   */
   constructor(client: SimplicityClient) {
     super(client, 'help', {
       aliases: ['h', 'commands', 'cmd', 'cmds', 'howtouse'],

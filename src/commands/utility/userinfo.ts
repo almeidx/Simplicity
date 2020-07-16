@@ -18,9 +18,6 @@ const {
 const { isEmpty } = Util;
 
 export default class UserInfo extends Command {
-  /**
-   * @param client The client for this command
-   */
   constructor(client: SimplicityClient) {
     super(client, 'userinfo', {
       aliases: ['ui', 'user', 'whois'],

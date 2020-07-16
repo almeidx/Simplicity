@@ -44,7 +44,7 @@ export default class CommandHandler {
     const usedPrefix = CommandHandler.findPrefix(prefix, message);
     const mentioned = CommandHandler.clientMentioned(message);
 
-    const channelDisabled = guildData?.disableChannels.includes(channel.id);
+    const channelDisabled = guildData?.disabledChannels.includes(channel.id);
     const t = i18next.getFixedT(language);
 
     if (mentioned && !usedPrefix) {

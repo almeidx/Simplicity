@@ -26,7 +26,7 @@
 
 //     const guildData = client.database && await client.database.guilds.get(message.guild.id);
 //     const channelId = guildData && guildData.starboard;
-//     const channel = channelId && message.channel.guild.channels.cache.get(channelId);
+//     const channel = channelId && message.channel.guild.channels.resolve(channelId);
 
 //     if (channel) {
 //       const reactionsSize = users.filter((u) => u.id !== message.author.id).size;

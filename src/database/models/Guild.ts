@@ -25,7 +25,7 @@ const GuildSchema = new Schema<GuildDoc>({
   prefix: String,
   autorole: GuildModuleSchema,
   starboard: GuildStarboardSchema,
-  disableChannels: { type: Array, of: String },
+  disabledChannels: { type: Array, of: String },
   logs: { type: Map, of: GuildModuleSchema },
 }, {
   id: false,

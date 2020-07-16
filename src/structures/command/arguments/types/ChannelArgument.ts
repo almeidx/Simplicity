@@ -7,7 +7,7 @@ import CommandContext from '../../CommandContext';
 const MENTION_REGEX = /(<#)?([0-9]{16,18})>?$/;
 
 const searchOn = (guild: Guild, id: string | null, arg: string): GuildChannel | undefined => {
-  if (id && guild.channels.cache.has(id)) guild.channels.cache.get(id);
+  if (id && guild.channels.cache.has(id)) guild.channels.resolve(id);
   return guild.channels
     .cache
     .find((c) => c.name.toLowerCase().includes(arg.toLowerCase()));

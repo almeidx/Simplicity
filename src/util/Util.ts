@@ -94,7 +94,7 @@ export default class Util {
     configName: keyof typeof Config['CHANNELS'],
     content: MessageAdditions,
   ): Promise<void> {
-    const channel = client.channels.cache.get(Config.CHANNELS[configName]);
+    const channel = client.channels.resolve(Config.CHANNELS[configName]);
     if (channel instanceof TextChannel) await channel.send(content);
   }
 

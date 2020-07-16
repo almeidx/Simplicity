@@ -35,7 +35,7 @@ export default class UserArgument extends Argument<User, UserArgOptions> {
         || m.nickname?.toLowerCase().includes(input))
         || false);
 
-    let user = (id && client.users.cache.get(id)) || findMember?.user || null;
+    let user = (id && client.users.resolve(id)) || findMember?.user || null;
     if (!user && opts.fetchGlobal) {
       user = (id && await client.users.fetch(id).catch(() => null)) || null;
       if (user) user.isPartial = true;

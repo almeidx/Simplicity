@@ -150,7 +150,7 @@
     "prefix": "Prefix",
     "language": "Language",
     "starboard": "Starboard",
-    "disableChannels": "Disable channels",
+    "disabledChannels": "Disable channels",
     "languageKeys": [
       "lang",
       "language",
